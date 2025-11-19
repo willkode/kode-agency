@@ -90,7 +90,7 @@ export default function AboutPage() {
                <div className="text-[#73e28a] text-sm font-bold uppercase tracking-wider mb-2">Who We Are</div>
                <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
                   We Do Work <br />
-                  smart Digital <br />
+                  Kode Digital <br />
                   agency
                </h2>
 
@@ -314,7 +314,7 @@ export default function AboutPage() {
                      <Quote className="w-8 h-8 fill-current opacity-100" />
                   </div>
                   <p className="text-slate-400 mb-8 mt-4 text-sm leading-relaxed">
-                     "The team at Smart Agency is simply amazing. They delivered our project on time and with exceptional quality. Highly recommended!"
+                     "The team at Kode Agency is simply amazing. They delivered our project on time and with exceptional quality. Highly recommended!"
                   </p>
                   <div className="flex items-center gap-4">
                      <img src={`https://images.unsplash.com/photo-${1500000000000 + i * 1000}?q=80&w=100&auto=format&fit=crop`} className="w-12 h-12 rounded-full object-cover" alt="User" />

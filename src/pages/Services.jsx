@@ -24,7 +24,7 @@ export default function ServicesPage() {
               <path d="M50 0C22.4 0 0 22.4 0 50s22.4 50 50 50 50-22.4 50-50S77.6 0 50 0zm0 90C27.9 90 10 72.1 10 50S27.9 10 50 10s40 17.9 40 40-17.9 40-40 40z" fill="currentColor" fillOpacity="0.1"/>
               <path id="textPath" d="M 0,50 a 50,50 0 1,1 0,1 z" fill="none" />
               <text fill="currentColor" fontSize="10" fontWeight="bold" letterSpacing="2">
-                <textPath href="#textPath" startOffset="0%">AGENCY CREATIVE DEVELOPMENT</textPath>
+                <textPath href="#textPath" startOffset="0%">KODE AGENCY CREATIVE DEVELOPMENT</textPath>
               </text>
            </svg>
         </div>
@@ -115,7 +115,7 @@ export default function ServicesPage() {
                      <span className="w-2 h-2 bg-[#73e28a] rounded-full"></span> Team Member
                   </div>
                   <h2 className="text-4xl font-bold mb-6">
-                     We Do Work smart <br/> Digital agency
+                     We Do Work Kode <br/> Digital agency
                   </h2>
                   <p className="text-slate-400 mb-8 leading-relaxed">
                      Our agency is about people. We bring together the best talent to create teams that are greater than the sum of their parts.
@@ -174,7 +174,7 @@ export default function ServicesPage() {
       <div className="bg-slate-900 py-12 border-y border-slate-800">
          <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-center md:justify-between items-center gap-12 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-               {['SHAN IT', 'creativa it', 'innovate', 'smart', 'Canva', 'count.it'].map((brand, i) => (
+               {['SHAN IT', 'creativa it', 'innovate', 'Kode', 'Canva', 'count.it'].map((brand, i) => (
                   <span key={i} className="text-2xl md:text-3xl font-bold text-slate-400 hover:text-white cursor-default">{brand}</span>
                ))}
             </div>

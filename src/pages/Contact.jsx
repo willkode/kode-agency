@@ -115,7 +115,7 @@ export default function ContactPage() {
          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[
                { id: "01", icon: Phone, text: "+55 (9900) 666 22", label: "Call Us" },
-               { id: "02", icon: Mail, text: "Info@Exand.Com", label: "Email Us" },
+               { id: "02", icon: Mail, text: "Info@KodeAgency.com", label: "Email Us" },
                { id: "03", icon: MapPin, text: "Mirpur 12, Dhaka, BD.", label: "Location" },
                { id: "04", icon: Clock, text: "Office Open 10AM - 17PM", label: "Working Hours" },
             ].map((item) => (
@@ -153,7 +153,7 @@ export default function ContactPage() {
                      <Input 
                         required
                         type="email"
-                        placeholder="Info@Exand.com"
+                        placeholder="Info@KodeAgency.com"
                         className="bg-slate-900/50 border-slate-800 text-white h-12 focus:border-[#73e28a] rounded-lg placeholder:text-slate-600"
                         value={formData.email}
                         onChange={(e) => handleChange('email', e.target.value)}
@@ -244,7 +244,7 @@ export default function ContactPage() {
                 <div className="w-full space-y-2">
                    <Label className="text-slate-400 text-xs uppercase">Your Mail:</Label>
                    <Input 
-                      placeholder="Info@Exand.com" 
+                      placeholder="Info@KodeAgency.com" 
                       className="bg-transparent border-b border-slate-800 rounded-none px-0 h-12 focus:border-[#73e28a] text-white placeholder:text-slate-600 border-t-0 border-x-0"
                    />
                 </div>

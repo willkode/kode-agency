@@ -111,7 +111,7 @@ export default function HomePage() {
                <div className="inline-block text-[#73e28a] font-semibold tracking-wider text-sm mb-2 uppercase">About Us</div>
                <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
                   We Are More <br />
-                  <span className="text-[#73e28a]">Smart Digital</span> Agency
+                  <span className="text-[#73e28a]">Kode</span> Agency
                </h2>
                <p className="text-slate-400 mb-8 leading-relaxed">
                   We combine the speed of modern low-code platforms with the power of custom engineering. 

@@ -147,7 +147,7 @@ export default function Layout({ children, currentPageName }) {
           </div>
 
           <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-slate-500 text-sm">© {new Date().getFullYear()} AI Agency. All rights reserved.</p>
+            <p className="text-slate-500 text-sm">© {new Date().getFullYear()} Kode Agency. All rights reserved.</p>
             <div className="flex gap-6 text-sm text-slate-500">
               <Link to={createPageUrl('Legal')} className="hover:text-slate-300">Privacy Policy</Link>
               <Link to={createPageUrl('Legal')} className="hover:text-slate-300">Terms of Service</Link>
