@@ -156,6 +156,48 @@ export default function HomePage() {
         </div>
       </Section>
 
+      {/* Testimonials */}
+      <Section className="bg-slate-950 border-t border-slate-800">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-bold text-white mb-4">Trusted by Founders & Teams</h2>
+          <p className="text-slate-400">Don't just take our word for it.</p>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-8">
+           {[
+             {
+               quote: "We launched our MVP in 3 weeks. The speed was incredible, and the code quality was top-notch.",
+               author: "Sarah Jenkins",
+               role: "Founder, TechFlow",
+               image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&auto=format&fit=crop"
+             },
+             {
+               quote: "They helped us automate our entire onboarding process. Saved us 20+ hours a week.",
+               author: "David Chen",
+               role: "COO, AgencyScale",
+               image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop"
+             },
+             {
+               quote: "Finally an agency that understands product, not just code. They acted like true partners.",
+               author: "Elena Rodriguez",
+               role: "Product Lead, SaaSy",
+               image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=150&auto=format&fit=crop"
+             }
+           ].map((t, i) => (
+             <Card key={i} className="p-8">
+               <div className="flex items-center gap-4 mb-6">
+                 <img src={t.image} alt={t.author} className="w-12 h-12 rounded-full object-cover ring-2 ring-indigo-500/30" />
+                 <div>
+                   <div className="text-white font-bold">{t.author}</div>
+                   <div className="text-slate-500 text-sm">{t.role}</div>
+                 </div>
+               </div>
+               <p className="text-slate-300 italic">"{t.quote}"</p>
+             </Card>
+           ))}
+        </div>
+      </Section>
+
       {/* Process Summary */}
       <Section className="bg-indigo-950/10 border-y border-slate-800/50">
         <div className="text-center mb-16">
