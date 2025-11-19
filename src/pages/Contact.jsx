@@ -46,7 +46,7 @@ export default function ContactPage() {
               <p className="text-slate-400 mb-8">
                  Thanks for reaching out. We'll get back to you shortly.
               </p>
-              <Button onClick={() => setIsSubmitted(false)} className="bg-[#73e28a] text-black hover:bg-lime-500">
+              <Button onClick={() => setIsSubmitted(false)} className="bg-[#73e28a] text-black hover:bg-[#5dbb72]">
                  Send another message
               </Button>
            </Card>
@@ -199,7 +199,7 @@ export default function ContactPage() {
                   <Button 
                      type="submit"
                      disabled={submitMutation.isPending}
-                     className="bg-[#73e28a] text-black hover:bg-lime-500 font-bold h-12 px-8 rounded-lg"
+                     className="bg-[#73e28a] text-black hover:bg-[#5dbb72] font-bold h-12 px-8 rounded-lg"
                   >
                      {submitMutation.isPending ? 'Sending...' : 'Send Request'} 
                      <ArrowUpRight className="ml-2 w-5 h-5" />

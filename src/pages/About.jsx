@@ -132,7 +132,7 @@ export default function AboutPage() {
                </div>
 
                <div className="pt-4">
-                  <Button className="bg-[#73e28a] hover:bg-lime-500 text-black rounded-full px-8 h-12">
+                  <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black rounded-full px-8 h-12">
                      More About Us <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                </div>
@@ -233,7 +233,7 @@ export default function AboutPage() {
                   <li className="flex items-center gap-3"><Check className="w-4 h-4 text-[#73e28a]" /> SEO Optimization</li>
                   <li className="flex items-center gap-3 opacity-50"><Check className="w-4 h-4" /> Advanced Analytics</li>
                </ul>
-               <Button className="w-full bg-[#73e28a] text-black hover:bg-lime-500 font-bold">Purchase Now <ArrowRight className="ml-2 w-4 h-4" /></Button>
+               <Button className="w-full bg-[#73e28a] text-black hover:bg-[#5dbb72] font-bold">Purchase Now <ArrowRight className="ml-2 w-4 h-4" /></Button>
             </Card>
 
             {/* Premium */}
