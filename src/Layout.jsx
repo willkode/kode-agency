@@ -128,10 +128,9 @@ export default function Layout({ children, currentPageName }) {
             <div>
               <h4 className="text-white font-semibold mb-6">Company</h4>
               <ul className="space-y-3 text-sm text-slate-400">
-                <li><Link to={createPageUrl('About')} className="hover:text-[#73e28a] transition-colors">About Us</Link></li>
-                <li><Link to={createPageUrl('Process')} className="hover:text-[#73e28a] transition-colors">Our Process</Link></li>
-                <li><Link to={createPageUrl('Careers')} className="hover:text-[#73e28a] transition-colors">Careers</Link></li>
-                <li><Link to={createPageUrl('Contact')} className="hover:text-[#73e28a] transition-colors">Contact</Link></li>
+               <li><Link to={createPageUrl('About')} className="hover:text-[#73e28a] transition-colors">About Us</Link></li>
+               <li><Link to={createPageUrl('Process')} className="hover:text-[#73e28a] transition-colors">Our Process</Link></li>
+               <li><Link to={createPageUrl('Contact')} className="hover:text-[#73e28a] transition-colors">Contact</Link></li>
               </ul>
             </div>
 

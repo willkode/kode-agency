@@ -17,9 +17,16 @@ export default function PlatformsPage() {
       </Section>
 
       <Section>
+        <div className="mb-12 text-center max-w-3xl mx-auto">
+          <h2 className="text-2xl font-bold text-white mb-4">Our philosophy on platforms</h2>
+          <p className="text-slate-400 leading-relaxed">
+            AI tools are power tools. We use them to move faster, not to ship junk. Every build still goes through human review, UX thinking, strategic clarity, and thorough QA. We pick the right tool for the job — not force everything into one platform.
+          </p>
+        </div>
+        
         <div className="space-y-12">
           {/* Base44 */}
-          <Card className="p-8 border-indigo-500/30 bg-indigo-950/10">
+          <Card className="p-8 border-[#73e28a]/30 bg-[#73e28a]/5">
             <div className="flex flex-col md:flex-row gap-8">
               <div className="md:w-1/3">
                 <div className="text-4xl font-bold text-white mb-4">Base44</div>
@@ -134,7 +141,7 @@ export default function PlatformsPage() {
            <h3 className="text-2xl font-bold text-white mb-6">Not sure which one you need?</h3>
            <p className="text-slate-400 mb-8">That's our job. We'll analyze your requirements and recommend the best path.</p>
            <Link to={createPageUrl('Contact')}>
-             <Button className="bg-indigo-600 hover:bg-indigo-700 text-white h-12 px-8">
+             <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-12 px-8">
                Schedule a Platform Fit Call
              </Button>
            </Link>
