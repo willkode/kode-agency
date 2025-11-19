@@ -41,8 +41,8 @@ export default function Layout({ children, currentPageName }) {
                 to={createPageUrl(link.path)}
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                   currentPageName === link.path
-                    ? 'text-black bg-lime-400'
-                    : 'text-slate-400 hover:text-lime-400 hover:bg-slate-800/50'
+                    ? 'text-black bg-[#73e28a]'
+                    : 'text-slate-400 hover:text-[#73e28a] hover:bg-slate-800/50'
                 }`}
               >
                 {link.name}
@@ -52,7 +52,7 @@ export default function Layout({ children, currentPageName }) {
 
           <div className="hidden lg:flex items-center gap-4">
             <Link to={createPageUrl('Contact')}>
-              <Button className="bg-lime-400 hover:bg-lime-500 text-black font-bold border-0 rounded-full px-6">
+              <Button className="bg-[#73e28a] hover:bg-lime-500 text-black font-bold border-0 rounded-full px-6">
                 Let's Talk
               </Button>
             </Link>
@@ -82,7 +82,7 @@ export default function Layout({ children, currentPageName }) {
                   </Link>
                 ))}
                 <Link to={createPageUrl('Contact')} className="mt-4">
-                  <Button className="w-full bg-lime-400 hover:bg-lime-500 text-black h-12 text-lg">
+                  <Button className="w-full bg-[#73e28a] hover:bg-lime-500 text-black h-12 text-lg">
                     Let's Talk
                   </Button>
                 </Link>
@@ -118,30 +118,30 @@ export default function Layout({ children, currentPageName }) {
             <div>
               <h4 className="text-white font-semibold mb-6">Services</h4>
               <ul className="space-y-3 text-sm text-slate-400">
-                <li><Link to={createPageUrl('Services')} className="hover:text-lime-400 transition-colors">Platform Builds</Link></li>
-                <li><Link to={createPageUrl('Services')} className="hover:text-lime-400 transition-colors">Custom Development</Link></li>
-                <li><Link to={createPageUrl('Services')} className="hover:text-lime-400 transition-colors">Integrations</Link></li>
-                <li><Link to={createPageUrl('Services')} className="hover:text-lime-400 transition-colors">Support & Maintenance</Link></li>
+                <li><Link to={createPageUrl('Services')} className="hover:text-[#73e28a] transition-colors">Platform Builds</Link></li>
+                <li><Link to={createPageUrl('Services')} className="hover:text-[#73e28a] transition-colors">Custom Development</Link></li>
+                <li><Link to={createPageUrl('Services')} className="hover:text-[#73e28a] transition-colors">Integrations</Link></li>
+                <li><Link to={createPageUrl('Services')} className="hover:text-[#73e28a] transition-colors">Support & Maintenance</Link></li>
               </ul>
             </div>
 
             <div>
               <h4 className="text-white font-semibold mb-6">Company</h4>
               <ul className="space-y-3 text-sm text-slate-400">
-                <li><Link to={createPageUrl('About')} className="hover:text-lime-400 transition-colors">About Us</Link></li>
-                <li><Link to={createPageUrl('Process')} className="hover:text-lime-400 transition-colors">Our Process</Link></li>
-                <li><Link to={createPageUrl('Careers')} className="hover:text-lime-400 transition-colors">Careers</Link></li>
-                <li><Link to={createPageUrl('Contact')} className="hover:text-lime-400 transition-colors">Contact</Link></li>
+                <li><Link to={createPageUrl('About')} className="hover:text-[#73e28a] transition-colors">About Us</Link></li>
+                <li><Link to={createPageUrl('Process')} className="hover:text-[#73e28a] transition-colors">Our Process</Link></li>
+                <li><Link to={createPageUrl('Careers')} className="hover:text-[#73e28a] transition-colors">Careers</Link></li>
+                <li><Link to={createPageUrl('Contact')} className="hover:text-[#73e28a] transition-colors">Contact</Link></li>
               </ul>
             </div>
 
             <div>
               <h4 className="text-white font-semibold mb-6">Resources</h4>
               <ul className="space-y-3 text-sm text-slate-400">
-                <li><Link to={createPageUrl('Blog')} className="hover:text-lime-400 transition-colors">Blog</Link></li>
-                <li><Link to={createPageUrl('Portfolio')} className="hover:text-lime-400 transition-colors">Case Studies</Link></li>
-                <li><Link to={createPageUrl('FAQ')} className="hover:text-lime-400 transition-colors">FAQ</Link></li>
-                <li><Link to={createPageUrl('Legal')} className="hover:text-lime-400 transition-colors">Privacy & Terms</Link></li>
+                <li><Link to={createPageUrl('Blog')} className="hover:text-[#73e28a] transition-colors">Blog</Link></li>
+                <li><Link to={createPageUrl('Portfolio')} className="hover:text-[#73e28a] transition-colors">Case Studies</Link></li>
+                <li><Link to={createPageUrl('FAQ')} className="hover:text-[#73e28a] transition-colors">FAQ</Link></li>
+                <li><Link to={createPageUrl('Legal')} className="hover:text-[#73e28a] transition-colors">Privacy & Terms</Link></li>
               </ul>
             </div>
           </div>

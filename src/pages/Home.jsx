@@ -22,7 +22,7 @@ export default function HomePage() {
       <section className="relative pt-20 pb-10 md:pt-32 md:pb-20 overflow-hidden">
         {/* Abstract Background Shapes */}
         <div className="absolute top-20 right-10 w-32 h-32 border-2 border-dashed border-slate-700 rounded-full opacity-20 animate-spin-slow" />
-        <div className="absolute top-40 left-10 w-24 h-24 bg-lime-400/10 rounded-full blur-xl" />
+        <div className="absolute top-40 left-10 w-24 h-24 bg-[#73e28a]/10 rounded-full blur-xl" />
         <div className="absolute top-10 right-[20%] w-[400px] h-[400px] bg-gradient-to-b from-slate-800/20 to-transparent rounded-full -z-10" />
 
         <div className="container mx-auto px-4 text-center">
@@ -32,11 +32,11 @@ export default function HomePage() {
               Development
             </h1>
              {/* Small image badge next to "Creative" - simulating the screenshot */}
-            <div className="hidden md:block absolute top-2 right-[-60px] w-16 h-10 rounded-full border-2 border-lime-400 overflow-hidden">
+            <div className="hidden md:block absolute top-2 right-[-60px] w-16 h-10 rounded-full border-2 border-[#73e28a] overflow-hidden">
                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" className="w-full h-full object-cover" alt="Team" />
             </div>
              {/* Green Ring Icon */}
-            <div className="absolute top-0 right-0 md:right-[-100px] text-lime-400 animate-spin-slow">
+            <div className="absolute top-0 right-0 md:right-[-100px] text-[#73e28a] animate-spin-slow">
                <svg width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="2" strokeDasharray="10 5"/>
                </svg>
@@ -49,7 +49,7 @@ export default function HomePage() {
 
           {/* Hero Image */}
           <div className="relative max-w-6xl mx-auto mt-8 group">
-             <div className="absolute inset-0 bg-lime-400/20 rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-4 group-hover:translate-y-4 transition-transform"></div>
+             <div className="absolute inset-0 bg-[#73e28a]/20 rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-4 group-hover:translate-y-4 transition-transform"></div>
              <div className="relative rounded-2xl overflow-hidden border border-slate-800">
                 <img 
                    src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop" 
@@ -58,7 +58,7 @@ export default function HomePage() {
                 />
                 {/* Play Button Overlay */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                   <button className="w-20 h-20 bg-lime-400 rounded-full flex items-center justify-center text-black hover:scale-110 transition-transform shadow-lg shadow-lime-400/20">
+                   <button className="w-20 h-20 bg-[#73e28a] rounded-full flex items-center justify-center text-black hover:scale-110 transition-transform shadow-lg shadow-[#73e28a]/20">
                       <Play fill="black" className="ml-1" />
                    </button>
                 </div>
@@ -72,7 +72,7 @@ export default function HomePage() {
          <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-center md:justify-between items-center gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
                {['Base44', 'Lovable', 'Replit', 'OpenAI', 'Vercel', 'Supabase'].map((brand) => (
-                  <span key={brand} className="text-2xl font-bold text-slate-400 hover:text-lime-400 cursor-default">{brand}</span>
+                  <span key={brand} className="text-2xl font-bold text-slate-400 hover:text-[#73e28a] cursor-default">{brand}</span>
                ))}
             </div>
          </div>
@@ -108,10 +108,10 @@ export default function HomePage() {
             </div>
             
             <div>
-               <div className="inline-block text-lime-400 font-semibold tracking-wider text-sm mb-2 uppercase">About Us</div>
+               <div className="inline-block text-[#73e28a] font-semibold tracking-wider text-sm mb-2 uppercase">About Us</div>
                <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
                   We Are More <br />
-                  <span className="text-lime-400">Smart Digital</span> Agency
+                  <span className="text-[#73e28a]">Smart Digital</span> Agency
                </h2>
                <p className="text-slate-400 mb-8 leading-relaxed">
                   We combine the speed of modern low-code platforms with the power of custom engineering. 
@@ -143,7 +143,7 @@ export default function HomePage() {
       <Section className="bg-slate-900/30 py-24 relative">
          <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-               <div className="text-lime-400 text-sm font-bold uppercase tracking-wider mb-2">What We Do</div>
+               <div className="text-[#73e28a] text-sm font-bold uppercase tracking-wider mb-2">What We Do</div>
                <h2 className="text-3xl md:text-5xl font-bold">We Offer The Best <br />AI Solutions & Services</h2>
             </div>
 
@@ -154,13 +154,13 @@ export default function HomePage() {
                         key={idx} 
                         className={`p-6 rounded-xl cursor-pointer transition-all duration-300 border ${
                            activeService === idx 
-                           ? 'bg-slate-900 border-lime-400/50' 
+                           ? 'bg-slate-900 border-[#73e28a]/50' 
                            : 'bg-transparent border-transparent hover:bg-slate-900'
                         }`}
                         onClick={() => setActiveService(idx)}
                      >
                         <div className="flex items-start gap-4">
-                           <div className={`text-2xl font-bold ${activeService === idx ? 'text-lime-400' : 'text-slate-600'}`}>
+                           <div className={`text-2xl font-bold ${activeService === idx ? 'text-[#73e28a]' : 'text-slate-600'}`}>
                               {service.icon}
                            </div>
                            <div>
@@ -173,7 +173,7 @@ export default function HomePage() {
                            </div>
                            <div className="ml-auto mt-1">
                               {activeService === idx ? (
-                                 <div className="w-6 h-6 rounded-full bg-lime-400 flex items-center justify-center">
+                                 <div className="w-6 h-6 rounded-full bg-[#73e28a] flex items-center justify-center">
                                     <Check className="w-4 h-4 text-black" />
                                  </div>
                               ) : (
@@ -196,7 +196,7 @@ export default function HomePage() {
                      className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
                   />
                   {/* Floating Badge */}
-                  <div className="absolute bottom-8 right-8 bg-lime-400 p-6 rounded-full animate-spin-slow">
+                  <div className="absolute bottom-8 right-8 bg-[#73e28a] p-6 rounded-full animate-spin-slow">
                      <ArrowUpRight className="w-8 h-8 text-black" />
                   </div>
                </div>
@@ -211,7 +211,7 @@ export default function HomePage() {
                   { title: "Build", icon: "🚀" },
                ].map((item, i) => (
                   <div key={i} className="text-center group">
-                     <div className="text-4xl mb-4 bg-slate-900 w-20 h-20 rounded-full flex items-center justify-center mx-auto group-hover:bg-lime-400 transition-colors">
+                     <div className="text-4xl mb-4 bg-slate-900 w-20 h-20 rounded-full flex items-center justify-center mx-auto group-hover:bg-[#73e28a] transition-colors">
                         {item.icon}
                      </div>
                      <h4 className="font-bold text-white">{item.title}</h4>
@@ -225,12 +225,12 @@ export default function HomePage() {
       {/* Portfolio Section */}
       <Section className="py-24">
          <div className="text-center mb-16">
-            <div className="text-lime-400 text-sm font-bold uppercase tracking-wider mb-2">Our Portfolio</div>
+            <div className="text-[#73e28a] text-sm font-bold uppercase tracking-wider mb-2">Our Portfolio</div>
             <h2 className="text-3xl md:text-5xl font-bold mb-6">Let's Look Our <br/> Recent Project House</h2>
             
             <div className="flex justify-center gap-4 mt-8">
                {['All', 'Web Design', 'Mobile App', 'Branding'].map(cat => (
-                  <button key={cat} className="px-6 py-2 rounded-full border border-slate-800 hover:bg-lime-400 hover:text-black hover:border-lime-400 transition-all text-sm font-medium text-slate-300">
+                  <button key={cat} className="px-6 py-2 rounded-full border border-slate-800 hover:bg-[#73e28a] hover:text-black hover:border-[#73e28a] transition-all text-sm font-medium text-slate-300">
                      {cat}
                   </button>
                ))}
@@ -246,10 +246,10 @@ export default function HomePage() {
                <div key={i} className={`group relative rounded-2xl overflow-hidden ${item.large ? 'md:col-span-2 h-[500px]' : 'h-[400px]'}`}>
                   <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
-                     <span className="text-lime-400 text-sm font-bold mb-2">{item.cat}</span>
+                     <span className="text-[#73e28a] text-sm font-bold mb-2">{item.cat}</span>
                      <h3 className="text-3xl font-bold text-white">{item.title}</h3>
                      <div className="mt-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <Button variant="link" className="text-white p-0 h-auto hover:text-lime-400">View Case Study <ArrowRight className="ml-2 w-4 h-4" /></Button>
+                        <Button variant="link" className="text-white p-0 h-auto hover:text-[#73e28a]">View Case Study <ArrowRight className="ml-2 w-4 h-4" /></Button>
                      </div>
                   </div>
                </div>
@@ -257,7 +257,7 @@ export default function HomePage() {
          </div>
          
          <div className="flex justify-center mt-12 gap-2">
-            <div className="w-3 h-3 rounded-full bg-lime-400"></div>
+            <div className="w-3 h-3 rounded-full bg-[#73e28a]"></div>
             <div className="w-3 h-3 rounded-full bg-slate-800"></div>
             <div className="w-3 h-3 rounded-full bg-slate-800"></div>
          </div>
@@ -268,10 +268,10 @@ export default function HomePage() {
          <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row gap-12">
                <div className="md:w-1/4">
-                  <div className="text-lime-400 text-sm font-bold uppercase tracking-wider mb-2">Our Team</div>
+                  <div className="text-[#73e28a] text-sm font-bold uppercase tracking-wider mb-2">Our Team</div>
                   <h2 className="text-4xl font-bold mb-6">Meet Our <br/> Experts</h2>
                   <p className="text-slate-400 mb-8">We are a group of passionate designers and developers.</p>
-                  <Button variant="outline" className="border-slate-700 text-white hover:bg-lime-400 hover:text-black hover:border-lime-400">View All Members</Button>
+                  <Button variant="outline" className="border-slate-700 text-white hover:bg-[#73e28a] hover:text-black hover:border-[#73e28a]">View All Members</Button>
                </div>
                
                <div className="md:w-3/4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -284,7 +284,7 @@ export default function HomePage() {
                         <img src={member.img} alt={member.name} className="w-full aspect-[3/4] object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
                         <div className="absolute bottom-0 left-0 right-0 bg-slate-950/90 backdrop-blur p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                            <h4 className="text-white font-bold">{member.name}</h4>
-                           <p className="text-lime-400 text-xs">{member.role}</p>
+                           <p className="text-[#73e28a] text-xs">{member.role}</p>
                            <div className="flex gap-3 mt-3">
                               <Twitter className="w-4 h-4 text-slate-400 hover:text-white cursor-pointer" />
                               <Linkedin className="w-4 h-4 text-slate-400 hover:text-white cursor-pointer" />
@@ -302,7 +302,7 @@ export default function HomePage() {
       <Section className="py-24">
          <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-               <div className="text-lime-400 text-sm font-bold uppercase tracking-wider mb-2">Testimonials</div>
+               <div className="text-[#73e28a] text-sm font-bold uppercase tracking-wider mb-2">Testimonials</div>
                <h2 className="text-3xl md:text-5xl font-bold">Best Of Our Client's <br/> Latest Testimonials</h2>
             </div>
 
@@ -311,16 +311,16 @@ export default function HomePage() {
                   { name: "James Bond", role: "CEO, Tech", quote: "The team understood our vision perfectly. The final product exceeded expectations.", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop" },
                   { name: "Alina Stark", role: "Founder, Art", quote: "Fast, reliable, and creative. Base44 allowed us to scale without worry.", img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1000&auto=format&fit=crop" }
                ].map((t, i) => (
-                  <Card key={i} className="bg-slate-900 border-slate-800 p-8 relative group hover:border-lime-400/30 transition-colors">
-                     <div className="absolute top-8 right-8 text-slate-700 group-hover:text-lime-400 transition-colors">
+                  <Card key={i} className="bg-slate-900 border-slate-800 p-8 relative group hover:border-[#73e28a]/30 transition-colors">
+                     <div className="absolute top-8 right-8 text-slate-700 group-hover:text-[#73e28a] transition-colors">
                         <Quote className="w-10 h-10 fill-current opacity-20" />
                      </div>
                      <p className="text-slate-300 mb-8 italic text-lg relative z-10">"{t.quote}"</p>
                      <div className="flex items-center gap-4">
-                        <img src={t.img} alt={t.name} className="w-12 h-12 rounded-full object-cover border-2 border-slate-700 group-hover:border-lime-400 transition-colors" />
+                        <img src={t.img} alt={t.name} className="w-12 h-12 rounded-full object-cover border-2 border-slate-700 group-hover:border-[#73e28a] transition-colors" />
                         <div>
                            <h4 className="text-white font-bold">{t.name}</h4>
-                           <p className="text-lime-400 text-xs">{t.role}</p>
+                           <p className="text-[#73e28a] text-xs">{t.role}</p>
                         </div>
                      </div>
                   </Card>
@@ -338,14 +338,14 @@ export default function HomePage() {
                   <div className="relative">
                      <img src="https://images.unsplash.com/photo-1531538606174-0f90ff5dce83?q=80&w=1974&auto=format&fit=crop" className="rounded-xl w-full h-64 object-cover" alt="Work" />
                      <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded-xl">
-                         <div className="w-12 h-12 bg-lime-400 rounded-full flex items-center justify-center animate-pulse">
+                         <div className="w-12 h-12 bg-[#73e28a] rounded-full flex items-center justify-center animate-pulse">
                            <Play fill="black" className="w-4 h-4 text-black ml-1" />
                          </div>
                      </div>
                   </div>
                </div>
                <div>
-                  <div className="text-lime-400 text-sm font-bold uppercase tracking-wider mb-2">Get Started</div>
+                  <div className="text-[#73e28a] text-sm font-bold uppercase tracking-wider mb-2">Get Started</div>
                   <h2 className="text-4xl font-bold mb-6">We Create Website <br/> Create And Solution</h2>
                   <p className="text-slate-400 mb-8">
                      Every project is an opportunity to create something new and better. Let's build your future together.
@@ -368,7 +368,7 @@ export default function HomePage() {
       {/* Blog Section */}
       <Section className="py-24">
          <div className="text-center mb-16">
-            <div className="text-lime-400 text-sm font-bold uppercase tracking-wider mb-2">Our Blog</div>
+            <div className="text-[#73e28a] text-sm font-bold uppercase tracking-wider mb-2">Our Blog</div>
             <h2 className="text-3xl md:text-5xl font-bold">We Provide Advanced <br/> News And Updates</h2>
          </div>
 
@@ -381,11 +381,11 @@ export default function HomePage() {
                <div key={i} className="group cursor-pointer">
                   <div className="overflow-hidden rounded-xl mb-4 relative">
                      <img src={post.img} alt={post.title} className="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500" />
-                     <div className="absolute top-4 left-4 bg-lime-400 text-black text-xs font-bold px-3 py-1 rounded">
+                     <div className="absolute top-4 left-4 bg-[#73e28a] text-black text-xs font-bold px-3 py-1 rounded">
                         {post.date}
                      </div>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-lime-400 transition-colors">{post.title}</h3>
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#73e28a] transition-colors">{post.title}</h3>
                   <div className="flex items-center text-slate-500 text-sm group-hover:text-white transition-colors">
                      Read More <ArrowRight className="ml-2 w-4 h-4" />
                   </div>
@@ -398,7 +398,7 @@ export default function HomePage() {
       <div className="container mx-auto px-4 mb-20">
          <div className="bg-slate-900 rounded-3xl p-12 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 border border-slate-800">
             {/* Deco */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-lime-400/5 rounded-full blur-3xl"></div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#73e28a]/5 rounded-full blur-3xl"></div>
             
             <div className="relative z-10">
                <h2 className="text-3xl font-bold text-white mb-2">Subscribe Now</h2>
@@ -409,9 +409,9 @@ export default function HomePage() {
                <input 
                   type="email" 
                   placeholder="Enter email address" 
-                  className="bg-slate-950 border border-slate-800 rounded-full px-6 py-4 text-white w-full md:w-80 focus:outline-none focus:border-lime-400"
+                  className="bg-slate-950 border border-slate-800 rounded-full px-6 py-4 text-white w-full md:w-80 focus:outline-none focus:border-[#73e28a]"
                />
-               <button className="w-14 h-14 bg-lime-400 rounded-full flex items-center justify-center text-black hover:scale-105 transition-transform">
+               <button className="w-14 h-14 bg-[#73e28a] rounded-full flex items-center justify-center text-black hover:scale-105 transition-transform">
                   <ArrowUpRight />
                </button>
             </div>

@@ -16,7 +16,7 @@ export default function AboutPage() {
       <section className="relative pt-32 pb-20 overflow-hidden">
         {/* Background Elements */}
         <div className="absolute top-20 right-10 w-32 h-32 border-2 border-dashed border-slate-700 rounded-full opacity-20 animate-spin-slow" />
-        <div className="absolute top-10 right-[10%] text-lime-400 animate-spin-slow">
+        <div className="absolute top-10 right-[10%] text-[#73e28a] animate-spin-slow">
            <svg width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="2" strokeDasharray="10 5"/>
            </svg>
@@ -27,7 +27,7 @@ export default function AboutPage() {
              <div>
                 <h1 className="text-5xl md:text-7xl font-bold mb-2">About</h1>
                 <div className="flex items-center gap-2 text-slate-400 text-sm font-medium">
-                   <span className="text-lime-400">Home</span> / <span>About</span>
+                   <span className="text-[#73e28a]">Home</span> / <span>About</span>
                 </div>
              </div>
              <div className="hidden md:block w-32 h-32 bg-pattern-dots opacity-20"></div>
@@ -41,7 +41,7 @@ export default function AboutPage() {
                alt="About Hero" 
              />
              <div className="absolute inset-0 flex items-center justify-center">
-                <button className="w-20 h-20 bg-lime-400 rounded-full flex items-center justify-center text-black hover:scale-110 transition-transform shadow-lg shadow-lime-400/20">
+                <button className="w-20 h-20 bg-[#73e28a] rounded-full flex items-center justify-center text-black hover:scale-110 transition-transform shadow-lg shadow-[#73e28a]/20">
                    <Play fill="black" className="ml-1" />
                 </button>
              </div>
@@ -54,7 +54,7 @@ export default function AboutPage() {
          <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-center md:justify-between items-center gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
                {['Burner', 'Creative', 'Base44', 'Smart', 'Canva', 'Count.it'].map((brand) => (
-                  <span key={brand} className="text-xl md:text-2xl font-bold text-slate-400 hover:text-lime-400 cursor-default">{brand}</span>
+                  <span key={brand} className="text-xl md:text-2xl font-bold text-slate-400 hover:text-[#73e28a] cursor-default">{brand}</span>
                ))}
             </div>
          </div>
@@ -69,8 +69,8 @@ export default function AboutPage() {
                { icon: <Rocket />, title: "Marketing", desc: "Growth strategies that work." },
                { icon: <Target />, title: "Web Design", desc: "Pixel perfect interfaces." },
             ].map((item, i) => (
-               <Card key={i} className="bg-slate-900 border-slate-800 text-center p-8 hover:border-lime-400/50 transition-colors group">
-                  <div className="w-14 h-14 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-400 group-hover:bg-lime-400 group-hover:text-black transition-colors">
+               <Card key={i} className="bg-slate-900 border-slate-800 text-center p-8 hover:border-[#73e28a]/50 transition-colors group">
+                  <div className="w-14 h-14 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-400 group-hover:bg-[#73e28a] group-hover:text-black transition-colors">
                      {item.icon}
                   </div>
                   <h3 className="text-white font-bold text-lg mb-2">{item.title}</h3>
@@ -83,11 +83,11 @@ export default function AboutPage() {
       {/* "We Do Work Smart" Section */}
       <Section className="py-10 relative">
          {/* Background Wave */}
-         <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-radial from-lime-400/5 to-transparent opacity-50 pointer-events-none" />
+         <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-radial from-[#73e28a]/5 to-transparent opacity-50 pointer-events-none" />
          
          <div className="grid md:grid-cols-2 gap-16 items-center">
             <div className="relative">
-               <div className="text-lime-400 text-sm font-bold uppercase tracking-wider mb-2">Who We Are</div>
+               <div className="text-[#73e28a] text-sm font-bold uppercase tracking-wider mb-2">Who We Are</div>
                <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
                   We Do Work <br />
                   smart Digital <br />
@@ -97,7 +97,7 @@ export default function AboutPage() {
                <div className="relative h-[400px]">
                   {/* Circular Badge */}
                   <div className="absolute top-0 left-0 z-20 w-24 h-24 bg-slate-900 border border-slate-800 rounded-full flex flex-col items-center justify-center text-center p-2 shadow-xl">
-                     <span className="text-lime-400 font-bold text-xl">Since</span>
+                     <span className="text-[#73e28a] font-bold text-xl">Since</span>
                      <span className="text-white text-xs">2023</span>
                   </div>
 
@@ -125,14 +125,14 @@ export default function AboutPage() {
                
                <div className="grid grid-cols-2 gap-4">
                   {['UI/UX Design', 'Photography', 'Web Development', 'Video Editing', 'Mobile Apps', 'Digital Marketing'].map(tag => (
-                     <div key={tag} className="bg-slate-900 border border-slate-800 rounded px-4 py-2 text-sm text-slate-300 hover:border-lime-400 transition-colors text-center">
+                     <div key={tag} className="bg-slate-900 border border-slate-800 rounded px-4 py-2 text-sm text-slate-300 hover:border-[#73e28a] transition-colors text-center">
                         {tag}
                      </div>
                   ))}
                </div>
 
                <div className="pt-4">
-                  <Button className="bg-lime-400 hover:bg-lime-500 text-black rounded-full px-8 h-12">
+                  <Button className="bg-[#73e28a] hover:bg-lime-500 text-black rounded-full px-8 h-12">
                      More About Us <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                </div>
@@ -144,7 +144,7 @@ export default function AboutPage() {
       <Section className="bg-slate-900/30 py-24">
          <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
-               <div className="text-lime-400 text-sm font-bold uppercase tracking-wider mb-2">What We Do</div>
+               <div className="text-[#73e28a] text-sm font-bold uppercase tracking-wider mb-2">What We Do</div>
                <h2 className="text-4xl font-bold mb-8">Make your Service.</h2>
                <p className="text-slate-400 mb-8">
                   We provide a comprehensive suite of services to help you build, launch, and grow your digital product.
@@ -160,19 +160,19 @@ export default function AboutPage() {
                         key={idx} 
                         className={`p-6 rounded-xl cursor-pointer border transition-all duration-300 ${
                            activeService === idx 
-                           ? 'bg-slate-900 border-lime-400' 
+                           ? 'bg-slate-900 border-[#73e28a]' 
                            : 'border-slate-800 hover:bg-slate-900'
                         }`}
                         onClick={() => setActiveService(idx)}
                      >
                         <div className="flex items-center justify-between">
                            <div className="flex items-center gap-4">
-                              <div className={`text-xl ${activeService === idx ? 'text-lime-400' : 'text-slate-500'}`}>
+                              <div className={`text-xl ${activeService === idx ? 'text-[#73e28a]' : 'text-slate-500'}`}>
                                  {service.icon}
                               </div>
                               <h3 className="font-bold text-white text-lg">{service.title}</h3>
                            </div>
-                           <div className={`w-6 h-6 rounded-full flex items-center justify-center border ${activeService === idx ? 'bg-lime-400 border-lime-400 text-black' : 'border-slate-600 text-slate-600'}`}>
+                           <div className={`w-6 h-6 rounded-full flex items-center justify-center border ${activeService === idx ? 'bg-[#73e28a] border-[#73e28a] text-black' : 'border-slate-600 text-slate-600'}`}>
                               {activeService === idx ? <Check className="w-3 h-3" /> : <span className="text-xs">+</span>}
                            </div>
                         </div>
@@ -192,7 +192,7 @@ export default function AboutPage() {
                   alt="Service Team" 
                   className="rounded-2xl w-full h-[500px] object-cover"
                />
-               <div className="absolute top-10 right-[-20px] bg-lime-400 p-4 rounded-full animate-bounce-slow shadow-lg">
+               <div className="absolute top-10 right-[-20px] bg-[#73e28a] p-4 rounded-full animate-bounce-slow shadow-lg">
                   <ArrowUpRight className="w-8 h-8 text-black" />
                </div>
             </div>
@@ -202,52 +202,52 @@ export default function AboutPage() {
       {/* Pricing Section */}
       <Section className="py-24">
          <div className="text-center mb-16">
-            <div className="text-lime-400 text-sm font-bold uppercase tracking-wider mb-2">Pricing Plans</div>
+            <div className="text-[#73e28a] text-sm font-bold uppercase tracking-wider mb-2">Pricing Plans</div>
             <h2 className="text-3xl md:text-5xl font-bold">All Professional Let's Look Our <br/> Recent Pricing Table</h2>
          </div>
 
          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4">
             {/* Basic */}
-            <Card className="bg-slate-900 border-slate-800 p-8 relative group hover:border-lime-400/30 transition-colors">
+            <Card className="bg-slate-900 border-slate-800 p-8 relative group hover:border-[#73e28a]/30 transition-colors">
                <h3 className="text-2xl font-bold text-white mb-2">$19.99</h3>
                <p className="text-white font-bold mb-6">Basic Plan</p>
                <ul className="space-y-4 mb-8 text-sm text-slate-400">
-                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-lime-400" /> 1 Website</li>
-                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-lime-400" /> 5 GB Storage</li>
-                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-lime-400" /> Basic Support</li>
+                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-[#73e28a]" /> 1 Website</li>
+                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-[#73e28a]" /> 5 GB Storage</li>
+                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-[#73e28a]" /> Basic Support</li>
                   <li className="flex items-center gap-3 opacity-50"><Check className="w-4 h-4" /> SEO Optimization</li>
                   <li className="flex items-center gap-3 opacity-50"><Check className="w-4 h-4" /> Advanced Analytics</li>
                </ul>
-               <Button variant="outline" className="w-full border-slate-700 text-white hover:bg-lime-400 hover:text-black hover:border-lime-400">Purchase Now <ArrowRight className="ml-2 w-4 h-4" /></Button>
+               <Button variant="outline" className="w-full border-slate-700 text-white hover:bg-[#73e28a] hover:text-black hover:border-[#73e28a]">Purchase Now <ArrowRight className="ml-2 w-4 h-4" /></Button>
             </Card>
 
             {/* Standard - Highlighted */}
-            <Card className="bg-slate-900 border-lime-400 p-8 relative transform md:-translate-y-4 shadow-2xl shadow-lime-400/10">
-               <div className="absolute top-0 right-0 bg-lime-400 text-black text-xs font-bold px-3 py-1 rounded-bl-lg">POPULAR</div>
+            <Card className="bg-slate-900 border-[#73e28a] p-8 relative transform md:-translate-y-4 shadow-2xl shadow-[#73e28a]/10">
+               <div className="absolute top-0 right-0 bg-[#73e28a] text-black text-xs font-bold px-3 py-1 rounded-bl-lg">POPULAR</div>
                <h3 className="text-2xl font-bold text-white mb-2">$29.99</h3>
                <p className="text-white font-bold mb-6">Standard Plan</p>
                <ul className="space-y-4 mb-8 text-sm text-slate-300">
-                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-lime-400" /> 5 Websites</li>
-                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-lime-400" /> 20 GB Storage</li>
-                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-lime-400" /> Priority Support</li>
-                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-lime-400" /> SEO Optimization</li>
+                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-[#73e28a]" /> 5 Websites</li>
+                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-[#73e28a]" /> 20 GB Storage</li>
+                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-[#73e28a]" /> Priority Support</li>
+                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-[#73e28a]" /> SEO Optimization</li>
                   <li className="flex items-center gap-3 opacity-50"><Check className="w-4 h-4" /> Advanced Analytics</li>
                </ul>
-               <Button className="w-full bg-lime-400 text-black hover:bg-lime-500 font-bold">Purchase Now <ArrowRight className="ml-2 w-4 h-4" /></Button>
+               <Button className="w-full bg-[#73e28a] text-black hover:bg-lime-500 font-bold">Purchase Now <ArrowRight className="ml-2 w-4 h-4" /></Button>
             </Card>
 
             {/* Premium */}
-            <Card className="bg-slate-900 border-slate-800 p-8 relative group hover:border-lime-400/30 transition-colors">
+            <Card className="bg-slate-900 border-slate-800 p-8 relative group hover:border-[#73e28a]/30 transition-colors">
                <h3 className="text-2xl font-bold text-white mb-2">$59.99</h3>
                <p className="text-white font-bold mb-6">Premium Plan</p>
                <ul className="space-y-4 mb-8 text-sm text-slate-400">
-                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-lime-400" /> Unlimited Websites</li>
-                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-lime-400" /> 100 GB Storage</li>
-                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-lime-400" /> 24/7 Support</li>
-                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-lime-400" /> SEO Optimization</li>
-                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-lime-400" /> Advanced Analytics</li>
+                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-[#73e28a]" /> Unlimited Websites</li>
+                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-[#73e28a]" /> 100 GB Storage</li>
+                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-[#73e28a]" /> 24/7 Support</li>
+                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-[#73e28a]" /> SEO Optimization</li>
+                  <li className="flex items-center gap-3"><Check className="w-4 h-4 text-[#73e28a]" /> Advanced Analytics</li>
                </ul>
-               <Button variant="outline" className="w-full border-slate-700 text-white hover:bg-lime-400 hover:text-black hover:border-lime-400">Purchase Now <ArrowRight className="ml-2 w-4 h-4" /></Button>
+               <Button variant="outline" className="w-full border-slate-700 text-white hover:bg-[#73e28a] hover:text-black hover:border-[#73e28a]">Purchase Now <ArrowRight className="ml-2 w-4 h-4" /></Button>
             </Card>
          </div>
       </Section>
@@ -257,14 +257,14 @@ export default function AboutPage() {
          <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-end justify-between mb-12">
                <div>
-                  <div className="text-lime-400 text-sm font-bold uppercase tracking-wider mb-2">Our Team</div>
+                  <div className="text-[#73e28a] text-sm font-bold uppercase tracking-wider mb-2">Our Team</div>
                   <h2 className="text-4xl font-bold">Our Team <br/> Member</h2>
                </div>
                <div className="flex gap-2">
-                  <button className="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-lime-400 hover:border-lime-400 hover:text-black transition-colors">
+                  <button className="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-[#73e28a] hover:border-[#73e28a] hover:text-black transition-colors">
                      <ArrowRight className="rotate-180 w-4 h-4" />
                   </button>
-                  <button className="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-lime-400 hover:border-lime-400 hover:text-black transition-colors">
+                  <button className="w-10 h-10 rounded-full border border-slate-700 flex items-center justify-center hover:bg-[#73e28a] hover:border-[#73e28a] hover:text-black transition-colors">
                      <ArrowRight className="w-4 h-4" />
                   </button>
                </div>
@@ -282,7 +282,7 @@ export default function AboutPage() {
                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6 pt-20">
                         <h4 className="text-white font-bold text-lg">{member.name}</h4>
                         <div className="flex justify-between items-center">
-                           <p className="text-lime-400 text-sm">{member.role}</p>
+                           <p className="text-[#73e28a] text-sm">{member.role}</p>
                            <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0 duration-300">
                               <Twitter className="w-4 h-4 text-white cursor-pointer" />
                               <Linkedin className="w-4 h-4 text-white cursor-pointer" />
@@ -303,14 +303,14 @@ export default function AboutPage() {
       {/* Testimonials Section */}
       <Section className="bg-slate-900/30 py-24">
          <div className="text-center mb-16">
-            <div className="text-lime-400 text-sm font-bold uppercase tracking-wider mb-2">Testimonials</div>
+            <div className="text-[#73e28a] text-sm font-bold uppercase tracking-wider mb-2">Testimonials</div>
             <h2 className="text-3xl md:text-5xl font-bold">Best Of Our Lat's Look Clients <br/> Latest Testimonials</h2>
          </div>
 
          <div className="grid md:grid-cols-3 gap-8 container mx-auto px-4">
             {[1, 2, 3].map((_, i) => (
-               <Card key={i} className="bg-slate-900 border-slate-800 p-8 relative group hover:border-lime-400/30 transition-colors">
-                  <div className="absolute top-6 right-6 text-lime-400">
+               <Card key={i} className="bg-slate-900 border-slate-800 p-8 relative group hover:border-[#73e28a]/30 transition-colors">
+                  <div className="absolute top-6 right-6 text-[#73e28a]">
                      <Quote className="w-8 h-8 fill-current opacity-100" />
                   </div>
                   <p className="text-slate-400 mb-8 mt-4 text-sm leading-relaxed">
@@ -331,10 +331,10 @@ export default function AboutPage() {
       {/* Newsletter Section */}
       <div className="container mx-auto px-4 mb-20 mt-20">
          <div className="bg-slate-900 rounded-3xl p-12 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 border border-slate-800">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-lime-400/5 rounded-full blur-3xl"></div>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#73e28a]/5 rounded-full blur-3xl"></div>
             
             <div className="relative z-10">
-               <div className="text-lime-400 text-xs font-bold uppercase tracking-wider mb-2">Get News</div>
+               <div className="text-[#73e28a] text-xs font-bold uppercase tracking-wider mb-2">Get News</div>
                <h2 className="text-3xl font-bold text-white mb-2">Subscribe Now.</h2>
                <p className="text-slate-400 text-sm max-w-md">We will send you the latest news and updates. We don't spam.</p>
             </div>
@@ -343,9 +343,9 @@ export default function AboutPage() {
                <input 
                   type="email" 
                   placeholder="Enter email address" 
-                  className="bg-slate-950 border border-slate-800 rounded-full px-6 py-4 text-white w-full md:w-80 focus:outline-none focus:border-lime-400"
+                  className="bg-slate-950 border border-slate-800 rounded-full px-6 py-4 text-white w-full md:w-80 focus:outline-none focus:border-[#73e28a]"
                />
-               <button className="w-14 h-14 bg-lime-400 rounded-full flex items-center justify-center text-black hover:scale-105 transition-transform">
+               <button className="w-14 h-14 bg-[#73e28a] rounded-full flex items-center justify-center text-black hover:scale-105 transition-transform">
                   <ArrowUpRight />
                </button>
             </div>
