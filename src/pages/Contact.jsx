@@ -6,20 +6,17 @@ import Card from '@/components/ui-custom/Card';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { Mail, MapPin, Phone, CheckCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, ArrowUpRight, CheckCircle, ArrowRight } from 'lucide-react';
 
 export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
      name: '',
      email: '',
-     company: '',
-     budget: '',
-     timeline: '',
-     preferred_platform: 'Not sure',
-     description: ''
+     phone: '',
+     subject: '',
+     message: ''
   });
 
   const submitMutation = useMutation({
@@ -40,16 +37,16 @@ export default function ContactPage() {
 
   if (isSubmitted) {
      return (
-        <div className="min-h-screen flex items-center justify-center pt-20">
-           <Card className="text-center p-12 max-w-lg mx-auto">
-              <div className="w-16 h-16 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+        <div className="min-h-screen flex items-center justify-center bg-slate-950 pt-20">
+           <Card className="text-center p-12 max-w-lg mx-auto bg-slate-900 border-slate-800">
+              <div className="w-16 h-16 bg-lime-400/20 text-lime-400 rounded-full flex items-center justify-center mx-auto mb-6">
                  <CheckCircle className="w-8 h-8" />
               </div>
               <h2 className="text-3xl font-bold text-white mb-4">Message Sent!</h2>
               <p className="text-slate-400 mb-8">
-                 Thanks for reaching out. We'll review your project details and get back to you within 24 hours to schedule a discovery call.
+                 Thanks for reaching out. We'll get back to you shortly.
               </p>
-              <Button onClick={() => setIsSubmitted(false)} variant="outline" className="border-slate-700 text-slate-300">
+              <Button onClick={() => setIsSubmitted(false)} className="bg-lime-400 text-black hover:bg-lime-500">
                  Send another message
               </Button>
            </Card>
@@ -58,165 +55,206 @@ export default function ContactPage() {
   }
 
   return (
-    <div>
-      <Section className="pt-32 pb-16 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Start a Project</h1>
-        <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-          Tell us about your idea. We'll help you build it.
-        </p>
-      </Section>
-
-      <Section>
-        <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Contact Info */}
-          <div>
-             <h2 className="text-2xl font-bold text-white mb-6">Get in Touch</h2>
-             <p className="text-slate-400 mb-8 leading-relaxed">
-                Whether you have a complete specification or just a napkin sketch, we'd love to hear from you. Fill out the form to book a free 30-minute discovery call.
-             </p>
-             
-             <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                   <div className="bg-slate-800 p-3 rounded-lg text-indigo-400">
-                      <Mail className="w-6 h-6" />
-                   </div>
-                   <div>
-                      <h4 className="text-white font-medium">Email</h4>
-                      <p className="text-slate-400">hello@aiagency.com</p>
-                   </div>
-                </div>
-                <div className="flex items-start gap-4">
-                   <div className="bg-slate-800 p-3 rounded-lg text-indigo-400">
-                      <Phone className="w-6 h-6" />
-                   </div>
-                   <div>
-                      <h4 className="text-white font-medium">Phone</h4>
-                      <p className="text-slate-400">+1 (555) 123-4567</p>
-                   </div>
-                </div>
-                <div className="flex items-start gap-4">
-                   <div className="bg-slate-800 p-3 rounded-lg text-indigo-400">
-                      <MapPin className="w-6 h-6" />
-                   </div>
-                   <div>
-                      <h4 className="text-white font-medium">Office</h4>
-                      <p className="text-slate-400">San Francisco, CA<br/>(Remote Global Team)</p>
-                   </div>
-                </div>
-             </div>
-
-             <div className="mt-12 bg-slate-900 p-6 rounded-xl border border-slate-800">
-                <h4 className="text-white font-bold mb-2">FAQ</h4>
-                <p className="text-slate-400 text-sm mb-4">Have simple questions about pricing or process?</p>
-                <Button variant="link" className="text-indigo-400 p-0">Check our FAQ page &rarr;</Button>
-             </div>
-          </div>
-
-          {/* Form */}
-          <Card className="p-8 bg-slate-900/80">
-             <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
-                   <div className="space-y-2">
-                      <Label htmlFor="name" className="text-slate-300">Name</Label>
-                      <Input 
-                         id="name" 
-                         required 
-                         className="bg-slate-950 border-slate-800 text-white focus:border-indigo-500" 
-                         value={formData.name}
-                         onChange={(e) => handleChange('name', e.target.value)}
-                      />
-                   </div>
-                   <div className="space-y-2">
-                      <Label htmlFor="email" className="text-slate-300">Email</Label>
-                      <Input 
-                         id="email" 
-                         type="email" 
-                         required 
-                         className="bg-slate-950 border-slate-800 text-white focus:border-indigo-500" 
-                         value={formData.email}
-                         onChange={(e) => handleChange('email', e.target.value)}
-                      />
-                   </div>
-                </div>
-                
-                <div className="space-y-2">
-                   <Label htmlFor="company" className="text-slate-300">Company (Optional)</Label>
-                   <Input 
-                      id="company" 
-                      className="bg-slate-950 border-slate-800 text-white focus:border-indigo-500" 
-                      value={formData.company}
-                      onChange={(e) => handleChange('company', e.target.value)}
-                   />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                   <div className="space-y-2">
-                      <Label htmlFor="budget" className="text-slate-300">Budget Range</Label>
-                      <Select onValueChange={(val) => handleChange('budget', val)}>
-                         <SelectTrigger className="bg-slate-950 border-slate-800 text-white">
-                            <SelectValue placeholder="Select..." />
-                         </SelectTrigger>
-                         <SelectContent>
-                            <SelectItem value="<5k">Under $5k</SelectItem>
-                            <SelectItem value="5k-10k">$5k - $10k</SelectItem>
-                            <SelectItem value="10k-25k">$10k - $25k</SelectItem>
-                            <SelectItem value="25k+">$25k+</SelectItem>
-                         </SelectContent>
-                      </Select>
-                   </div>
-                   <div className="space-y-2">
-                      <Label htmlFor="timeline" className="text-slate-300">Timeline</Label>
-                      <Select onValueChange={(val) => handleChange('timeline', val)}>
-                         <SelectTrigger className="bg-slate-950 border-slate-800 text-white">
-                            <SelectValue placeholder="Select..." />
-                         </SelectTrigger>
-                         <SelectContent>
-                            <SelectItem value="asap">ASAP (1-2 weeks)</SelectItem>
-                            <SelectItem value="1month">Within 1 month</SelectItem>
-                            <SelectItem value="flexible">Flexible</SelectItem>
-                         </SelectContent>
-                      </Select>
-                   </div>
-                </div>
-
-                <div className="space-y-2">
-                   <Label htmlFor="platform" className="text-slate-300">Preferred Platform</Label>
-                   <Select onValueChange={(val) => handleChange('preferred_platform', val)} defaultValue="Not sure">
-                      <SelectTrigger className="bg-slate-950 border-slate-800 text-white">
-                         <SelectValue placeholder="Select..." />
-                      </SelectTrigger>
-                      <SelectContent>
-                         <SelectItem value="Not sure">Not sure (Recommend one)</SelectItem>
-                         <SelectItem value="Base44">Base44</SelectItem>
-                         <SelectItem value="Lovable">Lovable</SelectItem>
-                         <SelectItem value="Replit">Replit</SelectItem>
-                         <SelectItem value="Custom">Custom Code</SelectItem>
-                      </SelectContent>
-                   </Select>
-                </div>
-
-                <div className="space-y-2">
-                   <Label htmlFor="description" className="text-slate-300">Project Description</Label>
-                   <Textarea 
-                      id="description" 
-                      placeholder="Tell us what you want to build..." 
-                      className="bg-slate-950 border-slate-800 text-white min-h-[120px] focus:border-indigo-500" 
-                      value={formData.description}
-                      onChange={(e) => handleChange('description', e.target.value)}
-                   />
-                </div>
-
-                <Button 
-                   type="submit" 
-                   disabled={submitMutation.isPending} 
-                   className="w-full bg-indigo-600 hover:bg-indigo-700 text-white h-12 text-lg"
-                >
-                   {submitMutation.isPending ? 'Sending...' : 'Send Project Details'}
-                </Button>
-             </form>
-          </Card>
+    <div className="flex flex-col bg-slate-950 text-white overflow-hidden">
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-20">
+        <div className="container mx-auto px-4 relative z-10">
+           <div className="flex justify-between items-start">
+              <div>
+                 <h1 className="text-6xl font-bold mb-6">Contact</h1>
+                 <div className="inline-flex items-center gap-2 px-6 py-2 border border-lime-400/30 rounded text-sm font-medium bg-lime-400/5">
+                    <span className="text-lime-400">Home</span>
+                    <span className="text-slate-600">/</span>
+                    <span className="text-white">Contact</span>
+                 </div>
+              </div>
+              
+              {/* Abstract Graphics */}
+              <div className="hidden md:block relative">
+                 <div className="absolute -top-10 right-20 w-16 h-16 rounded-full overflow-hidden border-2 border-slate-800">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=150&auto=format&fit=crop" className="w-full h-full object-cover" alt="Team" />
+                 </div>
+                 <div className="relative">
+                    <div className="text-lime-400 animate-spin-slow mb-4 ml-20">
+                       <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+                          <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="2" strokeDasharray="10 5"/>
+                          <path d="M10 50a40 40 0 0 0 80 0" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className="opacity-50"/>
+                       </svg>
+                    </div>
+                    {/* Diagonal Lines */}
+                    <div className="flex gap-1 justify-end">
+                       {[...Array(10)].map((_, i) => (
+                          <div key={i} className="w-0.5 h-20 bg-gradient-to-b from-lime-400 to-transparent opacity-50 transform -skew-x-12"></div>
+                       ))}
+                    </div>
+                 </div>
+              </div>
+           </div>
         </div>
+        
+        {/* Background decorations */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-slate-800/20 rounded-full blur-3xl"></div>
+      </section>
+
+      {/* Map Section */}
+      <div className="w-full h-[400px] bg-slate-900 relative grayscale contrast-125 brightness-75 border-y border-slate-800">
+         <img 
+            src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074&auto=format&fit=crop" 
+            className="w-full h-full object-cover opacity-50" 
+            alt="Dark Map" 
+         />
+         {/* Map Markers Overlay */}
+         <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-4 h-4 bg-lime-400 rounded-full animate-ping absolute"></div>
+            <div className="w-4 h-4 bg-lime-400 rounded-full relative border-4 border-slate-900"></div>
+         </div>
+      </div>
+
+      {/* Contact Info Cards */}
+      <div className="container mx-auto px-4 -mt-16 relative z-20">
+         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {[
+               { id: "01", icon: Phone, text: "+55 (9900) 666 22", label: "Call Us" },
+               { id: "02", icon: Mail, text: "Info@Exand.Com", label: "Email Us" },
+               { id: "03", icon: MapPin, text: "Mirpur 12, Dhaka, BD.", label: "Location" },
+               { id: "04", icon: Clock, text: "Office Open 10AM - 17PM", label: "Working Hours" },
+            ].map((item) => (
+               <div key={item.id} className="bg-slate-950 border border-slate-800 p-8 rounded-xl text-center hover:border-lime-400 transition-colors group">
+                  <div className="flex justify-between items-start mb-4">
+                     <span className="text-xs font-bold text-slate-600 group-hover:text-lime-400 transition-colors border border-slate-800 rounded px-2 py-1">{item.id}</span>
+                  </div>
+                  <div className="w-12 h-12 mx-auto mb-4 text-lime-400 group-hover:scale-110 transition-transform">
+                     <item.icon className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-white font-bold text-lg">{item.text}</h3>
+               </div>
+            ))}
+         </div>
+      </div>
+
+      {/* Main Form Section */}
+      <Section className="py-24">
+         <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="space-y-8">
+               <div className="grid md:grid-cols-2 gap-8">
+                  <div className="space-y-3">
+                     <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Your Name*</Label>
+                     <Input 
+                        required
+                        placeholder="Enter Your Name"
+                        className="bg-slate-900/50 border-slate-800 text-white h-12 focus:border-lime-400 rounded-lg placeholder:text-slate-600"
+                        value={formData.name}
+                        onChange={(e) => handleChange('name', e.target.value)}
+                     />
+                  </div>
+                  <div className="space-y-3">
+                     <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Your Email*</Label>
+                     <Input 
+                        required
+                        type="email"
+                        placeholder="Info@Exand.com"
+                        className="bg-slate-900/50 border-slate-800 text-white h-12 focus:border-lime-400 rounded-lg placeholder:text-slate-600"
+                        value={formData.email}
+                        onChange={(e) => handleChange('email', e.target.value)}
+                     />
+                  </div>
+               </div>
+
+               <div className="grid md:grid-cols-2 gap-8">
+                  <div className="space-y-3">
+                     <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Phone</Label>
+                     <Input 
+                        placeholder="+00 000 000 00"
+                        className="bg-slate-900/50 border-slate-800 text-white h-12 focus:border-lime-400 rounded-lg placeholder:text-slate-600"
+                        value={formData.phone}
+                        onChange={(e) => handleChange('phone', e.target.value)}
+                     />
+                  </div>
+                  <div className="space-y-3">
+                     <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Subject</Label>
+                     <Input 
+                        placeholder="Enter your subject"
+                        className="bg-slate-900/50 border-slate-800 text-white h-12 focus:border-lime-400 rounded-lg placeholder:text-slate-600"
+                        value={formData.subject}
+                        onChange={(e) => handleChange('subject', e.target.value)}
+                     />
+                  </div>
+               </div>
+
+               <div className="space-y-3">
+                  <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Message</Label>
+                  <Textarea 
+                     placeholder="Write your message"
+                     className="bg-slate-900/50 border-slate-800 text-white min-h-[150px] focus:border-lime-400 rounded-lg placeholder:text-slate-600 resize-none"
+                     value={formData.message}
+                     onChange={(e) => handleChange('message', e.target.value)}
+                  />
+               </div>
+
+               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pt-4">
+                  <p className="text-slate-500 text-xs max-w-xs">
+                     * Call us 24/7 or fill out the form below to receive a free consultation.
+                  </p>
+                  <Button 
+                     type="submit"
+                     disabled={submitMutation.isPending}
+                     className="bg-lime-400 text-black hover:bg-lime-500 font-bold h-12 px-8 rounded-lg"
+                  >
+                     {submitMutation.isPending ? 'Sending...' : 'Send Request'} 
+                     <ArrowUpRight className="ml-2 w-5 h-5" />
+                  </Button>
+               </div>
+            </form>
+
+            {/* Right Side Image */}
+            <div className="relative h-full min-h-[500px] rounded-2xl overflow-hidden bg-slate-900 group">
+               <img 
+                  src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop" 
+                  alt="Contact Support" 
+                  className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500"
+               />
+               <div className="absolute bottom-10 left-10 right-10">
+                  <h2 className="text-4xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
+                     Have Any Query Feel <br/> Free Contact
+                  </h2>
+                  <div className="inline-flex items-center gap-3 bg-lime-400 px-6 py-3 rounded-full text-black font-bold shadow-lg cursor-pointer hover:scale-105 transition-transform">
+                     <Phone className="w-5 h-5" />
+                     <span>(+00)9-44578-668</span>
+                  </div>
+               </div>
+            </div>
+         </div>
       </Section>
+
+      {/* Newsletter Section */}
+      <div className="container mx-auto px-4 mb-20 border-t border-slate-900 pt-16">
+         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+             <div className="max-w-md">
+                <div className="flex items-center gap-2 mb-4 text-lime-400 font-bold text-sm uppercase tracking-wider">
+                   <CheckCircle className="w-4 h-4" /> Get In Touch
+                </div>
+                <h2 className="text-4xl font-bold text-white mb-4">Subscribe Now.</h2>
+                <p className="text-slate-500 text-sm leading-relaxed">
+                   Fusce eget accumsan urna. Id rhoncus tortor. Integer arc leo non orci fringilla suscipit.
+                </p>
+             </div>
+             
+             <div className="flex-grow w-full max-w-xl flex items-center gap-8">
+                <div className="w-full space-y-2">
+                   <Label className="text-slate-400 text-xs uppercase">Your Mail:</Label>
+                   <Input 
+                      placeholder="Info@Exand.com" 
+                      className="bg-transparent border-b border-slate-800 rounded-none px-0 h-12 focus:border-lime-400 text-white placeholder:text-slate-600 border-t-0 border-x-0"
+                   />
+                </div>
+                <button className="w-24 h-24 flex-shrink-0 bg-lime-400 rounded-full flex flex-col items-center justify-center text-black font-bold text-xs hover:scale-105 transition-transform shadow-lg shadow-lime-400/20">
+                   <ArrowUpRight className="w-6 h-6 mb-1" />
+                   <span>Subscribe</span>
+                </button>
+             </div>
+         </div>
+      </div>
     </div>
   );
 }
