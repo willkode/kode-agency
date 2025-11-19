@@ -164,7 +164,7 @@ export default function AboutPage() {
             </Button>
           </Link>
           <Link to={createPageUrl('Services')}>
-            <Button variant="outline" className="border-slate-700 text-white hover:bg-slate-800 h-14 px-10 text-lg">
+            <Button variant="outline" className="border-slate-600 bg-slate-900/50 text-white hover:bg-slate-800 hover:border-slate-500 h-14 px-10 text-lg">
               See what we build
             </Button>
           </Link>

@@ -47,7 +47,7 @@ export default function HomePage() {
                 </Button>
              </Link>
              <Link to={createPageUrl('Process')}>
-                <Button variant="outline" className="border-slate-700 text-white hover:bg-slate-800 h-14 px-8 text-lg rounded-full">
+                <Button variant="outline" className="border-slate-600 bg-slate-900/50 text-white hover:bg-slate-800 hover:border-slate-500 h-14 px-8 text-lg rounded-full">
                    See how we build 80% faster
                 </Button>
              </Link>
