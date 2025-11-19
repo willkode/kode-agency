@@ -53,7 +53,7 @@ export default function AboutPage() {
       <div className="bg-slate-950 border-b border-slate-900 py-10">
          <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-center md:justify-between items-center gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-               {['Burner', 'Creative', 'Base44', 'Smart', 'Canva', 'Count.it'].map((brand) => (
+               {['Burner', 'Creative', 'Base44', 'Kode', 'Canva', 'Count.it'].map((brand) => (
                   <span key={brand} className="text-xl md:text-2xl font-bold text-slate-400 hover:text-[#73e28a] cursor-default">{brand}</span>
                ))}
             </div>
@@ -90,7 +90,7 @@ export default function AboutPage() {
                <div className="text-[#73e28a] text-sm font-bold uppercase tracking-wider mb-2">Who We Are</div>
                <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
                   We Do Work <br />
-                  Kode Digital <br />
+                  Kode <br />
                   agency
                </h2>
 
