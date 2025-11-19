@@ -30,7 +30,7 @@ export default function Layout({ children, currentPageName }) {
       <header className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link to={createPageUrl('Home')} className="flex items-center gap-2 z-50">
-            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/691e276e2117009b68e21c5c/474e850a6_kodeagency-logo.png" alt="KodeAgency" className="h-10 w-auto" />
+            <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/691e276e2117009b68e21c5c/3e54475dc_KA-Logo.png" alt="KodeAgency" className="h-10 w-auto" />
           </Link>
 
           {/* Desktop Nav */}
@@ -103,7 +103,7 @@ export default function Layout({ children, currentPageName }) {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
             <div>
               <div className="flex items-center gap-2 mb-6">
-                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/691e276e2117009b68e21c5c/474e850a6_kodeagency-logo.png" alt="KodeAgency" className="h-8 w-auto" />
+                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/691e276e2117009b68e21c5c/3e54475dc_KA-Logo.png" alt="KodeAgency" className="h-8 w-auto" />
               </div>
               <p className="text-slate-400 text-sm leading-relaxed mb-6">
                 Accelerating software development with AI and modern platforms. We build serious apps fast.
