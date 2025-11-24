@@ -56,7 +56,7 @@ export default function PricingPage() {
               <h3 className="text-2xl font-bold text-white mb-2">MVP Sprint</h3>
               <p className="text-slate-400 text-sm mb-6">For founders validating an idea fast.</p>
               <div className="mb-6">
-                <div className="text-4xl font-bold text-white mb-1">$8k-$15k</div>
+                <div className="text-4xl font-bold text-white mb-1">From $1k</div>
                 <div className="text-slate-500 text-sm">Fixed price, 4-8 weeks</div>
               </div>
 
@@ -81,7 +81,7 @@ export default function PricingPage() {
               <h3 className="text-2xl font-bold text-white mb-2">Launch Package</h3>
               <p className="text-slate-400 text-sm mb-6">For production-ready SaaS apps.</p>
               <div className="mb-6">
-                <div className="text-4xl font-bold text-white mb-1">$20k-$50k</div>
+                <div className="text-4xl font-bold text-white mb-1">$3k-$5k</div>
                 <div className="text-slate-500 text-sm">Custom quote, 6-12 weeks</div>
               </div>
 
@@ -104,7 +104,7 @@ export default function PricingPage() {
               <h3 className="text-2xl font-bold text-white mb-2">Product Partner</h3>
               <p className="text-slate-400 text-sm mb-6">For ongoing evolution & growth.</p>
               <div className="mb-6">
-                <div className="text-4xl font-bold text-white mb-1">$5k-$15k<span className="text-xl text-slate-500 font-normal">/mo</span></div>
+                <div className="text-4xl font-bold text-white mb-1">$2k-$5k<span className="text-xl text-slate-500 font-normal">/mo</span></div>
                 <div className="text-slate-500 text-sm">Month-to-month, cancel anytime</div>
               </div>
 
