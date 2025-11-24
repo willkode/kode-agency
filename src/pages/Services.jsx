@@ -4,6 +4,9 @@ import { createPageUrl } from '@/utils';
 import { Button } from "@/components/ui/button";
 import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
+import PageHero from '@/components/ui-custom/PageHero';
+import SectionLabel from '@/components/ui-custom/SectionLabel';
+import RotatingBadge from '@/components/ui-custom/RotatingBadge';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
@@ -19,6 +22,12 @@ export default function ServicesPage() {
     { icon: Palette, title: "UI/UX Design", desc: "Beautiful, conversion-focused interfaces that users love." },
     { icon: Gauge, title: "Performance Tuning", desc: "Speed optimization, Core Web Vitals, and technical SEO fixes." },
     { icon: Rocket, title: "Launch Support", desc: "Deployment, monitoring, and 30-day warranty on all builds." },
+  ];
+
+  const features = [
+    { num: "01", title: "Creative Solution", desc: "AI-accelerated development with human refinement for quality output." },
+    { num: "02", title: "Modern Stack", desc: "Built on Base44, Lovable, React, and modern cloud infrastructure." },
+    { num: "03", title: "Fast Delivery", desc: "4-8 weeks from kickoff to production-ready deployment." },
   ];
 
   const testimonials = [
@@ -44,53 +53,29 @@ export default function ServicesPage() {
 
   return (
     <div className="bg-slate-950 text-white">
-      {/* Hero with Image */}
-      <div className="relative h-[400px] md:h-[500px] overflow-hidden">
-        <div className="absolute inset-0">
-          <img 
-            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" 
-            alt="Team collaboration" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
-        </div>
-        
-        <div className="relative z-10 container mx-auto px-4 h-full flex items-center">
-          <div>
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">Services</h1>
-            <div className="flex items-center gap-2 text-sm">
-              <Link to={createPageUrl('Home')} className="text-[#73e28a] hover:underline">Home</Link>
-              <span className="text-slate-500">/</span>
-              <span className="text-slate-300">Services</span>
-            </div>
-          </div>
-        </div>
-        
-        {/* Decorative circles */}
-        <div className="absolute top-10 right-10 hidden md:block">
-          <div className="w-24 h-24 rounded-full border-2 border-dashed border-[#73e28a]/30 animate-spin-slow"></div>
-        </div>
-        <div className="absolute top-20 right-32 hidden md:block">
-          <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-white/20">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="" className="w-full h-full object-cover" />
-          </div>
-        </div>
-      </div>
+      {/* Hero */}
+      <PageHero 
+        title="Services" 
+        backgroundImage="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1600&auto=format&fit=crop"
+      />
 
       {/* Services Grid */}
-      <Section className="py-20 relative overflow-hidden">
+      <Section className="py-24 relative overflow-hidden">
         <GridBackground />
         <FloatingPixels count={20} />
         
         <div className="relative z-10">
-          <div className="text-center mb-16">
-            <div className="inline-block px-4 py-2 bg-[#73e28a]/10 border border-[#73e28a]/30 rounded-full text-[#73e28a] text-sm font-semibold mb-6">
-              What We Offer
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16">
+            <div>
+              <SectionLabel text="Best Of Service" />
+              <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+                All Professional Solutions<br />
+                & Services
+              </h2>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-              All Professional Solutions &<br />Services
-            </h2>
+            <div className="mt-6 lg:mt-0">
+              <RotatingBadge size={100} />
+            </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -107,22 +92,22 @@ export default function ServicesPage() {
         </div>
       </Section>
 
-      {/* We Do Work Smart Section */}
-      <Section className="py-20 bg-slate-900/50 relative overflow-hidden">
+      {/* Why Choose Us Section */}
+      <Section className="py-24 bg-slate-900/50 relative overflow-hidden">
         <GlowingOrb position="top-right" size="400px" opacity={0.1} />
         
-        <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+        <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
           <div className="relative">
             <div className="relative z-10">
               <img 
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=500&auto=format&fit=crop" 
+                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&auto=format&fit=crop" 
                 alt="Team working" 
-                className="rounded-2xl w-full max-w-md"
+                className="rounded-2xl w-full max-w-lg"
               />
               {/* Floating accent image */}
-              <div className="absolute -bottom-8 -right-8 w-32 h-32 rounded-xl overflow-hidden border-4 border-slate-950 shadow-xl">
+              <div className="absolute -bottom-8 -right-8 w-40 h-40 rounded-xl overflow-hidden border-4 border-slate-950 shadow-xl">
                 <img 
-                  src="https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=200&auto=format&fit=crop" 
+                  src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=200&auto=format&fit=crop" 
                   alt="Discussion" 
                   className="w-full h-full object-cover"
                 />
@@ -137,30 +122,27 @@ export default function ServicesPage() {
           </div>
           
           <div>
-            <div className="inline-block px-4 py-2 bg-[#73e28a]/10 border border-[#73e28a]/30 rounded-full text-[#73e28a] text-sm font-semibold mb-6">
-              Why Choose Us
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              We Work Smart<br />
-              <span className="text-[#73e28a]">AI-Native Agency</span>
+            <SectionLabel text="Why Choose Us" />
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+              Make Your Service<br />
+              <span className="text-[#73e28a]">Stand Out</span>
             </h2>
-            <p className="text-slate-300 leading-relaxed mb-6">
-              30 years of marketing experience combined with cutting-edge AI development tools. We don't just build apps — we build products designed to grow your business.
+            <p className="text-slate-300 leading-relaxed mb-8">
+              For each project, we take a bespoke approach to developing solutions, often with the common goal of shipping fast without sacrificing quality.
             </p>
-            <ul className="space-y-4 mb-8">
-              <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-[#73e28a] flex-shrink-0 mt-0.5" />
-                <span className="text-slate-300">80% faster development with AI-accelerated workflows</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-[#73e28a] flex-shrink-0 mt-0.5" />
-                <span className="text-slate-300">Conversion-first design backed by 30 years of marketing</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-[#73e28a] flex-shrink-0 mt-0.5" />
-                <span className="text-slate-300">Fixed pricing with no hourly billing surprises</span>
-              </li>
-            </ul>
+
+            <div className="space-y-6 mb-8">
+              {features.map((feature, i) => (
+                <div key={i} className="flex gap-6 p-5 bg-slate-800/50 border border-slate-700 rounded-xl hover:border-[#73e28a]/30 transition-colors">
+                  <div className="text-[#73e28a] font-bold text-xl">{feature.num}</div>
+                  <div>
+                    <h4 className="text-white font-bold mb-1">{feature.title}</h4>
+                    <p className="text-slate-400 text-sm">{feature.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
             <div className="flex items-center gap-6">
               <Link to={createPageUrl('Contact')}>
                 <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-12 px-6">
@@ -179,16 +161,14 @@ export default function ServicesPage() {
       </Section>
 
       {/* Testimonials */}
-      <Section className="py-20 relative overflow-hidden">
+      <Section className="py-24 relative overflow-hidden">
         <GridBackground />
         <FloatingPixels count={15} />
         
         <div className="relative z-10">
           <div className="text-center mb-16">
-            <div className="inline-block px-4 py-2 bg-[#73e28a]/10 border border-[#73e28a]/30 rounded-full text-[#73e28a] text-sm font-semibold mb-6">
-              Client Testimonials
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
+            <SectionLabel text="Client Testimonials" />
+            <h2 className="text-4xl md:text-5xl font-bold text-white">
               What Our Clients Say
             </h2>
           </div>
@@ -220,11 +200,11 @@ export default function ServicesPage() {
       </Section>
 
       {/* CTA */}
-      <Section className="py-20 relative overflow-hidden">
+      <Section className="py-24 bg-slate-900/30 relative overflow-hidden">
         <GlowingOrb position="center" size="500px" opacity={0.1} />
         
         <div className="relative z-10 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Ready to build something amazing?
           </h2>
           <p className="text-slate-300 text-lg mb-10 max-w-2xl mx-auto">

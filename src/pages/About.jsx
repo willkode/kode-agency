@@ -4,149 +4,166 @@ import { createPageUrl } from '@/utils';
 import { Button } from "@/components/ui/button";
 import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
+import PageHero from '@/components/ui-custom/PageHero';
+import SectionLabel from '@/components/ui-custom/SectionLabel';
+import RotatingBadge from '@/components/ui-custom/RotatingBadge';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
-import { ArrowRight, Sparkles, Target, Zap } from 'lucide-react';
+import { ArrowRight, Play, CheckCircle, Sparkles, Target, Zap, Award, Users, Clock } from 'lucide-react';
 
 export default function AboutPage() {
+  const stats = [
+    { value: "30+", label: "Years Experience" },
+    { value: "80%", label: "Faster Development" },
+    { value: "70%", label: "Cost Savings" },
+    { value: "4-8", label: "Weeks to MVP" },
+  ];
+
+  const values = [
+    { icon: Sparkles, title: "AI-First Approach", desc: "We leverage cutting-edge AI tools to accelerate every phase of development without sacrificing quality." },
+    { icon: Target, title: "Conversion Focus", desc: "Every screen is designed to convert — sign-ups, demos, purchases. Not just pretty pixels." },
+    { icon: Zap, title: "Speed & Clarity", desc: "Fixed pricing, clear timelines, no hourly billing surprises. Ship fast and iterate." },
+  ];
+
   return (
     <div className="bg-slate-950 text-white">
       {/* Hero */}
-      <Section className="pt-32 pb-16 text-center relative overflow-hidden">
-        <GridBackground />
-        <FloatingPixels count={25} />
-        <GlowingOrb position="top-right" size="450px" opacity={0.15} />
-        <GlowingOrb position="bottom-left" size="350px" color="#5dbb72" opacity={0.1} />
-        
-        <div className="relative z-10">
-          <div className="inline-block px-4 py-2 bg-[#73e28a]/10 border border-[#73e28a]/30 rounded-full text-[#73e28a] text-sm font-semibold mb-6">
-            About Kode Agency
-          </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-            The marketer who<br />
-            <span className="text-[#73e28a]">learned to code</span>
-          </h1>
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-            30 years of marketing + full-stack development + AI = a product studio that thinks like a CMO and builds like a dev.
-          </p>
-        </div>
-      </Section>
+      <PageHero 
+        title="About" 
+        backgroundImage="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1600&auto=format&fit=crop"
+      />
 
-      {/* Will Kode Story */}
-      <Section className="py-20">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-16 items-center mb-20">
-            <div className="relative">
-              <div className="aspect-[4/5] rounded-2xl overflow-hidden border-4 border-[#73e28a]/20">
+      {/* Video Banner */}
+      <div className="relative h-[500px] overflow-hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1600&auto=format&fit=crop" 
+          alt="Team collaboration" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-slate-950/40"></div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-24 h-24 rounded-full bg-[#73e28a] flex items-center justify-center cursor-pointer hover:scale-110 transition-transform shadow-lg shadow-[#73e28a]/30">
+            <Play className="w-10 h-10 text-black ml-1" fill="black" />
+          </div>
+        </div>
+      </div>
+
+      {/* About Content */}
+      <Section className="py-24 relative overflow-hidden">
+        <GlowingOrb position="top-right" size="400px" opacity={0.1} />
+        
+        <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
+          <div className="relative">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-4">
+                <img 
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=500&fit=crop" 
+                  alt="Team member" 
+                  className="rounded-2xl w-full h-64 object-cover"
+                />
+                <img 
+                  src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=300&fit=crop" 
+                  alt="Work" 
+                  className="rounded-2xl w-full h-48 object-cover"
+                />
+              </div>
+              <div className="pt-12">
                 <img 
                   src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/691e276e2117009b68e21c5c/bb73b7d1e_image.png" 
                   alt="Will Kode" 
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                  className="rounded-2xl w-full h-80 object-cover"
                 />
               </div>
-              <div className="absolute -bottom-6 -right-6 bg-[#73e28a] text-black px-8 py-4 rounded-lg font-bold shadow-lg text-xl">
-                30+ Years
-              </div>
             </div>
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Hi, I'm Will Kode
-              </h2>
-              <div className="space-y-4 text-slate-400 leading-relaxed">
-                <p>
-                  I've spent three decades in the trenches of marketing, SEO, and conversion optimization — helping brands across restoration, mobility, home services, and SaaS grow their revenue.
-                </p>
-                <p>
-                  But I kept hitting the same wall: <strong className="text-white">traditional dev was too slow, too expensive, and often misaligned with growth.</strong>
-                </p>
-                <p>
-                  So I went back to full-stack development. Then, over the past year, I dove deep into AI-native product building — using tools like Base44, Lovable, and custom AI agents to accelerate every part of the process.
-                </p>
-                <p>
-                  Now I build the software myself, combining my marketing brain with modern development workflows to ship apps that don't just work — <strong className="text-[#73e28a]">they convert and grow</strong>.
-                </p>
+            {/* Green accent */}
+            <div className="absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2">
+              <div className="w-16 h-16 bg-[#73e28a] rounded-tr-3xl rounded-bl-3xl flex items-center justify-center">
+                <CheckCircle className="w-8 h-8 text-black" />
               </div>
             </div>
           </div>
 
-          {/* What I Learned */}
-          <div className="bg-slate-900 rounded-2xl p-12 border border-slate-800 mb-20">
-            <h3 className="text-2xl font-bold text-white mb-8 text-center">What I learned along the way</h3>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-[#73e28a]/10 flex items-center justify-center text-[#73e28a] mx-auto mb-4">
-                  <Sparkles className="w-8 h-8" />
-                </div>
-                <h4 className="text-lg font-bold text-white mb-3">Traditional dev is broken</h4>
-                <p className="text-slate-400 text-sm">
-                  6-month timelines, hourly billing, and endless revisions are a terrible model for founders who need to move fast.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-violet-500/10 flex items-center justify-center text-violet-400 mx-auto mb-4">
-                  <Zap className="w-8 h-8" />
-                </div>
-                <h4 className="text-lg font-bold text-white mb-3">AI changes the economics</h4>
-                <p className="text-slate-400 text-sm">
-                  AI tools like Base44 and Lovable let us generate scaffolds, test ideas, and iterate at a pace that was impossible before.
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 mx-auto mb-4">
-                  <Target className="w-8 h-8" />
-                </div>
-                <h4 className="text-lg font-bold text-white mb-3">Strategy matters more than code</h4>
-                <p className="text-slate-400 text-sm">
-                  Most dev shops don't understand funnels, CAC, LTV, or SEO. I do. Every build starts with strategy, not just features.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Why Kode Agency Exists */}
-          <div className="text-center mb-12">
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Why Kode Agency exists
-            </h3>
-            <p className="text-slate-400 text-lg max-w-3xl mx-auto leading-relaxed">
-              To give founders, agencies, and teams <strong className="text-white">"a product studio that thinks like a CMO and builds like a dev."</strong> Fast, focused, and built to convert — not just to exist.
+          <div>
+            <SectionLabel text="About Company" />
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+              The Marketer Who<br />
+              <span className="text-[#73e28a]">Learned to Code</span>
+            </h2>
+            <p className="text-slate-300 leading-relaxed mb-6">
+              I'm Will Kode. I've spent three decades in the trenches of marketing, SEO, and conversion optimization — helping brands grow their revenue.
             </p>
+            <p className="text-slate-400 leading-relaxed mb-8">
+              But I kept hitting the same wall: traditional dev was too slow, too expensive, and often misaligned with growth. So I went back to full-stack development. Then I dove deep into AI-native product building — using tools like Base44, Lovable, and custom AI agents to accelerate every part of the process.
+            </p>
+
+            <div className="flex flex-wrap gap-3 mb-8">
+              {['Marketing Strategy', 'Full-Stack Dev', 'AI Integration', 'CRO Optimization', 'SaaS Building'].map((skill, i) => (
+                <span key={i} className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-full text-sm text-slate-300 hover:border-[#73e28a]/50 hover:text-[#73e28a] transition-colors cursor-default">
+                  {skill}
+                </span>
+              ))}
+            </div>
+
+            <Link to={createPageUrl('Contact')}>
+              <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-12 px-6">
+                Work With Me <ArrowRight className="ml-2 w-4 h-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </Section>
+
+      {/* Stats */}
+      <Section className="py-16 bg-slate-900/50 border-y border-slate-800">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {stats.map((stat, i) => (
+            <div key={i} className="text-center">
+              <div className="text-4xl md:text-5xl font-bold text-[#73e28a] mb-2">{stat.value}</div>
+              <div className="text-slate-400">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Values */}
+      <Section className="py-24 relative overflow-hidden">
+        <GridBackground />
+        <FloatingPixels count={20} />
+        
+        <div className="relative z-10">
+          <div className="text-center mb-16">
+            <SectionLabel text="Our Values" />
+            <h2 className="text-4xl md:text-5xl font-bold text-white">What Sets Us Apart</h2>
           </div>
 
-          <Card className="p-12 bg-gradient-to-br from-slate-900 to-slate-800 border-[#73e28a]/30">
-            <div className="grid md:grid-cols-3 gap-8 text-center">
-              <div>
-                <div className="text-4xl font-bold text-[#73e28a] mb-2">80%</div>
-                <p className="text-slate-300 font-medium">Faster builds</p>
-                <p className="text-slate-500 text-sm mt-2">Using AI + modern platforms</p>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-[#73e28a] mb-2">70%</div>
-                <p className="text-slate-300 font-medium">Lower costs</p>
-                <p className="text-slate-500 text-sm mt-2">Compared to traditional dev</p>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-[#73e28a] mb-2">4–8</div>
-                <p className="text-slate-300 font-medium">Weeks to MVP</p>
-                <p className="text-slate-500 text-sm mt-2">From idea to production</p>
-              </div>
-            </div>
-          </Card>
+          <div className="grid md:grid-cols-3 gap-8">
+            {values.map((value, i) => (
+              <Card key={i} className="p-8 text-center group hover:border-[#73e28a]/50 bg-slate-900/80">
+                <div className="w-16 h-16 mx-auto mb-6 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-[#73e28a] group-hover:bg-[#73e28a] group-hover:text-black transition-all duration-300">
+                  <value.icon className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3">{value.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{value.desc}</p>
+              </Card>
+            ))}
+          </div>
         </div>
       </Section>
 
       {/* Philosophy */}
-      <Section className="py-20 bg-slate-900/30 relative overflow-hidden">
-        <GridBackground />
-        <FloatingPixels count={15} />
+      <Section className="py-24 bg-slate-900/30 relative overflow-hidden">
+        <GlowingOrb position="center" size="500px" opacity={0.1} />
+        
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            My philosophy
-          </h3>
+          <SectionLabel text="My Philosophy" />
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
+            How I Think About Building
+          </h2>
+          
           <div className="space-y-6 text-slate-300 text-lg leading-relaxed">
             <p>
-              Software should be built <strong className="text-white">fast, lean, and conversion-first</strong>. 
+              Software should be built <strong className="text-white">fast, lean, and conversion-first</strong>.
             </p>
             <p>
               AI tools are power tools — they help us move faster, but they don't replace human judgment, UX thinking, or strategic clarity.
@@ -154,7 +171,7 @@ export default function AboutPage() {
             <p>
               Every project should have a clear goal: sign-ups, demos, revenue, automation. If we can't measure it, we shouldn't build it.
             </p>
-            <p className="text-[#73e28a] font-semibold text-xl">
+            <p className="text-[#73e28a] font-semibold text-xl mt-8">
               "Ship fast. Measure everything. Optimize relentlessly."
             </p>
           </div>
@@ -162,29 +179,29 @@ export default function AboutPage() {
       </Section>
 
       {/* CTA */}
-      <Section className="py-20 text-center relative overflow-hidden">
+      <Section className="py-24 relative overflow-hidden">
         <GridBackground />
-        <GlowingOrb position="center" size="500px" opacity={0.1} />
+        <FloatingPixels count={15} />
         
-        <div className="relative z-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+        <div className="relative z-10 text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Want to work together?
           </h2>
           <p className="text-slate-300 text-lg mb-10 max-w-2xl mx-auto">
             Whether you have an idea or an existing app, let's talk about how we can move faster.
           </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link to={createPageUrl('Contact')}>
-            <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg">
-              Start a project <ArrowRight className="ml-2" />
-            </Button>
-          </Link>
-          <Link to={createPageUrl('Services')}>
-            <Button variant="outline" className="border-slate-600 bg-slate-900/50 text-white hover:bg-slate-800 hover:border-slate-500 h-14 px-10 text-lg">
-              See what we build
-            </Button>
-          </Link>
-        </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to={createPageUrl('Contact')}>
+              <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg">
+                Start a project <ArrowRight className="ml-2" />
+              </Button>
+            </Link>
+            <Link to={createPageUrl('Services')}>
+              <Button variant="outline" className="border-slate-600 bg-slate-900/50 text-white hover:bg-slate-800 hover:border-slate-500 h-14 px-10 text-lg">
+                See what we build
+              </Button>
+            </Link>
+          </div>
         </div>
       </Section>
     </div>

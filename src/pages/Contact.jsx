@@ -3,11 +3,16 @@ import { base44 } from '@/api/base44Client';
 import { useMutation } from '@tanstack/react-query';
 import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
+import PageHero from '@/components/ui-custom/PageHero';
+import SectionLabel from '@/components/ui-custom/SectionLabel';
+import GridBackground from '@/components/ui-custom/GridBackground';
+import FloatingPixels from '@/components/ui-custom/FloatingPixels';
+import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Phone, Mail, MapPin, Clock, ArrowUpRight, CheckCircle, ArrowRight } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, ArrowUpRight, CheckCircle } from 'lucide-react';
 
 export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -35,6 +40,13 @@ export default function ContactPage() {
      submitMutation.mutate(formData);
   };
 
+  const contactInfo = [
+    { id: "01", icon: Phone, text: "+1 (555) 123-4567", label: "Call Us" },
+    { id: "02", icon: Mail, text: "hello@kodeagency.com", label: "Email Us" },
+    { id: "03", icon: MapPin, text: "Remote-First Agency", label: "Location" },
+    { id: "04", icon: Clock, text: "Mon - Fri, 9AM - 6PM", label: "Working Hours" },
+  ];
+
   if (isSubmitted) {
      return (
         <div className="min-h-screen flex items-center justify-center bg-slate-950 pt-20">
@@ -56,52 +68,18 @@ export default function ContactPage() {
 
   return (
     <div className="flex flex-col bg-slate-950 text-white overflow-hidden">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20">
-        <div className="container mx-auto px-4 relative z-10">
-           <div className="flex justify-between items-start">
-              <div>
-                 <h1 className="text-6xl font-bold mb-6">Contact</h1>
-                 <div className="inline-flex items-center gap-2 px-6 py-2 border border-[#73e28a]/30 rounded text-sm font-medium bg-[#73e28a]/5">
-                    <span className="text-[#73e28a]">Home</span>
-                    <span className="text-slate-600">/</span>
-                    <span className="text-white">Contact</span>
-                 </div>
-              </div>
-              
-              {/* Abstract Graphics */}
-              <div className="hidden md:block relative">
-                 <div className="absolute -top-10 right-20 w-16 h-16 rounded-full overflow-hidden border-2 border-slate-800">
-                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=150&auto=format&fit=crop" className="w-full h-full object-cover" alt="Team" />
-                 </div>
-                 <div className="relative">
-                    <div className="text-[#73e28a] animate-spin-slow mb-4 ml-20">
-                       <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
-                          <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="2" strokeDasharray="10 5"/>
-                          <path d="M10 50a40 40 0 0 0 80 0" stroke="currentColor" strokeWidth="4" strokeLinecap="round" className="opacity-50"/>
-                       </svg>
-                    </div>
-                    {/* Diagonal Lines */}
-                    <div className="flex gap-1 justify-end">
-                       {[...Array(10)].map((_, i) => (
-                          <div key={i} className="w-0.5 h-20 bg-gradient-to-b from-[#73e28a] to-transparent opacity-50 transform -skew-x-12"></div>
-                       ))}
-                    </div>
-                 </div>
-              </div>
-           </div>
-        </div>
-        
-        {/* Background decorations */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-slate-800/20 rounded-full blur-3xl"></div>
-      </section>
+      {/* Hero */}
+      <PageHero 
+        title="Contact" 
+        backgroundImage="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&auto=format&fit=crop"
+      />
 
       {/* Map Section */}
-      <div className="w-full h-[400px] bg-slate-900 relative grayscale contrast-125 brightness-75 border-y border-slate-800">
+      <div className="w-full h-[400px] bg-slate-900 relative border-y border-slate-800">
          <img 
             src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074&auto=format&fit=crop" 
-            className="w-full h-full object-cover opacity-50" 
-            alt="Dark Map" 
+            className="w-full h-full object-cover opacity-30 grayscale" 
+            alt="Map" 
          />
          {/* Map Markers Overlay */}
          <div className="absolute inset-0 flex items-center justify-center">
@@ -112,115 +90,123 @@ export default function ContactPage() {
 
       {/* Contact Info Cards */}
       <div className="container mx-auto px-4 -mt-16 relative z-20">
-         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {[
-               { id: "01", icon: Phone, text: "+55 (9900) 666 22", label: "Call Us" },
-               { id: "02", icon: Mail, text: "Info@KodeAgency.com", label: "Email Us" },
-               { id: "03", icon: MapPin, text: "Mirpur 12, Dhaka, BD.", label: "Location" },
-               { id: "04", icon: Clock, text: "Office Open 10AM - 17PM", label: "Working Hours" },
-            ].map((item) => (
-               <div key={item.id} className="bg-slate-950 border border-slate-800 p-8 rounded-xl text-center hover:border-[#73e28a] transition-colors group">
+         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {contactInfo.map((item) => (
+               <Card key={item.id} className="bg-slate-900/95 backdrop-blur-sm border-slate-800 p-8 text-center hover:border-[#73e28a]/50 transition-colors group">
                   <div className="flex justify-between items-start mb-4">
-                     <span className="text-xs font-bold text-slate-600 group-hover:text-[#73e28a] transition-colors border border-slate-800 rounded px-2 py-1">{item.id}</span>
+                     <span className="text-xs font-bold text-slate-600 group-hover:text-[#73e28a] transition-colors border border-slate-700 rounded px-2 py-1">{item.id}</span>
                   </div>
-                  <div className="w-12 h-12 mx-auto mb-4 text-[#73e28a] group-hover:scale-110 transition-transform">
-                     <item.icon className="w-8 h-8" />
+                  <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-[#73e28a] group-hover:bg-[#73e28a] group-hover:text-black transition-all">
+                     <item.icon className="w-5 h-5" />
                   </div>
                   <h3 className="text-white font-bold text-lg">{item.text}</h3>
-               </div>
+                  <p className="text-slate-500 text-sm mt-1">{item.label}</p>
+               </Card>
             ))}
          </div>
       </div>
 
       {/* Main Form Section */}
-      <Section className="py-24">
-         <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <Section className="py-24 relative overflow-hidden">
+         <GridBackground />
+         <FloatingPixels count={15} />
+         
+         <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-start">
             {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-8">
-               <div className="grid md:grid-cols-2 gap-8">
-                  <div className="space-y-3">
-                     <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Your Name*</Label>
-                     <Input 
-                        required
-                        placeholder="Enter Your Name"
-                        className="bg-slate-900/50 border-slate-800 text-white h-12 focus:border-[#73e28a] rounded-lg placeholder:text-slate-600"
-                        value={formData.name}
-                        onChange={(e) => handleChange('name', e.target.value)}
-                     />
+            <div>
+               <SectionLabel text="Get In Touch" />
+               <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
+                  Let's Start Your<br />
+                  <span className="text-[#73e28a]">Project Today</span>
+               </h2>
+               
+               <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                     <div className="space-y-2">
+                        <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Your Name*</Label>
+                        <Input 
+                           required
+                           placeholder="John Doe"
+                           className="bg-slate-900/50 border-slate-700 text-white h-12 focus:border-[#73e28a] rounded-lg placeholder:text-slate-600"
+                           value={formData.name}
+                           onChange={(e) => handleChange('name', e.target.value)}
+                        />
+                     </div>
+                     <div className="space-y-2">
+                        <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Your Email*</Label>
+                        <Input 
+                           required
+                           type="email"
+                           placeholder="john@company.com"
+                           className="bg-slate-900/50 border-slate-700 text-white h-12 focus:border-[#73e28a] rounded-lg placeholder:text-slate-600"
+                           value={formData.email}
+                           onChange={(e) => handleChange('email', e.target.value)}
+                        />
+                     </div>
                   </div>
-                  <div className="space-y-3">
-                     <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Your Email*</Label>
-                     <Input 
-                        required
-                        type="email"
-                        placeholder="Info@KodeAgency.com"
-                        className="bg-slate-900/50 border-slate-800 text-white h-12 focus:border-[#73e28a] rounded-lg placeholder:text-slate-600"
-                        value={formData.email}
-                        onChange={(e) => handleChange('email', e.target.value)}
-                     />
-                  </div>
-               </div>
 
-               <div className="grid md:grid-cols-2 gap-8">
-                  <div className="space-y-3">
-                     <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Phone</Label>
-                     <Input 
-                        placeholder="+00 000 000 00"
-                        className="bg-slate-900/50 border-slate-800 text-white h-12 focus:border-[#73e28a] rounded-lg placeholder:text-slate-600"
-                        value={formData.phone}
-                        onChange={(e) => handleChange('phone', e.target.value)}
+                  <div className="grid md:grid-cols-2 gap-6">
+                     <div className="space-y-2">
+                        <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Phone</Label>
+                        <Input 
+                           placeholder="+1 (555) 123-4567"
+                           className="bg-slate-900/50 border-slate-700 text-white h-12 focus:border-[#73e28a] rounded-lg placeholder:text-slate-600"
+                           value={formData.phone}
+                           onChange={(e) => handleChange('phone', e.target.value)}
+                        />
+                     </div>
+                     <div className="space-y-2">
+                        <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Subject</Label>
+                        <Input 
+                           placeholder="Project inquiry"
+                           className="bg-slate-900/50 border-slate-700 text-white h-12 focus:border-[#73e28a] rounded-lg placeholder:text-slate-600"
+                           value={formData.subject}
+                           onChange={(e) => handleChange('subject', e.target.value)}
+                        />
+                     </div>
+                  </div>
+
+                  <div className="space-y-2">
+                     <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Message</Label>
+                     <Textarea 
+                        placeholder="Tell us about your project..."
+                        className="bg-slate-900/50 border-slate-700 text-white min-h-[150px] focus:border-[#73e28a] rounded-lg placeholder:text-slate-600 resize-none"
+                        value={formData.message}
+                        onChange={(e) => handleChange('message', e.target.value)}
                      />
                   </div>
-                  <div className="space-y-3">
-                     <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Subject</Label>
-                     <Input 
-                        placeholder="Enter your subject"
-                        className="bg-slate-900/50 border-slate-800 text-white h-12 focus:border-[#73e28a] rounded-lg placeholder:text-slate-600"
-                        value={formData.subject}
-                        onChange={(e) => handleChange('subject', e.target.value)}
-                     />
+
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pt-4">
+                     <p className="text-slate-500 text-sm max-w-xs">
+                        * We typically respond within 24 hours
+                     </p>
+                     <Button 
+                        type="submit"
+                        disabled={submitMutation.isPending}
+                        className="bg-[#73e28a] text-black hover:bg-[#5dbb72] font-bold h-12 px-8 rounded-lg"
+                     >
+                        {submitMutation.isPending ? 'Sending...' : 'Send Request'} 
+                        <ArrowUpRight className="ml-2 w-5 h-5" />
+                     </Button>
                   </div>
-               </div>
-
-               <div className="space-y-3">
-                  <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Message</Label>
-                  <Textarea 
-                     placeholder="Write your message"
-                     className="bg-slate-900/50 border-slate-800 text-white min-h-[150px] focus:border-[#73e28a] rounded-lg placeholder:text-slate-600 resize-none"
-                     value={formData.message}
-                     onChange={(e) => handleChange('message', e.target.value)}
-                  />
-               </div>
-
-               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pt-4">
-                  <p className="text-slate-500 text-xs max-w-xs">
-                     * Call us 24/7 or fill out the form below to receive a free consultation.
-                  </p>
-                  <Button 
-                     type="submit"
-                     disabled={submitMutation.isPending}
-                     className="bg-[#73e28a] text-black hover:bg-[#5dbb72] font-bold h-12 px-8 rounded-lg"
-                  >
-                     {submitMutation.isPending ? 'Sending...' : 'Send Request'} 
-                     <ArrowUpRight className="ml-2 w-5 h-5" />
-                  </Button>
-               </div>
-            </form>
+               </form>
+            </div>
 
             {/* Right Side Image */}
-            <div className="relative h-full min-h-[500px] rounded-2xl overflow-hidden bg-slate-900 group">
+            <div className="relative h-full min-h-[600px] rounded-2xl overflow-hidden bg-slate-900 group">
                <img 
-                  src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop" 
+                  src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=800&auto=format&fit=crop" 
                   alt="Contact Support" 
                   className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500"
                />
+               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
                <div className="absolute bottom-10 left-10 right-10">
                   <h2 className="text-4xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
-                     Have Any Query Feel <br/> Free Contact
+                     Have Any Query?<br/> Feel Free to Contact
                   </h2>
                   <div className="inline-flex items-center gap-3 bg-[#73e28a] px-6 py-3 rounded-full text-black font-bold shadow-lg cursor-pointer hover:scale-105 transition-transform">
                      <Phone className="w-5 h-5" />
-                     <span>(+00)9-44578-668</span>
+                     <span>+1 (555) 123-4567</span>
                   </div>
                </div>
             </div>
@@ -228,33 +214,31 @@ export default function ContactPage() {
       </Section>
 
       {/* Newsletter Section */}
-      <div className="container mx-auto px-4 mb-20 border-t border-slate-900 pt-16">
+      <Section className="py-16 border-t border-slate-800">
          <div className="flex flex-col md:flex-row items-center justify-between gap-12">
              <div className="max-w-md">
-                <div className="flex items-center gap-2 mb-4 text-[#73e28a] font-bold text-sm uppercase tracking-wider">
-                   <CheckCircle className="w-4 h-4" /> Get In Touch
-                </div>
+                <SectionLabel text="Get In Touch" />
                 <h2 className="text-4xl font-bold text-white mb-4">Subscribe Now.</h2>
                 <p className="text-slate-500 text-sm leading-relaxed">
-                   Fusce eget accumsan urna. Id rhoncus tortor. Integer arc leo non orci fringilla suscipit.
+                   Stay updated with our latest projects and insights.
                 </p>
              </div>
              
              <div className="flex-grow w-full max-w-xl flex items-center gap-8">
                 <div className="w-full space-y-2">
-                   <Label className="text-slate-400 text-xs uppercase">Your Mail:</Label>
+                   <Label className="text-slate-400 text-xs uppercase">Your Email:</Label>
                    <Input 
-                      placeholder="Info@KodeAgency.com" 
-                      className="bg-transparent border-b border-slate-800 rounded-none px-0 h-12 focus:border-[#73e28a] text-white placeholder:text-slate-600 border-t-0 border-x-0"
+                      placeholder="your@email.com" 
+                      className="bg-transparent border-b border-slate-700 rounded-none px-0 h-12 focus:border-[#73e28a] text-white placeholder:text-slate-600 border-t-0 border-x-0"
                    />
                 </div>
-                <button className="w-24 h-24 flex-shrink-0 bg-[#73e28a] rounded-full flex flex-col items-center justify-center text-black font-bold text-xs hover:scale-105 transition-transform shadow-lg shadow-[#73e28a]/20">
+                <button className="w-20 h-20 flex-shrink-0 bg-[#73e28a] rounded-full flex flex-col items-center justify-center text-black font-bold text-xs hover:scale-105 transition-transform shadow-lg shadow-[#73e28a]/20">
                    <ArrowUpRight className="w-6 h-6 mb-1" />
                    <span>Subscribe</span>
                 </button>
              </div>
          </div>
-      </div>
+      </Section>
     </div>
   );
 }
