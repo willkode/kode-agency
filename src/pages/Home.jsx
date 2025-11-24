@@ -193,23 +193,23 @@ export default function HomePage() {
       </section>
 
       {/* Client Logos Marquee */}
-      <Section className="py-12 border-b border-slate-800 bg-slate-900/50 -mt-20">
+      <Section className="py-12 border-y border-slate-800 bg-slate-900/50">
         <div className="flex items-center justify-center gap-12 md:gap-16 flex-wrap">
           {[
-            { name: 'Base44', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
-            { name: 'Lovable', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+            { name: 'Base44', logo: 'https://cdn.prod.website-files.com/66be3e4f7d01ec1ff24ed1ca/66d28e9f23c9298cc79e7ad6_b44.svg' },
+            { name: 'Lovable', logo: 'https://lovable.dev/lovable-logo.svg' },
             { name: 'React', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
-            { name: 'Tailwind', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg' },
-            { name: 'Vercel', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg' },
-            { name: 'Supabase', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
+            { name: 'Tailwind', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg' },
+            { name: 'Vercel', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg' },
+            { name: 'Supabase', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg' },
           ].map((item, i) => (
-            <div key={i} className="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
+            <div key={i} className="flex items-center gap-3 opacity-60 hover:opacity-100 transition-opacity">
               <img 
                 src={item.logo} 
                 alt={item.name} 
-                className="h-6 w-6 grayscale brightness-150"
+                className="h-8 w-auto grayscale brightness-200 contrast-0"
               />
-              <span className="text-slate-500 font-medium text-sm">{item.name}</span>
+              <span className="text-slate-400 font-medium text-sm hidden md:block">{item.name}</span>
             </div>
           ))}
         </div>
