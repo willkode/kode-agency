@@ -193,11 +193,11 @@ export default function HomePage() {
       </section>
 
       {/* Client Logos Marquee */}
-      <Section className="py-12 border-y border-slate-800 bg-slate-900/50">
+      <Section className="py-12 border-b border-slate-800 bg-slate-900/50 -mt-20">
         <div className="flex items-center justify-center gap-12 md:gap-16 flex-wrap">
           {[
-            { name: 'Base44', logo: 'https://cdn.prod.website-files.com/66be3e4f7d01ec1ff24ed1ca/66d28e9f23c9298cc79e7ad6_b44.svg' },
-            { name: 'Lovable', logo: 'https://lovable.dev/lovable-logo.svg' },
+            { name: 'Base44', logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/691e276e2117009b68e21c5c/3e54475dc_KA-Logo.png' },
+            { name: 'Lovable', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
             { name: 'React', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
             { name: 'Tailwind', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg' },
             { name: 'Vercel', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg' },
