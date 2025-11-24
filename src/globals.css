@@ -85,6 +85,41 @@
   animation: bounce-slow 3s ease-in-out infinite;
 }
 
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.15;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.25;
+    transform: scale(1.1);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s linear infinite;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(115, 226, 138, 0.1) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+}
+
 /* Custom gradients */
 .bg-gradient-radial {
   background: radial-gradient(var(--tw-gradient-stops));
