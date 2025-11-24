@@ -7,7 +7,7 @@ import GridBackground from '@/components/ui-custom/GridBackground';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Users, FileText, ExternalLink, Mail, Phone, MapPin, DollarSign, Calendar } from 'lucide-react';
+import { Users, FileText, ExternalLink, Mail, Phone, MapPin, DollarSign, Calendar, Download } from 'lucide-react';
 
 export default function AdminPage() {
   const [selectedApp, setSelectedApp] = useState(null);
@@ -178,9 +178,9 @@ export default function AdminPage() {
                       </a>
                     )}
                     {selectedApp.resume_url && (
-                      <a href={selectedApp.resume_url} target="_blank" rel="noopener noreferrer">
+                      <a href={selectedApp.resume_url} target="_blank" rel="noopener noreferrer" download>
                         <Button variant="outline" className="border-slate-700 text-slate-300 hover:text-white">
-                          <FileText className="w-4 h-4 mr-2" /> Resume
+                          <Download className="w-4 h-4 mr-2" /> Download Resume
                         </Button>
                       </a>
                     )}
