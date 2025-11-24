@@ -37,7 +37,7 @@ export default function BlogPage() {
         ) : (
           <div className="grid md:grid-cols-3 gap-8">
             {posts.map((post) => (
-              <div key={post.id} className="group cursor-pointer">
+              <Link key={post.id} to={createPageUrl('BlogPost') + `?id=${post.id}`} className="group cursor-pointer block">
                 {/* Image Container */}
                 <div className="relative h-56 rounded-xl overflow-hidden mb-4">
                   <img 
@@ -75,7 +75,7 @@ export default function BlogPage() {
                 <p className="text-slate-400 text-sm leading-relaxed line-clamp-3">
                   {post.summary || "Donec porta massa id dictum varius at tincidunt massa. Mauris dis mauris eu sed ellt. Dolor Pra interdum facilis..."}
                 </p>
-              </div>
+              </Link>
             ))}
             
             {posts.length === 0 && (
