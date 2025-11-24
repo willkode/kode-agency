@@ -13,34 +13,34 @@ import { ArrowRight, ArrowUpRight, ArrowLeft, Zap, Target, Sparkles, Layers, Cod
 
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  
+
   const heroSlides = [
-    { 
-      headline: "We Build Apps 80% Faster With AI",
-      subhead: "Beautiful, production-ready software. Built on platforms like Base44, Lovable, Replit, and full custom stacks.",
-      bullets: ["Production-Ready MVPs in Weeks", "Conversion-First Design", "Native, Web, and Mobile Apps"],
-    },
-    { 
-      headline: "Your Product. Built Faster With AI.",
-      subhead: "Turn your idea into a polished, market-ready product without waiting months.",
-      bullets: ["AI-Accelerated Development", "Modern UI/UX + Conversion Focus", "MVPs, SaaS Platforms, and Custom Tools"],
-    },
-    { 
-      headline: "Launch a Complete MVP in 1–4 Weeks",
-      subhead: "We combine design, development, and AI automation to build at incredible speed.",
-      bullets: ["Fixed Pricing. Clear Scope.", "Cross-Platform Apps & SaaS Systems", "Built With Base44, Lovable, Replit & Custom Code"],
-    },
-    { 
-      headline: "A Modern Agency for Modern Products",
-      subhead: "AI-native workflows let us deliver higher quality software with less friction.",
-      bullets: ["Clean Architecture & Scalable Code", "Pixel-Perfect UI with Conversion Insights", "AI Integration for Any App"],
-    },
-    { 
-      headline: "Get Custom Software Without the Slowdowns",
-      subhead: "We handle everything—design, development, AI systems, and integrations.",
-      bullets: ["Native, Web, and Mobile Development", "Enterprise-Ready Features", "Reliable Support After Launch"],
-    },
-  ];
+  {
+    headline: "We Build Apps 80% Faster With AI",
+    subhead: "Beautiful, production-ready software. Built on platforms like Base44, Lovable, Replit, and full custom stacks.",
+    bullets: ["Production-Ready MVPs in Weeks", "Conversion-First Design", "Native, Web, and Mobile Apps"]
+  },
+  {
+    headline: "Your Product. Built Faster With AI.",
+    subhead: "Turn your idea into a polished, market-ready product without waiting months.",
+    bullets: ["AI-Accelerated Development", "Modern UI/UX + Conversion Focus", "MVPs, SaaS Platforms, and Custom Tools"]
+  },
+  {
+    headline: "Launch a Complete MVP in 1–4 Weeks",
+    subhead: "We combine design, development, and AI automation to build at incredible speed.",
+    bullets: ["Fixed Pricing. Clear Scope.", "Cross-Platform Apps & SaaS Systems", "Built With Base44, Lovable, Replit & Custom Code"]
+  },
+  {
+    headline: "A Modern Agency for Modern Products",
+    subhead: "AI-native workflows let us deliver higher quality software with less friction.",
+    bullets: ["Clean Architecture & Scalable Code", "Pixel-Perfect UI with Conversion Insights", "AI Integration for Any App"]
+  },
+  {
+    headline: "Get Custom Software Without the Slowdowns",
+    subhead: "We handle everything—design, development, AI systems, and integrations.",
+    bullets: ["Native, Web, and Mobile Development", "Enterprise-Ready Features", "Reliable Support After Launch"]
+  }];
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -50,15 +50,15 @@ export default function HomePage() {
   }, []);
 
   const services = [
-    { icon: Zap, title: "AI MVP Sprints", desc: "From zero to live MVP in 4-8 weeks using AI-accelerated workflows." },
-    { icon: Layers, title: "SaaS Development", desc: "Production-ready apps with auth, billing, and admin dashboards." },
-    { icon: TrendingUp, title: "CRO Sites", desc: "Landing pages designed to convert visitors into customers." },
-    { icon: Code, title: "Custom Integrations", desc: "Connect your app to any API, CRM, or third-party service." },
-  ];
+  { icon: Zap, title: "AI MVP Sprints", desc: "From zero to live MVP in 4-8 weeks using AI-accelerated workflows." },
+  { icon: Layers, title: "SaaS Development", desc: "Production-ready apps with auth, billing, and admin dashboards." },
+  { icon: TrendingUp, title: "CRO Sites", desc: "Landing pages designed to convert visitors into customers." },
+  { icon: Code, title: "Custom Integrations", desc: "Connect your app to any API, CRM, or third-party service." }];
+
 
   const clients = [
-    "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=150&h=50&fit=crop&q=80",
-  ];
+  "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=150&h=50&fit=crop&q=80"];
+
 
   return (
     <div className="bg-slate-950 text-white overflow-hidden">
@@ -85,20 +85,20 @@ export default function HomePage() {
 
         {/* Diagonal Lines */}
         <div className="absolute top-48 right-10 hidden lg:flex gap-1">
-          {[...Array(15)].map((_, i) => (
-            <div 
-              key={i} 
-              className="w-0.5 bg-gradient-to-b from-[#73e28a] to-transparent transform -skew-x-12"
-              style={{ height: `${100 + i * 8}px`, opacity: 0.7 - i * 0.04 }}
-            ></div>
-          ))}
+          {[...Array(15)].map((_, i) =>
+          <div
+            key={i}
+            className="w-0.5 bg-gradient-to-b from-[#73e28a] to-transparent transform -skew-x-12"
+            style={{ height: `${100 + i * 8}px`, opacity: 0.7 - i * 0.04 }}>
+          </div>
+          )}
         </div>
 
         {/* Hero Content */}
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mb-16">
             <div className="min-h-[320px] md:min-h-[280px]">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 transition-all duration-500">
+              <h1 className="text-white mr-40 mb-6 ml-1 text-4xl font-bold leading-tight md:text-5xl lg:text-6xl transition-all duration-500">
                 {heroSlides[currentSlide].headline}
               </h1>
               
@@ -107,12 +107,12 @@ export default function HomePage() {
               </p>
               
               <div className="flex flex-col gap-3 mb-10">
-                {heroSlides[currentSlide].bullets.map((bullet, i) => (
-                  <div key={i} className="flex items-center gap-3 text-slate-200">
+                {heroSlides[currentSlide].bullets.map((bullet, i) =>
+                <div key={i} className="flex items-center gap-3 text-slate-200">
                     <ArrowRight className="w-4 h-4 text-[#73e28a] flex-shrink-0" />
                     <span>{bullet}</span>
                   </div>
-                ))}
+                )}
               </div>
             </div>
 
@@ -127,16 +127,16 @@ export default function HomePage() {
 
             {/* Slider Arrows */}
             <div className="flex items-center gap-4">
-              <button 
+              <button
                 onClick={() => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)}
-                className="w-12 h-12 rounded-full border border-slate-600 flex items-center justify-center text-slate-400 hover:border-[#73e28a] hover:text-[#73e28a] transition-colors"
-              >
+                className="w-12 h-12 rounded-full border border-slate-600 flex items-center justify-center text-slate-400 hover:border-[#73e28a] hover:text-[#73e28a] transition-colors">
+
                 <ChevronLeft className="w-5 h-5" />
               </button>
-              <button 
+              <button
                 onClick={() => setCurrentSlide((prev) => (prev + 1) % heroSlides.length)}
-                className="w-12 h-12 rounded-full border border-slate-600 flex items-center justify-center text-slate-400 hover:border-[#73e28a] hover:text-[#73e28a] transition-colors"
-              >
+                className="w-12 h-12 rounded-full border border-slate-600 flex items-center justify-center text-slate-400 hover:border-[#73e28a] hover:text-[#73e28a] transition-colors">
+
                 <ChevronRight className="w-5 h-5" />
               </button>
               <span className="text-slate-500 text-sm ml-2">0{currentSlide + 1} / 05</span>
@@ -148,18 +148,20 @@ export default function HomePage() {
         <div className="relative h-[300px] md:h-[400px] mt-8">
           <div className="grid grid-cols-2 h-full">
             <div className="relative overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&auto=format&fit=crop" 
-                alt="Team working" 
-                className="w-full h-full object-cover"
-              />
+              <img
+                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&auto=format&fit=crop"
+                alt="Team working"
+                className="w-full h-full object-cover" />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
             </div>
             <div className="relative overflow-hidden">
-              <img 
-                src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&auto=format&fit=crop" 
-                alt="Discussion" 
-                className="w-full h-full object-cover grayscale"
-              />
+              <img
+                src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&auto=format&fit=crop"
+                alt="Discussion"
+                className="w-full h-full object-cover" />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
               {/* Green corner accent */}
               <div className="absolute top-0 left-0 w-16 h-16 border-l-4 border-t-4 border-[#73e28a]"></div>
             </div>
@@ -170,13 +172,13 @@ export default function HomePage() {
         <div className="absolute left-8 top-1/3 hidden lg:flex flex-col items-center gap-4">
           <span className="text-slate-500 text-sm">0{currentSlide + 1}</span>
           <div className="flex flex-col gap-2">
-            {heroSlides.map((_, i) => (
-              <button 
-                key={i} 
-                onClick={() => setCurrentSlide(i)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${i === currentSlide ? 'bg-[#73e28a] scale-125' : 'border border-slate-600 hover:border-[#73e28a]'}`}
-              />
-            ))}
+            {heroSlides.map((_, i) =>
+            <button
+              key={i}
+              onClick={() => setCurrentSlide(i)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${i === currentSlide ? 'bg-[#73e28a] scale-125' : 'border border-slate-600 hover:border-[#73e28a]'}`} />
+
+            )}
           </div>
           <span className="text-slate-500 text-sm">05</span>
         </div>
@@ -194,20 +196,10 @@ export default function HomePage() {
 
       {/* Client Logos Marquee */}
       <Section className="py-12 border-y border-slate-800 bg-slate-900/50">
-        <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16">
-          {[
-            { name: 'Base44', logo: 'https://www.base44.com/favicon.ico' },
-            { name: 'Lovable', logo: 'https://lovable.dev/favicon.ico' },
-            { name: 'Replit', logo: 'https://replit.com/public/icons/favicon-196.png' },
-            { name: 'Bolt.New', logo: 'https://bolt.new/favicon.ico' },
-            { name: 'Cursor', logo: 'https://www.cursor.com/favicon.ico' },
-            { name: 'Vercel', logo: 'https://vercel.com/favicon.ico' },
-          ].map((item, i) => (
-            <div key={i} className="flex items-center gap-3 opacity-60 hover:opacity-100 transition-opacity">
-              <img src={item.logo} alt={item.name} className="w-6 h-6 grayscale" />
-              <span className="text-slate-400 font-bold text-lg tracking-wider">{item.name}</span>
-            </div>
-          ))}
+        <div className="flex items-center justify-center gap-16 opacity-60">
+          {['Base44', 'Lovable', 'React', 'Tailwind', 'Vercel', 'Supabase'].map((name, i) =>
+          <div key={i} className="text-slate-400 font-bold text-xl tracking-wider">{name}</div>
+          )}
         </div>
       </Section>
 
@@ -219,23 +211,23 @@ export default function HomePage() {
           <div className="relative">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-4">
-                <img 
-                  src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&h=500&fit=crop" 
-                  alt="Team" 
-                  className="rounded-2xl w-full h-64 object-cover"
-                />
-                <img 
-                  src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=300&fit=crop" 
-                  alt="Work" 
-                  className="rounded-2xl w-full h-48 object-cover"
-                />
+                <img
+                  src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&h=500&fit=crop"
+                  alt="Team"
+                  className="rounded-2xl w-full h-64 object-cover" />
+
+                <img
+                  src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=300&fit=crop"
+                  alt="Work"
+                  className="rounded-2xl w-full h-48 object-cover" />
+
               </div>
               <div className="pt-12">
-                <img 
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=600&fit=crop" 
-                  alt="Collaboration" 
-                  className="rounded-2xl w-full h-80 object-cover"
-                />
+                <img
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=600&fit=crop"
+                  alt="Collaboration"
+                  className="rounded-2xl w-full h-80 object-cover" />
+
               </div>
             </div>
             {/* Play button overlay */}
@@ -260,11 +252,11 @@ export default function HomePage() {
             </p>
 
             <div className="flex flex-wrap gap-3 mb-8">
-              {['UX/UI Design', 'AI Integration', 'SaaS Development', 'CRO Optimization', 'Custom APIs', 'Rapid MVPs'].map((skill, i) => (
-                <span key={i} className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-full text-sm text-slate-300 hover:border-[#73e28a]/50 hover:text-[#73e28a] transition-colors cursor-default">
+              {['UX/UI Design', 'AI Integration', 'SaaS Development', 'CRO Optimization', 'Custom APIs', 'Rapid MVPs'].map((skill, i) =>
+              <span key={i} className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-full text-sm text-slate-300 hover:border-[#73e28a]/50 hover:text-[#73e28a] transition-colors cursor-default">
                   {skill}
                 </span>
-              ))}
+              )}
             </div>
           </div>
         </div>
@@ -290,15 +282,15 @@ export default function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map((service, i) => (
-              <Card key={i} className="p-8 text-center group hover:border-[#73e28a]/50 bg-slate-900/80">
+            {services.map((service, i) =>
+            <Card key={i} className="p-8 text-center group hover:border-[#73e28a]/50 bg-slate-900/80">
                 <div className="w-16 h-16 mx-auto mb-6 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-[#73e28a] group-hover:bg-[#73e28a] group-hover:text-black transition-all duration-300">
                   <service.icon className="w-7 h-7" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-3">{service.title}</h3>
                 <p className="text-slate-400 text-sm leading-relaxed">{service.desc}</p>
               </Card>
-            ))}
+            )}
           </div>
         </div>
       </Section>
@@ -320,27 +312,27 @@ export default function HomePage() {
 
             <div className="space-y-6">
               {[
-                { num: "01", title: "AI-Accelerated", desc: "80% faster development using modern AI tools and platforms" },
-                { num: "02", title: "Conversion-First", desc: "30 years of marketing experience in every build" },
-                { num: "03", title: "Fixed Pricing", desc: "No hourly surprises, clear timelines and deliverables" },
-              ].map((item, i) => (
-                <div key={i} className="flex gap-6 p-6 bg-slate-900/50 border border-slate-800 rounded-xl hover:border-[#73e28a]/30 transition-colors">
+              { num: "01", title: "AI-Accelerated", desc: "80% faster development using modern AI tools and platforms" },
+              { num: "02", title: "Conversion-First", desc: "30 years of marketing experience in every build" },
+              { num: "03", title: "Fixed Pricing", desc: "No hourly surprises, clear timelines and deliverables" }].
+              map((item, i) =>
+              <div key={i} className="flex gap-6 p-6 bg-slate-900/50 border border-slate-800 rounded-xl hover:border-[#73e28a]/30 transition-colors">
                   <div className="text-[#73e28a] font-bold text-xl">{item.num}</div>
                   <div>
                     <h4 className="text-white font-bold mb-2">{item.title}</h4>
                     <p className="text-slate-400 text-sm">{item.desc}</p>
                   </div>
                 </div>
-              ))}
+              )}
             </div>
           </div>
 
           <div className="relative">
-            <img 
-              src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&h=700&fit=crop" 
-              alt="Team working" 
-              className="rounded-2xl w-full"
-            />
+            <img
+              src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&h=700&fit=crop"
+              alt="Team working"
+              className="rounded-2xl w-full" />
+
             <div className="absolute -bottom-6 -left-6 bg-[#73e28a] text-black p-6 rounded-xl">
               <div className="text-4xl font-bold">30+</div>
               <div className="text-sm font-medium">Years Experience</div>
@@ -361,20 +353,20 @@ export default function HomePage() {
 
         <div className="relative z-10 flex flex-wrap justify-center gap-8">
           {[
-            { num: "01", title: "Discover", desc: "Map goals and requirements" },
-            { num: "02", title: "Scope", desc: "Define features and timeline" },
-            { num: "03", title: "Sprint", desc: "Build working MVP" },
-            { num: "04", title: "Launch", desc: "Deploy and measure" },
-            { num: "05", title: "Grow", desc: "Ongoing partnership" },
-          ].map((step, i) => (
-            <div key={i} className="text-center group">
+          { num: "01", title: "Discover", desc: "Map goals and requirements" },
+          { num: "02", title: "Scope", desc: "Define features and timeline" },
+          { num: "03", title: "Sprint", desc: "Build working MVP" },
+          { num: "04", title: "Launch", desc: "Deploy and measure" },
+          { num: "05", title: "Grow", desc: "Ongoing partnership" }].
+          map((step, i) =>
+          <div key={i} className="text-center group">
               <div className="w-20 h-20 mx-auto mb-4 rounded-full border-2 border-[#73e28a] flex items-center justify-center text-[#73e28a] font-bold text-xl group-hover:bg-[#73e28a] group-hover:text-black transition-all">
                 {step.num}
               </div>
               <h4 className="text-white font-bold mb-2">{step.title}</h4>
               <p className="text-slate-400 text-sm max-w-[140px]">{step.desc}</p>
             </div>
-          ))}
+          )}
         </div>
 
         <div className="text-center mt-12 relative z-10">
@@ -425,17 +417,17 @@ export default function HomePage() {
             <h3 className="text-3xl font-bold text-white">Subscribe Now.</h3>
           </div>
           <div className="flex items-center gap-4 w-full max-w-md">
-            <input 
-              type="email" 
-              placeholder="Your email address" 
-              className="flex-1 bg-transparent border-b border-slate-700 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#73e28a]"
-            />
+            <input
+              type="email"
+              placeholder="Your email address"
+              className="flex-1 bg-transparent border-b border-slate-700 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#73e28a]" />
+
             <button className="w-16 h-16 rounded-full bg-[#73e28a] flex items-center justify-center text-black hover:scale-105 transition-transform">
               <ArrowUpRight className="w-6 h-6" />
             </button>
           </div>
         </div>
       </Section>
-    </div>
-  );
+    </div>);
+
 }
