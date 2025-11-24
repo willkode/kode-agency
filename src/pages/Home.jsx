@@ -153,15 +153,13 @@ export default function HomePage() {
                 alt="Team working" 
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
             </div>
             <div className="relative overflow-hidden">
               <img 
                 src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&auto=format&fit=crop" 
                 alt="Discussion" 
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover grayscale"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
               {/* Green corner accent */}
               <div className="absolute top-0 left-0 w-16 h-16 border-l-4 border-t-4 border-[#73e28a]"></div>
             </div>
@@ -196,9 +194,19 @@ export default function HomePage() {
 
       {/* Client Logos Marquee */}
       <Section className="py-12 border-y border-slate-800 bg-slate-900/50">
-        <div className="flex items-center justify-center gap-16 opacity-60">
-          {['Base44', 'Lovable', 'React', 'Tailwind', 'Vercel', 'Supabase'].map((name, i) => (
-            <div key={i} className="text-slate-400 font-bold text-xl tracking-wider">{name}</div>
+        <div className="flex flex-wrap items-center justify-center gap-10 md:gap-16">
+          {[
+            { name: 'Base44', logo: 'https://www.base44.com/favicon.ico' },
+            { name: 'Lovable', logo: 'https://lovable.dev/favicon.ico' },
+            { name: 'Replit', logo: 'https://replit.com/public/icons/favicon-196.png' },
+            { name: 'Bolt.New', logo: 'https://bolt.new/favicon.ico' },
+            { name: 'Cursor', logo: 'https://www.cursor.com/favicon.ico' },
+            { name: 'Vercel', logo: 'https://vercel.com/favicon.ico' },
+          ].map((item, i) => (
+            <div key={i} className="flex items-center gap-3 opacity-60 hover:opacity-100 transition-opacity">
+              <img src={item.logo} alt={item.name} className="w-6 h-6 grayscale" />
+              <span className="text-slate-400 font-bold text-lg tracking-wider">{item.name}</span>
+            </div>
           ))}
         </div>
       </Section>
