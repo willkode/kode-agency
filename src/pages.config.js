@@ -10,6 +10,7 @@ import Contact from './pages/Contact';
 import FAQ from './pages/FAQ';
 import Legal from './pages/Legal';
 import BlogPost from './pages/BlogPost';
+import Apply from './pages/Apply';
 import __Layout from './Layout.jsx';
 
 
@@ -26,6 +27,7 @@ export const PAGES = {
     "FAQ": FAQ,
     "Legal": Legal,
     "BlogPost": BlogPost,
+    "Apply": Apply,
 }
 
 export const pagesConfig = {
