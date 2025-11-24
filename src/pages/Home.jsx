@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,23 @@ import SectionLabel from '@/components/ui-custom/SectionLabel';
 import { ArrowRight, ArrowUpRight, Zap, Target, Sparkles, Layers, Code, TrendingUp, CheckCircle, Play } from 'lucide-react';
 
 export default function HomePage() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  
+  const heroSlides = [
+    { title: "AI-Powered Development", text: "We use cutting-edge AI tools to build apps 80% faster than traditional agencies." },
+    { title: "30+ Years Experience", text: "Three decades of marketing and development expertise in every project we deliver." },
+    { title: "From Idea to Launch", text: "Our proven 5-step process takes you from concept to production in 4-8 weeks." },
+    { title: "Conversion-First Design", text: "Every screen is designed to convert — sign-ups, demos, and revenue growth." },
+    { title: "Fixed Pricing, No Surprises", text: "Clear timelines, transparent budgets, and no hourly billing drama." },
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   const services = [
     { icon: Zap, title: "AI MVP Sprints", desc: "From zero to live MVP in 4-8 weeks using AI-accelerated workflows." },
     { icon: Layers, title: "SaaS Development", desc: "Production-ready apps with auth, billing, and admin dashboards." },
@@ -112,20 +129,34 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Slide indicators */}
+        {/* Slide indicators with text */}
         <div className="absolute left-8 top-1/3 hidden lg:flex flex-col items-center gap-4">
-          <span className="text-slate-500 text-sm">01</span>
+          <span className="text-slate-500 text-sm">0{currentSlide + 1}</span>
           <div className="flex flex-col gap-2">
-            {[1,2,3,4,5].map((_, i) => (
-              <div key={i} className={`w-2 h-2 rounded-full ${i === 0 ? 'bg-[#73e28a]' : 'border border-slate-600'}`}></div>
+            {heroSlides.map((_, i) => (
+              <button 
+                key={i} 
+                onClick={() => setCurrentSlide(i)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${i === currentSlide ? 'bg-[#73e28a] scale-125' : 'border border-slate-600 hover:border-[#73e28a]'}`}
+              />
             ))}
           </div>
           <span className="text-slate-500 text-sm">05</span>
         </div>
 
-        {/* Side text */}
+        {/* Side rotating text */}
         <div className="absolute left-4 top-1/3 -rotate-90 origin-left hidden xl:block">
-          <span className="text-slate-600 text-xs tracking-[0.3em] uppercase">Our Vision Creative Web Agency</span>
+          <span className="text-slate-600 text-xs tracking-[0.3em] uppercase transition-all duration-500">
+            {heroSlides[currentSlide].title}
+          </span>
+        </div>
+
+        {/* Slider text content */}
+        <div className="absolute right-8 top-1/3 hidden lg:block max-w-xs text-right">
+          <div className="transition-all duration-500">
+            <h3 className="text-[#73e28a] font-bold text-lg mb-2">{heroSlides[currentSlide].title}</h3>
+            <p className="text-slate-400 text-sm leading-relaxed">{heroSlides[currentSlide].text}</p>
+          </div>
         </div>
       </section>
 
