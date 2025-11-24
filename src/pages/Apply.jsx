@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 import { CheckCircle, Upload, Loader2 } from 'lucide-react';
 
 export default function ApplyPage() {
@@ -27,7 +27,7 @@ export default function ApplyPage() {
     linkedin_url: '',
     resume_url: '',
     hourly_rate: '',
-    availability: '',
+
     message: ''
   });
 
@@ -160,29 +160,14 @@ export default function ApplyPage() {
                 />
               </div>
 
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Hourly Rate</Label>
-                  <Input 
-                    placeholder="$50/hr"
-                    className="bg-slate-800/50 border-slate-700 text-white h-12 focus:border-[#73e28a] rounded-lg placeholder:text-slate-600"
-                    value={formData.hourly_rate}
-                    onChange={(e) => handleChange('hourly_rate', e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Availability</Label>
-                  <Select value={formData.availability} onValueChange={(value) => handleChange('availability', value)}>
-                    <SelectTrigger className="bg-slate-800/50 border-slate-700 text-white h-12 focus:border-[#73e28a] rounded-lg">
-                      <SelectValue placeholder="Select availability" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Full-time">Full-time</SelectItem>
-                      <SelectItem value="Part-time">Part-time</SelectItem>
-                      <SelectItem value="Project-based">Project-based</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+              <div className="space-y-2">
+                <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Hourly Rate</Label>
+                <Input 
+                  placeholder="$50/hr"
+                  className="bg-slate-800/50 border-slate-700 text-white h-12 focus:border-[#73e28a] rounded-lg placeholder:text-slate-600"
+                  value={formData.hourly_rate}
+                  onChange={(e) => handleChange('hourly_rate', e.target.value)}
+                />
               </div>
 
               {/* Portfolio */}
