@@ -6,7 +6,7 @@ import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
 import PageHero from '@/components/ui-custom/PageHero';
 import SectionLabel from '@/components/ui-custom/SectionLabel';
-import RotatingBadge from '@/components/ui-custom/RotatingBadge';
+
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
@@ -73,9 +73,7 @@ export default function ServicesPage() {
                 & Services
               </h2>
             </div>
-            <div className="mt-6 lg:mt-0">
-              <RotatingBadge size={100} />
-            </div>
+
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

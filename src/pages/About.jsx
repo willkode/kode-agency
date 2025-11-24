@@ -6,7 +6,7 @@ import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
 import PageHero from '@/components/ui-custom/PageHero';
 import SectionLabel from '@/components/ui-custom/SectionLabel';
-import RotatingBadge from '@/components/ui-custom/RotatingBadge';
+
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
@@ -58,8 +58,8 @@ export default function AboutPage() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-4">
                 <img 
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=500&fit=crop" 
-                  alt="Team member" 
+                  src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&h=500&fit=crop" 
+                  alt="Team collaboration" 
                   className="rounded-2xl w-full h-64 object-cover"
                 />
                 <img 

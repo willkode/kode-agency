@@ -7,7 +7,7 @@ import Card from '@/components/ui-custom/Card';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
-import RotatingBadge from '@/components/ui-custom/RotatingBadge';
+
 import SectionLabel from '@/components/ui-custom/SectionLabel';
 import { ArrowRight, ArrowUpRight, ArrowLeft, Zap, Target, Sparkles, Layers, Code, TrendingUp, CheckCircle, Play, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -273,9 +273,7 @@ export default function HomePage() {
                 Solutions & Services
               </h2>
             </div>
-            <div className="mt-6 lg:mt-0">
-              <RotatingBadge size={100} />
-            </div>
+
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
