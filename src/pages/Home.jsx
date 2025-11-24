@@ -169,14 +169,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Client Logos Marquee */}
-      <Section className="py-12 border-y border-slate-800 bg-slate-900/50">
-        <div className="flex items-center justify-center gap-16 opacity-60">
-          {['Base44', 'Lovable', 'React', 'Tailwind', 'Vercel', 'Supabase'].map((name, i) =>
-          <div key={i} className="text-slate-400 font-bold text-xl tracking-wider">{name}</div>
-          )}
-        </div>
-      </Section>
+
 
       {/* About Section */}
       <Section className="py-24 relative overflow-hidden">
