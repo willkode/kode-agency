@@ -141,29 +141,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Bottom Images */}
-        <div className="relative h-[300px] md:h-[400px] mt-8">
-          <div className="grid grid-cols-2 h-full">
-            <div className="relative overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&auto=format&fit=crop"
-                alt="Team working"
-                className="w-full h-full object-cover" />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
-            </div>
-            <div className="relative overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&auto=format&fit=crop"
-                alt="Discussion"
-                className="w-full h-full object-cover" />
-
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
-              {/* Green corner accent */}
-              <div className="absolute top-0 left-0 w-16 h-16 border-l-4 border-t-4 border-[#73e28a]"></div>
-            </div>
-          </div>
-        </div>
 
         {/* Slide indicators with text */}
         <div className="absolute left-8 top-1/3 hidden lg:flex flex-col items-center gap-4">
