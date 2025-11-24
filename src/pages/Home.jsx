@@ -26,7 +26,7 @@ export default function HomePage() {
   return (
     <div className="bg-slate-950 text-white overflow-hidden">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center">
+      <section className="relative pt-32 pb-20">
         {/* Background Elements */}
         <div className="absolute inset-0">
           <GridBackground />
@@ -58,9 +58,9 @@ export default function HomePage() {
         </div>
 
         {/* Hero Content */}
-        <div className="container mx-auto px-4 relative z-10 pt-32">
-          <div className="max-w-4xl">
-            <div className="flex items-center gap-4 mb-8">
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mb-16">
+            <div className="flex items-center gap-4 mb-4">
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-none">
                 Creative
               </h1>
@@ -72,10 +72,10 @@ export default function HomePage() {
                 />
               </div>
             </div>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-none mb-4">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-none mb-2">
               Development
             </h1>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-slate-700 leading-none mb-12">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-slate-700 leading-none mb-10">
               Agency.
             </h1>
 
@@ -89,7 +89,7 @@ export default function HomePage() {
         </div>
 
         {/* Bottom Images */}
-        <div className="absolute bottom-0 left-0 right-0 h-[300px] md:h-[400px]">
+        <div className="relative h-[300px] md:h-[400px] mt-8">
           <div className="grid grid-cols-2 h-full">
             <div className="relative overflow-hidden">
               <img 
@@ -113,7 +113,7 @@ export default function HomePage() {
         </div>
 
         {/* Slide indicators */}
-        <div className="absolute left-8 top-1/2 transform -translate-y-1/2 hidden lg:flex flex-col items-center gap-4">
+        <div className="absolute left-8 top-1/3 hidden lg:flex flex-col items-center gap-4">
           <span className="text-slate-500 text-sm">01</span>
           <div className="flex flex-col gap-2">
             {[1,2,3,4,5].map((_, i) => (
@@ -124,7 +124,7 @@ export default function HomePage() {
         </div>
 
         {/* Side text */}
-        <div className="absolute left-4 top-1/2 transform -translate-y-1/2 -rotate-90 origin-left hidden xl:block">
+        <div className="absolute left-4 top-1/3 -rotate-90 origin-left hidden xl:block">
           <span className="text-slate-600 text-xs tracking-[0.3em] uppercase">Our Vision Creative Web Agency</span>
         </div>
       </section>
