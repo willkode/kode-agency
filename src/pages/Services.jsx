@@ -4,23 +4,33 @@ import { createPageUrl } from '@/utils';
 import { Button } from "@/components/ui/button";
 import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
+import GridBackground from '@/components/ui-custom/GridBackground';
+import FloatingPixels from '@/components/ui-custom/FloatingPixels';
+import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 import { Check, Zap, RefreshCw, TrendingUp, Gauge, ArrowRight } from 'lucide-react';
 
 export default function ServicesPage() {
   return (
     <div className="bg-slate-950 text-white">
       {/* Hero */}
-      <Section className="pt-32 pb-16 text-center">
-        <div className="inline-block px-4 py-2 bg-[#73e28a]/10 border border-[#73e28a]/30 rounded-full text-[#73e28a] text-sm font-semibold mb-6">
-          Services
+      <Section className="pt-32 pb-16 text-center relative overflow-hidden">
+        <GridBackground />
+        <FloatingPixels count={25} />
+        <GlowingOrb position="top-right" size="400px" opacity={0.15} />
+        <GlowingOrb position="bottom-left" size="300px" color="#5dbb72" opacity={0.1} />
+        
+        <div className="relative z-10">
+          <div className="inline-block px-4 py-2 bg-[#73e28a]/10 border border-[#73e28a]/30 rounded-full text-[#73e28a] text-sm font-semibold mb-6">
+            Services
+          </div>
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+            We do a small number of things<br />
+            <span className="text-[#73e28a]">extremely well</span>
+          </h1>
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+            Kode Agency is a focused studio, not a 100-service agency. Every service is built around speed, conversion, and ROI.
+          </p>
         </div>
-        <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-          We do a small number of things<br />
-          <span className="text-[#73e28a]">extremely well</span>
-        </h1>
-        <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-          Kode Agency is a focused studio, not a 100-service agency. Every service is built around speed, conversion, and ROI.
-        </p>
       </Section>
 
       {/* Service 1: AI MVP Sprints */}
@@ -288,18 +298,23 @@ export default function ServicesPage() {
       </Section>
 
       {/* CTA */}
-      <Section className="py-20 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-          Which service is right for you?
-        </h2>
-        <p className="text-slate-400 text-lg mb-10 max-w-2xl mx-auto">
-          Not sure? Book a quick call and we'll help you figure out the best path forward.
-        </p>
-        <Link to={createPageUrl('Contact')}>
-          <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg">
-            Let's talk about your project
-          </Button>
-        </Link>
+      <Section className="py-20 text-center relative overflow-hidden">
+        <GridBackground />
+        <GlowingOrb position="center" size="500px" opacity={0.1} />
+        
+        <div className="relative z-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            Which service is right for you?
+          </h2>
+          <p className="text-slate-300 text-lg mb-10 max-w-2xl mx-auto">
+            Not sure? Book a quick call and we'll help you figure out the best path forward.
+          </p>
+          <Link to={createPageUrl('Contact')}>
+            <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg">
+              Let's talk about your project
+            </Button>
+          </Link>
+        </div>
       </Section>
     </div>
   );

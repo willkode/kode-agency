@@ -4,23 +4,33 @@ import { createPageUrl } from '@/utils';
 import { Button } from "@/components/ui/button";
 import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
+import GridBackground from '@/components/ui-custom/GridBackground';
+import FloatingPixels from '@/components/ui-custom/FloatingPixels';
+import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 import { ArrowRight, Sparkles, Target, Zap } from 'lucide-react';
 
 export default function AboutPage() {
   return (
     <div className="bg-slate-950 text-white">
       {/* Hero */}
-      <Section className="pt-32 pb-16 text-center">
-        <div className="inline-block px-4 py-2 bg-[#73e28a]/10 border border-[#73e28a]/30 rounded-full text-[#73e28a] text-sm font-semibold mb-6">
-          About Kode Agency
+      <Section className="pt-32 pb-16 text-center relative overflow-hidden">
+        <GridBackground />
+        <FloatingPixels count={25} />
+        <GlowingOrb position="top-right" size="450px" opacity={0.15} />
+        <GlowingOrb position="bottom-left" size="350px" color="#5dbb72" opacity={0.1} />
+        
+        <div className="relative z-10">
+          <div className="inline-block px-4 py-2 bg-[#73e28a]/10 border border-[#73e28a]/30 rounded-full text-[#73e28a] text-sm font-semibold mb-6">
+            About Kode Agency
+          </div>
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+            The marketer who<br />
+            <span className="text-[#73e28a]">learned to code</span>
+          </h1>
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+            30 years of marketing + full-stack development + AI = a product studio that thinks like a CMO and builds like a dev.
+          </p>
         </div>
-        <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-          The marketer who<br />
-          <span className="text-[#73e28a]">learned to code</span>
-        </h1>
-        <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-          30 years of marketing + full-stack development + AI = a product studio that thinks like a CMO and builds like a dev.
-        </p>
       </Section>
 
       {/* Will Kode Story */}
@@ -127,12 +137,14 @@ export default function AboutPage() {
       </Section>
 
       {/* Philosophy */}
-      <Section className="py-20 bg-slate-900/30">
-        <div className="max-w-4xl mx-auto text-center">
+      <Section className="py-20 bg-slate-900/30 relative overflow-hidden">
+        <GridBackground />
+        <FloatingPixels count={15} />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
             My philosophy
           </h3>
-          <div className="space-y-6 text-slate-400 text-lg leading-relaxed">
+          <div className="space-y-6 text-slate-300 text-lg leading-relaxed">
             <p>
               Software should be built <strong className="text-white">fast, lean, and conversion-first</strong>. 
             </p>
@@ -150,13 +162,17 @@ export default function AboutPage() {
       </Section>
 
       {/* CTA */}
-      <Section className="py-20 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-          Want to work together?
-        </h2>
-        <p className="text-slate-400 text-lg mb-10 max-w-2xl mx-auto">
-          Whether you have an idea or an existing app, let's talk about how we can move faster.
-        </p>
+      <Section className="py-20 text-center relative overflow-hidden">
+        <GridBackground />
+        <GlowingOrb position="center" size="500px" opacity={0.1} />
+        
+        <div className="relative z-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            Want to work together?
+          </h2>
+          <p className="text-slate-300 text-lg mb-10 max-w-2xl mx-auto">
+            Whether you have an idea or an existing app, let's talk about how we can move faster.
+          </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link to={createPageUrl('Contact')}>
             <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg">
@@ -168,6 +184,7 @@ export default function AboutPage() {
               See what we build
             </Button>
           </Link>
+        </div>
         </div>
       </Section>
     </div>

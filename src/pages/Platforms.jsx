@@ -4,16 +4,29 @@ import { createPageUrl } from '@/utils';
 import { Button } from "@/components/ui/button";
 import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
+import GridBackground from '@/components/ui-custom/GridBackground';
+import FloatingPixels from '@/components/ui-custom/FloatingPixels';
+import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 import { Check, ExternalLink } from 'lucide-react';
 
 export default function PlatformsPage() {
   return (
-    <div>
-      <Section className="pt-32 pb-16 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Platforms We Build On</h1>
-        <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-          We don't just write code; we architect solutions using the best tools for your specific needs.
-        </p>
+    <div className="bg-slate-950">
+      <Section className="pt-32 pb-16 text-center relative overflow-hidden">
+        <GridBackground />
+        <FloatingPixels count={20} />
+        <GlowingOrb position="top-right" size="400px" opacity={0.15} />
+        <GlowingOrb position="bottom-left" size="300px" color="#5dbb72" opacity={0.1} />
+        
+        <div className="relative z-10">
+          <div className="inline-block px-4 py-2 bg-[#73e28a]/10 border border-[#73e28a]/30 rounded-full text-[#73e28a] text-sm font-semibold mb-6">
+            Platforms
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Platforms We Build On</h1>
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+            We don't just write code; we architect solutions using the best tools for your specific needs.
+          </p>
+        </div>
       </Section>
 
       <Section>

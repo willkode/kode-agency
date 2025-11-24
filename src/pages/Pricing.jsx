@@ -4,22 +4,32 @@ import { createPageUrl } from '@/utils';
 import { Button } from "@/components/ui/button";
 import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
+import GridBackground from '@/components/ui-custom/GridBackground';
+import FloatingPixels from '@/components/ui-custom/FloatingPixels';
+import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 import { Check } from 'lucide-react';
 
 export default function PricingPage() {
   return (
-    <div>
-      <Section className="pt-32 pb-16 text-center">
-        <div className="inline-block px-4 py-2 bg-[#73e28a]/10 border border-[#73e28a]/30 rounded-full text-[#73e28a] text-sm font-semibold mb-6">
-          Pricing
+    <div className="bg-slate-950">
+      <Section className="pt-32 pb-16 text-center relative overflow-hidden">
+        <GridBackground />
+        <FloatingPixels count={25} />
+        <GlowingOrb position="top-right" size="450px" opacity={0.15} />
+        <GlowingOrb position="bottom-left" size="350px" color="#5dbb72" opacity={0.1} />
+        
+        <div className="relative z-10">
+          <div className="inline-block px-4 py-2 bg-[#73e28a]/10 border border-[#73e28a]/30 rounded-full text-[#73e28a] text-sm font-semibold mb-6">
+            Pricing
+          </div>
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+            No hidden fees.<br />
+            No <span className="text-[#73e28a]">endless hourly billing</span>.
+          </h1>
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+            Choose the engagement model that fits your stage and budget. All prices reflect our AI-accelerated efficiency.
+          </p>
         </div>
-        <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-          No hidden fees.<br />
-          No <span className="text-[#73e28a]">endless hourly billing</span>.
-        </h1>
-        <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-          Choose the engagement model that fits your stage and budget. All prices reflect our AI-accelerated efficiency.
-        </p>
       </Section>
 
       <Section>
@@ -96,9 +106,12 @@ export default function PricingPage() {
         </div>
       </Section>
       
-      <Section className="bg-slate-900/30 py-20 text-center">
+      <Section className="bg-slate-900/30 py-20 text-center relative overflow-hidden">
+        <GridBackground />
+        <FloatingPixels count={15} />
+        <div className="relative z-10">
         <h2 className="text-3xl font-bold text-white mb-4">What affects pricing?</h2>
-        <p className="text-slate-400 mb-12 max-w-2xl mx-auto">Every project is different. Here's what moves the needle:</p>
+        <p className="text-slate-300 mb-12 max-w-2xl mx-auto">Every project is different. Here's what moves the needle:</p>
         <div className="grid md:grid-cols-4 gap-6 text-left max-w-6xl mx-auto">
            <Card className="p-6">
              <div className="text-[#73e28a] font-bold text-lg mb-3">Complexity</div>
@@ -124,6 +137,7 @@ export default function PricingPage() {
             We use AI + modern platforms to accelerate every phase: scaffolding, testing, deployment. 
             You get senior-level brains at AI-accelerated speed, with clear pricing and no hourly billing drama.
           </p>
+        </div>
         </div>
       </Section>
 

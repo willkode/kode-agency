@@ -4,6 +4,9 @@ import { createPageUrl } from '@/utils';
 import { Button } from "@/components/ui/button";
 import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
+import GridBackground from '@/components/ui-custom/GridBackground';
+import FloatingPixels from '@/components/ui-custom/FloatingPixels';
+import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 import { Search, PenTool, Hammer, Rocket, RefreshCw } from 'lucide-react';
 
 export default function ProcessPage() {
@@ -61,18 +64,25 @@ export default function ProcessPage() {
   ];
 
   return (
-    <div>
-      <Section className="pt-32 pb-16 text-center">
-        <div className="inline-block px-4 py-2 bg-[#73e28a]/10 border border-[#73e28a]/30 rounded-full text-[#73e28a] text-sm font-semibold mb-6">
-          Our Process
+    <div className="bg-slate-950">
+      <Section className="pt-32 pb-16 text-center relative overflow-hidden">
+        <GridBackground />
+        <FloatingPixels count={20} />
+        <GlowingOrb position="top-right" size="450px" opacity={0.15} />
+        <GlowingOrb position="bottom-left" size="350px" color="#5dbb72" opacity={0.1} />
+        
+        <div className="relative z-10">
+          <div className="inline-block px-4 py-2 bg-[#73e28a]/10 border border-[#73e28a]/30 rounded-full text-[#73e28a] text-sm font-semibold mb-6">
+            Our Process
+          </div>
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+            Idea → Scope → Sprint<br />
+            → Launch → <span className="text-[#73e28a]">Grow</span>
+          </h1>
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+            No black boxes. No endless hourly billing. Just a clear, proven workflow designed to ship software fast.
+          </p>
         </div>
-        <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-          Idea → Scope → Sprint<br />
-          → Launch → <span className="text-[#73e28a]">Grow</span>
-        </h1>
-        <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-          No black boxes. No endless hourly billing. Just a clear, proven workflow designed to ship software fast.
-        </p>
       </Section>
 
       <Section>
@@ -120,8 +130,10 @@ export default function ProcessPage() {
         </div>
       </Section>
 
-      <Section className="bg-slate-900/30 py-20 mt-10">
-        <div className="text-center max-w-4xl mx-auto">
+      <Section className="bg-slate-900/30 py-20 mt-10 relative overflow-hidden">
+        <GridBackground />
+        <FloatingPixels count={15} />
+        <div className="text-center max-w-4xl mx-auto relative z-10">
           <h2 className="text-3xl font-bold text-white mb-6">Typical Timelines</h2>
           <p className="text-slate-400 mb-12">Real numbers from real projects</p>
           <div className="grid md:grid-cols-2 gap-8 mb-12">

@@ -3,6 +3,9 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
+import GridBackground from '@/components/ui-custom/GridBackground';
+import FloatingPixels from '@/components/ui-custom/FloatingPixels';
+import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ExternalLink } from 'lucide-react';
@@ -23,12 +26,21 @@ export default function PortfolioPage() {
     : projects.filter(p => p.platform === filter);
 
   return (
-    <div>
-      <Section className="pt-32 pb-16 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Case Studies</h1>
-        <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-          See how we've helped other founders and teams ship software.
-        </p>
+    <div className="bg-slate-950">
+      <Section className="pt-32 pb-16 text-center relative overflow-hidden">
+        <GridBackground />
+        <FloatingPixels count={20} />
+        <GlowingOrb position="top-right" size="400px" opacity={0.15} />
+        
+        <div className="relative z-10">
+          <div className="inline-block px-4 py-2 bg-[#73e28a]/10 border border-[#73e28a]/30 rounded-full text-[#73e28a] text-sm font-semibold mb-6">
+            Portfolio
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Case Studies</h1>
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+            See how we've helped other founders and teams ship software.
+          </p>
+        </div>
       </Section>
 
       <Section>
@@ -40,8 +52,8 @@ export default function PortfolioPage() {
               onClick={() => setFilter(platform)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 filter === platform 
-                  ? 'bg-indigo-600 text-white' 
-                  : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
+                  ? 'bg-[#73e28a] text-black' 
+                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white'
               }`}
             >
               {platform}
@@ -75,7 +87,7 @@ export default function PortfolioPage() {
                 <div className="p-8 flex flex-col flex-grow">
                   <div className="flex justify-between items-start mb-4">
                     <div>
-                      <Badge variant="outline" className="border-indigo-500/50 text-indigo-400 mb-2">
+                      <Badge variant="outline" className="border-[#73e28a]/50 text-[#73e28a] mb-2">
                         {project.platform}
                       </Badge>
                       <h3 className="text-2xl font-bold text-white">{project.title}</h3>
@@ -98,7 +110,7 @@ export default function PortfolioPage() {
                     </div>
                     
                     {/* In a real app, this would link to a detail page */}
-                    <button className="text-indigo-400 hover:text-indigo-300 text-sm font-medium flex items-center gap-1 transition-colors">
+                    <button className="text-[#73e28a] hover:text-[#5dbb72] text-sm font-medium flex items-center gap-1 transition-colors">
                       Read full case study <ExternalLink className="w-3 h-3" />
                     </button>
                   </div>
