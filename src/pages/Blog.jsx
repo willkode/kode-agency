@@ -2,10 +2,9 @@ import React from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import Section from '@/components/ui-custom/Section';
-import Card from '@/components/ui-custom/Card';
-import { Badge } from "@/components/ui/badge";
+import PageHero from '@/components/ui-custom/PageHero';
 import { Skeleton } from "@/components/ui/skeleton";
-import { Calendar, Clock, ArrowRight } from 'lucide-react';
+import { Calendar, MessageCircle } from 'lucide-react';
 import { format } from 'date-fns';
 
 export default function BlogPage() {
@@ -16,80 +15,116 @@ export default function BlogPage() {
   });
 
   return (
-    <div>
-      <Section className="pt-32 pb-16 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Insights & Resources</h1>
-        <p className="text-xl text-slate-400 max-w-3xl mx-auto">
-          Guides, tutorials, and thoughts on modern software development.
-        </p>
-      </Section>
+    <div className="bg-slate-950 text-white">
+      {/* Hero */}
+      <PageHero 
+        title="Blog Grid – 3 Columns" 
+        backgroundImage="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1600&auto=format&fit=crop"
+      />
 
-      <Section>
+      {/* Blog Grid */}
+      <Section className="py-20">
         {isLoading ? (
           <div className="grid md:grid-cols-3 gap-8">
-             {[1, 2, 3].map(i => (
-               <div key={i} className="space-y-4">
-                 <Skeleton className="h-48 w-full rounded-xl bg-slate-800" />
-                 <Skeleton className="h-6 w-3/4 bg-slate-800" />
-                 <Skeleton className="h-4 w-full bg-slate-800" />
-               </div>
-             ))}
+            {[1, 2, 3, 4, 5, 6].map(i => (
+              <div key={i} className="space-y-4">
+                <Skeleton className="h-56 w-full rounded-xl bg-slate-800" />
+                <Skeleton className="h-6 w-3/4 bg-slate-800" />
+                <Skeleton className="h-4 w-full bg-slate-800" />
+              </div>
+            ))}
           </div>
         ) : (
           <div className="grid md:grid-cols-3 gap-8">
             {posts.map((post) => (
-              <Card key={post.id} className="p-0 overflow-hidden h-full flex flex-col group cursor-pointer">
-                <div className="h-48 overflow-hidden relative">
-                   <div className="absolute inset-0 bg-slate-900/10 group-hover:bg-transparent transition-colors z-10" />
-                   <img 
-                     src={post.image_url || "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop"} 
-                     alt={post.title} 
-                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" 
-                   />
-                </div>
-                <div className="p-6 flex flex-col flex-grow">
-                  <div className="flex flex-wrap gap-2 mb-4">
-                     {post.tags?.map(tag => (
-                        <span key={tag} className="text-xs font-medium px-2 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">
-                           {tag}
-                        </span>
-                     ))}
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#73e28a] transition-colors">
-                     {post.title}
-                  </h3>
-                  <p className="text-slate-400 text-sm mb-6 flex-grow line-clamp-3">
-                     {post.summary}
-                  </p>
-                  <div className="flex items-center justify-between text-slate-500 text-xs mt-auto pt-4 border-t border-slate-800">
-                     <div className="flex items-center gap-4">
-                        <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {post.created_date ? format(new Date(post.created_date), 'MMM d, yyyy') : 'Recent'}</span>
-                        <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {post.reading_time || '5 min'} read</span>
-                     </div>
+              <div key={post.id} className="group cursor-pointer">
+                {/* Image Container */}
+                <div className="relative h-56 rounded-xl overflow-hidden mb-4">
+                  <img 
+                    src={post.image_url || "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&auto=format&fit=crop"} 
+                    alt={post.title} 
+                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" 
+                  />
+                  {/* Author Badge */}
+                  <div className="absolute bottom-4 left-4 flex items-center gap-2 bg-slate-900/80 backdrop-blur-sm rounded-full px-3 py-1.5">
+                    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#73e28a] to-emerald-600 flex items-center justify-center text-black text-xs font-bold">
+                      K
+                    </div>
+                    <span className="text-white text-xs font-medium">Kode Agency</span>
                   </div>
                 </div>
-              </Card>
-            ))}
-            {posts.length === 0 && (
-              <div className="col-span-full text-center py-20">
-                <p className="text-slate-500">No blog posts yet. Check back soon!</p>
+
+                {/* Meta Info */}
+                <div className="flex items-center gap-4 text-slate-500 text-xs mb-3">
+                  <span className="flex items-center gap-1.5 text-[#73e28a]">
+                    <Calendar className="w-3.5 h-3.5" />
+                    {post.created_date ? format(new Date(post.created_date), 'MMM d, yyyy') : 'Recent'}
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <MessageCircle className="w-3.5 h-3.5" />
+                    0 Comments
+                  </span>
+                </div>
+
+                {/* Title */}
+                <h3 className="text-lg font-bold text-white mb-3 group-hover:text-[#73e28a] transition-colors leading-tight">
+                  {post.title}
+                </h3>
+
+                {/* Summary */}
+                <p className="text-slate-400 text-sm leading-relaxed line-clamp-3">
+                  {post.summary || "Donec porta massa id dictum varius at tincidunt massa. Mauris dis mauris eu sed ellt. Dolor Pra interdum facilis..."}
+                </p>
               </div>
+            ))}
+            
+            {posts.length === 0 && (
+              <>
+                {/* Placeholder cards when no posts */}
+                {[1, 2, 3, 4, 5, 6].map(i => (
+                  <div key={i} className="group cursor-pointer">
+                    <div className="relative h-56 rounded-xl overflow-hidden mb-4">
+                      <img 
+                        src={`https://images.unsplash.com/photo-${1600880292203 + i * 1000}-757bb62b4baf?w=600&auto=format&fit=crop`}
+                        alt="Blog post" 
+                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" 
+                      />
+                      <div className="absolute bottom-4 left-4 flex items-center gap-2 bg-slate-900/80 backdrop-blur-sm rounded-full px-3 py-1.5">
+                        <div className="w-6 h-6 rounded-full bg-gradient-to-br from-[#73e28a] to-emerald-600 flex items-center justify-center text-black text-xs font-bold">
+                          K
+                        </div>
+                        <span className="text-white text-xs font-medium">Kode Agency</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4 text-slate-500 text-xs mb-3">
+                      <span className="flex items-center gap-1.5 text-[#73e28a]">
+                        <Calendar className="w-3.5 h-3.5" />
+                        July 6, 2023
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <MessageCircle className="w-3.5 h-3.5" />
+                        0 Comments
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-3 group-hover:text-[#73e28a] transition-colors leading-tight">
+                      {['Advantages Of Hiring Consulting Firm', 'Finding Consulting Agency Engagement', 'What To Expect From A Consulting Agency', 'How To Suggest & Promote Your Firm', 'The Best Ways to Display Your Success', 'How To Agree To A Fair And Visible Contract'][i-1]}
+                    </h3>
+                    <p className="text-slate-400 text-sm leading-relaxed line-clamp-3">
+                      Donec porta massa id dictum varius at tincidunt massa. Mauris dis mauris eu sed ellt. Dolor Pra interdum facilis...
+                    </p>
+                  </div>
+                ))}
+              </>
             )}
           </div>
         )}
-      </Section>
-      
-      <Section className="bg-slate-900/30 py-16">
-         <div className="flex flex-col md:flex-row items-center justify-between bg-gradient-to-br from-[#73e28a] to-[#5dbb72] rounded-2xl p-8 md:p-12 max-w-5xl mx-auto">
-            <div className="mb-6 md:mb-0 md:mr-8">
-               <h3 className="text-2xl font-bold text-black mb-2">Get our free App Planning Checklist</h3>
-               <p className="text-black/80">A comprehensive PDF to help you scope your idea before spending a dime.</p>
-            </div>
-            <div className="flex w-full md:w-auto gap-2">
-               <input type="email" placeholder="Enter your email" className="bg-white/90 border border-white rounded px-4 py-2 text-black placeholder:text-black/60 focus:outline-none focus:ring-2 focus:ring-black/20 flex-grow md:w-64" />
-               <Button className="bg-black text-white hover:bg-slate-900">Download</Button>
-            </div>
-         </div>
+
+        {/* Pagination */}
+        <div className="flex items-center justify-center gap-2 mt-16">
+          <button className="w-10 h-10 rounded-full bg-[#73e28a] text-black font-bold text-sm">1</button>
+          <button className="w-10 h-10 rounded-full border border-slate-700 text-slate-400 hover:border-[#73e28a] hover:text-[#73e28a] transition-colors text-sm">2</button>
+          <button className="w-10 h-10 rounded-full border border-slate-700 text-slate-400 hover:border-[#73e28a] hover:text-[#73e28a] transition-colors text-sm">→</button>
+        </div>
       </Section>
     </div>
   );
