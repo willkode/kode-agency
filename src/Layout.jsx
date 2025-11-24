@@ -119,7 +119,7 @@ export default function Layout({ children, currentPageName }) {
                 <label className="text-white text-sm font-bold mb-2 block">Your Mail:</label>
                 <input 
                   type="email" 
-                  placeholder="info@exand.com" 
+                  placeholder="hello@kodebase.us" 
                   className="w-full bg-transparent border-b border-slate-700 py-3 text-slate-400 placeholder:text-slate-500 focus:outline-none focus:border-[#73e28a]"
                 />
               </div>
