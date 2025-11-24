@@ -272,7 +272,7 @@ export default function HomePage() {
                <div className="relative">
                   <div className="aspect-square rounded-2xl overflow-hidden border-4 border-[#73e28a]/20">
                      <img 
-                        src="https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=2070&auto=format&fit=crop" 
+                        src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/691e276e2117009b68e21c5c/bb73b7d1e_image.png" 
                         alt="Will Kode" 
                         className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
                      />
