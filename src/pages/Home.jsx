@@ -9,7 +9,7 @@ import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 import RotatingBadge from '@/components/ui-custom/RotatingBadge';
 import SectionLabel from '@/components/ui-custom/SectionLabel';
-import { ArrowRight, ArrowUpRight, Zap, Target, Sparkles, Layers, Code, TrendingUp, CheckCircle, Play } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ArrowLeft, Zap, Target, Sparkles, Layers, Code, TrendingUp, CheckCircle, Play, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -45,7 +45,7 @@ export default function HomePage() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 5000);
+    }, 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -116,13 +116,30 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
               <Link to={createPageUrl('Contact')}>
                 <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-8 text-lg rounded-lg">
                   Let's Build Together
                 </Button>
               </Link>
               <span className="text-slate-400 text-sm">Your idea. Our speed. Real results.</span>
+            </div>
+
+            {/* Slider Arrows */}
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)}
+                className="w-12 h-12 rounded-full border border-slate-600 flex items-center justify-center text-slate-400 hover:border-[#73e28a] hover:text-[#73e28a] transition-colors"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button 
+                onClick={() => setCurrentSlide((prev) => (prev + 1) % heroSlides.length)}
+                className="w-12 h-12 rounded-full border border-slate-600 flex items-center justify-center text-slate-400 hover:border-[#73e28a] hover:text-[#73e28a] transition-colors"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+              <span className="text-slate-500 text-sm ml-2">0{currentSlide + 1} / 05</span>
             </div>
           </div>
         </div>
