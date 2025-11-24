@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 import { CheckCircle, Upload, Loader2 } from 'lucide-react';
 
@@ -26,6 +27,7 @@ export default function ApplyPage() {
     portfolio_url: '',
     linkedin_url: '',
     resume_url: '',
+    rate_type: '',
     hourly_rate: '',
 
     message: ''
@@ -151,8 +153,9 @@ export default function ApplyPage() {
 
               {/* Skills & Rate */}
               <div className="space-y-2">
-                <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Skills (comma separated)</Label>
+                <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Skills (comma separated) *</Label>
                 <Input 
+                  required
                   placeholder="React, Node.js, UI/UX Design, etc."
                   className="bg-slate-800/50 border-slate-700 text-white h-12 focus:border-[#73e28a] rounded-lg placeholder:text-slate-600"
                   value={formData.skills}
@@ -160,14 +163,31 @@ export default function ApplyPage() {
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Hourly Rate</Label>
-                <Input 
-                  placeholder="$50/hr"
-                  className="bg-slate-800/50 border-slate-700 text-white h-12 focus:border-[#73e28a] rounded-lg placeholder:text-slate-600"
-                  value={formData.hourly_rate}
-                  onChange={(e) => handleChange('hourly_rate', e.target.value)}
-                />
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Rate *</Label>
+                  <Select value={formData.rate_type} onValueChange={(value) => handleChange('rate_type', value)} required>
+                    <SelectTrigger className="bg-slate-800/50 border-slate-700 text-white h-12 focus:border-[#73e28a] rounded-lg">
+                      <SelectValue placeholder="Select rate type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Hourly">Hourly</SelectItem>
+                      <SelectItem value="Project-based">Project-based</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                {formData.rate_type === 'Hourly' && (
+                  <div className="space-y-2">
+                    <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Hourly Rate *</Label>
+                    <Input 
+                      required
+                      placeholder="$50/hr"
+                      className="bg-slate-800/50 border-slate-700 text-white h-12 focus:border-[#73e28a] rounded-lg placeholder:text-slate-600"
+                      value={formData.hourly_rate}
+                      onChange={(e) => handleChange('hourly_rate', e.target.value)}
+                    />
+                  </div>
+                )}
               </div>
 
               {/* Portfolio */}
@@ -194,7 +214,7 @@ export default function ApplyPage() {
 
               {/* Resume Upload */}
               <div className="space-y-2">
-                <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Resume (PDF)</Label>
+                <Label className="text-slate-400 text-xs uppercase tracking-wider font-bold">Resume (PDF) *</Label>
                 <div className="relative">
                   <input
                     type="file"
