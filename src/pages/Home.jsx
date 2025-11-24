@@ -196,20 +196,20 @@ export default function HomePage() {
       <Section className="py-12 border-b border-slate-800 bg-slate-900/50 -mt-20">
         <div className="flex items-center justify-center gap-12 md:gap-16 flex-wrap">
           {[
-            { name: 'Base44', logo: 'https://framerusercontent.com/images/EGMWC5l7gHhHPtqSRCbXfWpZo.svg' },
-            { name: 'Lovable', logo: 'https://framerusercontent.com/images/x3GRXF8x4d8AGVHsHmTRnBD8Y.png' },
+            { name: 'Base44', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+            { name: 'Lovable', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
             { name: 'React', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
-            { name: 'Tailwind', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg' },
-            { name: 'Vercel', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg' },
-            { name: 'Supabase', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg' },
+            { name: 'Tailwind', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg' },
+            { name: 'Vercel', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg' },
+            { name: 'Supabase', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
           ].map((item, i) => (
-            <div key={i} className="flex items-center gap-3 opacity-60 hover:opacity-100 transition-opacity">
+            <div key={i} className="flex items-center gap-2 opacity-50 hover:opacity-100 transition-opacity">
               <img 
                 src={item.logo} 
                 alt={item.name} 
-                className="h-8 w-auto grayscale brightness-200 contrast-0"
+                className="h-6 w-6 grayscale brightness-150"
               />
-              <span className="text-slate-400 font-medium text-sm hidden md:block">{item.name}</span>
+              <span className="text-slate-500 font-medium text-sm">{item.name}</span>
             </div>
           ))}
         </div>
