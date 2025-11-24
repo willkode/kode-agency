@@ -19,36 +19,26 @@ export default function HomePage() {
       headline: "We Build Apps 80% Faster With AI",
       subhead: "Beautiful, production-ready software. Built on platforms like Base44, Lovable, Replit, and full custom stacks.",
       bullets: ["Production-Ready MVPs in Weeks", "Conversion-First Design", "Native, Web, and Mobile Apps"],
-      button: "Let's Build Together",
-      subtext: "Your idea. Our speed. Real results."
     },
     { 
       headline: "Your Product. Built Faster With AI.",
       subhead: "Turn your idea into a polished, market-ready product without waiting months.",
       bullets: ["AI-Accelerated Development", "Modern UI/UX + Conversion Focus", "MVPs, SaaS Platforms, and Custom Tools"],
-      button: "Start Your Build",
-      subtext: "Move fast. Launch smart."
     },
     { 
       headline: "Launch a Complete MVP in 1–4 Weeks",
       subhead: "We combine design, development, and AI automation to build at incredible speed.",
       bullets: ["Fixed Pricing. Clear Scope.", "Cross-Platform Apps & SaaS Systems", "Built With Base44, Lovable, Replit & Custom Code"],
-      button: "Build My MVP",
-      subtext: "From idea to live product—fast."
     },
     { 
       headline: "A Modern Agency for Modern Products",
       subhead: "AI-native workflows let us deliver higher quality software with less friction.",
       bullets: ["Clean Architecture & Scalable Code", "Pixel-Perfect UI with Conversion Insights", "AI Integration for Any App"],
-      button: "Work With Us",
-      subtext: "Better builds. Better speed. Better results."
     },
     { 
       headline: "Get Custom Software Without the Slowdowns",
       subhead: "We handle everything—design, development, AI systems, and integrations.",
       bullets: ["Native, Web, and Mobile Development", "Enterprise-Ready Features", "Reliable Support After Launch"],
-      button: "Let's Build Together",
-      subtext: "Your vision—built the right way."
     },
   ];
 
@@ -129,10 +119,10 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <Link to={createPageUrl('Contact')}>
                 <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-8 text-lg rounded-lg">
-                  {heroSlides[currentSlide].button}
+                  Let's Build Together
                 </Button>
               </Link>
-              <span className="text-slate-400 text-sm">{heroSlides[currentSlide].subtext}</span>
+              <span className="text-slate-400 text-sm">Your idea. Our speed. Real results.</span>
             </div>
           </div>
         </div>
