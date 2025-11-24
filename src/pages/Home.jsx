@@ -1,362 +1,368 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Check, ArrowUpRight } from 'lucide-react';
 import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
+import RotatingBadge from '@/components/ui-custom/RotatingBadge';
+import SectionLabel from '@/components/ui-custom/SectionLabel';
+import { ArrowRight, ArrowUpRight, Zap, Target, Sparkles, Layers, Code, TrendingUp, CheckCircle, Play } from 'lucide-react';
 
 export default function HomePage() {
-  const [activeService, setActiveService] = useState(0);
-
   const services = [
-    { title: "Strategy & Planning", description: "We map out your product's journey from concept to launch.", icon: "01" },
-    { title: "Design & Prototype", description: "Visualizing your idea with pixel-perfect designs and prototypes.", icon: "02" },
-    { title: "Development", description: "Building scalable, robust applications using modern tech stacks.", icon: "03" },
+    { icon: Zap, title: "AI MVP Sprints", desc: "From zero to live MVP in 4-8 weeks using AI-accelerated workflows." },
+    { icon: Layers, title: "SaaS Development", desc: "Production-ready apps with auth, billing, and admin dashboards." },
+    { icon: TrendingUp, title: "CRO Sites", desc: "Landing pages designed to convert visitors into customers." },
+    { icon: Code, title: "Custom Integrations", desc: "Connect your app to any API, CRM, or third-party service." },
+  ];
+
+  const clients = [
+    "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=150&h=50&fit=crop&q=80",
   ];
 
   return (
-    <div className="flex flex-col bg-slate-950 text-white overflow-hidden">
-      
+    <div className="bg-slate-950 text-white overflow-hidden">
       {/* Hero Section */}
-      <section className="relative pt-20 pb-10 md:pt-32 md:pb-20 overflow-hidden">
-        {/* Grid Background */}
-        <GridBackground />
+      <section className="relative min-h-screen flex items-center">
+        {/* Background Elements */}
+        <div className="absolute inset-0">
+          <GridBackground />
+          <FloatingPixels count={30} />
+        </div>
 
-        {/* Floating Pixels */}
-        <FloatingPixels count={30} />
+        {/* Decorative Globe */}
+        <div className="absolute top-32 left-20 hidden lg:block">
+          <div className="w-28 h-28 rounded-full border border-slate-700/50" style={{
+            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255,255,255,0.1) 1px, transparent 0)`,
+            backgroundSize: '10px 10px'
+          }}></div>
+        </div>
 
-        {/* Glowing Orbs */}
-        <GlowingOrb position="top-right" size="500px" opacity={0.2} />
-        <GlowingOrb position="bottom-left" size="400px" color="#5dbb72" opacity={0.1} />
+        {/* Rotating Badge */}
+        <div className="absolute top-32 right-32 hidden lg:block">
+          <RotatingBadge text="AI Product Studio" size={140} />
+        </div>
 
-        {/* Decorative Elements */}
-        <div className="absolute top-20 right-10 w-32 h-32 border border-[#73e28a]/20 rounded-full opacity-40 animate-spin-slow" />
-        <div className="absolute top-60 left-20 w-2 h-2 bg-[#73e28a] rounded-full animate-ping" />
-        <div className="absolute bottom-40 right-[15%] w-3 h-3 bg-[#73e28a]/50 rounded-full animate-bounce-slow" />
+        {/* Diagonal Lines */}
+        <div className="absolute top-48 right-10 hidden lg:flex gap-1">
+          {[...Array(15)].map((_, i) => (
+            <div 
+              key={i} 
+              className="w-0.5 bg-gradient-to-b from-[#73e28a] to-transparent transform -skew-x-12"
+              style={{ height: `${100 + i * 8}px`, opacity: 0.7 - i * 0.04 }}
+            ></div>
+          ))}
+        </div>
 
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <div className="inline-block px-4 py-2 bg-[#73e28a]/10 border border-[#73e28a]/30 rounded-full text-[#73e28a] text-sm font-semibold mb-6">
-            AI-Native Product Studio
+        {/* Hero Content */}
+        <div className="container mx-auto px-4 relative z-10 pt-32">
+          <div className="max-w-4xl">
+            <div className="flex items-center gap-4 mb-8">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-none">
+                Creative
+              </h1>
+              <div className="w-24 h-16 md:w-32 md:h-20 rounded-full overflow-hidden border-2 border-white/20 hidden sm:block">
+                <img 
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=200&h=120&fit=crop" 
+                  alt="Team" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-none mb-4">
+              Development
+            </h1>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-slate-700 leading-none mb-12">
+              Agency.
+            </h1>
+
+            <Link to={createPageUrl('Contact')}>
+              <div className="inline-flex items-center gap-3 px-8 py-4 border border-[#73e28a]/50 hover:border-[#73e28a] hover:bg-[#73e28a]/5 transition-all cursor-pointer group">
+                <ArrowUpRight className="w-5 h-5 text-[#73e28a] group-hover:rotate-45 transition-transform" />
+                <span className="text-white font-medium">We Build Production-Ready Apps Fast</span>
+              </div>
+            </Link>
           </div>
-          
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.1] mb-6">
-            Build 80% faster.<br />
-            Ship production-ready<br />
-            apps in <span className="text-[#73e28a]">weeks</span>, not months.
-          </h1>
+        </div>
 
-          <p className="text-slate-400 text-xl max-w-3xl mx-auto mb-10 leading-relaxed">
-            Kode Agency uses AI + modern platforms like Base44 and Lovable to build web, desktop, and mobile apps at 70% lower cost — without sacrificing UX, performance, or conversion.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-             <Link to={createPageUrl('Contact')}>
-                <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-8 text-lg rounded-full shadow-lg shadow-[#73e28a]/20">
-                   Plan your MVP sprint <ArrowRight className="ml-2" />
-                </Button>
-             </Link>
-             <Link to={createPageUrl('Process')}>
-                <Button variant="outline" className="border-slate-600 bg-slate-900/50 text-white hover:bg-slate-800 hover:border-slate-500 h-14 px-8 text-lg rounded-full">
-                   See how we build 80% faster
-                </Button>
-             </Link>
+        {/* Bottom Images */}
+        <div className="absolute bottom-0 left-0 right-0 h-[300px] md:h-[400px]">
+          <div className="grid grid-cols-2 h-full">
+            <div className="relative overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&auto=format&fit=crop" 
+                alt="Team working" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+            </div>
+            <div className="relative overflow-hidden">
+              <img 
+                src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&auto=format&fit=crop" 
+                alt="Discussion" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+              {/* Green corner accent */}
+              <div className="absolute top-0 left-0 w-16 h-16 border-l-4 border-t-4 border-[#73e28a]"></div>
+            </div>
           </div>
+        </div>
 
-          <div className="text-slate-500 text-sm">
-             Built with Base44, Lovable, Replit + custom stacks
+        {/* Slide indicators */}
+        <div className="absolute left-8 top-1/2 transform -translate-y-1/2 hidden lg:flex flex-col items-center gap-4">
+          <span className="text-slate-500 text-sm">01</span>
+          <div className="flex flex-col gap-2">
+            {[1,2,3,4,5].map((_, i) => (
+              <div key={i} className={`w-2 h-2 rounded-full ${i === 0 ? 'bg-[#73e28a]' : 'border border-slate-600'}`}></div>
+            ))}
           </div>
+          <span className="text-slate-500 text-sm">05</span>
+        </div>
+
+        {/* Side text */}
+        <div className="absolute left-4 top-1/2 transform -translate-y-1/2 -rotate-90 origin-left hidden xl:block">
+          <span className="text-slate-600 text-xs tracking-[0.3em] uppercase">Our Vision Creative Web Agency</span>
         </div>
       </section>
 
-      {/* Who We Build For */}
-      <Section className="py-20 border-y border-slate-900 relative overflow-hidden">
-         <div className="absolute inset-0 opacity-[0.02]" style={{
-           backgroundImage: `radial-gradient(circle at 1px 1px, #73e28a 1px, transparent 0)`,
-           backgroundSize: '40px 40px'
-         }} />
-         <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Who we build for</h2>
-         </div>
-         <div className="grid md:grid-cols-4 gap-8">
-            {[
-               { title: "Founders", pain: "You have an idea but traditional dev is slow and expensive.", solution: "We scope and ship your MVP in 4–8 weeks with clear pricing." },
-               { title: "Agencies", pain: "Your clients need apps but you don't have a dev team.", solution: "We work as your white-label product studio behind the scenes." },
-               { title: "Creators", pain: "You want a SaaS around your audience but don't know where to start.", solution: "We build course platforms, membership sites, and community tools fast." },
-               { title: "Companies", pain: "You're drowning in spreadsheets and manual workflows.", solution: "We automate with custom dashboards and internal tools in weeks." },
-            ].map((item, i) => (
-               <Card key={i} className="p-6 text-center">
-                  <h3 className="text-xl font-bold text-[#73e28a] mb-3">{item.title}</h3>
-                  <p className="text-slate-500 text-sm mb-3">{item.pain}</p>
-                  <p className="text-slate-300 text-sm">{item.solution}</p>
-               </Card>
-            ))}
-         </div>
+      {/* Client Logos Marquee */}
+      <Section className="py-12 border-y border-slate-800 bg-slate-900/50">
+        <div className="flex items-center justify-center gap-16 opacity-60">
+          {['Base44', 'Lovable', 'React', 'Tailwind', 'Vercel', 'Supabase'].map((name, i) => (
+            <div key={i} className="text-slate-400 font-bold text-xl tracking-wider">{name}</div>
+          ))}
+        </div>
       </Section>
 
-      {/* What We Build */}
-      <Section className="py-24">
-         <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">What we actually build</h2>
-            <p className="text-slate-400 text-lg max-w-2xl mx-auto">Fast, focused, and built to convert</p>
-         </div>
-         <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {[
-               { 
-                  title: "MVPs & SaaS products", 
-                  desc: "From zero to live MVP in 4–8 weeks using AI-accelerated sprints. We handle strategy, design, development, and deployment.",
-                  link: "Portfolio"
-               },
-               { 
-                  title: "Internal tools & automations", 
-                  desc: "Dashboards, workflows, AI agents, and integrations that clean up back-office processes and eliminate spreadsheet chaos.",
-                  link: "Services"
-               },
-               { 
-                  title: "Marketing sites that convert", 
-                  desc: "CRO-optimized landing pages and product sites with SEO, performance, and analytics baked in from day one.",
-                  link: "Services"
-               },
-               { 
-                  title: "AI integrations & copilots", 
-                  desc: "Custom LLM flows, AI agents, and intelligent features to augment your existing products and workflows.",
-                  link: "Services"
-               },
-            ].map((item, i) => (
-               <Card key={i} className="p-8 group hover:border-[#73e28a]/50">
-                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-[#73e28a] transition-colors">{item.title}</h3>
-                  <p className="text-slate-400 mb-6 leading-relaxed">{item.desc}</p>
-                  <Link to={createPageUrl(item.link)} className="text-[#73e28a] font-medium flex items-center gap-2 hover:gap-3 transition-all">
-                     See examples <ArrowRight className="w-4 h-4" />
-                  </Link>
-               </Card>
-            ))}
-         </div>
-      </Section>
-
-      {/* Why We're Different */}
-      <Section className="bg-slate-900/30 py-24 relative overflow-hidden">
-         <GridBackground />
-         <div className="absolute top-10 left-10 w-2 h-2 bg-[#73e28a] rounded-full animate-ping" />
-         <div className="absolute bottom-20 right-20 w-3 h-3 bg-[#73e28a]/60 rounded-full animate-bounce-slow" />
-         <div className="text-center mb-16 relative z-10">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Why Kode Agency is different</h2>
-            <p className="text-slate-300 text-lg">Our unfair advantages</p>
-         </div>
-         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            {[
-               { 
-                  icon: "🧠", 
-                  title: "Fused brain", 
-                  desc: "30 years of marketing + full-stack dev + AI product building in one brain. We don't just build, we build to convert."
-               },
-               { 
-                  icon: "⚡", 
-                  title: "AI-accelerated workflow", 
-                  desc: "We use Base44, Lovable, and AI agents to generate scaffolds, then refine with human judgment and CRO thinking."
-               },
-               { 
-                  icon: "🎯", 
-                  title: "Speed and clarity", 
-                  desc: "We scope, design, and ship in clearly defined sprints. No endless hourly billing, no scope creep."
-               },
-               { 
-                  icon: "📈", 
-                  title: "Conversion-first", 
-                  desc: "Every screen is designed to convert — sign-ups, demos, upgrades. Not just pretty pixels."
-               },
-            ].map((item, i) => (
-               <div key={i} className="text-center relative z-10">
-                  <div className="text-5xl mb-4">{item.icon}</div>
-                  <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">{item.desc}</p>
-               </div>
-            ))}
-         </div>
-      </Section>
-
-      {/* Process Preview */}
-      <Section className="py-24">
-         <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">How we work</h2>
-            <p className="text-slate-300 text-lg">Idea → Scope → Sprint → Launch → Grow</p>
-         </div>
-         <div className="grid md:grid-cols-5 gap-8 max-w-6xl mx-auto">
-            {[
-               { num: "01", title: "Discover", desc: "You bring the idea. We map goals, users, and success metrics." },
-               { num: "02", title: "Scope", desc: "We define features, tech stack, and timelines." },
-               { num: "03", title: "Sprint", desc: "We ship a working MVP with real data and workflows." },
-               { num: "04", title: "Launch", desc: "We deploy, measure, and fix friction." },
-               { num: "05", title: "Grow", desc: "Optional ongoing product and growth partnership." },
-            ].map((step, i) => (
-               <div key={i} className="text-center relative">
-                  <div className="w-16 h-16 rounded-full border-2 border-[#73e28a] flex items-center justify-center text-[#73e28a] font-bold text-xl mx-auto mb-4 bg-slate-950">
-                     {step.num}
-                  </div>
-                  <h3 className="text-lg font-bold text-white mb-2">{step.title}</h3>
-                  <p className="text-slate-300 text-sm">{step.desc}</p>
-                  {i < 4 && (
-                     <div className="hidden md:block absolute top-8 left-[60%] w-full h-0.5 bg-slate-800"></div>
-                  )}
-               </div>
-            ))}
-         </div>
-         <div className="text-center mt-12">
-            <Link to={createPageUrl('Process')}>
-               <Button variant="outline" className="border-slate-600 bg-slate-900/80 text-white hover:bg-slate-800 hover:border-slate-500">
-                  See process in detail <ArrowRight className="ml-2" />
-               </Button>
-            </Link>
-         </div>
-      </Section>
-
-      {/* Featured Builds */}
-      <Section className="bg-slate-900/30 py-24 relative overflow-hidden">
-         <FloatingPixels count={15} />
-         <GlowingOrb position="center" size="600px" opacity={0.08} />
-         <div className="text-center mb-16">
-            <div className="text-[#73e28a] text-sm font-bold uppercase tracking-wider mb-2">Portfolio</div>
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Featured builds</h2>
-         </div>
-         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-               { 
-                  title: "Investment Club Portal", 
-                  desc: "Base44 + AI agents. Replaced 8 spreadsheets.",
-                  metric: "Launched in 6 weeks",
-                  platform: "Base44"
-               },
-               { 
-                  title: "Course Platform MVP", 
-                  desc: "Lovable + custom functions for creator economy.",
-                  metric: "Built in 3 weeks",
-                  platform: "Lovable"
-               },
-               { 
-                  title: "Workflow Automation", 
-                  desc: "Custom Node.js + AI. Saved 20 hrs/week.",
-                  metric: "ROI in 2 months",
-                  platform: "Custom"
-               },
-            ].map((project, i) => (
-               <Card key={i} className="p-8 group hover:border-[#73e28a]/50">
-                  <div className="text-xs font-bold text-[#73e28a] uppercase tracking-wider mb-4">{project.platform}</div>
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#73e28a] transition-colors">{project.title}</h3>
-                  <p className="text-slate-400 text-sm mb-4">{project.desc}</p>
-                  <div className="flex items-center gap-2 text-green-400 text-sm font-medium mb-6">
-                     <Check className="w-4 h-4" />
-                     {project.metric}
-                  </div>
-                  <Link to={createPageUrl('Portfolio')} className="text-[#73e28a] text-sm font-medium flex items-center gap-2 hover:gap-3 transition-all">
-                     Read case study <ArrowRight className="w-3 h-3" />
-                  </Link>
-               </Card>
-            ))}
-         </div>
-         <div className="text-center mt-12">
-            <Link to={createPageUrl('Portfolio')}>
-               <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold">
-                  View all projects <ArrowRight className="ml-2" />
-               </Button>
-            </Link>
-         </div>
-      </Section>
-
-      {/* Will Kode Authority Section */}
-      <Section className="py-24">
-         <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-               <div className="relative">
-                  <div className="aspect-square rounded-2xl overflow-hidden border-4 border-[#73e28a]/20">
-                     <img 
-                        src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/691e276e2117009b68e21c5c/bb73b7d1e_image.png" 
-                        alt="Will Kode" 
-                        className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
-                     />
-                  </div>
-                  <div className="absolute -bottom-6 -right-6 bg-[#73e28a] text-black px-6 py-3 rounded-lg font-bold shadow-lg">
-                     30+ Years Experience
-                  </div>
-               </div>
-               <div>
-                  <div className="text-[#73e28a] text-sm font-bold uppercase tracking-wider mb-2">Led by Will Kode</div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                     Marketer, SEO, CRO specialist & AI-native product builder
-                  </h2>
-                  <p className="text-slate-400 mb-6 leading-relaxed">
-                     I've spent decades in marketing, SEO, and conversion optimization — working with brands across restoration, mobility, home services, and SaaS.
-                  </p>
-                  <p className="text-slate-400 mb-8 leading-relaxed">
-                     Now I build the software. Kode Agency combines my marketing brain with full-stack development and AI-accelerated workflows to ship apps that don't just work — they convert and grow.
-                  </p>
-                  <Link to={createPageUrl('About')}>
-                     <Button className="bg-white hover:bg-slate-200 text-black rounded-full px-8">
-                        My story <ArrowRight className="ml-2" />
-                     </Button>
-                  </Link>
-               </div>
+      {/* About Section */}
+      <Section className="py-24 relative overflow-hidden">
+        <GlowingOrb position="top-right" size="400px" opacity={0.1} />
+        
+        <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
+          <div className="relative">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-4">
+                <img 
+                  src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&h=500&fit=crop" 
+                  alt="Team" 
+                  className="rounded-2xl w-full h-64 object-cover"
+                />
+                <img 
+                  src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=300&fit=crop" 
+                  alt="Work" 
+                  className="rounded-2xl w-full h-48 object-cover"
+                />
+              </div>
+              <div className="pt-12">
+                <img 
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=600&fit=crop" 
+                  alt="Collaboration" 
+                  className="rounded-2xl w-full h-80 object-cover"
+                />
+              </div>
             </div>
-         </div>
-      </Section>
+            {/* Play button overlay */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <div className="w-20 h-20 rounded-full bg-[#73e28a] flex items-center justify-center cursor-pointer hover:scale-110 transition-transform shadow-lg shadow-[#73e28a]/30">
+                <Play className="w-8 h-8 text-black ml-1" fill="black" />
+              </div>
+            </div>
+          </div>
 
-      {/* Final CTA */}
-      <Section className="py-24 bg-gradient-to-b from-slate-900/50 to-slate-950 relative overflow-hidden">
-         <GridBackground />
-         <GlowingOrb position="top-left" size="400px" opacity={0.15} />
-         <GlowingOrb position="bottom-right" size="350px" color="#5dbb72" opacity={0.1} />
-         <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-               Ready to build 80% faster?
+          <div>
+            <SectionLabel text="About Company" />
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+              We Do Work Smart<br />
+              <span className="text-[#73e28a]">AI-Native Agency</span>
             </h2>
-            <p className="text-slate-400 text-xl mb-12 max-w-2xl mx-auto">
-               Whether you have an idea or an existing app, we'll help you move fast without sacrificing quality.
+            <p className="text-slate-300 leading-relaxed mb-6">
+              We're a team of creatives who are excited about unique ideas and help companies create amazing products by crafting top-notch UI/UX with AI-accelerated development.
             </p>
-            <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto relative z-10">
-               <Link to={createPageUrl('Contact')} className="block">
-                  <Card className="p-8 hover:border-[#73e28a]/50 group cursor-pointer h-full bg-slate-900/80">
-                     <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#73e28a] transition-colors">I have an idea</h3>
-                     <p className="text-slate-300 text-sm mb-4">Let's scope and build your MVP</p>
-                     <ArrowRight className="w-5 h-5 text-[#73e28a] group-hover:translate-x-1 transition-transform" />
-                  </Card>
-               </Link>
-               <Link to={createPageUrl('Contact')} className="block">
-                  <Card className="p-8 hover:border-[#73e28a]/50 group cursor-pointer h-full bg-slate-900/80">
-                     <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#73e28a] transition-colors">I have an existing app</h3>
-                     <p className="text-slate-300 text-sm mb-4">Let's evolve and optimize it</p>
-                     <ArrowRight className="w-5 h-5 text-[#73e28a] group-hover:translate-x-1 transition-transform" />
-                  </Card>
-               </Link>
+            <p className="text-slate-400 leading-relaxed mb-8">
+              This is the main factor that sets us apart from our competition and allows us to deliver specialist product development. Our team applies its wide-ranging experience to determining the best approach for your project.
+            </p>
+
+            <div className="flex flex-wrap gap-3 mb-8">
+              {['UX/UI Design', 'AI Integration', 'SaaS Development', 'CRO Optimization', 'Custom APIs', 'Rapid MVPs'].map((skill, i) => (
+                <span key={i} className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-full text-sm text-slate-300 hover:border-[#73e28a]/50 hover:text-[#73e28a] transition-colors cursor-default">
+                  {skill}
+                </span>
+              ))}
             </div>
-         </div>
+          </div>
+        </div>
       </Section>
 
-      {/* Newsletter / Footer CTA */}
-      <div className="container mx-auto px-4 mb-20">
-         <div className="bg-slate-900 rounded-3xl p-12 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8 border border-slate-800">
-            {/* Deco */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#73e28a]/5 rounded-full blur-3xl"></div>
-            
-            <div className="relative z-10">
-               <h2 className="text-3xl font-bold text-white mb-2">Subscribe Now</h2>
-               <p className="text-slate-400">Get the latest updates and news directly to your inbox.</p>
+      {/* Services Section */}
+      <Section className="py-24 bg-slate-900/30 relative overflow-hidden">
+        <GridBackground />
+        <FloatingPixels count={15} />
+        
+        <div className="relative z-10">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16">
+            <div>
+              <SectionLabel text="Best Of Service" />
+              <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+                All Professional<br />
+                Solutions & Services
+              </h2>
             </div>
-
-            <div className="relative z-10 w-full md:w-auto flex gap-2">
-               <input 
-                  type="email" 
-                  placeholder="Enter email address" 
-                  className="bg-slate-950 border border-slate-800 rounded-full px-6 py-4 text-white w-full md:w-80 focus:outline-none focus:border-[#73e28a]"
-               />
-               <button className="w-14 h-14 bg-[#73e28a] rounded-full flex items-center justify-center text-black hover:scale-105 transition-transform">
-                  <ArrowUpRight />
-               </button>
+            <div className="mt-6 lg:mt-0">
+              <RotatingBadge size={100} />
             </div>
-         </div>
-      </div>
+          </div>
 
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {services.map((service, i) => (
+              <Card key={i} className="p-8 text-center group hover:border-[#73e28a]/50 bg-slate-900/80">
+                <div className="w-16 h-16 mx-auto mb-6 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-[#73e28a] group-hover:bg-[#73e28a] group-hover:text-black transition-all duration-300">
+                  <service.icon className="w-7 h-7" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3">{service.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{service.desc}</p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* Why Choose Us */}
+      <Section className="py-24 relative overflow-hidden">
+        <GlowingOrb position="bottom-left" size="350px" color="#5dbb72" opacity={0.1} />
+        
+        <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
+          <div>
+            <SectionLabel text="Why Choose Us" />
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Make Your Product<br />
+              <span className="text-[#73e28a]">Stand Out</span>
+            </h2>
+            <p className="text-slate-300 leading-relaxed mb-8">
+              For each project, we take a bespoke approach to developing solutions, often with the common goal of shipping fast without sacrificing quality.
+            </p>
+
+            <div className="space-y-6">
+              {[
+                { num: "01", title: "AI-Accelerated", desc: "80% faster development using modern AI tools and platforms" },
+                { num: "02", title: "Conversion-First", desc: "30 years of marketing experience in every build" },
+                { num: "03", title: "Fixed Pricing", desc: "No hourly surprises, clear timelines and deliverables" },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-6 p-6 bg-slate-900/50 border border-slate-800 rounded-xl hover:border-[#73e28a]/30 transition-colors">
+                  <div className="text-[#73e28a] font-bold text-xl">{item.num}</div>
+                  <div>
+                    <h4 className="text-white font-bold mb-2">{item.title}</h4>
+                    <p className="text-slate-400 text-sm">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative">
+            <img 
+              src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&h=700&fit=crop" 
+              alt="Team working" 
+              className="rounded-2xl w-full"
+            />
+            <div className="absolute -bottom-6 -left-6 bg-[#73e28a] text-black p-6 rounded-xl">
+              <div className="text-4xl font-bold">30+</div>
+              <div className="text-sm font-medium">Years Experience</div>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* Process Section */}
+      <Section className="py-24 bg-slate-900/30 relative overflow-hidden">
+        <GridBackground />
+        
+        <div className="relative z-10 text-center mb-16">
+          <SectionLabel text="Our Process" />
+          <h2 className="text-4xl md:text-5xl font-bold text-white">How We Work</h2>
+          <p className="text-slate-300 mt-4">Idea → Scope → Sprint → Launch → Grow</p>
+        </div>
+
+        <div className="relative z-10 flex flex-wrap justify-center gap-8">
+          {[
+            { num: "01", title: "Discover", desc: "Map goals and requirements" },
+            { num: "02", title: "Scope", desc: "Define features and timeline" },
+            { num: "03", title: "Sprint", desc: "Build working MVP" },
+            { num: "04", title: "Launch", desc: "Deploy and measure" },
+            { num: "05", title: "Grow", desc: "Ongoing partnership" },
+          ].map((step, i) => (
+            <div key={i} className="text-center group">
+              <div className="w-20 h-20 mx-auto mb-4 rounded-full border-2 border-[#73e28a] flex items-center justify-center text-[#73e28a] font-bold text-xl group-hover:bg-[#73e28a] group-hover:text-black transition-all">
+                {step.num}
+              </div>
+              <h4 className="text-white font-bold mb-2">{step.title}</h4>
+              <p className="text-slate-400 text-sm max-w-[140px]">{step.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center mt-12 relative z-10">
+          <Link to={createPageUrl('Process')}>
+            <Button variant="outline" className="border-slate-600 bg-slate-900/80 text-white hover:bg-slate-800 hover:border-slate-500">
+              See Full Process <ArrowRight className="ml-2 w-4 h-4" />
+            </Button>
+          </Link>
+        </div>
+      </Section>
+
+      {/* CTA Section */}
+      <Section className="py-24 relative overflow-hidden">
+        <GlowingOrb position="center" size="500px" opacity={0.1} />
+        
+        <div className="relative z-10 text-center max-w-3xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            Ready to build 80% faster?
+          </h2>
+          <p className="text-slate-300 text-lg mb-10">
+            Whether you have an idea or an existing app, we'll help you move fast without sacrificing quality.
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+            <Link to={createPageUrl('Contact')} className="block">
+              <Card className="p-8 hover:border-[#73e28a]/50 group cursor-pointer h-full bg-slate-900/80">
+                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#73e28a] transition-colors">I have an idea</h3>
+                <p className="text-slate-300 text-sm mb-4">Let's scope and build your MVP</p>
+                <ArrowRight className="w-5 h-5 text-[#73e28a] group-hover:translate-x-1 transition-transform" />
+              </Card>
+            </Link>
+            <Link to={createPageUrl('Contact')} className="block">
+              <Card className="p-8 hover:border-[#73e28a]/50 group cursor-pointer h-full bg-slate-900/80">
+                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#73e28a] transition-colors">I have an existing app</h3>
+                <p className="text-slate-300 text-sm mb-4">Let's evolve and optimize it</p>
+                <ArrowRight className="w-5 h-5 text-[#73e28a] group-hover:translate-x-1 transition-transform" />
+              </Card>
+            </Link>
+          </div>
+        </div>
+      </Section>
+
+      {/* Newsletter */}
+      <Section className="py-16 border-t border-slate-800">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+          <div>
+            <SectionLabel text="Get In Touch" />
+            <h3 className="text-3xl font-bold text-white">Subscribe Now.</h3>
+          </div>
+          <div className="flex items-center gap-4 w-full max-w-md">
+            <input 
+              type="email" 
+              placeholder="Your email address" 
+              className="flex-1 bg-transparent border-b border-slate-700 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#73e28a]"
+            />
+            <button className="w-16 h-16 rounded-full bg-[#73e28a] flex items-center justify-center text-black hover:scale-105 transition-transform">
+              <ArrowUpRight className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+      </Section>
     </div>
   );
 }
