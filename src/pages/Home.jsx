@@ -166,11 +166,17 @@ export default function HomePage() {
           <span className="text-slate-500 text-sm">05</span>
         </div>
 
-        {/* Side rotating text */}
-        <div className="absolute left-4 top-1/3 -rotate-90 origin-left hidden xl:block">
-          <span className="text-slate-600 text-xs tracking-[0.3em] uppercase transition-all duration-500">
-            Slide {currentSlide + 1} of 5
-          </span>
+        {/* Next Slide Preview */}
+        <div className="absolute right-8 top-1/4 hidden lg:flex flex-col items-center text-center max-w-[200px]">
+          <div className="mb-6">
+            <RotatingBadge text="AI Product Studio" size={120} />
+          </div>
+          <h4 className="text-[#73e28a] font-bold text-lg mb-2 transition-all duration-500">
+            {heroSlides[(currentSlide + 1) % heroSlides.length].headline.split(' ').slice(0, 3).join(' ')}
+          </h4>
+          <p className="text-slate-400 text-sm leading-relaxed transition-all duration-500">
+            {heroSlides[(currentSlide + 1) % heroSlides.length].subhead.slice(0, 80)}...
+          </p>
         </div>
       </section>
 
