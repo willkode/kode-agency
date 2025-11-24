@@ -11,6 +11,7 @@ import FAQ from './pages/FAQ';
 import Legal from './pages/Legal';
 import BlogPost from './pages/BlogPost';
 import Apply from './pages/Apply';
+import Admin from './pages/Admin';
 import __Layout from './Layout.jsx';
 
 
@@ -28,6 +29,7 @@ export const PAGES = {
     "Legal": Legal,
     "BlogPost": BlogPost,
     "Apply": Apply,
+    "Admin": Admin,
 }
 
 export const pagesConfig = {
