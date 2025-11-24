@@ -142,9 +142,9 @@ export default function HomePage() {
          <GridBackground />
          <div className="absolute top-10 left-10 w-2 h-2 bg-[#73e28a] rounded-full animate-ping" />
          <div className="absolute bottom-20 right-20 w-3 h-3 bg-[#73e28a]/60 rounded-full animate-bounce-slow" />
-         <div className="text-center mb-16">
+         <div className="text-center mb-16 relative z-10">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Why Kode Agency is different</h2>
-            <p className="text-slate-400 text-lg">Our unfair advantages</p>
+            <p className="text-slate-300 text-lg">Our unfair advantages</p>
          </div>
          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {[
@@ -169,10 +169,10 @@ export default function HomePage() {
                   desc: "Every screen is designed to convert — sign-ups, demos, upgrades. Not just pretty pixels."
                },
             ].map((item, i) => (
-               <div key={i} className="text-center">
+               <div key={i} className="text-center relative z-10">
                   <div className="text-5xl mb-4">{item.icon}</div>
                   <h3 className="text-xl font-bold text-white mb-3">{item.title}</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+                  <p className="text-slate-300 text-sm leading-relaxed">{item.desc}</p>
                </div>
             ))}
          </div>
@@ -182,7 +182,7 @@ export default function HomePage() {
       <Section className="py-24">
          <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">How we work</h2>
-            <p className="text-slate-400 text-lg">Idea → Scope → Sprint → Launch → Grow</p>
+            <p className="text-slate-300 text-lg">Idea → Scope → Sprint → Launch → Grow</p>
          </div>
          <div className="grid md:grid-cols-5 gap-8 max-w-6xl mx-auto">
             {[
@@ -197,7 +197,7 @@ export default function HomePage() {
                      {step.num}
                   </div>
                   <h3 className="text-lg font-bold text-white mb-2">{step.title}</h3>
-                  <p className="text-slate-400 text-sm">{step.desc}</p>
+                  <p className="text-slate-300 text-sm">{step.desc}</p>
                   {i < 4 && (
                      <div className="hidden md:block absolute top-8 left-[60%] w-full h-0.5 bg-slate-800"></div>
                   )}
@@ -206,7 +206,7 @@ export default function HomePage() {
          </div>
          <div className="text-center mt-12">
             <Link to={createPageUrl('Process')}>
-               <Button variant="outline" className="border-slate-700 text-white hover:bg-slate-800">
+               <Button variant="outline" className="border-slate-600 bg-slate-900/80 text-white hover:bg-slate-800 hover:border-slate-500">
                   See process in detail <ArrowRight className="ml-2" />
                </Button>
             </Link>
@@ -314,18 +314,18 @@ export default function HomePage() {
             <p className="text-slate-400 text-xl mb-12 max-w-2xl mx-auto">
                Whether you have an idea or an existing app, we'll help you move fast without sacrificing quality.
             </p>
-            <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto relative z-10">
                <Link to={createPageUrl('Contact')} className="block">
-                  <Card className="p-8 hover:border-[#73e28a]/50 group cursor-pointer h-full">
+                  <Card className="p-8 hover:border-[#73e28a]/50 group cursor-pointer h-full bg-slate-900/80">
                      <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#73e28a] transition-colors">I have an idea</h3>
-                     <p className="text-slate-400 text-sm mb-4">Let's scope and build your MVP</p>
+                     <p className="text-slate-300 text-sm mb-4">Let's scope and build your MVP</p>
                      <ArrowRight className="w-5 h-5 text-[#73e28a] group-hover:translate-x-1 transition-transform" />
                   </Card>
                </Link>
                <Link to={createPageUrl('Contact')} className="block">
-                  <Card className="p-8 hover:border-[#73e28a]/50 group cursor-pointer h-full">
+                  <Card className="p-8 hover:border-[#73e28a]/50 group cursor-pointer h-full bg-slate-900/80">
                      <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#73e28a] transition-colors">I have an existing app</h3>
-                     <p className="text-slate-400 text-sm mb-4">Let's evolve and optimize it</p>
+                     <p className="text-slate-300 text-sm mb-4">Let's evolve and optimize it</p>
                      <ArrowRight className="w-5 h-5 text-[#73e28a] group-hover:translate-x-1 transition-transform" />
                   </Card>
                </Link>
