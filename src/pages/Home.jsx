@@ -78,10 +78,7 @@ export default function HomePage() {
           }}></div>
         </div>
 
-        {/* Rotating Badge */}
-        <div className="absolute top-32 right-32 hidden lg:block">
-          <RotatingBadge text="AI Product Studio" size={140} />
-        </div>
+
 
         {/* Diagonal Lines */}
         <div className="absolute top-48 right-10 hidden lg:flex gap-1">
