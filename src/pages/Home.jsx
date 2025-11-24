@@ -15,11 +15,41 @@ export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
   
   const heroSlides = [
-    { title: "AI-Powered Development", text: "We use cutting-edge AI tools to build apps 80% faster than traditional agencies." },
-    { title: "30+ Years Experience", text: "Three decades of marketing and development expertise in every project we deliver." },
-    { title: "From Idea to Launch", text: "Our proven 5-step process takes you from concept to production in 4-8 weeks." },
-    { title: "Conversion-First Design", text: "Every screen is designed to convert — sign-ups, demos, and revenue growth." },
-    { title: "Fixed Pricing, No Surprises", text: "Clear timelines, transparent budgets, and no hourly billing drama." },
+    { 
+      headline: "We Build Apps 80% Faster With AI",
+      subhead: "Beautiful, production-ready software. Built on platforms like Base44, Lovable, Replit, and full custom stacks.",
+      bullets: ["Production-Ready MVPs in Weeks", "Conversion-First Design", "Native, Web, and Mobile Apps"],
+      button: "Let's Build Together",
+      subtext: "Your idea. Our speed. Real results."
+    },
+    { 
+      headline: "Your Product. Built Faster With AI.",
+      subhead: "Turn your idea into a polished, market-ready product without waiting months.",
+      bullets: ["AI-Accelerated Development", "Modern UI/UX + Conversion Focus", "MVPs, SaaS Platforms, and Custom Tools"],
+      button: "Start Your Build",
+      subtext: "Move fast. Launch smart."
+    },
+    { 
+      headline: "Launch a Complete MVP in 1–4 Weeks",
+      subhead: "We combine design, development, and AI automation to build at incredible speed.",
+      bullets: ["Fixed Pricing. Clear Scope.", "Cross-Platform Apps & SaaS Systems", "Built With Base44, Lovable, Replit & Custom Code"],
+      button: "Build My MVP",
+      subtext: "From idea to live product—fast."
+    },
+    { 
+      headline: "A Modern Agency for Modern Products",
+      subhead: "AI-native workflows let us deliver higher quality software with less friction.",
+      bullets: ["Clean Architecture & Scalable Code", "Pixel-Perfect UI with Conversion Insights", "AI Integration for Any App"],
+      button: "Work With Us",
+      subtext: "Better builds. Better speed. Better results."
+    },
+    { 
+      headline: "Get Custom Software Without the Slowdowns",
+      subhead: "We handle everything—design, development, AI systems, and integrations.",
+      bullets: ["Native, Web, and Mobile Development", "Enterprise-Ready Features", "Reliable Support After Launch"],
+      button: "Let's Build Together",
+      subtext: "Your vision—built the right way."
+    },
   ];
 
   useEffect(() => {
@@ -77,31 +107,33 @@ export default function HomePage() {
         {/* Hero Content */}
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mb-16">
-            <div className="flex items-center gap-4 mb-4">
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-none">
-                Creative
+            <div className="min-h-[320px] md:min-h-[280px]">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6 transition-all duration-500">
+                {heroSlides[currentSlide].headline}
               </h1>
-              <div className="w-24 h-16 md:w-32 md:h-20 rounded-full overflow-hidden border-2 border-white/20 hidden sm:block">
-                <img 
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=200&h=120&fit=crop" 
-                  alt="Team" 
-                  className="w-full h-full object-cover"
-                />
+              
+              <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-2xl transition-all duration-500">
+                {heroSlides[currentSlide].subhead}
+              </p>
+              
+              <div className="flex flex-col gap-3 mb-10">
+                {heroSlides[currentSlide].bullets.map((bullet, i) => (
+                  <div key={i} className="flex items-center gap-3 text-slate-200">
+                    <ArrowRight className="w-4 h-4 text-[#73e28a] flex-shrink-0" />
+                    <span>{bullet}</span>
+                  </div>
+                ))}
               </div>
             </div>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-none mb-2">
-              Development
-            </h1>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-slate-700 leading-none mb-10">
-              Agency.
-            </h1>
 
-            <Link to={createPageUrl('Contact')}>
-              <div className="inline-flex items-center gap-3 px-8 py-4 border border-[#73e28a]/50 hover:border-[#73e28a] hover:bg-[#73e28a]/5 transition-all cursor-pointer group">
-                <ArrowUpRight className="w-5 h-5 text-[#73e28a] group-hover:rotate-45 transition-transform" />
-                <span className="text-white font-medium">We Build Production-Ready Apps Fast</span>
-              </div>
-            </Link>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <Link to={createPageUrl('Contact')}>
+                <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-8 text-lg rounded-lg">
+                  {heroSlides[currentSlide].button}
+                </Button>
+              </Link>
+              <span className="text-slate-400 text-sm">{heroSlides[currentSlide].subtext}</span>
+            </div>
           </div>
         </div>
 
@@ -147,16 +179,8 @@ export default function HomePage() {
         {/* Side rotating text */}
         <div className="absolute left-4 top-1/3 -rotate-90 origin-left hidden xl:block">
           <span className="text-slate-600 text-xs tracking-[0.3em] uppercase transition-all duration-500">
-            {heroSlides[currentSlide].title}
+            Slide {currentSlide + 1} of 5
           </span>
-        </div>
-
-        {/* Slider text content */}
-        <div className="absolute right-8 top-1/3 hidden lg:block max-w-xs text-right">
-          <div className="transition-all duration-500">
-            <h3 className="text-[#73e28a] font-bold text-lg mb-2">{heroSlides[currentSlide].title}</h3>
-            <p className="text-slate-400 text-sm leading-relaxed">{heroSlides[currentSlide].text}</p>
-          </div>
         </div>
       </section>
 
