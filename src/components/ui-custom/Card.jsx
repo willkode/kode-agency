@@ -1,7 +1,7 @@
 import React from 'react';
 import { cn } from "@/lib/utils";
 
-export default function Card({ children, className, hoverEffect = true }) {
+export default function Card({ children, className, hoverEffect = true, onClick, ...props }) {
   return (
     <div 
       className={cn(
@@ -9,6 +9,8 @@ export default function Card({ children, className, hoverEffect = true }) {
         hoverEffect && "hover:border-indigo-500/50 hover:bg-slate-800/50 hover:shadow-lg hover:shadow-indigo-500/10",
         className
       )}
+      onClick={onClick}
+      {...props}
     >
       {children}
     </div>
