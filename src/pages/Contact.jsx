@@ -25,7 +25,19 @@ export default function ContactPage() {
   });
 
   const submitMutation = useMutation({
-    mutationFn: (data) => base44.entities.ContactSubmission.create(data),
+    mutationFn: async (data) => {
+      // Save to ContactSubmission
+      await base44.entities.ContactSubmission.create(data);
+      // Also create a Lead in CRM
+      await base44.entities.Lead.create({
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        description: data.message,
+        source: 'Contact Form',
+        status: 'New'
+      });
+    },
     onSuccess: () => {
        setIsSubmitted(true);
     }
