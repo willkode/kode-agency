@@ -302,7 +302,7 @@ export default function ProjectsSection({ initialProject, onProjectCreated }) {
 
       {/* Project Detail Dialog */}
       <Dialog open={!!selectedProject} onOpenChange={(open) => !open && setSelectedProject(null)}>
-        <DialogContent className="bg-slate-900 border-slate-800 max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="bg-slate-900 border-slate-800 max-w-2xl max-h-[90vh] overflow-y-auto [&>button]:text-slate-400 [&>button]:hover:text-white">
           {selectedProject && (
             <>
               <DialogHeader>
@@ -311,7 +311,7 @@ export default function ProjectsSection({ initialProject, onProjectCreated }) {
                     <DialogTitle className="text-white text-2xl">{selectedProject.title}</DialogTitle>
                     {selectedProject.client_company && <p className="text-slate-400">{selectedProject.client_company}</p>}
                   </div>
-                  <Button variant="ghost" size="icon" onClick={() => deleteProjectMutation.mutate(selectedProject.id)}>
+                  <Button variant="ghost" size="icon" className="hover:bg-slate-800" onClick={() => deleteProjectMutation.mutate(selectedProject.id)}>
                     <Trash2 className="w-4 h-4 text-red-400" />
                   </Button>
                 </div>
@@ -320,7 +320,7 @@ export default function ProjectsSection({ initialProject, onProjectCreated }) {
               <div className="space-y-6 mt-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm text-slate-400 mb-2 block">Status</label>
+                    <label className="text-sm text-slate-300 mb-2 block">Status</label>
                     <Select 
                       value={selectedProject.status || 'Planning'} 
                       onValueChange={(v) => {
@@ -337,7 +337,7 @@ export default function ProjectsSection({ initialProject, onProjectCreated }) {
                     </Select>
                   </div>
                   <div>
-                    <label className="text-sm text-slate-400 mb-2 block">Priority</label>
+                    <label className="text-sm text-slate-300 mb-2 block">Priority</label>
                     <Select 
                       value={selectedProject.priority || 'Medium'} 
                       onValueChange={(v) => {
@@ -404,13 +404,13 @@ export default function ProjectsSection({ initialProject, onProjectCreated }) {
 
                 {selectedProject.description && (
                   <div>
-                    <label className="text-sm text-slate-400 mb-2 block">Description</label>
+                    <label className="text-sm text-slate-300 mb-2 block">Description</label>
                     <p className="text-slate-300 bg-slate-800/50 p-3 rounded-lg">{selectedProject.description}</p>
                   </div>
                 )}
 
                 <div>
-                  <label className="text-sm text-slate-400 mb-2 block">Notes</label>
+                  <label className="text-sm text-slate-300 mb-2 block">Notes</label>
                   <Textarea 
                     className="bg-slate-800 border-slate-700"
                     value={selectedProject.notes || ''}
