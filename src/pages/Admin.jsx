@@ -57,7 +57,7 @@ export default function AdminPage() {
                   <Button
                     key={tab.id}
                     variant={activeTab === tab.id ? 'default' : 'ghost'}
-                    className={activeTab === tab.id ? 'bg-[#73e28a] text-black hover:bg-[#5dbb72]' : 'text-slate-400 hover:text-white'}
+                    className={activeTab === tab.id ? 'bg-[#73e28a] text-black hover:bg-[#5dbb72]' : 'text-slate-400 hover:text-white hover:bg-slate-700'}
                     onClick={() => setActiveTab(tab.id)}
                   >
                     <Icon className="w-4 h-4 mr-2" />
