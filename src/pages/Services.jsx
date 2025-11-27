@@ -6,28 +6,35 @@ import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
 import PageHero from '@/components/ui-custom/PageHero';
 import SectionLabel from '@/components/ui-custom/SectionLabel';
-
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
-import { Zap, RefreshCw, TrendingUp, Gauge, Layers, Code, Palette, Rocket, ArrowRight, CheckCircle, Phone } from 'lucide-react';
+import { 
+  Code, Rocket, Bot, Link2, Layers, Palette, Globe, Server,
+  Search, TrendingUp, Target, FileText, Brush, Mail, BarChart3,
+  ArrowRight, CheckCircle, Phone
+} from 'lucide-react';
 
 export default function ServicesPage() {
-  const services = [
-    { icon: Zap, title: "AI MVP Sprints", desc: "From zero to live MVP in 4-8 weeks using AI-accelerated workflows." },
-    { icon: Layers, title: "SaaS Development", desc: "Production-ready SaaS apps with authentication, billing, and dashboards." },
-    { icon: RefreshCw, title: "Product Partner", desc: "Ongoing development, A/B testing, and continuous optimization." },
-    { icon: TrendingUp, title: "CRO Sites", desc: "Landing pages and funnels designed to convert visitors into customers." },
-    { icon: Code, title: "Custom Integrations", desc: "Connect your app to any API, CRM, or third-party service." },
-    { icon: Palette, title: "UI/UX Design", desc: "Beautiful, conversion-focused interfaces that users love." },
-    { icon: Gauge, title: "Performance Tuning", desc: "Speed optimization, Core Web Vitals, and technical SEO fixes." },
-    { icon: Rocket, title: "Launch Support", desc: "Deployment, monitoring, and 30-day warranty on all builds." },
+  const developmentServices = [
+    { icon: Code, title: "App Development", slug: "AppDevelopment", desc: "Native, web, and cross-platform apps with AI-enhanced workflows." },
+    { icon: Rocket, title: "MVP Development", slug: "MVPDevelopment", desc: "Rapid MVPs using Base44, Lovable, Replit — launch in weeks." },
+    { icon: Bot, title: "AI Systems & Automations", slug: "AISystems", desc: "Custom AI agents, workflow automation, and LLM integrations." },
+    { icon: Link2, title: "API Development", slug: "APIDevelopment", desc: "REST & GraphQL APIs with third-party integrations." },
+    { icon: Layers, title: "Custom SaaS", slug: "SaaSDevelopment", desc: "Multi-tenant platforms with billing, auth, and dashboards." },
+    { icon: Palette, title: "UI/UX Design", slug: "UIUXDesign", desc: "Conversion-focused interfaces and full design systems." },
+    { icon: Globe, title: "Website Development", slug: "WebsiteDevelopment", desc: "High-performance sites, landing pages, and e-commerce." },
+    { icon: Server, title: "DevOps & Infrastructure", slug: "DevOps", desc: "Cloud setup, monitoring, scaling, and deployment." },
   ];
 
-  const features = [
-    { num: "01", title: "Creative Solution", desc: "AI-accelerated development with human refinement for quality output." },
-    { num: "02", title: "Modern Stack", desc: "Built on Base44, Lovable, React, and modern cloud infrastructure." },
-    { num: "03", title: "Fast Delivery", desc: "4-8 weeks from kickoff to production-ready deployment." },
+  const marketingServices = [
+    { icon: Search, title: "SEO Services", slug: "SEOServices", desc: "Technical SEO, on-page optimization, and AI-powered audits." },
+    { icon: TrendingUp, title: "Conversion Rate Optimization", slug: "CROServices", desc: "Funnel optimization, A/B testing, and UX improvements." },
+    { icon: Target, title: "Paid Ads Management", slug: "PaidAds", desc: "Google Ads, Facebook/Instagram Ads, and retargeting." },
+    { icon: FileText, title: "Content Marketing", slug: "ContentMarketing", desc: "Blog writing, AI-generated content, and social media." },
+    { icon: Brush, title: "Branding & Creative", slug: "Branding", desc: "Logo design, brand identity, and messaging strategy." },
+    { icon: Mail, title: "Email Marketing", slug: "EmailMarketing", desc: "Automation, lead nurturing, and list growth strategy." },
+    { icon: BarChart3, title: "Full Funnel Marketing", slug: "FullFunnelMarketing", desc: "End-to-end strategy, lead gen, and multi-channel campaigns." },
   ];
 
   const testimonials = [
@@ -51,48 +58,82 @@ export default function ServicesPage() {
     }
   ];
 
+  const ServiceCard = ({ service }) => (
+    <Link to={createPageUrl(service.slug)}>
+      <Card className="p-6 group hover:border-[#73e28a]/50 bg-slate-900/80 h-full cursor-pointer">
+        <div className="w-14 h-14 mb-4 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-[#73e28a] group-hover:bg-[#73e28a] group-hover:text-black transition-all duration-300">
+          <service.icon className="w-6 h-6" />
+        </div>
+        <h3 className="text-lg font-bold text-white mb-2 group-hover:text-[#73e28a] transition-colors">{service.title}</h3>
+        <p className="text-slate-400 text-sm leading-relaxed mb-4">{service.desc}</p>
+        <div className="flex items-center text-[#73e28a] text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+          Learn More <ArrowRight className="w-4 h-4 ml-1" />
+        </div>
+      </Card>
+    </Link>
+  );
+
   return (
     <div className="bg-slate-950 text-white">
-      {/* Hero */}
       <PageHero 
         title="Services" 
         backgroundImage="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1600&auto=format&fit=crop"
       />
 
-      {/* Services Grid */}
+      {/* Development Services */}
       <Section className="py-24 relative overflow-hidden">
         <GridBackground />
         <FloatingPixels count={20} />
         
         <div className="relative z-10">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-16">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12">
             <div>
-              <SectionLabel text="Best Of Service" />
+              <SectionLabel text="Build & Ship" />
               <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
-                All Professional Solutions<br />
-                & Services
+                Development Services
               </h2>
+              <p className="text-slate-400 mt-4 max-w-2xl">
+                Everything related to building software, apps, automations, AI systems, and dev consulting — delivered 80% faster with our AI-enhanced workflow.
+              </p>
             </div>
-
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {services.map((service, i) => (
-              <Card key={i} className="p-6 text-center group hover:border-[#73e28a]/50 bg-slate-900/80">
-                <div className="w-16 h-16 mx-auto mb-5 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-[#73e28a] group-hover:bg-[#73e28a] group-hover:text-black transition-all duration-300">
-                  <service.icon className="w-7 h-7" />
-                </div>
-                <h3 className="text-lg font-bold text-white mb-3">{service.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{service.desc}</p>
-              </Card>
+            {developmentServices.map((service, i) => (
+              <ServiceCard key={i} service={service} />
             ))}
           </div>
         </div>
       </Section>
 
-      {/* Why Choose Us Section */}
+      {/* Marketing Services */}
       <Section className="py-24 bg-slate-900/50 relative overflow-hidden">
         <GlowingOrb position="top-right" size="400px" opacity={0.1} />
+        
+        <div className="relative z-10">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12">
+            <div>
+              <SectionLabel text="Grow & Scale" />
+              <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+                Marketing Services
+              </h2>
+              <p className="text-slate-400 mt-4 max-w-2xl">
+                Everything tied to growth, visibility, conversion, traffic, and brand — powered by data-driven strategies and AI optimization.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {marketingServices.map((service, i) => (
+              <ServiceCard key={i} service={service} />
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* Why Choose Us */}
+      <Section className="py-24 relative overflow-hidden">
+        <GridBackground />
         
         <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
           <div className="relative">
@@ -102,7 +143,6 @@ export default function ServicesPage() {
                 alt="Team working" 
                 className="rounded-2xl w-full max-w-lg"
               />
-              {/* Floating accent image */}
               <div className="absolute -bottom-8 -right-8 w-40 h-40 rounded-xl overflow-hidden border-4 border-slate-950 shadow-xl">
                 <img 
                   src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=200&auto=format&fit=crop" 
@@ -110,7 +150,6 @@ export default function ServicesPage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              {/* Green accent */}
               <div className="absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2">
                 <div className="w-16 h-16 bg-[#73e28a] rounded-tr-3xl rounded-bl-3xl flex items-center justify-center">
                   <CheckCircle className="w-8 h-8 text-black" />
@@ -122,21 +161,23 @@ export default function ServicesPage() {
           <div>
             <SectionLabel text="Why Choose Us" />
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-              Make Your Service<br />
-              <span className="text-[#73e28a]">Stand Out</span>
+              Development + Marketing<br />
+              <span className="text-[#73e28a]">Under One Roof</span>
             </h2>
             <p className="text-slate-300 leading-relaxed mb-8">
-              For each project, we take a bespoke approach to developing solutions, often with the common goal of shipping fast without sacrificing quality.
+              Most agencies do one or the other. We do both — which means your product is built for conversion from day one, not retrofitted later.
             </p>
 
-            <div className="space-y-6 mb-8">
-              {features.map((feature, i) => (
-                <div key={i} className="flex gap-6 p-5 bg-slate-800/50 border border-slate-700 rounded-xl hover:border-[#73e28a]/30 transition-colors">
-                  <div className="text-[#73e28a] font-bold text-xl">{feature.num}</div>
-                  <div>
-                    <h4 className="text-white font-bold mb-1">{feature.title}</h4>
-                    <p className="text-slate-400 text-sm">{feature.desc}</p>
-                  </div>
+            <div className="space-y-4 mb-8">
+              {[
+                "AI-accelerated development — 80% faster than traditional agencies",
+                "Conversion-first design and marketing baked into every build",
+                "Fixed pricing with no surprises — know your costs upfront",
+                "Full-stack team: developers, designers, and marketers"
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-[#73e28a] mt-0.5 flex-shrink-0" />
+                  <span className="text-slate-300">{item}</span>
                 </div>
               ))}
             </div>
@@ -159,8 +200,7 @@ export default function ServicesPage() {
       </Section>
 
       {/* Testimonials */}
-      <Section className="py-24 relative overflow-hidden">
-        <GridBackground />
+      <Section className="py-24 bg-slate-900/50 relative overflow-hidden">
         <FloatingPixels count={15} />
         
         <div className="relative z-10">
@@ -198,7 +238,7 @@ export default function ServicesPage() {
       </Section>
 
       {/* CTA */}
-      <Section className="py-24 bg-slate-900/30 relative overflow-hidden">
+      <Section className="py-24 relative overflow-hidden">
         <GlowingOrb position="center" size="500px" opacity={0.1} />
         
         <div className="relative z-10 text-center">

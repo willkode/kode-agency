@@ -12,6 +12,21 @@ import Legal from './pages/Legal';
 import BlogPost from './pages/BlogPost';
 import Apply from './pages/Apply';
 import Admin from './pages/Admin';
+import AppDevelopment from './pages/AppDevelopment';
+import MVPDevelopment from './pages/MVPDevelopment';
+import AISystems from './pages/AISystems';
+import APIDevelopment from './pages/APIDevelopment';
+import SaaSDevelopment from './pages/SaaSDevelopment';
+import UIUXDesign from './pages/UIUXDesign';
+import WebsiteDevelopment from './pages/WebsiteDevelopment';
+import DevOps from './pages/DevOps';
+import SEOServices from './pages/SEOServices';
+import CROServices from './pages/CROServices';
+import PaidAds from './pages/PaidAds';
+import ContentMarketing from './pages/ContentMarketing';
+import Branding from './pages/Branding';
+import EmailMarketing from './pages/EmailMarketing';
+import FullFunnelMarketing from './pages/FullFunnelMarketing';
 import __Layout from './Layout.jsx';
 
 
@@ -30,6 +45,21 @@ export const PAGES = {
     "BlogPost": BlogPost,
     "Apply": Apply,
     "Admin": Admin,
+    "AppDevelopment": AppDevelopment,
+    "MVPDevelopment": MVPDevelopment,
+    "AISystems": AISystems,
+    "APIDevelopment": APIDevelopment,
+    "SaaSDevelopment": SaaSDevelopment,
+    "UIUXDesign": UIUXDesign,
+    "WebsiteDevelopment": WebsiteDevelopment,
+    "DevOps": DevOps,
+    "SEOServices": SEOServices,
+    "CROServices": CROServices,
+    "PaidAds": PaidAds,
+    "ContentMarketing": ContentMarketing,
+    "Branding": Branding,
+    "EmailMarketing": EmailMarketing,
+    "FullFunnelMarketing": FullFunnelMarketing,
 }
 
 export const pagesConfig = {
