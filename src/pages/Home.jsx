@@ -269,8 +269,8 @@ export default function HomePage() {
           <div>
             <SectionLabel text="The Kode Advantage" />
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Why the Smart Money<br />
-              <span className="text-[#73e28a]">Chooses Us</span>
+              Stop Hiring. Start<br />
+              <span className="text-[#73e28a]">Winning.</span>
             </h2>
             <p className="text-slate-300 leading-relaxed mb-8">
               You could hire a dev shop that doesn't understand marketing. Or a marketing agency that can't build. Or waste months managing both. Or you could just win.
