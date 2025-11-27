@@ -16,29 +16,29 @@ export default function HomePage() {
 
   const heroSlides = [
   {
-    headline: "Development + Marketing Under One Roof",
-    subhead: "We build apps 80% faster with AI and grow them with data-driven marketing. Full-stack solutions from MVP to scale.",
-    bullets: ["Apps, SaaS & AI Systems", "SEO, Ads & Conversion Optimization", "Fixed Pricing. Fast Delivery."]
+    headline: "30 Years of Expertise. AI-Powered Speed.",
+    subhead: "We've generated $100M+ in client revenue. Now we build 10x faster with AI. Your unfair advantage starts here.",
+    bullets: ["Battle-Tested Marketing + Cutting-Edge Dev", "From Zero to Revenue in Weeks, Not Months", "Fixed Pricing. No Surprises. Real Results."]
   },
   {
-    headline: "Ship Your MVP in 4-8 Weeks",
-    subhead: "AI-accelerated development on Base44, Lovable, Replit, and custom stacks. From idea to production-ready product.",
-    bullets: ["Native, Web & Cross-Platform Apps", "Multi-Tenant SaaS with Billing", "AI Agents & Workflow Automation"]
+    headline: "Your MVP. Live in 4 Weeks.",
+    subhead: "Stop burning runway on slow agencies. We've launched 200+ products. Yours could be next.",
+    bullets: ["Production-Ready, Not Just Prototypes", "Built to Scale From Day One", "AI-Accelerated Without Cutting Corners"]
   },
   {
-    headline: "Rank Higher. Convert More.",
-    subhead: "Data-driven SEO, paid ads, and CRO strategies that turn traffic into customers. AI-powered marketing at scale.",
-    bullets: ["Technical SEO & Content Strategy", "Google & Meta Ads Management", "A/B Testing & Funnel Optimization"]
+    headline: "Traffic is Vanity. Revenue is Sanity.",
+    subhead: "We don't chase rankings—we engineer profitable customer acquisition systems. 30 years of conversion science meets AI.",
+    bullets: ["SEO That Drives Revenue, Not Just Traffic", "Paid Ads with 3-10x ROAS Track Record", "Conversion Funnels That Actually Convert"]
   },
   {
-    headline: "Custom AI Systems & Automations",
-    subhead: "Build intelligent agents, workflow automations, and LLM integrations that save time and reduce costs.",
-    bullets: ["OpenAI, Anthropic & Google Integrations", "Zapier, n8n & Make Workflows", "Custom AI Agents for Any Task"]
+    headline: "Automate Everything. Outpace Everyone.",
+    subhead: "Your competitors are using AI wrong. We build systems that compound your advantage while you sleep.",
+    bullets: ["Custom AI Agents That Work 24/7", "Workflow Automations That Save 40+ Hours/Week", "Integrations That Eliminate Busywork"]
   },
   {
-    headline: "Beautiful Design That Converts",
-    subhead: "UI/UX design, branding, and websites built for performance. Every pixel optimized for user action.",
-    bullets: ["Conversion-Focused Interfaces", "Brand Identity & Design Systems", "High-Performance Websites"]
+    headline: "Design That Sells. Not Just Looks Pretty.",
+    subhead: "Every pixel is a persuasion trigger. We've optimized thousands of interfaces. We know what converts.",
+    bullets: ["Psychology-Driven UI/UX Design", "Brands That Command Premium Prices", "Websites That Turn Visitors Into Buyers"]
   }];
 
 
@@ -50,10 +50,10 @@ export default function HomePage() {
   }, []);
 
   const services = [
-  { icon: Rocket, title: "MVP Development", desc: "Launch your product in 4-8 weeks using AI-accelerated workflows." },
-  { icon: Bot, title: "AI Systems", desc: "Custom agents, automations, and LLM integrations for your business." },
-  { icon: Search, title: "SEO & Content", desc: "Rank higher with technical SEO and AI-powered content strategy." },
-  { icon: Target, title: "Paid Ads & CRO", desc: "Drive traffic and convert visitors with data-driven optimization." }];
+  { icon: Rocket, title: "MVP Development", desc: "Ship in weeks, not months. 200+ products launched. Yours is next." },
+  { icon: Bot, title: "AI Systems", desc: "Automate the repetitive. Amplify the profitable. Work smarter." },
+  { icon: Search, title: "SEO & Content", desc: "Page 1 rankings that drive revenue, not just vanity metrics." },
+  { icon: Target, title: "Paid Ads & CRO", desc: "Turn ad spend into predictable profit. 3-10x ROAS guaranteed." }];
 
 
   const clients = [
@@ -207,16 +207,16 @@ export default function HomePage() {
           </div>
 
           <div>
-            <SectionLabel text="About Company" />
+            <SectionLabel text="Why We're Different" />
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-              We Do Work Smart<br />
-              <span className="text-[#73e28a]">AI-Native Agency</span>
+              30 Years of Wins.<br />
+              <span className="text-[#73e28a]">Now Supercharged by AI.</span>
             </h2>
             <p className="text-slate-300 leading-relaxed mb-6">
-              We're a team of creatives who are excited about unique ideas and help companies create amazing products by crafting top-notch UI/UX with AI-accelerated development.
+              Most agencies are either old-school marketers who can't code, or young devs who don't understand business. We're the rare breed that's mastered both—and now we move 10x faster with AI.
             </p>
             <p className="text-slate-400 leading-relaxed mb-8">
-              This is the main factor that sets us apart from our competition and allows us to deliver specialist product development. Our team applies its wide-ranging experience to determining the best approach for your project.
+              $100M+ in revenue generated. 200+ products launched. We've seen what works, what fails, and exactly how to shortcut your path to success. Stop gambling. Start scaling.
             </p>
 
             <div className="flex flex-wrap gap-3 mb-8">
@@ -267,20 +267,20 @@ export default function HomePage() {
         
         <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
           <div>
-            <SectionLabel text="Why Choose Us" />
+            <SectionLabel text="The Kode Advantage" />
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Make Your Product<br />
-              <span className="text-[#73e28a]">Stand Out</span>
+              Why the Smart Money<br />
+              <span className="text-[#73e28a]">Chooses Us</span>
             </h2>
             <p className="text-slate-300 leading-relaxed mb-8">
-              For each project, we take a bespoke approach to developing solutions, often with the common goal of shipping fast without sacrificing quality.
+              You could hire a dev shop that doesn't understand marketing. Or a marketing agency that can't build. Or waste months managing both. Or you could just win.
             </p>
 
             <div className="space-y-6">
               {[
-              { num: "01", title: "AI-Accelerated", desc: "80% faster development using modern AI tools and platforms" },
-              { num: "02", title: "Conversion-First", desc: "30 years of marketing experience in every build" },
-              { num: "03", title: "Fixed Pricing", desc: "No hourly surprises, clear timelines and deliverables" }].
+              { num: "01", title: "Speed That Compounds", desc: "Ship in weeks while competitors take months. First-mover advantage is real." },
+              { num: "02", title: "30 Years of Conversion Science", desc: "Every feature we build is designed to drive revenue. We know what sells." },
+              { num: "03", title: "Fixed Price. Fixed Timeline.", desc: "Know exactly what you'll pay and when you'll launch. Zero surprises." }].
               map((item, i) =>
               <div key={i} className="flex gap-6 p-6 bg-slate-900/50 border border-slate-800 rounded-xl hover:border-[#73e28a]/30 transition-colors">
                   <div className="text-[#73e28a] font-bold text-xl">{item.num}</div>
@@ -312,18 +312,18 @@ export default function HomePage() {
         <GridBackground />
         
         <div className="relative z-10 text-center mb-16">
-          <SectionLabel text="Our Process" />
-          <h2 className="text-4xl md:text-5xl font-bold text-white">How We Work</h2>
-          <p className="text-slate-300 mt-4">Idea → Scope → Sprint → Launch → Grow</p>
+          <SectionLabel text="Proven Process" />
+          <h2 className="text-4xl md:text-5xl font-bold text-white">From Zero to Revenue. Fast.</h2>
+          <p className="text-slate-300 mt-4">The same system that's launched 200+ successful products.</p>
         </div>
 
         <div className="relative z-10 flex flex-wrap justify-center gap-8">
           {[
-          { num: "01", title: "Discover", desc: "Map goals and requirements" },
-          { num: "02", title: "Scope", desc: "Define features and timeline" },
-          { num: "03", title: "Sprint", desc: "Build working MVP" },
-          { num: "04", title: "Launch", desc: "Deploy and measure" },
-          { num: "05", title: "Grow", desc: "Ongoing partnership" }].
+          { num: "01", title: "Discover", desc: "Find the fastest path to revenue" },
+          { num: "02", title: "Scope", desc: "Lock in features, timeline & price" },
+          { num: "03", title: "Sprint", desc: "Build at 10x speed with AI" },
+          { num: "04", title: "Launch", desc: "Go live with marketing ready" },
+          { num: "05", title: "Scale", desc: "Compound your wins" }].
           map((step, i) =>
           <div key={i} className="text-center group">
               <div className="w-20 h-20 mx-auto mb-4 rounded-full border-2 border-[#73e28a] flex items-center justify-center text-[#73e28a] font-bold text-xl group-hover:bg-[#73e28a] group-hover:text-black transition-all">
@@ -350,24 +350,24 @@ export default function HomePage() {
         
         <div className="relative z-10 text-center max-w-3xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Ready to build 80% faster?
+            Your Competitors Won't Wait.<br />Neither Should You.
           </h2>
           <p className="text-slate-300 text-lg mb-10">
-            Whether you have an idea or an existing app, we'll help you move fast without sacrificing quality.
+            Every day you delay is a day they're gaining ground. Let's change that. Free strategy call—no pitch, just answers.
           </p>
           
           <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
             <Link to={createPageUrl('Contact')} className="block">
               <Card className="p-8 hover:border-[#73e28a]/50 group cursor-pointer h-full bg-slate-900/80">
                 <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#73e28a] transition-colors">I have an idea</h3>
-                <p className="text-slate-300 text-sm mb-4">Let's scope and build your MVP</p>
+                <p className="text-slate-300 text-sm mb-4">Let's validate it and ship in weeks</p>
                 <ArrowRight className="w-5 h-5 text-[#73e28a] group-hover:translate-x-1 transition-transform" />
               </Card>
             </Link>
             <Link to={createPageUrl('Contact')} className="block">
               <Card className="p-8 hover:border-[#73e28a]/50 group cursor-pointer h-full bg-slate-900/80">
-                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#73e28a] transition-colors">I have an existing app</h3>
-                <p className="text-slate-300 text-sm mb-4">Let's evolve and optimize it</p>
+                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#73e28a] transition-colors">I need to scale</h3>
+                <p className="text-slate-300 text-sm mb-4">Let's 10x your growth engine</p>
                 <ArrowRight className="w-5 h-5 text-[#73e28a] group-hover:translate-x-1 transition-transform" />
               </Card>
             </Link>
