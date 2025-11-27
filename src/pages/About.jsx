@@ -34,20 +34,22 @@ export default function AboutPage() {
         backgroundImage="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1600&auto=format&fit=crop"
       />
 
-      {/* Video Banner */}
-      <div className="relative h-[500px] overflow-hidden">
-        <img 
-          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1600&auto=format&fit=crop" 
-          alt="Team collaboration" 
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-slate-950/40"></div>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-24 h-24 rounded-full bg-[#73e28a] flex items-center justify-center cursor-pointer hover:scale-110 transition-transform shadow-lg shadow-[#73e28a]/30">
-            <Play className="w-10 h-10 text-black ml-1" fill="black" />
-          </div>
+      {/* Achievement Counters */}
+      <Section className="py-20 bg-slate-900/50 border-y border-slate-800">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {[
+            { value: "50+", label: "Apps Built" },
+            { value: "25+", label: "Mobile Apps" },
+            { value: "100+", label: "Websites" },
+            { value: "75+", label: "Marketing Campaigns" },
+          ].map((item, i) => (
+            <div key={i} className="text-center">
+              <div className="text-4xl md:text-5xl font-bold text-[#73e28a] mb-2">{item.value}</div>
+              <div className="text-slate-400">{item.label}</div>
+            </div>
+          ))}
         </div>
-      </div>
+      </Section>
 
       {/* About Content */}
       <Section className="py-24 relative overflow-hidden">
