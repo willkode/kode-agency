@@ -54,31 +54,20 @@ export default function AboutPage() {
         <GlowingOrb position="top-right" size="400px" opacity={0.1} />
         
         <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
-          <div className="relative">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-4">
-                <img 
-                  src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=400&h=500&fit=crop" 
-                  alt="Team collaboration" 
-                  className="rounded-2xl w-full h-64 object-cover"
-                />
-                <img 
-                  src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=300&fit=crop" 
-                  alt="Work" 
-                  className="rounded-2xl w-full h-48 object-cover grayscale"
-                />
-              </div>
-              <div className="pt-12">
-              </div>
-            </div>
-            {/* Will Kode Photo - Full size with higher z-index */}
+          <div className="relative flex flex-col items-center">
+            {/* Will Kode Photo */}
             <img 
               src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/691e276e2117009b68e21c5c/bb73b7d1e_image.png" 
               alt="Will Kode" 
-              className="absolute top-0 right-0 z-20 h-full w-auto max-w-[60%] object-contain"
+              className="w-full max-w-md h-auto object-contain"
             />
+            {/* Name and Title */}
+            <div className="text-center mt-6">
+              <h3 className="text-2xl font-bold text-white">Will Kode</h3>
+              <p className="text-[#73e28a] font-medium">Founder and CEO</p>
+            </div>
             {/* Green accent */}
-            <div className="absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2 z-30">
+            <div className="absolute top-1/3 right-0 transform translate-x-1/2 z-30">
               <div className="w-16 h-16 bg-[#73e28a] rounded-tr-3xl rounded-bl-3xl flex items-center justify-center">
                 <CheckCircle className="w-8 h-8 text-black" />
               </div>
