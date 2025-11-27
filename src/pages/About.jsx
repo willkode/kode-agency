@@ -65,19 +65,20 @@ export default function AboutPage() {
                 <img 
                   src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=400&h=300&fit=crop" 
                   alt="Work" 
-                  className="rounded-2xl w-full h-48 object-cover"
+                  className="rounded-2xl w-full h-48 object-cover grayscale"
                 />
               </div>
               <div className="pt-12">
-                <img 
-                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/691e276e2117009b68e21c5c/bb73b7d1e_image.png" 
-                  alt="Will Kode" 
-                  className="rounded-2xl w-full h-80 object-cover"
-                />
               </div>
             </div>
+            {/* Will Kode Photo - Full size with higher z-index */}
+            <img 
+              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/691e276e2117009b68e21c5c/bb73b7d1e_image.png" 
+              alt="Will Kode" 
+              className="absolute top-0 right-0 z-20 h-full w-auto max-w-[60%] object-contain"
+            />
             {/* Green accent */}
-            <div className="absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2">
+            <div className="absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2 z-30">
               <div className="w-16 h-16 bg-[#73e28a] rounded-tr-3xl rounded-bl-3xl flex items-center justify-center">
                 <CheckCircle className="w-8 h-8 text-black" />
               </div>
