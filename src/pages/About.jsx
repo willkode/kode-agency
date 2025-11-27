@@ -106,17 +106,7 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      {/* Stats */}
-      <Section className="py-16 bg-slate-900/50 border-y border-slate-800">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {stats.map((stat, i) => (
-            <div key={i} className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-[#73e28a] mb-2">{stat.value}</div>
-              <div className="text-slate-400">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-      </Section>
+
 
       {/* Values */}
       <Section className="py-24 relative overflow-hidden">
