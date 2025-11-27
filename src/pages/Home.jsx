@@ -81,7 +81,7 @@ export default function HomePage() {
 
 
         {/* Diagonal Lines */}
-        <div className="absolute top-48 right-10 hidden lg:flex gap-1">
+        <div className="absolute top-1/2 -translate-y-1/2 right-10 hidden lg:flex gap-1">
           {[...Array(15)].map((_, i) =>
           <div
             key={i}
