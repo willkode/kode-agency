@@ -375,25 +375,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* Newsletter */}
-      <Section className="py-16 border-t border-slate-800">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          <div>
-            <SectionLabel text="Get In Touch" />
-            <h3 className="text-3xl font-bold text-white">Subscribe Now.</h3>
-          </div>
-          <div className="flex items-center gap-4 w-full max-w-md">
-            <input
-              type="email"
-              placeholder="Your email address"
-              className="flex-1 bg-transparent border-b border-slate-700 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#73e28a]" />
 
-            <button className="w-16 h-16 rounded-full bg-[#73e28a] flex items-center justify-center text-black hover:scale-105 transition-transform">
-              <ArrowUpRight className="w-6 h-6" />
-            </button>
-          </div>
-        </div>
-      </Section>
     </div>);
 
 }

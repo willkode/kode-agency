@@ -225,32 +225,7 @@ export default function ContactPage() {
          </div>
       </Section>
 
-      {/* Newsletter Section */}
-      <Section className="py-16 border-t border-slate-800">
-         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-             <div className="max-w-md">
-                <SectionLabel text="Get In Touch" />
-                <h2 className="text-4xl font-bold text-white mb-4">Subscribe Now.</h2>
-                <p className="text-slate-500 text-sm leading-relaxed">
-                   Stay updated with our latest projects and insights.
-                </p>
-             </div>
-             
-             <div className="flex-grow w-full max-w-xl flex items-center gap-8">
-                <div className="w-full space-y-2">
-                   <Label className="text-slate-400 text-xs uppercase">Your Email:</Label>
-                   <Input 
-                      placeholder="your@email.com" 
-                      className="bg-transparent border-b border-slate-700 rounded-none px-0 h-12 focus:border-[#73e28a] text-white placeholder:text-slate-600 border-t-0 border-x-0"
-                   />
-                </div>
-                <button className="w-20 h-20 flex-shrink-0 bg-[#73e28a] rounded-full flex flex-col items-center justify-center text-black font-bold text-xs hover:scale-105 transition-transform shadow-lg shadow-[#73e28a]/20">
-                   <ArrowUpRight className="w-6 h-6 mb-1" />
-                   <span>Subscribe</span>
-                </button>
-             </div>
-         </div>
-      </Section>
+
     </div>
   );
 }
