@@ -159,7 +159,7 @@ export default function HomePage() {
         </div>
 
         {/* Next Slide Preview */}
-        <div className="absolute right-8 top-1/3 hidden lg:flex flex-col items-center text-center max-w-[200px]">
+        <div className="absolute right-1/4 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center text-center max-w-[220px]">
           <h4 className="text-[#73e28a] font-bold text-lg mb-2 transition-all duration-500">
             {heroSlides[(currentSlide + 1) % heroSlides.length].headline.split(' ').slice(0, 3).join(' ')}
           </h4>
