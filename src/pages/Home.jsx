@@ -9,36 +9,36 @@ import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 
 import SectionLabel from '@/components/ui-custom/SectionLabel';
-import { ArrowRight, ArrowUpRight, ArrowLeft, Zap, Target, Sparkles, Layers, Code, TrendingUp, CheckCircle, Play, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Rocket, Bot, Search, Target, TrendingUp, CheckCircle, Play, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const heroSlides = [
   {
-    headline: "We Build Apps 80% Faster With AI",
-    subhead: "Beautiful, production-ready software. Built on platforms like Base44, Lovable, Replit, and full custom stacks.",
-    bullets: ["Production-Ready MVPs in Weeks", "Conversion-First Design", "Native, Web, and Mobile Apps"]
+    headline: "Development + Marketing Under One Roof",
+    subhead: "We build apps 80% faster with AI and grow them with data-driven marketing. Full-stack solutions from MVP to scale.",
+    bullets: ["Apps, SaaS & AI Systems", "SEO, Ads & Conversion Optimization", "Fixed Pricing. Fast Delivery."]
   },
   {
-    headline: "Your Product. Built Faster With AI.",
-    subhead: "Turn your idea into a polished, market-ready product without waiting months.",
-    bullets: ["AI-Accelerated Development", "Modern UI/UX + Conversion Focus", "MVPs, SaaS Platforms, and Custom Tools"]
+    headline: "Ship Your MVP in 4-8 Weeks",
+    subhead: "AI-accelerated development on Base44, Lovable, Replit, and custom stacks. From idea to production-ready product.",
+    bullets: ["Native, Web & Cross-Platform Apps", "Multi-Tenant SaaS with Billing", "AI Agents & Workflow Automation"]
   },
   {
-    headline: "Launch a Complete MVP in 1–4 Weeks",
-    subhead: "We combine design, development, and AI automation to build at incredible speed.",
-    bullets: ["Fixed Pricing. Clear Scope.", "Cross-Platform Apps & SaaS Systems", "Built With Base44, Lovable, Replit & Custom Code"]
+    headline: "Rank Higher. Convert More.",
+    subhead: "Data-driven SEO, paid ads, and CRO strategies that turn traffic into customers. AI-powered marketing at scale.",
+    bullets: ["Technical SEO & Content Strategy", "Google & Meta Ads Management", "A/B Testing & Funnel Optimization"]
   },
   {
-    headline: "A Modern Agency for Modern Products",
-    subhead: "AI-native workflows let us deliver higher quality software with less friction.",
-    bullets: ["Clean Architecture & Scalable Code", "Pixel-Perfect UI with Conversion Insights", "AI Integration for Any App"]
+    headline: "Custom AI Systems & Automations",
+    subhead: "Build intelligent agents, workflow automations, and LLM integrations that save time and reduce costs.",
+    bullets: ["OpenAI, Anthropic & Google Integrations", "Zapier, n8n & Make Workflows", "Custom AI Agents for Any Task"]
   },
   {
-    headline: "Get Custom Software Without the Slowdowns",
-    subhead: "We handle everything—design, development, AI systems, and integrations.",
-    bullets: ["Native, Web, and Mobile Development", "Enterprise-Ready Features", "Reliable Support After Launch"]
+    headline: "Beautiful Design That Converts",
+    subhead: "UI/UX design, branding, and websites built for performance. Every pixel optimized for user action.",
+    bullets: ["Conversion-Focused Interfaces", "Brand Identity & Design Systems", "High-Performance Websites"]
   }];
 
 
@@ -50,10 +50,10 @@ export default function HomePage() {
   }, []);
 
   const services = [
-  { icon: Zap, title: "AI MVP Sprints", desc: "From zero to live MVP in 4-8 weeks using AI-accelerated workflows." },
-  { icon: Layers, title: "SaaS Development", desc: "Production-ready apps with auth, billing, and admin dashboards." },
-  { icon: TrendingUp, title: "CRO Sites", desc: "Landing pages designed to convert visitors into customers." },
-  { icon: Code, title: "Custom Integrations", desc: "Connect your app to any API, CRM, or third-party service." }];
+  { icon: Rocket, title: "MVP Development", desc: "Launch your product in 4-8 weeks using AI-accelerated workflows." },
+  { icon: Bot, title: "AI Systems", desc: "Custom agents, automations, and LLM integrations for your business." },
+  { icon: Search, title: "SEO & Content", desc: "Rank higher with technical SEO and AI-powered content strategy." },
+  { icon: Target, title: "Paid Ads & CRO", desc: "Drive traffic and convert visitors with data-driven optimization." }];
 
 
   const clients = [
@@ -220,7 +220,7 @@ export default function HomePage() {
             </p>
 
             <div className="flex flex-wrap gap-3 mb-8">
-              {['UX/UI Design', 'AI Integration', 'SaaS Development', 'CRO Optimization', 'Custom APIs', 'Rapid MVPs'].map((skill, i) =>
+              {['App Development', 'AI Systems', 'SEO Services', 'Paid Ads', 'UI/UX Design', 'SaaS Platforms'].map((skill, i) =>
               <span key={i} className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-full text-sm text-slate-300 hover:border-[#73e28a]/50 hover:text-[#73e28a] transition-colors cursor-default">
                   {skill}
                 </span>
