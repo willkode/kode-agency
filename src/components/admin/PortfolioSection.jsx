@@ -65,7 +65,7 @@ export default function PortfolioSection() {
           </Select>
         </div>
         <Link to={createPageUrl('AdminPortfolioEdit')}>
-          <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-white">
+          <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black">
             <Plus className="w-4 h-4 mr-2" /> Add Portfolio Item
           </Button>
         </Link>

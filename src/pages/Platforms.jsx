@@ -132,7 +132,7 @@ export default function PlatformsPage() {
             That's our job. We'll analyze your requirements and recommend the best path forward.
           </p>
           <Link to={createPageUrl('Contact')}>
-            <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-white font-bold h-14 px-10 text-lg">
+            <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg">
               Schedule a Platform Fit Call <ArrowRight className="ml-2" />
             </Button>
           </Link>

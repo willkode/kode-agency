@@ -198,7 +198,7 @@ export default function AdminBlogEditPage() {
                   Cancel
                 </Button>
               </Link>
-              <Button type="submit" className="bg-[#73e28a] hover:bg-[#5dbb72] text-white disabled:opacity-50 disabled:cursor-not-allowed" disabled={saving}>
+              <Button type="submit" className="bg-[#73e28a] hover:bg-[#5dbb72] text-black disabled:opacity-50 disabled:cursor-not-allowed" disabled={saving}>
                 <Save className="w-4 h-4 mr-2" />
                 {isEditing ? 'Update' : 'Publish'}
               </Button>

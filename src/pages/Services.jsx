@@ -152,7 +152,7 @@ export default function ServicesPage() {
               </div>
               <div className="absolute top-1/2 right-0 transform translate-x-1/2 -translate-y-1/2">
                 <div className="w-16 h-16 bg-[#73e28a] rounded-tr-3xl rounded-bl-3xl flex items-center justify-center">
-                  <CheckCircle className="w-8 h-8 text-white" />
+                  <CheckCircle className="w-8 h-8 text-black" />
                 </div>
               </div>
             </div>
@@ -184,7 +184,7 @@ export default function ServicesPage() {
 
             <div className="flex items-center gap-6">
               <Link to={createPageUrl('Contact')}>
-                <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-white font-bold h-12 px-6">
+                <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-12 px-6">
                   Start a Project <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </Link>
@@ -249,7 +249,7 @@ export default function ServicesPage() {
             Let's discuss your project and find the perfect solution for your needs.
           </p>
           <Link to={createPageUrl('Contact')}>
-            <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-white font-bold h-14 px-10 text-lg">
+            <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg">
               Get Started Today
             </Button>
           </Link>

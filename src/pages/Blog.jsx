@@ -123,7 +123,7 @@ export default function BlogPage() {
 
         {/* Pagination */}
         <div className="flex items-center justify-center gap-2 mt-16">
-          <button className="w-10 h-10 rounded-full bg-[#73e28a] text-white font-bold text-sm focus:outline-none focus:ring-2 focus:ring-[#73e28a] focus:ring-offset-2 focus:ring-offset-slate-950">1</button>
+          <button className="w-10 h-10 rounded-full bg-[#73e28a] text-black font-bold text-sm focus:outline-none focus:ring-2 focus:ring-[#73e28a] focus:ring-offset-2 focus:ring-offset-slate-950">1</button>
           <button className="w-10 h-10 rounded-full border border-slate-700 text-slate-400 hover:border-[#73e28a] hover:text-[#73e28a] transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#73e28a] focus:ring-offset-2 focus:ring-offset-slate-950">2</button>
           <button className="w-10 h-10 rounded-full border border-slate-700 text-slate-400 hover:border-[#73e28a] hover:text-[#73e28a] transition-colors text-sm focus:outline-none focus:ring-2 focus:ring-[#73e28a] focus:ring-offset-2 focus:ring-offset-slate-950">→</button>
         </div>

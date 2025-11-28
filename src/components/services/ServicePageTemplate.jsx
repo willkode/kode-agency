@@ -46,7 +46,7 @@ export default function ServicePageTemplate({
             
             <div className="flex items-center gap-6">
               <Link to={createPageUrl('Contact')}>
-                <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-white font-bold h-12 px-6">
+                <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-12 px-6">
                   Get Started <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </Link>
@@ -197,7 +197,7 @@ export default function ServicePageTemplate({
             Let's discuss your project and create something amazing together.
           </p>
           <Link to={createPageUrl('Contact')}>
-            <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-white font-bold h-14 px-10 text-lg">
+            <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg">
               Start Your Project
             </Button>
           </Link>

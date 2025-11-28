@@ -73,7 +73,7 @@ export default function ApplyPage() {
           <p className="text-slate-400 mb-8">
             Thanks for your interest. We'll review your application and get back to you soon.
           </p>
-          <Button onClick={() => setIsSubmitted(false)} className="bg-[#73e28a] text-white hover:bg-[#5dbb72]">
+          <Button onClick={() => setIsSubmitted(false)} className="bg-[#73e28a] text-black hover:bg-[#5dbb72]">
             Submit Another Application
           </Button>
         </Card>
@@ -261,7 +261,7 @@ export default function ApplyPage() {
               <Button 
                 type="submit"
                 disabled={submitMutation.isPending}
-                className="w-full bg-[#73e28a] text-white hover:bg-[#5dbb72] font-bold h-14 text-lg rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-[#73e28a] text-black hover:bg-[#5dbb72] font-bold h-14 text-lg rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {submitMutation.isPending ? 'Submitting...' : 'Submit Application'}
               </Button>

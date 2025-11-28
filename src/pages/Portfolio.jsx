@@ -107,7 +107,7 @@ export default function PortfolioPage() {
                 onClick={() => setFilter(category)}
                 className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-[#73e28a] focus:ring-offset-2 focus:ring-offset-slate-950 ${
                   filter === category 
-                    ? 'bg-[#73e28a] text-white' 
+                    ? 'bg-[#73e28a] text-black' 
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700'
                 }`}
               >
@@ -141,7 +141,7 @@ export default function PortfolioPage() {
                     {/* Hover overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-20 flex items-end p-6">
                       <div className="w-12 h-12 rounded-full bg-[#73e28a] flex items-center justify-center">
-                        <ArrowUpRight className="w-5 h-5 text-white" />
+                        <ArrowUpRight className="w-5 h-5 text-black" />
                       </div>
                     </div>
                   </div>
@@ -208,7 +208,7 @@ export default function PortfolioPage() {
             Let's build something amazing together and add it to our portfolio.
           </p>
           <Link to={createPageUrl('Contact')}>
-            <button className="bg-[#73e28a] hover:bg-[#5dbb72] text-white font-bold h-14 px-10 text-lg rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[#73e28a] focus:ring-offset-2 focus:ring-offset-slate-950">
+            <button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[#73e28a] focus:ring-offset-2 focus:ring-offset-slate-950">
               Start Your Project
             </button>
           </Link>

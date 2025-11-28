@@ -115,7 +115,7 @@ export default function HomePage() {
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
               <Link to={createPageUrl('Contact')}>
-                <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-white font-bold h-14 px-8 text-lg rounded-lg">
+                <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-8 text-lg rounded-lg">
                   Let's Build Together
                 </Button>
               </Link>
@@ -201,7 +201,7 @@ export default function HomePage() {
             {/* Play button overlay */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               <div className="w-20 h-20 rounded-full bg-[#73e28a] flex items-center justify-center cursor-pointer hover:scale-110 transition-transform shadow-lg shadow-[#73e28a]/30">
-                <Play className="w-8 h-8 text-white ml-1" fill="white" />
+                <Play className="w-8 h-8 text-black ml-1" fill="black" />
               </div>
             </div>
           </div>
@@ -299,7 +299,7 @@ export default function HomePage() {
               alt="Team working"
               className="rounded-2xl w-full" />
 
-            <div className="absolute -bottom-6 -left-6 bg-[#73e28a] text-white p-6 rounded-xl">
+            <div className="absolute -bottom-6 -left-6 bg-[#73e28a] text-black p-6 rounded-xl">
             <div className="text-4xl font-bold">30+</div>
             <div className="text-sm font-medium">Years Experience</div>
             </div>

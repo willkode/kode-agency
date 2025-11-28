@@ -52,7 +52,7 @@ export default function Layout({ children, currentPageName }) {
 
           <div className="hidden lg:flex items-center gap-4">
             <Link to={createPageUrl('Contact')}>
-              <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-white font-bold border-0 rounded-full px-6">
+              <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold border-0 rounded-full px-6">
                 Let's Talk
               </Button>
             </Link>
@@ -82,7 +82,7 @@ export default function Layout({ children, currentPageName }) {
                   </Link>
                 ))}
                 <Link to={createPageUrl('Contact')} className="mt-4">
-                  <Button className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-white h-12 text-lg">
+                  <Button className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black h-12 text-lg">
                     Let's Talk
                   </Button>
                 </Link>
