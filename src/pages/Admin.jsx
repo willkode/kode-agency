@@ -2,15 +2,19 @@ import React, { useState } from 'react';
 import Section from '@/components/ui-custom/Section';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import { Button } from "@/components/ui/button";
-import { Users, FolderKanban, Briefcase } from 'lucide-react';
+import { Users, FolderKanban, Briefcase, Layout, FileText } from 'lucide-react';
 
 import CRMSection from '@/components/admin/CRMSection';
 import ProjectsSection from '@/components/admin/ProjectsSection';
 import CareersSection from '@/components/admin/CareersSection';
+import PortfolioSection from '@/components/admin/PortfolioSection';
+import BlogSection from '@/components/admin/BlogSection';
 
 const tabs = [
   { id: 'crm', label: 'CRM', icon: Users },
   { id: 'projects', label: 'Projects', icon: FolderKanban },
+  { id: 'portfolio', label: 'Portfolio', icon: Layout },
+  { id: 'blog', label: 'Blog', icon: FileText },
   { id: 'careers', label: 'Careers', icon: Briefcase },
 ];
 
@@ -77,6 +81,12 @@ export default function AdminPage() {
               initialProject={convertingLead} 
               onProjectCreated={handleProjectCreated}
             />
+          )}
+          {activeTab === 'portfolio' && (
+            <PortfolioSection />
+          )}
+          {activeTab === 'blog' && (
+            <BlogSection />
           )}
           {activeTab === 'careers' && (
             <CareersSection />
