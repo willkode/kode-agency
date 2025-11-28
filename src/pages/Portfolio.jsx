@@ -34,12 +34,12 @@ export default function PortfolioPage() {
   const sampleProjects = [
     {
       id: 1,
-      title: "ForgeBase",
+      title: "SaaS Dashboard",
       platform: "Base44",
-      type: "AI Studio",
-      description: "ForgeBase turns the open-source Contains Studio agents into a full product team for your Base44 app – engineering, design, product, marketing, ops, QA, and automation, all focused on helping you ship better Base44 projects in days, not months.",
-      short_result: "Ship in days, not months",
-      image_url: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/691e276e2117009b68e21c5c/fa7e45f70_Screenshot2025-11-28103905.png"
+      type: "Web App",
+      description: "Full-featured analytics dashboard with real-time data visualization and team collaboration.",
+      short_result: "Launched in 6 weeks",
+      image_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop"
     },
     {
       id: 2,
