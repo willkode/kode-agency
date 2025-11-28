@@ -130,8 +130,8 @@ export default function PortfolioPage() {
           ) : (
             <div className="grid md:grid-cols-2 gap-8">
               {displayProjects.map((project, index) => (
-                <Card key={project.id} className={`overflow-hidden group p-0 h-full flex flex-col bg-slate-900/80 ${index % 3 === 1 ? 'md:row-span-2' : ''}`}>
-                  <div className={`overflow-hidden relative ${index % 3 === 1 ? 'h-80' : 'h-64'}`}>
+                <Card key={project.id} className="overflow-hidden group p-0 h-full flex flex-col bg-slate-900/80">
+                  <div className="overflow-hidden relative h-56">
                     <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-transparent transition-colors z-10" />
                     <img 
                       src={project.image_url || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop"} 
