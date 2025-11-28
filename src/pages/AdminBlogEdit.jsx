@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import Section from '@/components/ui-custom/Section';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import { ArrowLeft, Image as ImageIcon, Save, X } from 'lucide-react';
-import { Textarea } from "@/components/ui/textarea";
+import RichTextEditor from '@/components/admin/RichTextEditor';
 
 export default function AdminBlogEditPage() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -149,12 +149,11 @@ export default function AdminBlogEditPage() {
               )}
             </div>
             <div>
-              <label className="text-sm text-slate-400 mb-1 block">Content (supports Markdown)</label>
-              <Textarea
+              <label className="text-sm text-slate-400 mb-1 block">Content</label>
+              <RichTextEditor
                 value={formData.content}
-                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                className="bg-slate-800 border-slate-700 min-h-[300px] font-mono"
-                placeholder="Write your blog content here... You can use Markdown formatting."
+                onChange={(content) => setFormData({ ...formData, content })}
+                placeholder="Write your blog content here..."
               />
             </div>
             <div>
