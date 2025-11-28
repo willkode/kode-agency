@@ -180,7 +180,7 @@ export default function ProjectsSection({ initialProject, onProjectCreated }) {
         </div>
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-[#73e28a] text-black hover:bg-[#5dbb72]">
+            <Button className="bg-[#73e28a] text-white hover:bg-[#5dbb72]">
               <Plus className="w-4 h-4 mr-2" /> New Project
             </Button>
           </DialogTrigger>
@@ -254,7 +254,7 @@ export default function ProjectsSection({ initialProject, onProjectCreated }) {
               </div>
               <Textarea placeholder="Description" className="bg-slate-800 border-slate-700"
                 value={newProject.description} onChange={(e) => setNewProject({...newProject, description: e.target.value})} />
-              <Button className="w-full bg-[#73e28a] text-black hover:bg-[#5dbb72]"
+              <Button className="w-full bg-[#73e28a] text-white hover:bg-[#5dbb72]"
                 onClick={() => createProjectMutation.mutate({...newProject, budget: parseFloat(newProject.budget) || 0})}>
                 Create Project
               </Button>

@@ -217,7 +217,7 @@ export default function CRMSection({ onConvertToProject }) {
           </div>
           <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-[#73e28a] text-black hover:bg-[#5dbb72]">
+              <Button className="bg-[#73e28a] text-white hover:bg-[#5dbb72]">
                 <Plus className="w-4 h-4 mr-2" /> Add Lead
               </Button>
             </DialogTrigger>
@@ -250,7 +250,7 @@ export default function CRMSection({ onConvertToProject }) {
                   value={newLead.deal_value} onChange={(e) => setNewLead({...newLead, deal_value: e.target.value})} />
                 <Textarea placeholder="Description" className="bg-slate-800 border-slate-700"
                   value={newLead.description} onChange={(e) => setNewLead({...newLead, description: e.target.value})} />
-                <Button className="w-full bg-[#73e28a] text-black hover:bg-[#5dbb72]"
+                <Button className="w-full bg-[#73e28a] text-white hover:bg-[#5dbb72]"
                   onClick={() => createLeadMutation.mutate({...newLead, deal_value: parseFloat(newLead.deal_value) || 0})}>
                   Create Lead
                 </Button>
@@ -417,7 +417,7 @@ export default function CRMSection({ onConvertToProject }) {
                       onChange={(e) => setNewActivity({...newActivity, description: e.target.value})}
                     />
                     <Button 
-                      className="bg-[#73e28a] text-black"
+                      className="bg-[#73e28a] text-white hover:bg-[#5dbb72]"
                       onClick={() => {
                         if (newActivity.description) {
                           createActivityMutation.mutate({ ...newActivity, lead_id: selectedLead.id });
@@ -441,7 +441,7 @@ export default function CRMSection({ onConvertToProject }) {
                 {/* Convert to Project Button (only for Won status) */}
                 {selectedLead.status === 'Won' && (
                   <Button 
-                    className="w-full bg-[#73e28a] text-black hover:bg-[#5dbb72]"
+                    className="w-full bg-[#73e28a] text-white hover:bg-[#5dbb72]"
                     onClick={handleConvertToProject}
                   >
                     <ArrowRight className="w-4 h-4 mr-2" /> Convert to Project

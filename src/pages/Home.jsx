@@ -126,13 +126,13 @@ export default function HomePage() {
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)}
-                className="w-12 h-12 rounded-full border border-slate-600 flex items-center justify-center text-slate-400 hover:border-[#73e28a] hover:text-[#73e28a] transition-colors">
+                className="w-12 h-12 rounded-full border border-slate-600 flex items-center justify-center text-slate-400 hover:border-[#73e28a] hover:text-[#73e28a] transition-colors focus:outline-none focus:ring-2 focus:ring-[#73e28a] focus:ring-offset-2 focus:ring-offset-slate-950">
 
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={() => setCurrentSlide((prev) => (prev + 1) % heroSlides.length)}
-                className="w-12 h-12 rounded-full border border-slate-600 flex items-center justify-center text-slate-400 hover:border-[#73e28a] hover:text-[#73e28a] transition-colors">
+                className="w-12 h-12 rounded-full border border-slate-600 flex items-center justify-center text-slate-400 hover:border-[#73e28a] hover:text-[#73e28a] transition-colors focus:outline-none focus:ring-2 focus:ring-[#73e28a] focus:ring-offset-2 focus:ring-offset-slate-950">
 
                 <ChevronRight className="w-5 h-5" />
               </button>

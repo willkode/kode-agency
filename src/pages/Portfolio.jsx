@@ -105,9 +105,9 @@ export default function PortfolioPage() {
               <button
                 key={category}
                 onClick={() => setFilter(category)}
-                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
+                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-[#73e28a] focus:ring-offset-2 focus:ring-offset-slate-950 ${
                   filter === category 
-                    ? 'bg-[#73e28a] text-black' 
+                    ? 'bg-[#73e28a] text-white' 
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700'
                 }`}
               >

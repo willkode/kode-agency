@@ -49,7 +49,7 @@ export default function BlogSection() {
           />
         </div>
         <Link to={createPageUrl('AdminBlogEdit')}>
-          <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black">
+          <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-white">
             <Plus className="w-4 h-4 mr-2" /> New Blog Post
           </Button>
         </Link>
