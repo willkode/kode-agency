@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import Section from '@/components/ui-custom/Section';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import { ArrowLeft, Image as ImageIcon, Save, X } from 'lucide-react';
-import ReactQuill from 'react-quill';
+import { Textarea } from "@/components/ui/textarea";
 
 export default function AdminBlogEditPage() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -93,16 +93,7 @@ export default function AdminBlogEditPage() {
     setFormData({ ...formData, tags: formData.tags.filter(t => t !== tagToRemove) });
   };
 
-  const quillModules = {
-    toolbar: [
-      [{ 'header': [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      ['blockquote', 'code-block'],
-      ['link', 'image'],
-      ['clean']
-    ],
-  };
+
 
   return (
     <div className="min-h-screen bg-slate-950 text-white pt-24">
@@ -158,16 +149,13 @@ export default function AdminBlogEditPage() {
               )}
             </div>
             <div>
-              <label className="text-sm text-slate-400 mb-1 block">Content</label>
-              <div className="bg-white rounded-md">
-                <ReactQuill
-                  theme="snow"
-                  value={formData.content}
-                  onChange={(content) => setFormData({ ...formData, content })}
-                  modules={quillModules}
-                  className="[&_.ql-editor]:min-h-[300px]"
-                />
-              </div>
+              <label className="text-sm text-slate-400 mb-1 block">Content (supports Markdown)</label>
+              <Textarea
+                value={formData.content}
+                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                className="bg-slate-800 border-slate-700 min-h-[300px] font-mono"
+                placeholder="Write your blog content here... You can use Markdown formatting."
+              />
             </div>
             <div>
               <label className="text-sm text-slate-400 mb-1 block">Tags</label>
