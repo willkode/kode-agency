@@ -159,13 +159,13 @@ export default function AdminBlogEditPage() {
             </div>
             <div>
               <label className="text-sm text-slate-400 mb-1 block">Content</label>
-              <div className="bg-slate-800 rounded-md border border-slate-700">
+              <div className="bg-white rounded-md">
                 <ReactQuill
                   theme="snow"
                   value={formData.content}
                   onChange={(content) => setFormData({ ...formData, content })}
                   modules={quillModules}
-                  className="text-white [&_.ql-toolbar]:border-slate-700 [&_.ql-container]:border-slate-700 [&_.ql-editor]:min-h-[300px]"
+                  className="[&_.ql-editor]:min-h-[300px]"
                 />
               </div>
             </div>
