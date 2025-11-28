@@ -24,11 +24,11 @@ export default function PortfolioPage() {
     initialData: [],
   });
 
-  const platforms = ["All", "Base44", "Lovable", "Replit", "Custom"];
+  const categories = ["All", "Development", "Marketing"];
   
   const filteredProjects = filter === 'All' 
     ? projects 
-    : projects.filter(p => p.platform === filter);
+    : projects.filter(p => p.category === filter);
 
   // Sample projects if none exist
   const sampleProjects = [
@@ -101,17 +101,17 @@ export default function PortfolioPage() {
 
           {/* Filters */}
           <div className="flex flex-wrap justify-start gap-3 mb-12">
-            {platforms.map(platform => (
+            {categories.map(category => (
               <button
-                key={platform}
-                onClick={() => setFilter(platform)}
+                key={category}
+                onClick={() => setFilter(category)}
                 className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
-                  filter === platform 
+                  filter === category 
                     ? 'bg-[#73e28a] text-black' 
                     : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700'
                 }`}
               >
-                {platform}
+                {category}
               </button>
             ))}
           </div>
