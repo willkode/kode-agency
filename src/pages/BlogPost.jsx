@@ -120,8 +120,8 @@ Fusce tincidunt ac quis. A lobortis ras tincidunt or simply free text ever but w
               />
               {/* Play Button */}
               <div className="absolute bottom-6 right-6">
-                <button className="w-14 h-14 rounded-full bg-[#73e28a] flex items-center justify-center hover:scale-110 transition-transform shadow-lg">
-                  <Play className="w-6 h-6 text-black ml-1" fill="black" />
+                <button className="w-14 h-14 rounded-full bg-[#73e28a] flex items-center justify-center hover:scale-110 transition-transform shadow-lg focus:outline-none focus:ring-2 focus:ring-[#73e28a] focus:ring-offset-2 focus:ring-offset-slate-950">
+                  <Play className="w-6 h-6 text-white ml-1" fill="white" />
                 </button>
               </div>
               {/* Author Badge */}
@@ -281,8 +281,8 @@ Fusce tincidunt ac quis. A lobortis ras tincidunt or simply free text ever but w
                   placeholder="Search..." 
                   className="bg-slate-800 border-slate-700 text-white h-12 pr-12 focus:border-[#73e28a]"
                 />
-                <button className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-[#73e28a] rounded flex items-center justify-center">
-                  <Search className="w-4 h-4 text-black" />
+                <button className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-[#73e28a] rounded flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-[#73e28a]">
+                  <Search className="w-4 h-4 text-white" />
                 </button>
               </div>
             </div>

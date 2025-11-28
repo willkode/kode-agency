@@ -75,7 +75,7 @@ export default function PricingPage() {
 
             {/* Launch Package */}
             <Card className="flex flex-col p-8 border-t-4 border-t-[#73e28a] relative bg-slate-800/80 transform md:-translate-y-4 shadow-2xl shadow-[#73e28a]/10">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#73e28a] text-black text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wide">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#73e28a] text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wide">
                 Most Popular
               </div>
               <h3 className="text-2xl font-bold text-white mb-2">Launch Package</h3>

@@ -141,7 +141,7 @@ export default function PortfolioPage() {
                     {/* Hover overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-20 flex items-end p-6">
                       <div className="w-12 h-12 rounded-full bg-[#73e28a] flex items-center justify-center">
-                        <ArrowUpRight className="w-5 h-5 text-black" />
+                        <ArrowUpRight className="w-5 h-5 text-white" />
                       </div>
                     </div>
                   </div>

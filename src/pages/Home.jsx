@@ -201,7 +201,7 @@ export default function HomePage() {
             {/* Play button overlay */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               <div className="w-20 h-20 rounded-full bg-[#73e28a] flex items-center justify-center cursor-pointer hover:scale-110 transition-transform shadow-lg shadow-[#73e28a]/30">
-                <Play className="w-8 h-8 text-black ml-1" fill="black" />
+                <Play className="w-8 h-8 text-white ml-1" fill="white" />
               </div>
             </div>
           </div>
@@ -299,9 +299,9 @@ export default function HomePage() {
               alt="Team working"
               className="rounded-2xl w-full" />
 
-            <div className="absolute -bottom-6 -left-6 bg-[#73e28a] text-black p-6 rounded-xl">
-              <div className="text-4xl font-bold">30+</div>
-              <div className="text-sm font-medium">Years Experience</div>
+            <div className="absolute -bottom-6 -left-6 bg-[#73e28a] text-white p-6 rounded-xl">
+            <div className="text-4xl font-bold">30+</div>
+            <div className="text-sm font-medium">Years Experience</div>
             </div>
           </div>
         </div>

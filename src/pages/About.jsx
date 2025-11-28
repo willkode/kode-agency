@@ -71,7 +71,7 @@ export default function AboutPage() {
             {/* Green accent */}
             <div className="absolute top-1/3 right-0 transform translate-x-1/2 z-30">
               <div className="w-16 h-16 bg-[#73e28a] rounded-tr-3xl rounded-bl-3xl flex items-center justify-center">
-                <CheckCircle className="w-8 h-8 text-black" />
+                <CheckCircle className="w-8 h-8 text-white" />
               </div>
             </div>
           </div>
