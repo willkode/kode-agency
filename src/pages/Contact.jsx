@@ -70,7 +70,7 @@ export default function ContactPage() {
               <p className="text-slate-400 mb-8">
                  Thanks for reaching out. We'll get back to you shortly.
               </p>
-              <Button onClick={() => setIsSubmitted(false)} className="bg-[#73e28a] text-black hover:bg-[#5dbb72]">
+              <Button onClick={() => setIsSubmitted(false)} className="bg-[#73e28a] text-white hover:bg-[#5dbb72]">
                  Send another message
               </Button>
            </Card>
@@ -195,7 +195,7 @@ export default function ContactPage() {
                      <Button 
                         type="submit"
                         disabled={submitMutation.isPending}
-                        className="bg-[#73e28a] text-black hover:bg-[#5dbb72] font-bold h-12 px-8 rounded-lg"
+                        className="bg-[#73e28a] text-white hover:bg-[#5dbb72] font-bold h-12 px-8 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
                      >
                         {submitMutation.isPending ? 'Sending...' : 'Send Request'} 
                         <ArrowUpRight className="ml-2 w-5 h-5" />
@@ -216,7 +216,7 @@ export default function ContactPage() {
                   <h2 className="text-4xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
                      Have Any Query?<br/> Feel Free to Contact
                   </h2>
-                  <div className="inline-flex items-center gap-3 bg-[#73e28a] px-6 py-3 rounded-full text-black font-bold shadow-lg cursor-pointer hover:scale-105 transition-transform">
+                  <div className="inline-flex items-center gap-3 bg-[#73e28a] px-6 py-3 rounded-full text-white font-bold shadow-lg cursor-pointer hover:scale-105 transition-transform">
                      <Phone className="w-5 h-5" />
                      <span>+1 (555) 123-4567</span>
                   </div>

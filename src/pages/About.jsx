@@ -98,7 +98,7 @@ export default function AboutPage() {
             </div>
 
             <Link to={createPageUrl('Contact')}>
-              <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-12 px-6">
+              <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-white font-bold h-12 px-6">
                 Work With Me <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </Link>
@@ -174,7 +174,7 @@ export default function AboutPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to={createPageUrl('Contact')}>
-              <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg">
+              <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-white font-bold h-14 px-10 text-lg">
                 Start a project <ArrowRight className="ml-2" />
               </Button>
             </Link>

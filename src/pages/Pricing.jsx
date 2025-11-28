@@ -69,7 +69,7 @@ export default function PricingPage() {
               </ul>
 
               <Link to={createPageUrl('Contact')} className="w-full">
-                <Button className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold">Get Started</Button>
+                <Button className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-white font-bold">Get Started</Button>
               </Link>
             </Card>
 
@@ -95,7 +95,7 @@ export default function PricingPage() {
               </ul>
 
               <Link to={createPageUrl('Contact')} className="w-full">
-                <Button className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold">Request Quote</Button>
+                <Button className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-white font-bold">Request Quote</Button>
               </Link>
             </Card>
 
@@ -185,7 +185,7 @@ export default function PricingPage() {
             Let's discuss your project and find the right plan for you.
           </p>
           <Link to={createPageUrl('Contact')}>
-            <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg">
+            <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-white font-bold h-14 px-10 text-lg">
               Get Your Quote <ArrowRight className="ml-2" />
             </Button>
           </Link>

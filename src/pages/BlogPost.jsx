@@ -264,7 +264,7 @@ Fusce tincidunt ac quis. A lobortis ras tincidunt or simply free text ever but w
                   placeholder="Message" 
                   className="bg-slate-900 border-slate-700 text-white min-h-[120px] focus:border-[#73e28a] mb-4"
                 />
-                <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-12 px-8">
+                <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-white font-bold h-12 px-8">
                   Post Comment
                 </Button>
               </div>
@@ -318,7 +318,7 @@ Fusce tincidunt ac quis. A lobortis ras tincidunt or simply free text ever but w
             <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6 text-center">
               <h4 className="text-xl font-bold text-white mb-2">Have Any Query Feel Free Contact</h4>
               <Link to={createPageUrl('Contact')}>
-                <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold mt-4 w-full">
+                <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-white font-bold mt-4 w-full">
                   Contact Now
                 </Button>
               </Link>

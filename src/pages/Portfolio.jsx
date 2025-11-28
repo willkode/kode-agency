@@ -208,7 +208,7 @@ export default function PortfolioPage() {
             Let's build something amazing together and add it to our portfolio.
           </p>
           <Link to={createPageUrl('Contact')}>
-            <button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg rounded-lg transition-colors">
+            <button className="bg-[#73e28a] hover:bg-[#5dbb72] text-white font-bold h-14 px-10 text-lg rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-[#73e28a] focus:ring-offset-2 focus:ring-offset-slate-950">
               Start Your Project
             </button>
           </Link>
