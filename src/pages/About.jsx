@@ -59,7 +59,7 @@ export default function AboutPage() {
           <div className="relative flex flex-col items-center">
             {/* Will Kode Photo */}
             <img 
-              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/691e276e2117009b68e21c5c/bb73b7d1e_image.png" 
+              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/691e276e2117009b68e21c5c/9529b1fac_Gemini_Generated_Image_2bff3r2bff3r2bff1.png" 
               alt="Will Kode" 
               className="w-full max-w-md h-auto object-contain"
             />
