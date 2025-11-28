@@ -170,10 +170,17 @@ export default function PortfolioPage() {
                          Result: {project.short_result}
                       </div>
                       
-                      <button className="text-[#73e28a] hover:text-[#5dbb72] text-sm font-medium flex items-center gap-2 transition-colors group">
-                        Read full case study 
-                        <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                      </button>
+{project.app_url && (
+                        <a 
+                          href={project.app_url} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-[#73e28a] hover:text-[#5dbb72] text-sm font-medium flex items-center gap-2 transition-colors group"
+                        >
+                          View Live App
+                          <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        </a>
+                      )}
                     </div>
                   </div>
                 </Card>
