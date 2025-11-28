@@ -1,48 +1,21 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { Link } from 'react-router-dom';
+import { createPageUrl } from '@/utils';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Plus, Search, Pencil, Trash2, Eye, Image as ImageIcon, X } from 'lucide-react';
+import { Plus, Search, Pencil, Trash2, Image as ImageIcon } from 'lucide-react';
 import Card from '@/components/ui-custom/Card';
-import ReactQuill from 'react-quill';
 
 export default function BlogSection() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editingPost, setEditingPost] = useState(null);
-  const [formData, setFormData] = useState({
-    title: '',
-    summary: '',
-    content: '',
-    image_url: '',
-    tags: [],
-    reading_time: ''
-  });
-  const [tagInput, setTagInput] = useState('');
 
   const queryClient = useQueryClient();
 
   const { data: posts = [], isLoading } = useQuery({
     queryKey: ['blog-posts'],
     queryFn: () => base44.entities.Post.list('-created_date'),
-  });
-
-  const createMutation = useMutation({
-    mutationFn: (data) => base44.entities.Post.create(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['blog-posts'] });
-      resetForm();
-    },
-  });
-
-  const updateMutation = useMutation({
-    mutationFn: ({ id, data }) => base44.entities.Post.update(id, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['blog-posts'] });
-      resetForm();
-    },
   });
 
   const deleteMutation = useMutation({
@@ -52,81 +25,15 @@ export default function BlogSection() {
     },
   });
 
-  const resetForm = () => {
-    setFormData({
-      title: '',
-      summary: '',
-      content: '',
-      image_url: '',
-      tags: [],
-      reading_time: ''
-    });
-    setTagInput('');
-    setEditingPost(null);
-    setIsDialogOpen(false);
-  };
-
-  const handleEdit = (post) => {
-    setEditingPost(post);
-    setFormData({
-      title: post.title || '',
-      summary: post.summary || '',
-      content: post.content || '',
-      image_url: post.image_url || '',
-      tags: post.tags || [],
-      reading_time: post.reading_time || ''
-    });
-    setIsDialogOpen(true);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (editingPost) {
-      updateMutation.mutate({ id: editingPost.id, data: formData });
-    } else {
-      createMutation.mutate(formData);
-    }
-  };
-
   const handleDelete = (id) => {
     if (confirm('Are you sure you want to delete this blog post?')) {
       deleteMutation.mutate(id);
     }
   };
 
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
-      setFormData({ ...formData, image_url: file_url });
-    }
-  };
-
-  const addTag = () => {
-    if (tagInput.trim() && !formData.tags.includes(tagInput.trim())) {
-      setFormData({ ...formData, tags: [...formData.tags, tagInput.trim()] });
-      setTagInput('');
-    }
-  };
-
-  const removeTag = (tagToRemove) => {
-    setFormData({ ...formData, tags: formData.tags.filter(t => t !== tagToRemove) });
-  };
-
   const filteredPosts = posts.filter(p => 
     p.title?.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  const quillModules = {
-    toolbar: [
-      [{ 'header': [1, 2, 3, false] }],
-      ['bold', 'italic', 'underline', 'strike'],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      ['blockquote', 'code-block'],
-      ['link', 'image'],
-      ['clean']
-    ],
-  };
 
   return (
     <div className="space-y-6">
@@ -141,12 +48,11 @@ export default function BlogSection() {
             className="pl-10 bg-slate-800 border-slate-700 text-white"
           />
         </div>
-        <Button 
-          onClick={() => setIsDialogOpen(true)} 
-          className="bg-[#73e28a] hover:bg-[#5dbb72] text-black"
-        >
-          <Plus className="w-4 h-4 mr-2" /> New Blog Post
-        </Button>
+        <Link to={createPageUrl('AdminBlogEdit')}>
+          <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black">
+            <Plus className="w-4 h-4 mr-2" /> New Blog Post
+          </Button>
+        </Link>
       </div>
 
       {/* Posts Grid */}
@@ -190,14 +96,15 @@ export default function BlogSection() {
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-slate-500">{post.reading_time || '5 min read'}</span>
                   <div className="flex gap-1">
-                    <Button 
-                      size="sm" 
-                      variant="ghost" 
-                      className="text-slate-400 hover:text-white"
-                      onClick={() => handleEdit(post)}
-                    >
-                      <Pencil className="w-4 h-4" />
-                    </Button>
+                    <Link to={createPageUrl('AdminBlogEdit') + `?id=${post.id}`}>
+                      <Button 
+                        size="sm" 
+                        variant="ghost" 
+                        className="text-slate-400 hover:text-white"
+                      >
+                        <Pencil className="w-4 h-4" />
+                      </Button>
+                    </Link>
                     <Button 
                       size="sm" 
                       variant="ghost" 
@@ -214,110 +121,6 @@ export default function BlogSection() {
         )}
       </div>
 
-      {/* Add/Edit Dialog */}
-      <Dialog open={isDialogOpen} onOpenChange={(open) => { if (!open) resetForm(); }}>
-        <DialogContent className="bg-slate-900 border-slate-700 text-white max-w-3xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>{editingPost ? 'Edit Blog Post' : 'New Blog Post'}</DialogTitle>
-          </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="text-sm text-slate-400 mb-1 block">Title *</label>
-              <Input
-                value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                className="bg-slate-800 border-slate-700"
-                required
-              />
-            </div>
-            <div>
-              <label className="text-sm text-slate-400 mb-1 block">Summary</label>
-              <Input
-                value={formData.summary}
-                onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
-                className="bg-slate-800 border-slate-700"
-                placeholder="Brief description for previews"
-              />
-            </div>
-            <div>
-              <label className="text-sm text-slate-400 mb-1 block">Featured Image</label>
-              <div className="flex gap-2">
-                <Input
-                  value={formData.image_url}
-                  onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                  className="bg-slate-800 border-slate-700 flex-1"
-                  placeholder="Image URL"
-                />
-                <label className="cursor-pointer">
-                  <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
-                  <Button type="button" variant="outline" className="border-slate-700">
-                    <ImageIcon className="w-4 h-4" />
-                  </Button>
-                </label>
-              </div>
-              {formData.image_url && (
-                <img src={formData.image_url} alt="Preview" className="mt-2 h-24 rounded object-cover" />
-              )}
-            </div>
-            <div>
-              <label className="text-sm text-slate-400 mb-1 block">Content</label>
-              <div className="bg-slate-800 rounded-md border border-slate-700">
-                <ReactQuill
-                  theme="snow"
-                  value={formData.content}
-                  onChange={(content) => setFormData({ ...formData, content })}
-                  modules={quillModules}
-                  className="text-white [&_.ql-toolbar]:border-slate-700 [&_.ql-container]:border-slate-700 [&_.ql-editor]:min-h-[200px]"
-                />
-              </div>
-            </div>
-            <div>
-              <label className="text-sm text-slate-400 mb-1 block">Tags</label>
-              <div className="flex gap-2 mb-2">
-                <Input
-                  value={tagInput}
-                  onChange={(e) => setTagInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
-                  className="bg-slate-800 border-slate-700"
-                  placeholder="Add tag and press Enter"
-                />
-                <Button type="button" variant="outline" onClick={addTag} className="border-slate-700">
-                  Add
-                </Button>
-              </div>
-              {formData.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {formData.tags.map(tag => (
-                    <span key={tag} className="px-2 py-1 bg-slate-700 text-slate-300 text-sm rounded flex items-center gap-1">
-                      {tag}
-                      <button type="button" onClick={() => removeTag(tag)}>
-                        <X className="w-3 h-3" />
-                      </button>
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div>
-              <label className="text-sm text-slate-400 mb-1 block">Reading Time</label>
-              <Input
-                value={formData.reading_time}
-                onChange={(e) => setFormData({ ...formData, reading_time: e.target.value })}
-                className="bg-slate-800 border-slate-700"
-                placeholder="e.g., 5 min read"
-              />
-            </div>
-            <div className="flex justify-end gap-3 pt-4">
-              <Button type="button" variant="outline" onClick={resetForm} className="border-slate-700">
-                Cancel
-              </Button>
-              <Button type="submit" className="bg-[#73e28a] hover:bg-[#5dbb72] text-black">
-                {editingPost ? 'Update' : 'Publish'}
-              </Button>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

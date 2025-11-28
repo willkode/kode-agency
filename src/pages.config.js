@@ -27,6 +27,8 @@ import ContentMarketing from './pages/ContentMarketing';
 import Branding from './pages/Branding';
 import EmailMarketing from './pages/EmailMarketing';
 import FullFunnelMarketing from './pages/FullFunnelMarketing';
+import AdminPortfolioEdit from './pages/AdminPortfolioEdit';
+import AdminBlogEdit from './pages/AdminBlogEdit';
 import __Layout from './Layout.jsx';
 
 
@@ -60,6 +62,8 @@ export const PAGES = {
     "Branding": Branding,
     "EmailMarketing": EmailMarketing,
     "FullFunnelMarketing": FullFunnelMarketing,
+    "AdminPortfolioEdit": AdminPortfolioEdit,
+    "AdminBlogEdit": AdminBlogEdit,
 }
 
 export const pagesConfig = {

@@ -19,7 +19,9 @@ const tabs = [
 ];
 
 export default function AdminPage() {
-  const [activeTab, setActiveTab] = useState('crm');
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialTab = urlParams.get('tab') || 'crm';
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [convertingLead, setConvertingLead] = useState(null);
 
   const handleConvertToProject = (lead) => {
