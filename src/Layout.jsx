@@ -22,6 +22,7 @@ export default function Layout({ children, currentPageName }) {
     { name: 'Pricing', path: 'Pricing' },
     { name: 'About', path: 'About' },
     { name: 'Blog', path: 'Blog' },
+    { name: 'Contact Us', path: 'Contact', isGreen: true },
   ];
 
   return (
@@ -42,6 +43,8 @@ export default function Layout({ children, currentPageName }) {
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                   currentPageName === link.path
                     ? 'text-black bg-[#73e28a]'
+                    : link.isGreen
+                    ? 'text-[#73e28a] hover:text-[#5dbb72] hover:bg-slate-800/50'
                     : 'text-slate-400 hover:text-[#73e28a] hover:bg-slate-800/50'
                 }`}
               >
@@ -51,9 +54,9 @@ export default function Layout({ children, currentPageName }) {
           </nav>
 
           <div className="hidden lg:flex items-center gap-4">
-            <Link to={createPageUrl('Contact')}>
+            <Link to="/login">
               <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold border-0 rounded-full px-6">
-                Let's Talk
+                Login
               </Button>
             </Link>
           </div>
@@ -81,9 +84,9 @@ export default function Layout({ children, currentPageName }) {
                     {link.name}
                   </Link>
                 ))}
-                <Link to={createPageUrl('Contact')} className="mt-4">
+                <Link to="/login" className="mt-4">
                   <Button className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black h-12 text-lg">
-                    Let's Talk
+                    Login
                   </Button>
                 </Link>
               </nav>
