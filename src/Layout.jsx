@@ -54,11 +54,12 @@ export default function Layout({ children, currentPageName }) {
           </nav>
 
           <div className="hidden lg:flex items-center gap-4">
-            <Link to="/login">
-              <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold border-0 rounded-full px-6">
-                Login
-              </Button>
-            </Link>
+            <Button 
+              onClick={() => base44.auth.redirectToLogin()}
+              className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold border-0 rounded-full px-6"
+            >
+              Login
+            </Button>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -84,11 +85,12 @@ export default function Layout({ children, currentPageName }) {
                     {link.name}
                   </Link>
                 ))}
-                <Link to="/login" className="mt-4">
-                  <Button className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black h-12 text-lg">
-                    Login
-                  </Button>
-                </Link>
+                <Button 
+                  onClick={() => base44.auth.redirectToLogin()}
+                  className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black h-12 text-lg mt-4"
+                >
+                  Login
+                </Button>
               </nav>
             </div>
           )}
