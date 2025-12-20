@@ -32,6 +32,8 @@ export default function Base44ERPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [copied, setCopied] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [requestId, setRequestId] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -40,33 +42,43 @@ export default function Base44ERPage() {
     issue_description: ''
   });
 
+  // Handle return from PayPal
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const success = urlParams.get('success');
+    const token = urlParams.get('token'); // PayPal order ID
+    const reqId = urlParams.get('requestId');
+    
+    if (success === 'true' && token && reqId) {
+      // Capture the payment
+      base44.functions.invoke('capturePayPalOrder', { orderId: token, requestId: reqId })
+        .then(res => {
+          if (res.data.success) {
+            setPaymentSuccess(true);
+          }
+        })
+        .catch(err => console.error('Payment capture failed:', err));
+      
+      // Clean URL
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, []);
+
   const submitMutation = useMutation({
     mutationFn: async (data) => {
       // Save to database
-      await base44.entities.AppReviewRequest.create(data);
-      
-      // Send email notification
-      await base44.integrations.Core.SendEmail({
-        to: 'will@kodeagency.us',
-        subject: `New Base44 ER Review Request from ${data.name}`,
-        body: `
-New App Review Request:
-
-Name: ${data.name}
-Email: ${data.email}
-Country: ${data.country}
-App URL: ${data.app_url}
-
-Issue Description:
-${data.issue_description}
-
-Admin invite should be sent to: iamwillkode@gmail.com
-        `
-      });
+      const created = await base44.entities.AppReviewRequest.create(data);
+      return created;
     },
-    onSuccess: () => {
-      // Redirect to PayPal
-      window.location.href = 'https://www.paypal.com/paypalme/willkode/25';
+    onSuccess: async (created) => {
+      setRequestId(created.id);
+      setStep(3);
+      
+      // Create PayPal order and redirect
+      const response = await base44.functions.invoke('createPayPalOrder', { requestId: created.id });
+      if (response.data.approvalUrl) {
+        window.location.href = response.data.approvalUrl;
+      }
     }
   });
 
@@ -404,8 +416,28 @@ Admin invite should be sent to: iamwillkode@gmail.com
                 </p>
               </div>
               <p className="text-sm text-slate-500">
-                If you're not redirected automatically, <a href="https://www.paypal.com/paypalme/willkode/25" className="text-[#73e28a] hover:underline" target="_blank" rel="noopener noreferrer">click here</a>.
+                Please wait while we redirect you to PayPal...
               </p>
+            </div>
+          )}
+
+          {paymentSuccess && (
+            <div className="space-y-6 mt-4 text-center">
+              <div className="w-16 h-16 bg-[#73e28a]/20 rounded-full flex items-center justify-center mx-auto">
+                <CheckCircle className="w-8 h-8 text-[#73e28a]" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-white mb-2">Payment Successful!</h3>
+                <p className="text-slate-400">
+                  Thank you! Your app review request has been submitted. I'll start reviewing your app soon and get back to you via email.
+                </p>
+              </div>
+              <Button 
+                onClick={() => { setPaymentSuccess(false); setIsModalOpen(false); }}
+                className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold"
+              >
+                Close
+              </Button>
             </div>
           )}
         </DialogContent>
