@@ -37,6 +37,7 @@ export default function Base44ERPage() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     country: '',
     app_url: '',
     issue_description: ''
@@ -312,16 +313,28 @@ export default function Base44ERPage() {
                 </div>
               </div>
               
-              <div className="space-y-2">
-                <Label className="text-slate-400">Email *</Label>
-                <Input
-                  required
-                  type="email"
-                  placeholder="john@example.com"
-                  className="bg-slate-800 border-slate-700 text-white"
-                  value={formData.email}
-                  onChange={(e) => handleChange('email', e.target.value)}
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-slate-400">Email *</Label>
+                  <Input
+                    required
+                    type="email"
+                    placeholder="john@example.com"
+                    className="bg-slate-800 border-slate-700 text-white"
+                    value={formData.email}
+                    onChange={(e) => handleChange('email', e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-slate-400">Phone (optional)</Label>
+                  <Input
+                    type="tel"
+                    placeholder="+1 555-123-4567"
+                    className="bg-slate-800 border-slate-700 text-white"
+                    value={formData.phone}
+                    onChange={(e) => handleChange('phone', e.target.value)}
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">

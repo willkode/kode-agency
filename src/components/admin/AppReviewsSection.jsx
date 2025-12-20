@@ -11,7 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Search, ExternalLink, Mail, MapPin, Calendar, DollarSign } from 'lucide-react';
+import { Search, ExternalLink, Mail, MapPin, Calendar, DollarSign, Phone } from 'lucide-react';
 import moment from 'moment';
 
 const statusColors = {
@@ -141,6 +141,19 @@ export default function AppReviewsSection() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-3 bg-slate-800 rounded-lg">
+                    <Phone className="w-5 h-5 text-[#73e28a]" />
+                    <div>
+                      <p className="text-xs text-slate-500">Phone</p>
+                      {selectedRequest.phone ? (
+                        <a href={`tel:${selectedRequest.phone}`} className="text-white hover:text-[#73e28a]">
+                          {selectedRequest.phone}
+                        </a>
+                      ) : (
+                        <p className="text-slate-500">Not provided</p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-slate-800 rounded-lg">
                     <MapPin className="w-5 h-5 text-[#73e28a]" />
                     <div>
                       <p className="text-xs text-slate-500">Country</p>
@@ -154,7 +167,7 @@ export default function AppReviewsSection() {
                       <p className="text-white">{moment(selectedRequest.created_date).format('MMM D, YYYY h:mm A')}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-slate-800 rounded-lg">
+                  <div className="flex items-center gap-3 p-3 bg-slate-800 rounded-lg col-span-2">
                     <DollarSign className="w-5 h-5 text-[#73e28a]" />
                     <div>
                       <p className="text-xs text-slate-500">Payment</p>
