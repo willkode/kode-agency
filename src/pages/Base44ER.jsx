@@ -278,6 +278,7 @@ export default function Base44ERPage() {
       {/* Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="bg-slate-900 border-slate-800 text-white max-w-lg">
+          {!paymentSuccess && (
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold">
               {step === 1 && "App Review Request"}
@@ -285,6 +286,7 @@ export default function Base44ERPage() {
               {step === 3 && "Complete Payment"}
             </DialogTitle>
           </DialogHeader>
+          )}
 
           {step === 1 && (
             <div className="space-y-4 mt-4">
@@ -421,25 +423,29 @@ export default function Base44ERPage() {
             </div>
           )}
 
-          {paymentSuccess && (
-            <div className="space-y-6 mt-4 text-center">
-              <div className="w-16 h-16 bg-[#73e28a]/20 rounded-full flex items-center justify-center mx-auto">
-                <CheckCircle className="w-8 h-8 text-[#73e28a]" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-white mb-2">Payment Successful!</h3>
-                <p className="text-slate-400">
-                  Thank you! Your app review request has been submitted. I'll start reviewing your app soon and get back to you via email.
-                </p>
-              </div>
-              <Button 
-                onClick={() => { setPaymentSuccess(false); setIsModalOpen(false); }}
-                className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold"
-              >
-                Close
-              </Button>
+        </DialogContent>
+      </Dialog>
+
+      {/* Payment Success Dialog */}
+      <Dialog open={paymentSuccess} onOpenChange={setPaymentSuccess}>
+        <DialogContent className="bg-slate-900 border-slate-800 text-white max-w-lg">
+          <div className="space-y-6 text-center py-4">
+            <div className="w-16 h-16 bg-[#73e28a]/20 rounded-full flex items-center justify-center mx-auto">
+              <CheckCircle className="w-8 h-8 text-[#73e28a]" />
             </div>
-          )}
+            <div>
+              <h3 className="text-xl font-bold text-white mb-2">Payment Successful!</h3>
+              <p className="text-slate-400">
+                Thank you! Your app review request has been submitted. I'll start reviewing your app soon and get back to you via email.
+              </p>
+            </div>
+            <Button 
+              onClick={() => setPaymentSuccess(false)}
+              className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold"
+            >
+              Close
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
