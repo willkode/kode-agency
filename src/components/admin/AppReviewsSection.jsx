@@ -21,7 +21,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Search, ExternalLink, Mail, MapPin, Calendar, DollarSign, Phone, Trash2 } from 'lucide-react';
+import { Search, ExternalLink, Mail, MapPin, Calendar, DollarSign, Phone, Trash2, CheckCircle, Copy } from 'lucide-react';
 import moment from 'moment';
 
 const statusColors = {
@@ -41,6 +41,7 @@ export default function AppReviewsSection() {
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [statusFilter, setStatusFilter] = useState('all');
   const [deleteConfirm, setDeleteConfirm] = useState(null);
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -57,6 +58,20 @@ export default function AppReviewsSection() {
       setSelectedRequest(null);
     },
   });
+
+  const markCompleteMutation = useMutation({
+    mutationFn: (id) => base44.entities.AppReviewRequest.update(id, { payment_status: 'completed' }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['appReviewRequests'] });
+      setSelectedRequest(prev => prev ? { ...prev, payment_status: 'completed' } : null);
+    },
+  });
+
+  const copyEmail = (email) => {
+    navigator.clipboard.writeText(email);
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
 
   const filteredRequests = requests.filter(req => {
     const matchesSearch = 
@@ -157,9 +172,13 @@ export default function AppReviewsSection() {
                     <Mail className="w-5 h-5 text-[#73e28a]" />
                     <div>
                       <p className="text-xs text-slate-500">Email</p>
-                      <a href={`mailto:${selectedRequest.email}`} className="text-white hover:text-[#73e28a]">
+                      <button 
+                        onClick={() => copyEmail(selectedRequest.email)}
+                        className="text-white hover:text-[#73e28a] flex items-center gap-2"
+                      >
                         {selectedRequest.email}
-                      </a>
+                        {copiedEmail ? <CheckCircle className="w-3 h-3 text-[#73e28a]" /> : <Copy className="w-3 h-3 text-slate-500" />}
+                      </button>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-3 bg-slate-800 rounded-lg">
@@ -232,13 +251,17 @@ export default function AppReviewsSection() {
 
                 {/* Actions */}
                 <div className="flex gap-3 pt-4">
-                  <Button 
-                    variant="outline" 
-                    className="border-slate-700 text-slate-400 hover:text-white"
-                    onClick={() => window.open(`mailto:${selectedRequest.email}`, '_blank')}
-                  >
-                    <Mail className="w-4 h-4 mr-2" /> Email
-                  </Button>
+                  {selectedRequest.payment_status !== 'completed' && (
+                    <Button 
+                      variant="outline" 
+                      className="border-[#73e28a]/50 text-[#73e28a] hover:bg-[#73e28a]/20"
+                      onClick={() => markCompleteMutation.mutate(selectedRequest.id)}
+                      disabled={markCompleteMutation.isPending}
+                    >
+                      <CheckCircle className="w-4 h-4 mr-2" /> 
+                      {markCompleteMutation.isPending ? 'Marking...' : 'Mark Complete'}
+                    </Button>
+                  )}
                   <Button 
                     className="flex-1 bg-[#73e28a] hover:bg-[#5dbb72] text-black"
                     onClick={() => window.open(selectedRequest.app_url, '_blank')}
