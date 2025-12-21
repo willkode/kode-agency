@@ -21,7 +21,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Search, ExternalLink, Mail, MapPin, Calendar, DollarSign, Phone, Trash2, CheckCircle, Copy } from 'lucide-react';
+import { Search, ExternalLink, Mail, MapPin, Calendar, DollarSign, Phone, Trash2, CheckCircle, Copy, FileText } from 'lucide-react';
 import moment from 'moment';
 
 const statusColors = {
@@ -36,14 +36,301 @@ const statusLabels = {
   failed: 'Cancelled',
 };
 
+const BASE44_PROMPT = `You are an expert code reviewer analyzing a live Base44 application. 
+Scan the complete structure and configuration, all pages and functions of my app.
+Your task is to analyze it thoroughly and respond ONLY with a detailed findings report.
+
+Do NOT create any pages, interfaces, or automation workflows.
+Do NOT provide code to build anything.
+Simply analyze what I provide and return findings.
+
+
+## YOUR ANALYSIS TASK
+
+Conduct a comprehensive review across two dimensions:
+
+### CODE QUALITY ASSESSMENT
+- **Backend Function Quality**: Parameter validation, error handling, code patterns, reusability
+- **Database Design**: Schema normalization, relationship integrity, field types, naming consistency
+- **Access Rules**: CRUD rule logic, permission enforcement, data safety
+- **Integration Setup**: Proper configuration, error handling, secret management
+- **Overall Architecture**: Modularity, separation of concerns, maintainability
+
+### SECURITY ASSESSMENT
+- **Authentication & Authorization**: Proper identity verification, role enforcement, access control
+- **Secrets Management**: API keys, credentials, tokens (stored securely, not hardcoded)
+- **Data Access**: Access rules prevent unauthorized data exposure, sensitive fields protected
+- **Input Validation**: Parameters validated to prevent injection attacks
+- **Error Handling**: No sensitive information (stack traces, API URLs) exposed to client
+- **Integration Security**: Third-party services properly authenticated, no credential leaks
+- **Common Vulnerabilities**: SQL injection, XSS, CSRF, privilege escalation risks
+
+---
+
+## REPORT FORMAT
+
+Return your analysis in the following structure:
+
+## Code Quality Review
+
+### Critical Issues
+- [Issue 1]: [Description] → [Recommendation]
+- [Issue 2]: [Description] → [Recommendation]
+- [etc.]
+
+### High Priority Findings
+- [Finding 1]: [Description] → [Recommendation]
+- [Finding 2]: [Description] → [Recommendation]
+- [etc.]
+
+### Medium Priority Findings
+- [Finding 1]: [Description] → [Recommendation]
+- [etc.]
+
+### Low Priority Findings
+- [Finding 1]: [Description] → [Recommendation]
+- [etc.]
+
+### Positive Observations
+- [Good practice 1]: [Brief description]
+- [Good practice 2]: [Brief description]
+- [etc.]
+
+---
+
+## Security Review
+
+### Critical Issues
+- [Issue 1]: [Description] → [Recommendation]
+- [Issue 2]: [Description] → [Recommendation]
+- [etc.]
+
+### High Priority Findings
+- [Finding 1]: [Description] → [Recommendation]
+- [Finding 2]: [Description] → [Recommendation]
+- [etc.]
+
+### Medium Priority Findings
+- [Finding 1]: [Description] → [Recommendation]
+- [etc.]
+
+### Low Priority Findings
+- [Finding 1]: [Description] → [Recommendation]
+- [etc.]
+
+### Positive Observations
+- [Good practice 1]: [Brief description]
+- [etc.]
+
+---
+
+## Summary
+
+**Code Quality Score**: [1-10] with brief justification
+**Security Score**: [1-10] with brief justification
+
+**Total Issues by Severity**:
+- Critical: [count]
+- High: [count]
+- Medium: [count]
+- Low: [count]
+
+**Top 5 Action Items** (prioritized by impact):
+1. [Action 1]
+2. [Action 2]
+3. [Action 3]
+4. [Action 4]
+5. [Action 5]
+
+**Estimated Effort to Remediate Critical/High Issues**: [rough estimate]
+
+---
+
+## ANALYSIS GUIDELINES
+
+- Be specific: Reference exact function names, entity names, or field names when applicable
+- Be actionable: Each finding should include a concrete recommendation
+- Be thorough: Check for business logic flaws, not just syntax
+- Be realistic: Distinguish between "must fix" and "nice to have"
+- Flag assumptions: If I haven't provided certain information, note what's missing
+- Context matters: Consider the app's purpose and user base when assessing risk severity
+
+---
+
+## NOW ANALYZE MY APP
+
+Provide the full analysis in the report format above based on the data I share with you next.`;
+
+const GPT_PROMPT = `You are a senior software architect and security expert. I will upload a ZIP file containing the entire codebase of a React + TypeScript (or React + JS) web application.
+
+Your job is to UNPACK the ZIP, scan the codebase, and generate a detailed, customer-friendly, implementation-ready report.
+
+IMPORTANT OUTPUT REQUIREMENTS
+1) The report must be VERY detailed, well-organized, and written in a natural, client-friendly tone.
+2) The report must be structured with clear headings and consistent formatting.
+3) Every technical finding must include:
+   - Severity (Critical / High / Medium / Low)
+   - File path(s) and line number(s) where the issue appears
+   - What we found (plain language)
+   - Why it is a problem (security, reliability, maintainability, UX, business risk)
+   - Risk if not fixed (concrete impact)
+   - Recommended remediation (specific steps; code examples where helpful)
+   - "Method: Prompt #" reference (do not paste the prompt here; only reference it)
+   - Whether it requires backend changes (Yes/No)
+4) At the VERY END of the report, include a section titled exactly:
+   "Prompt Pack"
+   - Include "AI Model instruction" first (ex: "Use Sonnet 4.5")
+   - Include Prompt 0 as "Safety Rails"
+   - Then include numbered prompts for each major fix (Prompt 1, Prompt 2, …)
+   - Prompts must be copy/paste ready for a coding agent.
+5) Include a separate section titled exactly:
+   "RLS Audit (Row Level Security)"
+   - List each data entity discovered in the codebase (or referenced by the app/backend functions)
+   - Provide recommended Create / Read / Update / Delete rules per entity
+   - For each entity include:
+     - RLS recommendation summary (one sentence)
+     - Why we recommend this
+     - Risk if left public/full access
+6) Include an "Executive Summary" that a non-technical customer can understand.
+7) Include "Issue Totals" table by severity for:
+   - Code Quality
+   - Security
+   - (Optional) RLS findings if you classify them separately
+8) Include a "Fix Pack PR Plan" section that groups changes into small, low-risk PRs, in recommended order.
+9) Include a "Verification & Test Plan" section after the checklist to confirm fixes and prevent regressions.
+10) Produce the final report as an EDITABLE DOCUMENT (DOCX). If DOCX is not possible in your environment, produce clean Markdown that can be pasted into a document editor.
+
+SCOPE: TWO PARALLEL REVIEWS
+
+PART 1: CODE QUALITY REVIEW
+Assess the codebase against these criteria:
+1) Type Safety and TypeScript configuration
+   - Is strict mode enabled (if TS exists)?
+   - Where are types missing or any used?
+   - Consistency across components/hooks/utils
+2) Component architecture
+   - Overly large components
+   - Folder structure
+   - Prop drilling / deep nesting
+3) Hooks and state management
+   - Rules of Hooks
+   - Dependency arrays
+   - State duplication / lifting issues
+4) Code cleanliness
+   - Dead code, commented code
+   - Unused imports/vars
+   - Naming and conventions
+5) Testing
+   - Coverage and gaps
+   - Behavior vs implementation testing
+6) Performance
+   - Avoidable re-renders
+   - Lazy loading / code splitting
+   - Large lists and images optimization
+7) Error handling and UX
+   - Consistent error patterns
+   - Loading states
+   - Error boundaries
+8) Accessibility
+   - Semantic HTML
+   - Keyboard support
+   - ARIA usage where needed
+   - Contrast risks (if detectable)
+
+PART 2: SECURITY REVIEW (OWASP-aligned)
+Assess against secure coding standards:
+1) Input validation & XSS
+   - dangerouslySetInnerHTML / raw HTML rendering
+   - untrusted data rendering
+2) Authentication & authorization
+   - Client-only auth patterns
+   - Hardcoded secrets
+   - Authorization enforced server-side
+3) API & data security
+   - Sensitive data in logs
+   - Token handling (URL leakage, localStorage, etc.)
+   - CSRF considerations (where relevant)
+4) Security headers (if applicable via hosting config)
+   - CSP / HSTS / frame protection
+5) Dependency security
+   - package.json risks
+   - version pinning and unused deps
+6) Secrets & configuration
+   - .env handling
+   - build-time vs runtime secrets
+7) Error handling
+   - stack traces / sensitive messages leaked to client
+8) Dangerous code patterns
+   - eval / dynamic execution
+   - injection patterns
+   - IDOR (insecure direct object references)
+
+DELIVERABLE STRUCTURE (REPORT OUTLINE)
+Use this structure exactly (you can add subsections as needed):
+
+1) Title page / header (app name if found) + report date
+2) How to read this report
+3) Scope and approach
+4) Executive summary
+5) Issue totals (table)
+6) Recommended remediation sequence (PR plan)
+7) Detailed findings and recommendations
+   - Code Quality findings (organized by severity)
+   - Security findings (organized by severity)
+8) RLS Audit (Row Level Security)
+   - Summary table
+   - Per-entity CRUD rules + why + risk
+9) Verification & test plan
+10) Summary (updated scores + top actions + estimated effort)
+11) Prompt Pack (at the very end)
+
+WORKFLOW INSTRUCTIONS
+A) Start by unpacking the ZIP and listing the file structure (high-level tree).
+B) Identify key files (routing, auth, API layer, functions, state management, build config).
+C) Perform both reviews and capture findings with file paths + line numbers.
+D) Generate the report using the structure above.
+E) Ensure every finding references a "Method: Prompt #".
+F) At the end, generate the full "Prompt Pack" with Prompt 0 + all numbered prompts.
+
+PROMPT NUMBERING RULES
+- Prompt 0 = Safety Rails (always included)
+- Prompts 1–N map to remediation items
+- If multiple findings share the same fix approach, they can reference the same prompt number.
+- Each prompt must have:
+  - GOAL
+  - CONTEXT / REFERENCES
+  - TASKS
+  - ACCEPTANCE CRITERIA
+  - OUTPUT requirements
+
+NOW BEGIN
+1) Unpack and scan the uploaded ZIP.
+2) Print the high-level file structure.
+3) Then generate the full report and export it as a DOCX.
+
+==========================================================
+MANUAL FINDINGS ADD-ON (I WILL FILL THIS IN)
+(Leave this section untouched if it is empty. If it contains content, you MUST incorporate it into the report in an "Extended Findings" section and update Prompt Pack accordingly.)
+
+[Paste any extra findings here, with severity, file paths, and notes]
+==========================================================`;
+
 export default function AppReviewsSection() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [statusFilter, setStatusFilter] = useState('all');
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [copiedPrompt, setCopiedPrompt] = useState(null);
 
   const queryClient = useQueryClient();
+
+  const copyPrompt = (type) => {
+    const prompt = type === 'base44' ? BASE44_PROMPT : GPT_PROMPT;
+    navigator.clipboard.writeText(prompt);
+    setCopiedPrompt(type);
+    setTimeout(() => setCopiedPrompt(null), 2000);
+  };
 
   const { data: requests = [], isLoading } = useQuery({
     queryKey: ['appReviewRequests'],
@@ -86,14 +373,34 @@ export default function AppReviewsSection() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col md:flex-row gap-4 justify-between">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
-          <Input
-            placeholder="Search by name, email, or app URL..."
-            className="pl-10 bg-slate-800 border-slate-700 text-white"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+        <div className="flex gap-4 items-center">
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+            <Input
+              placeholder="Search by name, email, or app URL..."
+              className="pl-10 bg-slate-800 border-slate-700 text-white"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => copyPrompt('base44')}
+            className="border-slate-700 text-slate-400 hover:text-white hover:border-[#73e28a] whitespace-nowrap"
+          >
+            <FileText className="w-4 h-4 mr-2" />
+            {copiedPrompt === 'base44' ? 'Copied!' : 'Copy Base44 Prompt'}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => copyPrompt('gpt')}
+            className="border-slate-700 text-slate-400 hover:text-white hover:border-[#73e28a] whitespace-nowrap"
+          >
+            <FileText className="w-4 h-4 mr-2" />
+            {copiedPrompt === 'gpt' ? 'Copied!' : 'Copy GPT Prompt'}
+          </Button>
         </div>
         <div className="flex gap-2">
           {['all', 'pending', 'completed', 'failed'].map((status) => (
