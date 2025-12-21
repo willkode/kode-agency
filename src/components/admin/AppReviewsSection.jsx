@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Card from '@/components/ui-custom/Card';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -11,7 +11,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Search, ExternalLink, Mail, MapPin, Calendar, DollarSign, Phone } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Search, ExternalLink, Mail, MapPin, Calendar, DollarSign, Phone, Trash2 } from 'lucide-react';
 import moment from 'moment';
 
 const statusColors = {
@@ -30,10 +40,22 @@ export default function AppReviewsSection() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [statusFilter, setStatusFilter] = useState('all');
+  const [deleteConfirm, setDeleteConfirm] = useState(null);
+
+  const queryClient = useQueryClient();
 
   const { data: requests = [], isLoading } = useQuery({
     queryKey: ['appReviewRequests'],
     queryFn: () => base44.entities.AppReviewRequest.list('-created_date'),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (id) => base44.entities.AppReviewRequest.delete(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['appReviewRequests'] });
+      setDeleteConfirm(null);
+      setSelectedRequest(null);
+    },
   });
 
   const filteredRequests = requests.filter(req => {
@@ -212,10 +234,10 @@ export default function AppReviewsSection() {
                 <div className="flex gap-3 pt-4">
                   <Button 
                     variant="outline" 
-                    className="flex-1 border-slate-700 text-slate-400 hover:text-white"
+                    className="border-slate-700 text-slate-400 hover:text-white"
                     onClick={() => window.open(`mailto:${selectedRequest.email}`, '_blank')}
                   >
-                    <Mail className="w-4 h-4 mr-2" /> Email Client
+                    <Mail className="w-4 h-4 mr-2" /> Email
                   </Button>
                   <Button 
                     className="flex-1 bg-[#73e28a] hover:bg-[#5dbb72] text-black"
@@ -223,12 +245,42 @@ export default function AppReviewsSection() {
                   >
                     <ExternalLink className="w-4 h-4 mr-2" /> Open App
                   </Button>
+                  <Button 
+                    variant="outline" 
+                    className="border-red-500/50 text-red-400 hover:bg-red-500/20 hover:text-red-300"
+                    onClick={() => setDeleteConfirm(selectedRequest)}
+                  >
+                    <Trash2 className="w-4 h-4 mr-2" /> Delete
+                  </Button>
                 </div>
               </div>
             </>
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Delete Confirmation */}
+      <AlertDialog open={!!deleteConfirm} onOpenChange={() => setDeleteConfirm(null)}>
+        <AlertDialogContent className="bg-slate-900 border-slate-800 text-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Review Request</AlertDialogTitle>
+            <AlertDialogDescription className="text-slate-400">
+              Are you sure you want to delete the review request from <strong className="text-white">{deleteConfirm?.name}</strong>? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700">
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-600 hover:bg-red-700 text-white"
+              onClick={() => deleteMutation.mutate(deleteConfirm?.id)}
+            >
+              {deleteMutation.isPending ? 'Deleting...' : 'Delete'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

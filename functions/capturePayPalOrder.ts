@@ -58,6 +58,18 @@ Deno.serve(async (req) => {
     const requestData = requests[0];
     
     if (requestData) {
+      // Create a Lead in CRM for tracking
+      await base44.asServiceRole.entities.Lead.create({
+        name: requestData.name,
+        email: requestData.email,
+        phone: requestData.phone || '',
+        source: 'Website',
+        status: 'Qualified',
+        description: `Base44 ER App Review Request\n\nApp URL: ${requestData.app_url}\n\nIssue:\n${requestData.issue_description}`,
+        deal_value: 25,
+        notes: `Country: ${requestData.country || 'Not provided'}\nPayPal Order: ${orderId}`
+      });
+
       // Send notification email
       await base44.asServiceRole.integrations.Core.SendEmail({
         to: 'will@kodeagency.us',
@@ -72,6 +84,7 @@ Payment Details:
 Client Details:
 - Name: ${requestData.name}
 - Email: ${requestData.email}
+- Phone: ${requestData.phone || 'Not provided'}
 - Country: ${requestData.country || 'Not provided'}
 - App URL: ${requestData.app_url}
 
@@ -79,6 +92,8 @@ Issue Description:
 ${requestData.issue_description}
 
 Admin invite should have been sent to: iamwillkode@gmail.com
+
+A Lead has been automatically created in your CRM.
 
 ---
 This is an automated notification from Base44 ER.
