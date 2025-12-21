@@ -384,19 +384,17 @@ export default function AppReviewsSection() {
             />
           </div>
           <Button
-            variant="outline"
             size="sm"
             onClick={() => copyPrompt('base44')}
-            className="border-slate-700 text-slate-400 hover:text-white hover:border-[#73e28a] whitespace-nowrap"
+            className="bg-blue-600 hover:bg-blue-700 text-white whitespace-nowrap"
           >
             <FileText className="w-4 h-4 mr-2" />
             {copiedPrompt === 'base44' ? 'Copied!' : 'Copy Base44 Prompt'}
           </Button>
           <Button
-            variant="outline"
             size="sm"
             onClick={() => copyPrompt('gpt')}
-            className="border-slate-700 text-slate-400 hover:text-white hover:border-[#73e28a] whitespace-nowrap"
+            className="bg-blue-600 hover:bg-blue-700 text-white whitespace-nowrap"
           >
             <FileText className="w-4 h-4 mr-2" />
             {copiedPrompt === 'gpt' ? 'Copied!' : 'Copy GPT Prompt'}
