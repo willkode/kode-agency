@@ -114,10 +114,7 @@ export default function Layout({ children, currentPageName }) {
                 <span className="uppercase tracking-wider">Get InTouch</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Subscribe Now.</h2>
-              <p className="text-slate-500 text-sm leading-relaxed">
-                Fusce eget accumsan urna, id rhoncus tortor.<br />
-                Interdum leo non orci fringilla suscipit.
-              </p>
+
             </div>
 
             <div className="flex flex-col md:flex-row items-start md:items-end gap-8 flex-1 max-w-xl">
