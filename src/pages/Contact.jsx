@@ -53,10 +53,9 @@ export default function ContactPage() {
   };
 
   const contactInfo = [
-    { id: "01", icon: Phone, text: "+1 (555) 123-4567", label: "Call Us" },
-    { id: "02", icon: Mail, text: "hello@kodeagency.com", label: "Email Us" },
-    { id: "03", icon: MapPin, text: "Remote-First Agency", label: "Location" },
-    { id: "04", icon: Clock, text: "Mon - Fri, 9AM - 6PM", label: "Working Hours" },
+    { id: "01", icon: Mail, text: "hello@kodeagency.com", label: "Email Us" },
+    { id: "02", icon: MapPin, text: "Remote-First Agency", label: "Location" },
+    { id: "03", icon: Clock, text: "Mon - Fri, 9AM - 6PM", label: "Working Hours" },
   ];
 
   if (isSubmitted) {
@@ -102,7 +101,7 @@ export default function ContactPage() {
 
       {/* Contact Info Cards */}
       <div className="container mx-auto px-4 -mt-16 relative z-20">
-         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {contactInfo.map((item) => (
                <Card key={item.id} className="bg-slate-900/95 backdrop-blur-sm border-slate-800 p-8 text-center hover:border-[#73e28a]/50 transition-colors group">
                   <div className="flex justify-between items-start mb-4">
@@ -217,8 +216,8 @@ export default function ContactPage() {
                      Have Any Query?<br/> Feel Free to Contact
                   </h2>
                   <div className="inline-flex items-center gap-3 bg-[#73e28a] px-6 py-3 rounded-full text-black font-bold shadow-lg cursor-pointer hover:scale-105 transition-transform">
-                     <Phone className="w-5 h-5" />
-                     <span>+1 (555) 123-4567</span>
+                     <Mail className="w-5 h-5" />
+                     <span>hello@kodeagency.com</span>
                   </div>
                </div>
             </div>
