@@ -9,7 +9,7 @@ import SectionLabel from '@/components/ui-custom/SectionLabel';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
-import { ArrowRight, CheckCircle, Phone } from 'lucide-react';
+import { ArrowRight, CheckCircle } from 'lucide-react';
 
 export default function ServicePageTemplate({ 
   title, 
@@ -50,12 +50,6 @@ export default function ServicePageTemplate({
                   Get Started <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </Link>
-              <a href="tel:+1234567890" className="flex items-center gap-3 text-white hover:text-[#73e28a] transition-colors">
-                <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center">
-                  <Phone className="w-4 h-4" />
-                </div>
-                <span className="text-sm font-medium">Call Us</span>
-              </a>
             </div>
           </div>
           
