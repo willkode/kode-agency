@@ -30,7 +30,7 @@ import {
 } from 'lucide-react';
 
 const HOURLY_RATE = 75;
-const MIN_HOURS = 2;
+const MIN_HOURS = 1;
 
 export default function BuildSprintPage() {
   const [showModal, setShowModal] = useState(false);
@@ -249,7 +249,7 @@ export default function BuildSprintPage() {
               <div className="border-t border-slate-800 pt-6 space-y-4">
                 <div className="flex items-center gap-3 text-slate-300">
                   <Clock className="w-5 h-5 text-[#73e28a]" />
-                  <span>2-hour minimum booking</span>
+                  <span>1-hour minimum booking</span>
                 </div>
                 <div className="flex items-center gap-3 text-slate-300">
                   <Users className="w-5 h-5 text-[#73e28a]" />
@@ -263,7 +263,7 @@ export default function BuildSprintPage() {
               
               <div className="mt-6 p-4 bg-slate-800/50 rounded-lg text-center">
                 <div className="text-slate-400 text-sm">Minimum session cost</div>
-                <div className="text-2xl font-bold text-white">$150 <span className="text-slate-500 text-sm font-normal">(2 hours)</span></div>
+                <div className="text-2xl font-bold text-white">$75 <span className="text-slate-500 text-sm font-normal">(1 hour)</span></div>
               </div>
             </Card>
           </div>
@@ -414,7 +414,7 @@ export default function BuildSprintPage() {
             Ready to build?
           </h2>
           <p className="text-slate-300 text-lg mb-4 max-w-2xl mx-auto">
-            Rate: $75/hour • Minimum: 2 hours
+            Rate: $75/hour • Minimum: 1 hour
           </p>
           <p className="text-slate-400 mb-10 max-w-2xl mx-auto">
             If you are ready, book a session and include your Base44 link and MVP goal.
@@ -558,8 +558,53 @@ export default function BuildSprintPage() {
                   Back
                 </Button>
                 <Button
+                  onClick={() => setStep(3)}
+                  disabled={!formData.mvp_goal}
+                  className="flex-1 bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold"
+                >
+                  Continue <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+          )}
+          
+          {step === 3 && (
+            <div className="space-y-6 py-4">
+              <div className="p-4 bg-slate-800 rounded-lg border border-[#73e28a]/30">
+                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                  <Users className="w-5 h-5 text-[#73e28a]" />
+                  Grant Admin Access
+                </h3>
+                <p className="text-slate-300 mb-4">
+                  Before we can start, please add me as an admin to your Base44 app:
+                </p>
+                <ol className="space-y-3 text-slate-400">
+                  <li className="flex items-start gap-3">
+                    <span className="w-6 h-6 rounded-full bg-[#73e28a] text-black text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    <span>Open your Base44 app</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="w-6 h-6 rounded-full bg-[#73e28a] text-black text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    <span>Click the <strong className="text-white">Share</strong> button (to the left of the Publish button)</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="w-6 h-6 rounded-full bg-[#73e28a] text-black text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    <span>Invite <strong className="text-[#73e28a]">iamwillkode@gmail.com</strong> with <strong className="text-white">Admin</strong> access level</span>
+                  </li>
+                </ol>
+              </div>
+              
+              <div className="flex gap-3">
+                <Button
+                  variant="outline"
+                  onClick={() => setStep(2)}
+                  className="flex-1 border-slate-600 hover:bg-slate-700 text-white"
+                >
+                  Back
+                </Button>
+                <Button
                   onClick={handleSubmit}
-                  disabled={!formData.mvp_goal || createRequestMutation.isPending}
+                  disabled={createRequestMutation.isPending}
                   className="flex-1 bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold"
                 >
                   {createRequestMutation.isPending ? (
