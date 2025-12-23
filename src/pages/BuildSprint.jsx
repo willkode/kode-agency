@@ -127,7 +127,7 @@ export default function BuildSprintPage() {
   const faqs = [
     {
       q: "Do you take over the build, or do we actually build together?",
-      a: "We build together. You share your screen and I guide implementation so you understand what is happening and can keep building after."
+      a: "I share my screen and build while you watch. I explain every step so you understand what is happening and can keep building after."
     },
     {
       q: "Can we fix an existing messy app instead of starting fresh?",
@@ -225,7 +225,7 @@ export default function BuildSprintPage() {
               We will structure it correctly, ship real progress, and leave you with a foundation you can maintain.
             </p>
             <p className="text-slate-400 leading-relaxed mb-8">
-              A timeboxed co-building session where we work inside your Base44 project together. You share your screen, I guide the build, and we make sure the app is structured in a clean, maintainable way.
+              A timeboxed session where I share my screen and build your Base44 app while you watch. I explain every step so you learn how to structure and maintain a real MVP.
             </p>
             <p className="text-[#73e28a] font-semibold text-lg mb-8">
               You will leave the session with working features and a clear next-steps plan.
@@ -371,7 +371,7 @@ export default function BuildSprintPage() {
             {[
               { num: "01", title: "Book your time", desc: "Pick a start time and pay for at least 2 hours. You can extend during the session if you want." },
               { num: "02", title: "Pre-call checklist", desc: "Provide your Base44 app link, MVP goal, top 3 user actions, and any integrations needed." },
-              { num: "03", title: "Live build sprint", desc: "We build in your project together with a tight process—scope lock, setup, build, and confirm." },
+              { num: "03", title: "Live build sprint", desc: "I share my screen and build in your project while explaining every step—scope lock, setup, build, and confirm." },
               { num: "04", title: "Wrap-up", desc: "Leave with a working build, prioritized next-steps checklist, and clear guidance." }
             ].map((step, i) => (
               <div key={i} className="relative">
