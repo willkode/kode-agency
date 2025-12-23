@@ -242,7 +242,7 @@ export default function BuildSprintPage() {
           <div className="relative">
             <Card className="p-8 bg-slate-900/80 border-[#73e28a]/30">
               <div className="text-center mb-6">
-                <div className="text-5xl font-bold text-[#73e28a] mb-2">$50</div>
+                <div className="text-5xl font-bold text-[#73e28a] mb-2">$75</div>
                 <div className="text-slate-400">per hour</div>
               </div>
               
@@ -263,7 +263,7 @@ export default function BuildSprintPage() {
               
               <div className="mt-6 p-4 bg-slate-800/50 rounded-lg text-center">
                 <div className="text-slate-400 text-sm">Minimum session cost</div>
-                <div className="text-2xl font-bold text-white">$100 <span className="text-slate-500 text-sm font-normal">(2 hours)</span></div>
+                <div className="text-2xl font-bold text-white">$150 <span className="text-slate-500 text-sm font-normal">(2 hours)</span></div>
               </div>
             </Card>
           </div>
@@ -414,7 +414,7 @@ export default function BuildSprintPage() {
             Ready to build?
           </h2>
           <p className="text-slate-300 text-lg mb-4 max-w-2xl mx-auto">
-            Rate: $50/hour • Minimum: 2 hours
+            Rate: $75/hour • Minimum: 2 hours
           </p>
           <p className="text-slate-400 mb-10 max-w-2xl mx-auto">
             If you are ready, book a session and include your Base44 link and MVP goal.
