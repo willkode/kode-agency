@@ -553,7 +553,7 @@ export default function BuildSprintPage() {
                 <Button
                   variant="outline"
                   onClick={() => setStep(1)}
-                  className="flex-1 border-slate-700 hover:bg-slate-800"
+                  className="flex-1 border-slate-600 hover:bg-slate-700 text-white"
                 >
                   Back
                 </Button>
