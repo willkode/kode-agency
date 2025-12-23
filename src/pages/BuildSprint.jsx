@@ -465,11 +465,10 @@ export default function BuildSprintPage() {
                 <div className="flex items-center gap-4">
                   <Button
                     type="button"
-                    variant="outline"
                     size="icon"
                     onClick={() => handleHoursChange(-1)}
                     disabled={formData.hours <= MIN_HOURS}
-                    className="border-slate-600 hover:bg-slate-700 text-white"
+                    className="bg-slate-600 hover:bg-slate-500 text-black disabled:opacity-50"
                   >
                     <Minus className="w-4 h-4" />
                   </Button>
@@ -479,10 +478,9 @@ export default function BuildSprintPage() {
                   </div>
                   <Button
                     type="button"
-                    variant="outline"
                     size="icon"
                     onClick={() => handleHoursChange(1)}
-                    className="border-slate-600 hover:bg-slate-700 text-white"
+                    className="bg-slate-600 hover:bg-slate-500 text-black"
                   >
                     <Plus className="w-4 h-4" />
                   </Button>
