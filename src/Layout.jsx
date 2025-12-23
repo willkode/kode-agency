@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { Menu, X, ChevronRight, Github, Twitter, Linkedin } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,25 @@ import { base44 } from '@/api/base44Client';
 export default function Layout({ children, currentPageName }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // Check if admin user and redirect
+  useEffect(() => {
+    const checkAdminRedirect = async () => {
+      try {
+        const isAuth = await base44.auth.isAuthenticated();
+        if (isAuth) {
+          const user = await base44.auth.me();
+          if (user?.role === 'admin' && currentPageName !== 'Admin') {
+            navigate(createPageUrl('Admin'));
+          }
+        }
+      } catch (e) {
+        // Not logged in, ignore
+      }
+    };
+    checkAdminRedirect();
+  }, []);
 
   // Scroll to top on route change
   useEffect(() => {
