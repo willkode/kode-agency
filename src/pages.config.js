@@ -10,6 +10,7 @@ import Base44ER from './pages/Base44ER';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import Branding from './pages/Branding';
+import BuildSprint from './pages/BuildSprint';
 import CROServices from './pages/CROServices';
 import Contact from './pages/Contact';
 import ContentMarketing from './pages/ContentMarketing';
@@ -30,7 +31,6 @@ import SaaSDevelopment from './pages/SaaSDevelopment';
 import Services from './pages/Services';
 import UIUXDesign from './pages/UIUXDesign';
 import WebsiteDevelopment from './pages/WebsiteDevelopment';
-import BuildSprint from './pages/BuildSprint';
 import __Layout from './Layout.jsx';
 
 
@@ -47,6 +47,7 @@ export const PAGES = {
     "Blog": Blog,
     "BlogPost": BlogPost,
     "Branding": Branding,
+    "BuildSprint": BuildSprint,
     "CROServices": CROServices,
     "Contact": Contact,
     "ContentMarketing": ContentMarketing,
@@ -67,7 +68,6 @@ export const PAGES = {
     "Services": Services,
     "UIUXDesign": UIUXDesign,
     "WebsiteDevelopment": WebsiteDevelopment,
-    "BuildSprint": BuildSprint,
 }
 
 export const pagesConfig = {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Section from '@/components/ui-custom/Section';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import { Button } from "@/components/ui/button";
-import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope } from 'lucide-react';
+import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap } from 'lucide-react';
 
 import CRMSection from '@/components/admin/CRMSection';
 import ProjectsSection from '@/components/admin/ProjectsSection';
@@ -10,6 +10,7 @@ import CareersSection from '@/components/admin/CareersSection';
 import PortfolioSection from '@/components/admin/PortfolioSection';
 import BlogSection from '@/components/admin/BlogSection';
 import AppReviewsSection from '@/components/admin/AppReviewsSection';
+import BuildSprintsSection from '@/components/admin/BuildSprintsSection';
 
 const tabs = [
   { id: 'crm', label: 'CRM', icon: Users },
@@ -17,6 +18,7 @@ const tabs = [
   { id: 'portfolio', label: 'Portfolio', icon: Layout },
   { id: 'blog', label: 'Blog', icon: FileText },
   { id: 'careers', label: 'Careers', icon: Briefcase },
+  { id: 'sprints', label: 'Build Sprints', icon: Zap },
   { id: 'reviews', label: 'App Reviews', icon: Stethoscope },
 ];
 
@@ -94,6 +96,9 @@ export default function AdminPage() {
           )}
           {activeTab === 'careers' && (
             <CareersSection />
+          )}
+          {activeTab === 'sprints' && (
+            <BuildSprintsSection />
           )}
           {activeTab === 'reviews' && (
             <AppReviewsSection />
