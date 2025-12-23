@@ -12,7 +12,7 @@ import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 import { 
   Code, Rocket, Bot, Link2, Layers, Palette, Globe, Server,
   Search, TrendingUp, Target, FileText, Brush, Mail, BarChart3,
-  ArrowRight, CheckCircle, Phone
+  ArrowRight, CheckCircle, Phone, Zap, Stethoscope
 } from 'lucide-react';
 
 export default function ServicesPage() {
@@ -25,6 +25,11 @@ export default function ServicesPage() {
     { icon: Palette, title: "UI/UX Design", slug: "UIUXDesign", desc: "Conversion-focused interfaces and full design systems." },
     { icon: Globe, title: "Website Development", slug: "WebsiteDevelopment", desc: "High-performance sites, landing pages, and e-commerce." },
     { icon: Server, title: "DevOps & Infrastructure", slug: "DevOps", desc: "Cloud setup, monitoring, scaling, and deployment." },
+  ];
+
+  const specialtyServices = [
+    { icon: Zap, title: "Build Sprint", slug: "BuildSprint", desc: "Live screen-share session where I build your MVP while you watch and learn. $75/hr." },
+    { icon: Stethoscope, title: "Base44 Emergency Room", slug: "Base44ER", desc: "Expert app review + optional $100 fix service. Get your Base44 app unstuck." },
   ];
 
   const marketingServices = [
@@ -106,8 +111,33 @@ export default function ServicesPage() {
         </div>
       </Section>
 
-      {/* Marketing Services */}
+      {/* Specialty Services */}
       <Section className="py-24 bg-slate-900/50 relative overflow-hidden">
+        <GlowingOrb position="top-left" size="300px" opacity={0.1} />
+        
+        <div className="relative z-10">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12">
+            <div>
+              <SectionLabel text="Quick & Focused" />
+              <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+                Specialty Services
+              </h2>
+              <p className="text-slate-400 mt-4 max-w-2xl">
+                Targeted sessions for Base44 builders — get expert help fast without a full project engagement.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl">
+            {specialtyServices.map((service, i) => (
+              <ServiceCard key={i} service={service} />
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* Marketing Services */}
+      <Section className="py-24 relative overflow-hidden">
         <GlowingOrb position="top-right" size="400px" opacity={0.1} />
         
         <div className="relative z-10">
