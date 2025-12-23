@@ -25,8 +25,10 @@ import {
   AlertTriangle,
   Copy,
   ExternalLink,
-  Stethoscope
+  Stethoscope,
+  Hammer
 } from 'lucide-react';
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function Base44ERPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,7 +42,8 @@ export default function Base44ERPage() {
     phone: '',
     country: '',
     app_url: '',
-    issue_description: ''
+    issue_description: '',
+    include_fix: false
   });
 
   // Handle return from PayPal
@@ -147,9 +150,17 @@ export default function Base44ERPage() {
           <p className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto mb-4">
             Professional App Reviews & Debugging
           </p>
-          <p className="text-4xl md:text-5xl font-bold text-[#73e28a] mb-8">
-            $25 <span className="text-lg text-slate-500 font-normal">flat rate</span>
-          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
+            <div className="text-center">
+              <p className="text-4xl md:text-5xl font-bold text-[#73e28a]">$25</p>
+              <p className="text-slate-500 text-sm">Review Only</p>
+            </div>
+            <div className="text-slate-600 text-2xl">or</div>
+            <div className="text-center">
+              <p className="text-4xl md:text-5xl font-bold text-[#73e28a]">$125</p>
+              <p className="text-slate-500 text-sm">Review + Fix</p>
+            </div>
+          </div>
           
           <Button 
             onClick={() => setIsModalOpen(true)}
@@ -359,6 +370,33 @@ export default function Base44ERPage() {
                 />
               </div>
 
+              <div 
+                className={`p-4 rounded-lg border cursor-pointer transition-all ${formData.include_fix ? 'bg-[#73e28a]/10 border-[#73e28a]' : 'bg-slate-800 border-slate-700 hover:border-slate-600'}`}
+                onClick={() => handleChange('include_fix', !formData.include_fix)}
+              >
+                <div className="flex items-start gap-3">
+                  <Checkbox 
+                    checked={formData.include_fix}
+                    onCheckedChange={(checked) => handleChange('include_fix', checked)}
+                    className="mt-1 border-slate-600 data-[state=checked]:bg-[#73e28a] data-[state=checked]:border-[#73e28a]"
+                  />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Hammer className="w-4 h-4 text-[#73e28a]" />
+                      <span className="font-bold text-white">Add Fix Service (+$100)</span>
+                    </div>
+                    <p className="text-sm text-slate-400">
+                      I'll implement the fixes myself after the review. You get a working solution, not just advice.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-3 bg-slate-800/50 rounded-lg text-center">
+                <span className="text-slate-400">Total: </span>
+                <span className="text-xl font-bold text-[#73e28a]">${formData.include_fix ? '125' : '25'}</span>
+              </div>
+
               <Button 
                 onClick={handleNextStep}
                 disabled={!formData.name || !formData.email || !formData.app_url || !formData.issue_description}
@@ -427,7 +465,7 @@ export default function Base44ERPage() {
               <div>
                 <h3 className="text-xl font-bold text-white mb-2">Redirecting to PayPal...</h3>
                 <p className="text-slate-400">
-                  Complete your $25 payment to finalize the review request.
+                  Complete your ${formData.include_fix ? '125' : '25'} payment to finalize the review request.
                 </p>
               </div>
               <p className="text-sm text-slate-500">
