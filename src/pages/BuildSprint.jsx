@@ -444,7 +444,7 @@ export default function BuildSprintPage() {
                 <Input
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="bg-slate-800 border-slate-700"
+                  className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
                   placeholder="John Doe"
                 />
               </div>
@@ -455,7 +455,7 @@ export default function BuildSprintPage() {
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="bg-slate-800 border-slate-700"
+                  className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
                   placeholder="john@example.com"
                 />
               </div>
@@ -469,7 +469,7 @@ export default function BuildSprintPage() {
                     size="icon"
                     onClick={() => handleHoursChange(-1)}
                     disabled={formData.hours <= MIN_HOURS}
-                    className="border-slate-700 hover:bg-slate-800"
+                    className="border-slate-600 hover:bg-slate-700 text-white"
                   >
                     <Minus className="w-4 h-4" />
                   </Button>
@@ -482,7 +482,7 @@ export default function BuildSprintPage() {
                     variant="outline"
                     size="icon"
                     onClick={() => handleHoursChange(1)}
-                    className="border-slate-700 hover:bg-slate-800"
+                    className="border-slate-600 hover:bg-slate-700 text-white"
                   >
                     <Plus className="w-4 h-4" />
                   </Button>
