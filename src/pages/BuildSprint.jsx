@@ -29,7 +29,7 @@ import {
   Minus
 } from 'lucide-react';
 
-const HOURLY_RATE = 50;
+const HOURLY_RATE = 75;
 const MIN_HOURS = 2;
 
 export default function BuildSprintPage() {
