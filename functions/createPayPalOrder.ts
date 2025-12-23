@@ -25,11 +25,16 @@ Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
     
-    const { requestId } = await req.json();
+    const { requestId, includeFix } = await req.json();
     
     if (!requestId) {
       return Response.json({ error: 'Request ID is required' }, { status: 400 });
     }
+    
+    const amount = includeFix ? '125.00' : '25.00';
+    const description = includeFix 
+      ? 'Base44 App Review + Fix Service - Professional debugging, code review, and implementation'
+      : 'Base44 App Review - Professional debugging and code review';
     
     const accessToken = await getAccessToken();
     
@@ -43,10 +48,10 @@ Deno.serve(async (req) => {
         intent: 'CAPTURE',
         purchase_units: [{
           reference_id: requestId,
-          description: 'Base44 App Review - Professional debugging and code review',
+          description: description,
           amount: {
             currency_code: 'USD',
-            value: '25.00',
+            value: amount,
           },
         }],
         application_context: {

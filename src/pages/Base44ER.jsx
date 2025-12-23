@@ -79,7 +79,10 @@ export default function Base44ERPage() {
       setStep(3);
       
       // Create PayPal order and redirect
-      const response = await base44.functions.invoke('createPayPalOrder', { requestId: created.id });
+      const response = await base44.functions.invoke('createPayPalOrder', { 
+        requestId: created.id,
+        includeFix: formData.include_fix 
+      });
       if (response.data.approvalUrl) {
         window.location.href = response.data.approvalUrl;
       }
