@@ -9,7 +9,7 @@ import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 
 import SectionLabel from '@/components/ui-custom/SectionLabel';
-import { ArrowRight, ArrowUpRight, Rocket, Bot, Search, Target, TrendingUp, CheckCircle, Play, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Rocket, Bot, Search, Target, TrendingUp, CheckCircle, Play, ChevronLeft, ChevronRight, Zap, Stethoscope, Package } from 'lucide-react';
 
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -257,6 +257,49 @@ export default function HomePage() {
                 <p className="text-slate-400 text-sm leading-relaxed">{service.desc}</p>
               </Card>
             )}
+          </div>
+        </div>
+      </Section>
+
+      {/* Specialty Services */}
+      <Section className="py-24 relative overflow-hidden">
+        <GlowingOrb position="top-left" size="300px" opacity={0.1} />
+        
+        <div className="relative z-10">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12">
+            <div>
+              <SectionLabel text="Quick & Focused" />
+              <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+                Specialty Services
+              </h2>
+              <p className="text-slate-400 mt-4 max-w-2xl">
+                Targeted sessions for builders — get expert help fast without a full project engagement.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { icon: Zap, title: "Build Sprint", slug: "BuildSprint", price: "$75/hr", desc: "Live screen-share session where I build your MVP while you watch and learn." },
+              { icon: Stethoscope, title: "Base44 Emergency Room", slug: "Base44ER", price: "$50-$150", desc: "Expert app review + optional fix service. Get your Base44 app unstuck." },
+              { icon: Package, title: "App Foundation", slug: "AppFoundation", price: "$250", desc: "Done-for-you app scaffolding with core data models and integrations." },
+            ].map((service, i) => (
+              <Link key={i} to={createPageUrl(service.slug)}>
+                <Card className="p-6 group hover:border-[#73e28a]/50 bg-slate-900/80 h-full cursor-pointer">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="w-14 h-14 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-[#73e28a] group-hover:bg-[#73e28a] group-hover:text-black transition-all duration-300">
+                      <service.icon className="w-6 h-6" />
+                    </div>
+                    <span className="text-[#73e28a] font-bold">{service.price}</span>
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-[#73e28a] transition-colors">{service.title}</h3>
+                  <p className="text-slate-400 text-sm leading-relaxed mb-4">{service.desc}</p>
+                  <div className="flex items-center text-[#73e28a] text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                    Learn More <ArrowRight className="w-4 h-4 ml-1" />
+                  </div>
+                </Card>
+              </Link>
+            ))}
           </div>
         </div>
       </Section>
