@@ -153,21 +153,14 @@ export default function Base44ERPage() {
           <p className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto mb-4">
             Professional App Reviews & Debugging
           </p>
-          <div className="mb-4">
-            <div className="inline-flex items-center gap-2 bg-red-500/20 border border-red-500/50 rounded-full px-4 py-2 mb-4">
-              <span className="text-red-400 text-sm font-medium">🎄 Christmas Special — Ends 12/25 at 1am CST</span>
-            </div>
-          </div>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-8">
             <div className="text-center">
-              <p className="text-lg text-slate-500 line-through">$50</p>
-              <p className="text-4xl md:text-5xl font-bold text-[#73e28a]">$25</p>
+              <p className="text-4xl md:text-5xl font-bold text-[#73e28a]">$50</p>
               <p className="text-slate-500 text-sm">Review Only</p>
             </div>
             <div className="text-slate-600 text-2xl">or</div>
             <div className="text-center">
-              <p className="text-lg text-slate-500 line-through">$150</p>
-              <p className="text-4xl md:text-5xl font-bold text-[#73e28a]">$125</p>
+              <p className="text-4xl md:text-5xl font-bold text-[#73e28a]">$150</p>
               <p className="text-slate-500 text-sm">Review + Fix</p>
             </div>
           </div>
@@ -404,7 +397,7 @@ export default function Base44ERPage() {
 
               <div className="p-3 bg-slate-800/50 rounded-lg text-center">
                 <span className="text-slate-400">Total: </span>
-                <span className="text-xl font-bold text-[#73e28a]">${formData.include_fix ? '125' : '25'}</span>
+                <span className="text-xl font-bold text-[#73e28a]">${formData.include_fix ? '150' : '50'}</span>
               </div>
 
               <Button 
@@ -475,7 +468,7 @@ export default function Base44ERPage() {
               <div>
                 <h3 className="text-xl font-bold text-white mb-2">Redirecting to PayPal...</h3>
                 <p className="text-slate-400">
-                  Complete your ${formData.include_fix ? '125' : '25'} payment to finalize the review request.
+                  Complete your ${formData.include_fix ? '150' : '50'} payment to finalize the review request.
                 </p>
               </div>
               <p className="text-sm text-slate-500">

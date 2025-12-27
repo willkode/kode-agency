@@ -31,7 +31,7 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Request ID is required' }, { status: 400 });
     }
     
-    const amount = includeFix ? '125.00' : '25.00';
+    const amount = includeFix ? '150.00' : '50.00';
     const description = includeFix 
       ? 'Base44 App Review + Fix Service - Professional debugging, code review, and implementation'
       : 'Base44 App Review - Professional debugging and code review';
