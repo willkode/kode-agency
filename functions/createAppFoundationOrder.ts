@@ -25,13 +25,13 @@ Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
     
-    const { requestId } = await req.json();
+    const { requestId, amount: totalAmount } = await req.json();
     
     if (!requestId) {
       return Response.json({ error: 'Request ID is required' }, { status: 400 });
     }
     
-    const amount = '250.00';
+    const amount = totalAmount ? totalAmount.toFixed(2) : '250.00';
     const description = 'Done-For-You App Foundation - Core scaffolding, data models, and baseline integrations';
     
     const accessToken = await getAccessToken();

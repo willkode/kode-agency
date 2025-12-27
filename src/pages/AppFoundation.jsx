@@ -56,11 +56,36 @@ export default function AppFoundationPage() {
     preferred_platform: '',
     deadline: '',
     reference_links: '',
+    addons: [],
     confirm_foundation_only: false,
     confirm_no_ui_design: false,
     confirm_no_ongoing_dev: false,
     confirm_own_secrets: false
   });
+
+  const addonOptions = [
+    { id: 'ui_starter', name: 'UI Starter Pack', price: 200, desc: 'Basic layout system + reusable components (not custom design)' },
+    { id: 'phase2_roadmap', name: 'Phase 2 Roadmap', price: 99, desc: 'Prioritized build plan + backlog + milestones' },
+    { id: 'integration_deep', name: 'Integration Deep Setup', price: 150, desc: 'Fully configured integration beyond baseline wiring (per integration)' },
+  ];
+
+  const calculateTotal = () => {
+    const base = 250;
+    const addonsTotal = formData.addons.reduce((sum, addonId) => {
+      const addon = addonOptions.find(a => a.id === addonId);
+      return sum + (addon ? addon.price : 0);
+    }, 0);
+    return base + addonsTotal;
+  };
+
+  const handleAddonToggle = (addonId) => {
+    setFormData(prev => ({
+      ...prev,
+      addons: prev.addons.includes(addonId)
+        ? prev.addons.filter(id => id !== addonId)
+        : [...prev.addons, addonId]
+    }));
+  };
 
   // Handle return from PayPal
   React.useEffect(() => {
@@ -92,7 +117,8 @@ export default function AppFoundationPage() {
     },
     onSuccess: async (created) => {
       const response = await base44.functions.invoke('createAppFoundationOrder', { 
-        requestId: created.id
+        requestId: created.id,
+        amount: calculateTotal()
       });
       if (response.data.approvalUrl) {
         window.location.href = response.data.approvalUrl;
@@ -121,10 +147,12 @@ export default function AppFoundationPage() {
       if (!formData.core_features || !formData.preferred_platform) return;
       setStep(3);
     } else if (step === 3) {
+      setStep(4);
+    } else if (step === 4) {
       if (!formData.confirm_foundation_only || !formData.confirm_no_ui_design || 
           !formData.confirm_no_ongoing_dev || !formData.confirm_own_secrets) return;
-      setStep(4);
-      submitMutation.mutate(formData);
+      setStep(5);
+      submitMutation.mutate({ ...formData, total_amount: calculateTotal() });
     }
   };
 
@@ -416,11 +444,12 @@ export default function AppFoundationPage() {
               <DialogTitle className="text-2xl font-bold">
                 {step === 1 && "Step 1: Basic Info"}
                 {step === 2 && "Step 2: App Details"}
-                {step === 3 && "Step 3: Confirm Scope"}
-                {step === 4 && "Processing Payment..."}
+                {step === 3 && "Step 3: Add-Ons"}
+                {step === 4 && "Step 4: Confirm Scope"}
+                {step === 5 && "Processing Payment..."}
               </DialogTitle>
               <div className="flex gap-2 mt-2">
-                {[1,2,3].map(s => (
+                {[1,2,3,4].map(s => (
                   <div key={s} className={`h-1 flex-1 rounded ${s <= step ? 'bg-[#73e28a]' : 'bg-slate-700'}`} />
                 ))}
               </div>
@@ -612,13 +641,83 @@ export default function AppFoundationPage() {
                   disabled={!formData.core_features || !formData.preferred_platform}
                   className="flex-1 bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold"
                 >
-                  Next: Confirm Scope
+                  Next: Add-Ons
                 </Button>
               </div>
             </div>
           )}
 
           {step === 3 && (
+            <div className="space-y-4 mt-4">
+              <p className="text-slate-400 text-sm">
+                Optional add-ons to enhance your foundation:
+              </p>
+
+              <div className="space-y-3">
+                {addonOptions.map((addon) => (
+                  <label 
+                    key={addon.id}
+                    className={`flex items-start gap-3 p-4 rounded-lg cursor-pointer transition-colors ${
+                      formData.addons.includes(addon.id) 
+                        ? 'bg-[#73e28a]/10 border border-[#73e28a]/50' 
+                        : 'bg-slate-800 border border-slate-700 hover:border-slate-600'
+                    }`}
+                  >
+                    <Checkbox 
+                      checked={formData.addons.includes(addon.id)}
+                      onCheckedChange={() => handleAddonToggle(addon.id)}
+                      className="mt-0.5 border-slate-600 data-[state=checked]:bg-[#73e28a] data-[state=checked]:border-[#73e28a]"
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium text-white">{addon.name}</span>
+                        <span className="text-[#73e28a] font-bold">+${addon.price}</span>
+                      </div>
+                      <p className="text-sm text-slate-400 mt-1">{addon.desc}</p>
+                    </div>
+                  </label>
+                ))}
+              </div>
+
+              <div className="p-4 bg-slate-800/50 rounded-lg">
+                <div className="flex justify-between text-sm text-slate-400 mb-2">
+                  <span>Base Foundation</span>
+                  <span>$250</span>
+                </div>
+                {formData.addons.map(addonId => {
+                  const addon = addonOptions.find(a => a.id === addonId);
+                  return addon ? (
+                    <div key={addonId} className="flex justify-between text-sm text-slate-400 mb-2">
+                      <span>{addon.name}</span>
+                      <span>+${addon.price}</span>
+                    </div>
+                  ) : null;
+                })}
+                <div className="flex justify-between text-lg font-bold text-white pt-2 border-t border-slate-700 mt-2">
+                  <span>Total</span>
+                  <span className="text-[#73e28a]">${calculateTotal()}</span>
+                </div>
+              </div>
+
+              <div className="flex gap-3">
+                <Button 
+                  variant="outline"
+                  onClick={() => setStep(2)}
+                  className="flex-1 border-slate-700 text-slate-400 hover:text-white"
+                >
+                  Back
+                </Button>
+                <Button 
+                  onClick={handleNextStep}
+                  className="flex-1 bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold"
+                >
+                  Next: Confirm Scope
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {step === 4 && (
             <div className="space-y-4 mt-4">
               <p className="text-slate-400 text-sm">
                 Please confirm you understand the scope of this offer:
@@ -664,13 +763,13 @@ export default function AppFoundationPage() {
 
               <div className="p-4 bg-slate-800/50 rounded-lg text-center">
                 <span className="text-slate-400">Total: </span>
-                <span className="text-2xl font-bold text-[#73e28a]">$250</span>
+                <span className="text-2xl font-bold text-[#73e28a]">${calculateTotal()}</span>
               </div>
 
               <div className="flex gap-3">
                 <Button 
                   variant="outline"
-                  onClick={() => setStep(2)}
+                  onClick={() => setStep(3)}
                   className="flex-1 border-slate-700 text-slate-400 hover:text-white"
                 >
                   Back
@@ -680,13 +779,13 @@ export default function AppFoundationPage() {
                   disabled={!formData.confirm_foundation_only || !formData.confirm_no_ui_design || !formData.confirm_no_ongoing_dev || !formData.confirm_own_secrets || submitMutation.isPending}
                   className="flex-1 bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold"
                 >
-                  {submitMutation.isPending ? 'Processing...' : 'Pay $250 with PayPal'}
+                  {submitMutation.isPending ? 'Processing...' : `Pay $${calculateTotal()} with PayPal`}
                 </Button>
               </div>
             </div>
           )}
 
-          {step === 4 && (
+          {step === 5 && (
             <div className="space-y-6 mt-4 text-center">
               <div className="w-16 h-16 bg-[#73e28a]/20 rounded-full flex items-center justify-center mx-auto">
                 <ExternalLink className="w-8 h-8 text-[#73e28a]" />
