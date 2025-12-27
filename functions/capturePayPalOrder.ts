@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.4';
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 
 const PAYPAL_API = 'https://api-m.paypal.com'; // Use https://api-m.sandbox.paypal.com for testing
 
