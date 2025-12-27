@@ -34,10 +34,37 @@ export default function ApplyPage() {
   });
 
   const submitMutation = useMutation({
-    mutationFn: (data) => base44.entities.SubcontractorApplication.create({
-      ...data,
-      skills: data.skills ? data.skills.split(',').map(s => s.trim()) : []
-    }),
+    mutationFn: async (data) => {
+      const applicationData = {
+        ...data,
+        skills: data.skills ? data.skills.split(',').map(s => s.trim()) : []
+      };
+      await base44.entities.SubcontractorApplication.create(applicationData);
+      // Send notification email
+      await base44.integrations.Core.SendEmail({
+        to: 'will@kodeagency.us',
+        subject: `New Subcontractor Application from ${data.full_name}`,
+        body: `
+New Subcontractor Application
+
+Name: ${data.full_name}
+Email: ${data.email}
+Phone: ${data.phone || 'Not provided'}
+Location: ${data.location || 'Not provided'}
+
+Skills: ${data.skills || 'Not provided'}
+Rate Type: ${data.rate_type || 'Not provided'}
+Hourly Rate: ${data.hourly_rate || 'N/A'}
+
+Portfolio: ${data.portfolio_url || 'Not provided'}
+LinkedIn: ${data.linkedin_url || 'Not provided'}
+Resume: ${data.resume_url || 'Not uploaded'}
+
+Message:
+${data.message || 'No message provided'}
+        `
+      });
+    },
     onSuccess: () => {
       setIsSubmitted(true);
     }

@@ -37,6 +37,22 @@ export default function ContactPage() {
         source: 'Contact Form',
         status: 'New'
       });
+      // Send notification email
+      await base44.integrations.Core.SendEmail({
+        to: 'will@kodeagency.us',
+        subject: `New Contact Form Submission from ${data.name}`,
+        body: `
+New Contact Form Submission
+
+Name: ${data.name}
+Email: ${data.email}
+Phone: ${data.phone || 'Not provided'}
+Subject: ${data.subject || 'Not provided'}
+
+Message:
+${data.message || 'No message provided'}
+        `
+      });
     },
     onSuccess: () => {
        setIsSubmitted(true);
