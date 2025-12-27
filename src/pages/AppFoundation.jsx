@@ -592,21 +592,6 @@ export default function AppFoundationPage() {
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-slate-400">Preferred Platform *</Label>
-                <Select value={formData.preferred_platform} onValueChange={(v) => handleChange('preferred_platform', v)}>
-                  <SelectTrigger className="bg-slate-800 border-slate-700 text-white">
-                    <SelectValue placeholder="Select platform..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Base44">Base44</SelectItem>
-                    <SelectItem value="Lovable">Lovable</SelectItem>
-                    <SelectItem value="Replit">Replit</SelectItem>
-                    <SelectItem value="Custom">Custom Stack</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label className="text-slate-400">Deadline (optional)</Label>
@@ -638,7 +623,7 @@ export default function AppFoundationPage() {
                 </Button>
                 <Button 
                   onClick={handleNextStep}
-                  disabled={!formData.core_features || !formData.preferred_platform}
+                  disabled={!formData.core_features}
                   className="flex-1 bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold"
                 >
                   Next: Add-Ons
