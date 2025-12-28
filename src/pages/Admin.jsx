@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Section from '@/components/ui-custom/Section';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import { Button } from "@/components/ui/button";
-import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap } from 'lucide-react';
+import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt } from 'lucide-react';
 
 import CRMSection from '@/components/admin/CRMSection';
 import ProjectsSection from '@/components/admin/ProjectsSection';
@@ -11,10 +11,12 @@ import PortfolioSection from '@/components/admin/PortfolioSection';
 import BlogSection from '@/components/admin/BlogSection';
 import AppReviewsSection from '@/components/admin/AppReviewsSection';
 import BuildSprintsSection from '@/components/admin/BuildSprintsSection';
+import QuotesSection from '@/components/admin/QuotesSection';
 
 const tabs = [
   { id: 'crm', label: 'CRM', icon: Users },
   { id: 'projects', label: 'Projects', icon: FolderKanban },
+  { id: 'quotes', label: 'Quotes', icon: Receipt },
   { id: 'portfolio', label: 'Portfolio', icon: Layout },
   { id: 'blog', label: 'Blog', icon: FileText },
   { id: 'careers', label: 'Careers', icon: Briefcase },
@@ -87,6 +89,9 @@ export default function AdminPage() {
               initialProject={convertingLead} 
               onProjectCreated={handleProjectCreated}
             />
+          )}
+          {activeTab === 'quotes' && (
+            <QuotesSection />
           )}
           {activeTab === 'portfolio' && (
             <PortfolioSection />
