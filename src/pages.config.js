@@ -5,6 +5,7 @@ import Admin from './pages/Admin';
 import AdminBlogEdit from './pages/AdminBlogEdit';
 import AdminPortfolioEdit from './pages/AdminPortfolioEdit';
 import AppDevelopment from './pages/AppDevelopment';
+import AppFoundation from './pages/AppFoundation';
 import Apply from './pages/Apply';
 import Base44ER from './pages/Base44ER';
 import Blog from './pages/Blog';
@@ -31,7 +32,7 @@ import SaaSDevelopment from './pages/SaaSDevelopment';
 import Services from './pages/Services';
 import UIUXDesign from './pages/UIUXDesign';
 import WebsiteDevelopment from './pages/WebsiteDevelopment';
-import AppFoundation from './pages/AppFoundation';
+import PublicQuote from './pages/PublicQuote';
 import __Layout from './Layout.jsx';
 
 
@@ -43,6 +44,7 @@ export const PAGES = {
     "AdminBlogEdit": AdminBlogEdit,
     "AdminPortfolioEdit": AdminPortfolioEdit,
     "AppDevelopment": AppDevelopment,
+    "AppFoundation": AppFoundation,
     "Apply": Apply,
     "Base44ER": Base44ER,
     "Blog": Blog,
@@ -69,7 +71,7 @@ export const PAGES = {
     "Services": Services,
     "UIUXDesign": UIUXDesign,
     "WebsiteDevelopment": WebsiteDevelopment,
-    "AppFoundation": AppFoundation,
+    "PublicQuote": PublicQuote,
 }
 
 export const pagesConfig = {
