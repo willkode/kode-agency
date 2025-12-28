@@ -187,7 +187,7 @@ Kode Agency Team
             variant={filterStatus === status ? "default" : "outline"}
             size="sm"
             onClick={() => setFilterStatus(status)}
-            className={filterStatus === status ? "bg-[#73e28a] text-black" : "border-slate-700 text-slate-300"}
+            className={filterStatus === status ? "bg-[#73e28a] text-black" : "border-slate-700 text-slate-300 bg-slate-800 hover:bg-slate-700"}
           >
             {status.charAt(0).toUpperCase() + status.slice(1)}
           </Button>
