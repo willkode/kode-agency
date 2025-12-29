@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Section from '@/components/ui-custom/Section';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import { Button } from "@/components/ui/button";
-import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt } from 'lucide-react';
+import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList } from 'lucide-react';
 
 import CRMSection from '@/components/admin/CRMSection';
 import ProjectsSection from '@/components/admin/ProjectsSection';
@@ -12,6 +12,7 @@ import BlogSection from '@/components/admin/BlogSection';
 import AppReviewsSection from '@/components/admin/AppReviewsSection';
 import BuildSprintsSection from '@/components/admin/BuildSprintsSection';
 import QuotesSection from '@/components/admin/QuotesSection';
+import TaskTemplatesSection from '@/components/admin/TaskTemplatesSection';
 
 const tabs = [
   { id: 'crm', label: 'CRM', icon: Users },
@@ -22,6 +23,7 @@ const tabs = [
   { id: 'careers', label: 'Careers', icon: Briefcase },
   { id: 'sprints', label: 'Build Sprints', icon: Zap },
   { id: 'reviews', label: 'App Reviews', icon: Stethoscope },
+  { id: 'templates', label: 'Task Templates', icon: ClipboardList },
 ];
 
 export default function AdminPage() {
@@ -107,6 +109,9 @@ export default function AdminPage() {
           )}
           {activeTab === 'reviews' && (
             <AppReviewsSection />
+          )}
+          {activeTab === 'templates' && (
+            <TaskTemplatesSection />
           )}
         </div>
       </Section>

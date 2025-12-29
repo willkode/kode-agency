@@ -23,7 +23,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ArrowLeft, Plus, Calendar, User, CheckCircle, Clock, Circle, AlertCircle, Send } from 'lucide-react';
+import { ArrowLeft, Plus, Calendar, User, CheckCircle, Clock, Circle, AlertCircle, Send, FileText } from 'lucide-react';
 import { format } from 'date-fns';
 
 const statusColors = {
@@ -70,6 +70,11 @@ export default function ProjectTasksPage() {
     queryKey: ['tasks', projectId],
     queryFn: () => base44.entities.Task.filter({ project_id: projectId }, '-created_date'),
     enabled: !!projectId
+  });
+
+  const { data: templates = [] } = useQuery({
+    queryKey: ['task-templates'],
+    queryFn: () => base44.entities.TaskTemplate.list('name')
   });
 
   const { data: comments = [] } = useQuery({
@@ -212,6 +217,33 @@ export default function ProjectTasksPage() {
             <DialogTitle>Add New Task</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
+            {/* Templates Section */}
+            {templates.length > 0 && (
+              <div className="space-y-2">
+                <Label className="flex items-center gap-2">
+                  <FileText className="w-4 h-4" /> Use Template
+                </Label>
+                <div className="flex flex-wrap gap-2">
+                  {templates.map(template => (
+                    <Button
+                      key={template.id}
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setNewTask({
+                        ...newTask,
+                        name: template.name,
+                        description: template.description || '',
+                        priority: template.default_priority || 'Medium'
+                      })}
+                      className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white"
+                    >
+                      {template.name}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="space-y-2">
               <Label>Task Name *</Label>
               <Input
