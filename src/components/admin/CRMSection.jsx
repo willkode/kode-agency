@@ -438,15 +438,13 @@ export default function CRMSection({ onConvertToProject }) {
                   </div>
                 </div>
 
-                {/* Convert to Project Button (only for Won status) */}
-                {selectedLead.status === 'Won' && (
-                  <Button 
-                    className="w-full bg-[#73e28a] text-black hover:bg-[#5dbb72]"
-                    onClick={handleConvertToProject}
-                  >
-                    <ArrowRight className="w-4 h-4 mr-2" /> Convert to Project
-                  </Button>
-                )}
+                {/* Create Project Button */}
+                <Button 
+                  className="w-full bg-[#73e28a] text-black hover:bg-[#5dbb72]"
+                  onClick={handleConvertToProject}
+                >
+                  <ArrowRight className="w-4 h-4 mr-2" /> Create Project
+                </Button>
               </div>
             </>
           )}
