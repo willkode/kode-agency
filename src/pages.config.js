@@ -34,6 +34,7 @@ import Services from './pages/Services';
 import UIUXDesign from './pages/UIUXDesign';
 import WebsiteDevelopment from './pages/WebsiteDevelopment';
 import ProjectTasks from './pages/ProjectTasks';
+import ClientPortal from './pages/ClientPortal';
 import __Layout from './Layout.jsx';
 
 
@@ -74,6 +75,7 @@ export const PAGES = {
     "UIUXDesign": UIUXDesign,
     "WebsiteDevelopment": WebsiteDevelopment,
     "ProjectTasks": ProjectTasks,
+    "ClientPortal": ClientPortal,
 }
 
 export const pagesConfig = {
