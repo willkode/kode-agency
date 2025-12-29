@@ -42,6 +42,7 @@ const statusIcons = {
 };
 
 export default function ProjectsSection({ initialProject, onProjectCreated }) {
+  const navigate = useNavigate();
   const [selectedProject, setSelectedProject] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
@@ -273,7 +274,7 @@ export default function ProjectsSection({ initialProject, onProjectCreated }) {
             <Card 
               key={project.id} 
               className="p-5 bg-slate-900/80 border-slate-800 cursor-pointer hover:border-[#73e28a]/50"
-              onClick={() => setSelectedProject(project)}
+              onClick={() => navigate(createPageUrl('ProjectTasks') + `?id=${project.id}`)}
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center">
