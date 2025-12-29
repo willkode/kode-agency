@@ -77,6 +77,14 @@ export default function ProjectTasksPage() {
     queryFn: () => base44.entities.TaskTemplate.list('name')
   });
 
+  const { data: teamMembers = [] } = useQuery({
+    queryKey: ['team-members'],
+    queryFn: async () => {
+      const users = await base44.entities.User.list();
+      return users.filter(u => u.role === 'admin' || u.team_role === 'contractor');
+    }
+  });
+
   const { data: comments = [] } = useQuery({
     queryKey: ['task-comments', selectedTask?.id],
     queryFn: () => base44.entities.TaskComment.filter({ task_id: selectedTask?.id }, '-created_date'),
@@ -255,12 +263,18 @@ export default function ProjectTasksPage() {
             </div>
             <div className="space-y-2">
               <Label>Assigned To</Label>
-              <Input
-                value={newTask.assigned_to}
-                onChange={(e) => setNewTask({...newTask, assigned_to: e.target.value})}
-                className="bg-slate-800 border-slate-700"
-                placeholder="Team member name"
-              />
+              <Select value={newTask.assigned_to} onValueChange={(v) => setNewTask({...newTask, assigned_to: v})}>
+                <SelectTrigger className="bg-slate-800 border-slate-700">
+                  <SelectValue placeholder="Select team member" />
+                </SelectTrigger>
+                <SelectContent>
+                  {teamMembers.map(member => (
+                    <SelectItem key={member.id} value={member.full_name}>
+                      {member.full_name} {member.role === 'admin' ? '(Admin)' : '(Contractor)'}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -377,13 +391,24 @@ export default function ProjectTasksPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label className="text-slate-400">Assigned To</Label>
-                    <Input
-                      value={selectedTask.assigned_to || ''}
-                      onChange={(e) => setSelectedTask({...selectedTask, assigned_to: e.target.value})}
-                      onBlur={() => updateTaskMutation.mutate({ id: selectedTask.id, data: { assigned_to: selectedTask.assigned_to }})}
-                      className="bg-slate-800 border-slate-700"
-                      placeholder="Team member name"
-                    />
+                    <Select 
+                      value={selectedTask.assigned_to || ''} 
+                      onValueChange={(v) => {
+                        setSelectedTask({...selectedTask, assigned_to: v});
+                        updateTaskMutation.mutate({ id: selectedTask.id, data: { assigned_to: v }});
+                      }}
+                    >
+                      <SelectTrigger className="bg-slate-800 border-slate-700">
+                        <SelectValue placeholder="Select team member" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {teamMembers.map(member => (
+                          <SelectItem key={member.id} value={member.full_name}>
+                            {member.full_name} {member.role === 'admin' ? '(Admin)' : '(Contractor)'}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                   <div className="space-y-2">
                     <Label className="text-slate-400">Due Date</Label>
