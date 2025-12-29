@@ -27,12 +27,13 @@ import Platforms from './pages/Platforms';
 import Portfolio from './pages/Portfolio';
 import Pricing from './pages/Pricing';
 import Process from './pages/Process';
+import PublicQuote from './pages/PublicQuote';
 import SEOServices from './pages/SEOServices';
 import SaaSDevelopment from './pages/SaaSDevelopment';
 import Services from './pages/Services';
 import UIUXDesign from './pages/UIUXDesign';
 import WebsiteDevelopment from './pages/WebsiteDevelopment';
-import PublicQuote from './pages/PublicQuote';
+import ProjectTasks from './pages/ProjectTasks';
 import __Layout from './Layout.jsx';
 
 
@@ -66,12 +67,13 @@ export const PAGES = {
     "Portfolio": Portfolio,
     "Pricing": Pricing,
     "Process": Process,
+    "PublicQuote": PublicQuote,
     "SEOServices": SEOServices,
     "SaaSDevelopment": SaaSDevelopment,
     "Services": Services,
     "UIUXDesign": UIUXDesign,
     "WebsiteDevelopment": WebsiteDevelopment,
-    "PublicQuote": PublicQuote,
+    "ProjectTasks": ProjectTasks,
 }
 
 export const pagesConfig = {
