@@ -61,9 +61,37 @@ export default function ProjectsSection({ initialProject, onProjectCreated }) {
   });
 
   const createProjectMutation = useMutation({
-    mutationFn: (data) => base44.entities.Project.create(data),
+    mutationFn: async (data) => {
+      const projectType = data.project_type;
+      delete data.project_type; // Remove from project data before creating
+      const project = await base44.entities.Project.create(data);
+      
+      // Auto-create tasks based on project type
+      if (projectType === 'app_review' || projectType === 'app_review_corrections') {
+        await base44.entities.Task.create({
+          name: `App Review: ${data.client_name || data.title}`,
+          project_id: project.id,
+          status: 'To Do',
+          priority: 'High',
+          description: `App Review for ${data.client_name || 'Client'}\n\nClient Email: ${data.client_email || 'N/A'}\nCompany: ${data.client_company || 'N/A'}\n\nProject Description:\n${data.description || 'No description provided'}`,
+        });
+      }
+      
+      if (projectType === 'app_corrections' || projectType === 'app_review_corrections') {
+        await base44.entities.Task.create({
+          name: `App Corrections: ${data.client_name || data.title}`,
+          project_id: project.id,
+          status: 'To Do',
+          priority: 'High',
+          description: `App Corrections for ${data.client_name || 'Client'}\n\nClient Email: ${data.client_email || 'N/A'}\nCompany: ${data.client_company || 'N/A'}\n\nProject Description:\n${data.description || 'No description provided'}`,
+        });
+      }
+      
+      return project;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
       setIsAddDialogOpen(false);
       setNewProject({
         title: '', client_name: '', client_email: '', client_company: '',
