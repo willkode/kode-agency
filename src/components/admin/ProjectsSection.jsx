@@ -308,7 +308,22 @@ export default function ProjectsSection({ initialProject, onProjectCreated }) {
                 <div className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center">
                   <StatusIcon className="w-5 h-5 text-slate-400" />
                 </div>
-                <Badge className={statusColors[project.status || 'Planning']}>{project.status || 'Planning'}</Badge>
+                <div className="flex items-center gap-2">
+                  <Badge className={statusColors[project.status || 'Planning']}>{project.status || 'Planning'}</Badge>
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="h-6 w-6 hover:bg-red-500/20"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (confirm('Are you sure you want to delete this project?')) {
+                        deleteProjectMutation.mutate(project.id);
+                      }
+                    }}
+                  >
+                    <Trash2 className="w-3 h-3 text-red-400" />
+                  </Button>
+                </div>
               </div>
               <h3 className="font-bold text-white mb-1 truncate">{project.title}</h3>
               {project.client_name && (
