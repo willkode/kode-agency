@@ -32,15 +32,22 @@ export default function AdminPage() {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [convertingLead, setConvertingLead] = useState(null);
 
-  const handleConvertToProject = (lead) => {
+  const handleConvertToProject = (lead, projectType) => {
+    const projectTypeLabels = {
+      'app_review': 'App Review',
+      'app_review_corrections': 'App Review + Corrections',
+      'app_corrections': 'App Corrections',
+      'other': 'Project'
+    };
     const projectData = {
-      title: `${lead.company || lead.name} Project`,
+      title: `${lead.company || lead.name} - ${projectTypeLabels[projectType] || 'Project'}`,
       client_name: lead.name,
       client_email: lead.email,
       client_company: lead.company || '',
       budget: lead.deal_value ? String(lead.deal_value) : '',
       description: lead.description || '',
       lead_id: lead.id,
+      project_type: projectType,
     };
     setConvertingLead(projectData);
     setActiveTab('projects');
