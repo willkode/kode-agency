@@ -34,6 +34,8 @@ export default function CRMSection({ onConvertToProject }) {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [newActivity, setNewActivity] = useState({ type: 'Note', description: '' });
+  const [isConvertDialogOpen, setIsConvertDialogOpen] = useState(false);
+  const [projectType, setProjectType] = useState('');
   
   const queryClient = useQueryClient();
 
@@ -113,8 +115,14 @@ export default function CRMSection({ onConvertToProject }) {
   };
 
   const handleConvertToProject = () => {
+    setIsConvertDialogOpen(true);
+  };
+
+  const handleConfirmConvert = async () => {
     if (selectedLead && onConvertToProject) {
-      onConvertToProject(selectedLead);
+      onConvertToProject(selectedLead, projectType);
+      setIsConvertDialogOpen(false);
+      setProjectType('');
     }
   };
 
@@ -314,8 +322,47 @@ export default function CRMSection({ onConvertToProject }) {
         </div>
       )}
 
+      {/* Convert to Project Dialog */}
+      <Dialog open={isConvertDialogOpen} onOpenChange={setIsConvertDialogOpen}>
+        <DialogContent className="bg-slate-900 border-slate-800 max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-white">Select Project Type</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 mt-4">
+            <p className="text-slate-400 text-sm">Choose the type of project to create:</p>
+            <Select value={projectType} onValueChange={setProjectType}>
+              <SelectTrigger className="bg-slate-800 border-slate-700">
+                <SelectValue placeholder="Select project type..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="app_review">App Review</SelectItem>
+                <SelectItem value="app_review_corrections">App Review + Corrections</SelectItem>
+                <SelectItem value="app_corrections">App Corrections</SelectItem>
+                <SelectItem value="other">Other</SelectItem>
+              </SelectContent>
+            </Select>
+            <div className="flex gap-3 pt-2">
+              <Button 
+                variant="outline" 
+                className="flex-1 border-slate-700"
+                onClick={() => { setIsConvertDialogOpen(false); setProjectType(''); }}
+              >
+                Cancel
+              </Button>
+              <Button 
+                className="flex-1 bg-[#73e28a] text-black hover:bg-[#5dbb72]"
+                disabled={!projectType}
+                onClick={handleConfirmConvert}
+              >
+                Create Project
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Lead Detail Dialog */}
-      <Dialog open={!!selectedLead} onOpenChange={(open) => !open && setSelectedLead(null)}>
+      <Dialog open={!!selectedLead && !isConvertDialogOpen} onOpenChange={(open) => !open && setSelectedLead(null)}>
         <DialogContent className="bg-slate-900 border-slate-800 max-w-2xl max-h-[90vh] overflow-y-auto">
           {selectedLead && (
             <>
@@ -443,7 +490,7 @@ export default function CRMSection({ onConvertToProject }) {
                   className="w-full bg-[#73e28a] text-black hover:bg-[#5dbb72]"
                   onClick={handleConvertToProject}
                 >
-                  <ArrowRight className="w-4 h-4 mr-2" /> Create Project
+                  <ArrowRight className="w-4 h-4 mr-2" /> Convert to Project
                 </Button>
               </div>
             </>
