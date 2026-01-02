@@ -21,7 +21,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Search, ExternalLink, Mail, MapPin, Calendar, DollarSign, Phone, Trash2, CheckCircle, Copy, FileText } from 'lucide-react';
+import { Search, ExternalLink, Mail, MapPin, Calendar, DollarSign, Phone, Trash2, CheckCircle, Copy, FileText, ClipboardList } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import moment from 'moment';
 
 const statusColors = {
@@ -322,6 +323,8 @@ export default function AppReviewsSection() {
   const [deleteConfirm, setDeleteConfirm] = useState(null);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPrompt, setCopiedPrompt] = useState(null);
+  const [showCreateTask, setShowCreateTask] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState('');
 
   const queryClient = useQueryClient();
 
@@ -335,6 +338,11 @@ export default function AppReviewsSection() {
   const { data: requests = [], isLoading } = useQuery({
     queryKey: ['appReviewRequests'],
     queryFn: () => base44.entities.AppReviewRequest.list('-created_date'),
+  });
+
+  const { data: projects = [] } = useQuery({
+    queryKey: ['projects'],
+    queryFn: () => base44.entities.Project.list('-created_date'),
   });
 
   const deleteMutation = useMutation({
@@ -351,6 +359,25 @@ export default function AppReviewsSection() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['appReviewRequests'] });
       setSelectedRequest(prev => prev ? { ...prev, payment_status: 'completed' } : null);
+    },
+  });
+
+  const createTaskMutation = useMutation({
+    mutationFn: async ({ request, projectId }) => {
+      return base44.entities.Task.create({
+        name: `App Review: ${request.name}`,
+        project_id: projectId,
+        status: 'To Do',
+        priority: 'High',
+        description: `App Review Request from ${request.name}\n\nApp URL: ${request.app_url}\n\nIssue Description:\n${request.issue_description}\n\nClient Email: ${request.email}\nClient Phone: ${request.phone || 'Not provided'}\nCountry: ${request.country || 'Not provided'}\nInclude Fix: ${request.include_fix ? 'Yes' : 'No'}`,
+        notes: `Created from App Review Request ID: ${request.id}`
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
+      setShowCreateTask(false);
+      setSelectedProjectId('');
+      alert('Task created successfully!');
     },
   });
 
@@ -554,6 +581,39 @@ export default function AppReviewsSection() {
                   </p>
                 </div>
 
+                {/* Create Task Section */}
+                {showCreateTask ? (
+                  <div className="p-4 bg-slate-800 rounded-lg space-y-3">
+                    <p className="text-sm text-slate-400">Select a project to create a task:</p>
+                    <Select value={selectedProjectId} onValueChange={setSelectedProjectId}>
+                      <SelectTrigger className="bg-slate-900 border-slate-700">
+                        <SelectValue placeholder="Select Project" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {projects.map(project => (
+                          <SelectItem key={project.id} value={project.id}>{project.title}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <div className="flex gap-2">
+                      <Button 
+                        className="flex-1 bg-[#73e28a] hover:bg-[#5dbb72] text-black"
+                        disabled={!selectedProjectId || createTaskMutation.isPending}
+                        onClick={() => createTaskMutation.mutate({ request: selectedRequest, projectId: selectedProjectId })}
+                      >
+                        {createTaskMutation.isPending ? 'Creating...' : 'Create Task'}
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        className="border-slate-700"
+                        onClick={() => { setShowCreateTask(false); setSelectedProjectId(''); }}
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
+                ) : null}
+
                 {/* Actions */}
                 <div className="flex gap-3 pt-4">
                   {selectedRequest.payment_status !== 'completed' && (
@@ -567,6 +627,13 @@ export default function AppReviewsSection() {
                       {markCompleteMutation.isPending ? 'Marking...' : 'Mark Complete'}
                     </Button>
                   )}
+                  <Button 
+                    variant="outline" 
+                    className="border-blue-500/50 text-blue-400 hover:bg-blue-500/20"
+                    onClick={() => setShowCreateTask(true)}
+                  >
+                    <ClipboardList className="w-4 h-4 mr-2" /> Create Task
+                  </Button>
                   <Button 
                     className="flex-1 bg-[#73e28a] hover:bg-[#5dbb72] text-black"
                     onClick={() => window.open(selectedRequest.app_url, '_blank')}
