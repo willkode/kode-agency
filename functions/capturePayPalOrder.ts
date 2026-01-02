@@ -64,7 +64,7 @@ Deno.serve(async (req) => {
         email: requestData.email,
         phone: requestData.phone || '',
         source: 'Website',
-        status: 'Qualified',
+        status: 'Won',
         description: `Base44 ER App Review Request${requestData.include_fix ? ' + Fix' : ''}\n\nApp URL: ${requestData.app_url}\n\nIssue:\n${requestData.issue_description}`,
         deal_value: requestData.payment_amount || 25,
         notes: `Country: ${requestData.country || 'Not provided'}\nService: Base44 ER${requestData.include_fix ? ' + Fix' : ''}\nPayPal Order: ${orderId}`

@@ -63,7 +63,7 @@ Deno.serve(async (req) => {
         name: requestData.name,
         email: requestData.email,
         source: 'Website',
-        status: 'Qualified',
+        status: 'Won',
         description: `App Foundation Request\n\nApp Name: ${requestData.app_name}\nDescription: ${requestData.app_description}\nPlatform: ${requestData.preferred_platform}\n\nCore Features:\n${requestData.core_features}\n\nIntegrations: ${requestData.integrations || 'None specified'}\nAuth: ${requestData.auth_requirements || 'Not specified'}\nDatabase: ${requestData.database_needs || 'Not specified'}`,
         deal_value: 250,
         notes: `App Foundation - ${requestData.app_name}\nPayPal Order: ${orderId}`

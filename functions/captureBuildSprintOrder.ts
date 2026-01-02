@@ -56,7 +56,7 @@ Deno.serve(async (req) => {
       name: request.name,
       email: request.email,
       source: 'Website',
-      status: 'Qualified',
+      status: 'Won',
       description: `Build Sprint - ${request.hours} hours\nMVP Goal: ${request.mvp_goal}\nTop 3 Actions: ${request.top_3_actions || 'N/A'}\nIntegrations: ${request.integrations_needed || 'N/A'}\nExisting Issues: ${request.existing_issues || 'N/A'}`,
       deal_value: request.payment_amount,
       notes: `Base44 App: ${request.base44_app_link || 'New project'}`
