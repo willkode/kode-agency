@@ -13,6 +13,7 @@ import BlogPost from './pages/BlogPost';
 import Branding from './pages/Branding';
 import BuildSprint from './pages/BuildSprint';
 import CROServices from './pages/CROServices';
+import ClientPortal from './pages/ClientPortal';
 import Contact from './pages/Contact';
 import ContentMarketing from './pages/ContentMarketing';
 import DevOps from './pages/DevOps';
@@ -27,14 +28,14 @@ import Platforms from './pages/Platforms';
 import Portfolio from './pages/Portfolio';
 import Pricing from './pages/Pricing';
 import Process from './pages/Process';
+import ProjectTasks from './pages/ProjectTasks';
 import PublicQuote from './pages/PublicQuote';
 import SEOServices from './pages/SEOServices';
 import SaaSDevelopment from './pages/SaaSDevelopment';
 import Services from './pages/Services';
 import UIUXDesign from './pages/UIUXDesign';
 import WebsiteDevelopment from './pages/WebsiteDevelopment';
-import ProjectTasks from './pages/ProjectTasks';
-import ClientPortal from './pages/ClientPortal';
+import ClientAppReviews from './pages/ClientAppReviews';
 import __Layout from './Layout.jsx';
 
 
@@ -54,6 +55,7 @@ export const PAGES = {
     "Branding": Branding,
     "BuildSprint": BuildSprint,
     "CROServices": CROServices,
+    "ClientPortal": ClientPortal,
     "Contact": Contact,
     "ContentMarketing": ContentMarketing,
     "DevOps": DevOps,
@@ -68,14 +70,14 @@ export const PAGES = {
     "Portfolio": Portfolio,
     "Pricing": Pricing,
     "Process": Process,
+    "ProjectTasks": ProjectTasks,
     "PublicQuote": PublicQuote,
     "SEOServices": SEOServices,
     "SaaSDevelopment": SaaSDevelopment,
     "Services": Services,
     "UIUXDesign": UIUXDesign,
     "WebsiteDevelopment": WebsiteDevelopment,
-    "ProjectTasks": ProjectTasks,
-    "ClientPortal": ClientPortal,
+    "ClientAppReviews": ClientAppReviews,
 }
 
 export const pagesConfig = {
