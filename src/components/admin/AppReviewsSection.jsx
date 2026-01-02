@@ -325,6 +325,7 @@ export default function AppReviewsSection() {
   const [copiedPrompt, setCopiedPrompt] = useState(null);
   const [showCreateTask, setShowCreateTask] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState('');
+  const [newProjectTitle, setNewProjectTitle] = useState('');
 
   const queryClient = useQueryClient();
 
@@ -363,10 +364,24 @@ export default function AppReviewsSection() {
   });
 
   const createTaskMutation = useMutation({
-    mutationFn: async ({ request, projectId }) => {
+    mutationFn: async ({ request, projectId, newProjectTitle }) => {
+      let finalProjectId = projectId;
+      if (projectId === 'new' && newProjectTitle) {
+        const newProject = await base44.entities.Project.create({
+          title: newProjectTitle,
+          client_name: request.name,
+          client_email: request.email,
+          platform: 'Base44',
+          status: 'Planning',
+          priority: 'High',
+          description: `App Review project for ${request.name}`,
+          app_url: request.app_url
+        });
+        finalProjectId = newProject.id;
+      }
       return base44.entities.Task.create({
         name: `App Review: ${request.name}`,
-        project_id: projectId,
+        project_id: finalProjectId,
         status: 'To Do',
         priority: 'High',
         description: `App Review Request from ${request.name}\n\nApp URL: ${request.app_url}\n\nIssue Description:\n${request.issue_description}\n\nClient Email: ${request.email}\nClient Phone: ${request.phone || 'Not provided'}\nCountry: ${request.country || 'Not provided'}\nInclude Fix: ${request.include_fix ? 'Yes' : 'No'}`,
@@ -375,8 +390,10 @@ export default function AppReviewsSection() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
       setShowCreateTask(false);
       setSelectedProjectId('');
+      setNewProjectTitle('');
       alert('Task created successfully!');
     },
   });
@@ -590,23 +607,32 @@ export default function AppReviewsSection() {
                         <SelectValue placeholder="Select Project" />
                       </SelectTrigger>
                       <SelectContent>
+                        <SelectItem value="new">+ Create New Project</SelectItem>
                         {projects.map(project => (
                           <SelectItem key={project.id} value={project.id}>{project.title}</SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
+                    {selectedProjectId === 'new' && (
+                      <Input
+                        placeholder="New project title..."
+                        className="bg-slate-900 border-slate-700"
+                        value={newProjectTitle}
+                        onChange={(e) => setNewProjectTitle(e.target.value)}
+                      />
+                    )}
                     <div className="flex gap-2">
                       <Button 
                         className="flex-1 bg-[#73e28a] hover:bg-[#5dbb72] text-black"
-                        disabled={!selectedProjectId || createTaskMutation.isPending}
-                        onClick={() => createTaskMutation.mutate({ request: selectedRequest, projectId: selectedProjectId })}
+                        disabled={(!selectedProjectId || (selectedProjectId === 'new' && !newProjectTitle)) || createTaskMutation.isPending}
+                        onClick={() => createTaskMutation.mutate({ request: selectedRequest, projectId: selectedProjectId, newProjectTitle })}
                       >
                         {createTaskMutation.isPending ? 'Creating...' : 'Create Task'}
                       </Button>
                       <Button 
                         variant="outline" 
                         className="border-slate-700"
-                        onClick={() => { setShowCreateTask(false); setSelectedProjectId(''); }}
+                        onClick={() => { setShowCreateTask(false); setSelectedProjectId(''); setNewProjectTitle(''); }}
                       >
                         Cancel
                       </Button>
