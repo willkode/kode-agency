@@ -44,6 +44,7 @@ export default function AdminPage() {
   const initialTab = urlParams.get('tab') || 'crm';
   const [activeTab, setActiveTab] = useState(initialTab);
   const [convertingLead, setConvertingLead] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const handleConvertToProject = (lead, projectType) => {
     const projectTypeLabels = {
@@ -70,39 +71,92 @@ export default function AdminPage() {
     setConvertingLead(null);
   };
 
+  const currentTabLabel = menuGroups.flatMap(g => g.items).find(i => i.id === activeTab)?.label || 'Dashboard';
+
   return (
-    <div className="min-h-screen bg-slate-950 text-white pt-24">
-      <Section className="py-8">
-        <GridBackground />
-        
-        <div className="relative z-10">
-          {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-            <div>
-              <h1 className="text-3xl font-bold text-white">Admin Dashboard</h1>
-              <p className="text-slate-400">Manage leads, projects, and applicants</p>
+    <div className="min-h-screen bg-slate-950 text-white flex">
+      {/* Sidebar */}
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 ${sidebarOpen ? 'w-64' : 'w-0 lg:w-16'} bg-slate-900 border-r border-slate-800 transition-all duration-300 overflow-hidden flex flex-col`}>
+        {/* Sidebar Header */}
+        <div className="h-16 flex items-center justify-between px-4 border-b border-slate-800">
+          {sidebarOpen && (
+            <span className="font-bold text-lg text-white">Admin</span>
+          )}
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="text-slate-400 hover:text-white hover:bg-slate-800"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          >
+            {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </Button>
+        </div>
+
+        {/* Navigation */}
+        <nav className="flex-1 py-4 overflow-y-auto">
+          {menuGroups.map((group, idx) => (
+            <div key={idx} className="mb-6">
+              {sidebarOpen && (
+                <div className="px-4 mb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  {group.title}
+                </div>
+              )}
+              <div className="space-y-1 px-2">
+                {group.items.map(item => {
+                  const Icon = item.icon;
+                  const isActive = activeTab === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveTab(item.id)}
+                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all ${
+                        isActive 
+                          ? 'bg-[#73e28a] text-black font-medium' 
+                          : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                      }`}
+                    >
+                      <Icon className="w-5 h-5 flex-shrink-0" />
+                      {sidebarOpen && <span>{item.label}</span>}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            
-            {/* Tabs */}
-            <div className="flex bg-slate-800 rounded-lg p-1">
-              {tabs.map(tab => {
-                const Icon = tab.icon;
-                return (
-                  <Button
-                    key={tab.id}
-                    variant={activeTab === tab.id ? 'default' : 'ghost'}
-                    className={activeTab === tab.id ? 'bg-[#73e28a] text-black hover:bg-[#5dbb72]' : 'text-slate-400 hover:text-white hover:bg-slate-700'}
-                    onClick={() => setActiveTab(tab.id)}
-                  >
-                    <Icon className="w-4 h-4 mr-2" />
-                    {tab.label}
-                  </Button>
-                );
-              })}
+          ))}
+        </nav>
+      </aside>
+
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Main Content */}
+      <main className="flex-1 min-h-screen overflow-x-hidden">
+        {/* Top Bar */}
+        <header className="h-16 bg-slate-900/50 border-b border-slate-800 flex items-center justify-between px-6 sticky top-0 z-30 backdrop-blur-sm">
+          <div className="flex items-center gap-3">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="lg:hidden text-slate-400 hover:text-white"
+              onClick={() => setSidebarOpen(true)}
+            >
+              <Menu className="w-5 h-5" />
+            </Button>
+            <div className="flex items-center gap-2 text-sm">
+              <span className="text-slate-500">Admin</span>
+              <ChevronRight className="w-4 h-4 text-slate-600" />
+              <span className="text-white font-medium">{currentTabLabel}</span>
             </div>
           </div>
+        </header>
 
-          {/* Tab Content */}
+        {/* Page Content */}
+        <div className="p-6">
           {activeTab === 'crm' && (
             <CRMSection onConvertToProject={handleConvertToProject} />
           )}
@@ -134,7 +188,7 @@ export default function AdminPage() {
             <TaskTemplatesSection />
           )}
         </div>
-      </Section>
+      </main>
     </div>
   );
 }
