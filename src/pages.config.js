@@ -13,6 +13,7 @@ import BlogPost from './pages/BlogPost';
 import Branding from './pages/Branding';
 import BuildSprint from './pages/BuildSprint';
 import CROServices from './pages/CROServices';
+import ClientAppReviews from './pages/ClientAppReviews';
 import ClientPortal from './pages/ClientPortal';
 import Contact from './pages/Contact';
 import ContentMarketing from './pages/ContentMarketing';
@@ -35,7 +36,6 @@ import SaaSDevelopment from './pages/SaaSDevelopment';
 import Services from './pages/Services';
 import UIUXDesign from './pages/UIUXDesign';
 import WebsiteDevelopment from './pages/WebsiteDevelopment';
-import ClientAppReviews from './pages/ClientAppReviews';
 import __Layout from './Layout.jsx';
 
 
@@ -55,6 +55,7 @@ export const PAGES = {
     "Branding": Branding,
     "BuildSprint": BuildSprint,
     "CROServices": CROServices,
+    "ClientAppReviews": ClientAppReviews,
     "ClientPortal": ClientPortal,
     "Contact": Contact,
     "ContentMarketing": ContentMarketing,
@@ -77,7 +78,6 @@ export const PAGES = {
     "Services": Services,
     "UIUXDesign": UIUXDesign,
     "WebsiteDevelopment": WebsiteDevelopment,
-    "ClientAppReviews": ClientAppReviews,
 }
 
 export const pagesConfig = {

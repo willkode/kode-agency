@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import Section from '@/components/ui-custom/Section';
-import GridBackground from '@/components/ui-custom/GridBackground';
 import { Button } from "@/components/ui/button";
-import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList } from 'lucide-react';
+import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList, Menu, X, ChevronRight } from 'lucide-react';
 
 import CRMSection from '@/components/admin/CRMSection';
 import ProjectsSection from '@/components/admin/ProjectsSection';
@@ -14,16 +12,31 @@ import BuildSprintsSection from '@/components/admin/BuildSprintsSection';
 import QuotesSection from '@/components/admin/QuotesSection';
 import TaskTemplatesSection from '@/components/admin/TaskTemplatesSection';
 
-const tabs = [
-  { id: 'crm', label: 'CRM', icon: Users },
-  { id: 'projects', label: 'Projects', icon: FolderKanban },
-  { id: 'quotes', label: 'Quotes', icon: Receipt },
-  { id: 'portfolio', label: 'Portfolio', icon: Layout },
-  { id: 'blog', label: 'Blog', icon: FileText },
-  { id: 'careers', label: 'Careers', icon: Briefcase },
-  { id: 'sprints', label: 'Build Sprints', icon: Zap },
-  { id: 'reviews', label: 'App Reviews', icon: Stethoscope },
-  { id: 'templates', label: 'Task Templates', icon: ClipboardList },
+const menuGroups = [
+  {
+    title: 'Sales',
+    items: [
+      { id: 'crm', label: 'CRM', icon: Users },
+      { id: 'quotes', label: 'Quotes', icon: Receipt },
+    ]
+  },
+  {
+    title: 'Work',
+    items: [
+      { id: 'projects', label: 'Projects', icon: FolderKanban },
+      { id: 'sprints', label: 'Build Sprints', icon: Zap },
+      { id: 'reviews', label: 'App Reviews', icon: Stethoscope },
+      { id: 'templates', label: 'Task Templates', icon: ClipboardList },
+    ]
+  },
+  {
+    title: 'Content',
+    items: [
+      { id: 'portfolio', label: 'Portfolio', icon: Layout },
+      { id: 'blog', label: 'Blog', icon: FileText },
+      { id: 'careers', label: 'Careers', icon: Briefcase },
+    ]
+  },
 ];
 
 export default function AdminPage() {
