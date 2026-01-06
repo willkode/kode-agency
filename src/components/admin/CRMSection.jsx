@@ -19,12 +19,11 @@ const statusColors = {
   'Contacted': 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
   'Qualified': 'bg-purple-500/20 text-purple-400 border-purple-500/30',
   'Proposal': 'bg-orange-500/20 text-orange-400 border-orange-500/30',
-  'Negotiation': 'bg-pink-500/20 text-pink-400 border-pink-500/30',
   'Won': 'bg-[#73e28a]/20 text-[#73e28a] border-[#73e28a]/30',
   'Lost': 'bg-red-500/20 text-red-400 border-red-500/30',
 };
 
-const pipelineStages = ['New', 'Contacted', 'Qualified', 'Proposal', 'Negotiation', 'Won', 'Lost'];
+const pipelineStages = ['New', 'Contacted', 'Qualified', 'Proposal', 'Won', 'Lost'];
 
 export default function CRMSection({ onConvertToProject }) {
   const [selectedLead, setSelectedLead] = useState(null);
