@@ -171,6 +171,7 @@ export default function Layout({ children, currentPageName }) {
                   <li><Link to={createPageUrl('About')} className="hover:text-[#73e28a] transition-colors">About us</Link></li>
                   <li><Link to={createPageUrl('Portfolio')} className="hover:text-[#73e28a] transition-colors">Case Studies</Link></li>
                   <li><Link to={createPageUrl('Legal')} className="hover:text-[#73e28a] transition-colors">Privacy Policy</Link></li>
+                  <li><Link to={createPageUrl('RefundPolicy')} className="hover:text-[#73e28a] transition-colors">Refund Policy</Link></li>
                   <li><Link to={createPageUrl('Contact')} className="hover:text-[#73e28a] transition-colors">Contact us</Link></li>
                 </ul>
               </div>
