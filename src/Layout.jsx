@@ -4,6 +4,7 @@ import { createPageUrl } from '@/utils';
 import { Menu, X, ChevronRight, Github, Twitter, Linkedin } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { base44 } from '@/api/base44Client';
+import { HelmetProvider } from 'react-helmet-async';
 
 export default function Layout({ children, currentPageName }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -46,6 +47,7 @@ export default function Layout({ children, currentPageName }) {
   ];
 
   return (
+    <HelmetProvider>
     <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-indigo-500/30">
       {/* Navigation */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
@@ -216,8 +218,9 @@ export default function Layout({ children, currentPageName }) {
         {/* Copyright */}
         <div className="container mx-auto px-4 py-6 border-t border-slate-800">
           <p className="text-slate-500 text-sm text-center">© {new Date().getFullYear()} Kode Agency. All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
-  );
+          </div>
+          </footer>
+          </div>
+          </HelmetProvider>
+          );
 }
