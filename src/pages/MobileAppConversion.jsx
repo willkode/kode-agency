@@ -6,7 +6,6 @@ import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { CheckCircle, Smartphone, Zap, Shield, Globe, ArrowRight, Check } from 'lucide-react';
-import ServicePageTemplate from '@/components/services/ServicePageTemplate';
 import { base44 } from '@/api/base44Client';
 import { useMutation } from '@tanstack/react-query';
 
@@ -42,18 +41,45 @@ export default function MobileAppConversionPage() {
   };
 
   return (
-    <ServicePageTemplate
-      title="Convert Your Web App to a Mobile App"
-      subtitle="Turn Your Web App Into a Real Mobile App (Android + iOS)"
-      description="Launch a clean, installable mobile app from your existing web application—without rebuilding everything from scratch."
-      icon={Smartphone}
-      pricing="$750"
-      pricingSubtext="One-time conversion service for a single web app"
-      primaryCTA="Get Started"
-      secondaryCTA="Ask a Question"
-      onPrimaryCTA={() => setIsFormOpen(true)}
-      onSecondaryCTA={() => window.location.href = 'mailto:support@kodebase.us'}
-    >
+    <div className="bg-slate-950 text-white">
+      {/* Hero */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#73e28a]/5 to-indigo-500/5" />
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center">
+              <Smartphone className="w-10 h-10 text-[#73e28a]" />
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+              Turn Your Web App Into a Real Mobile App
+            </h1>
+            <p className="text-xl text-slate-300 mb-8">
+              Launch a clean, installable mobile app from your existing web application—without rebuilding everything from scratch.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+              <div className="text-center">
+                <div className="text-5xl font-bold text-[#73e28a] mb-2">$750</div>
+                <p className="text-slate-400">One-time conversion service</p>
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                onClick={() => setIsFormOpen(true)}
+                className="bg-[#73e28a] text-black hover:bg-[#5dbb72] text-lg px-8 py-6 h-auto"
+              >
+                Get Started <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+              <Button 
+                onClick={() => window.location.href = 'mailto:support@kodebase.us'}
+                variant="outline"
+                className="border-slate-700 text-white hover:bg-slate-800 text-lg px-8 py-6 h-auto"
+              >
+                Ask a Question
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* Trust Bullets */}
       <section className="py-16 bg-slate-900/50">
         <div className="container mx-auto px-4">
@@ -507,6 +533,6 @@ export default function MobileAppConversionPage() {
           </form>
         </DialogContent>
       </Dialog>
-    </ServicePageTemplate>
+    </div>
   );
 }
