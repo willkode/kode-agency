@@ -27,8 +27,35 @@ export default function AboutPage() {
     { icon: Zap, title: "Speed & Clarity", desc: "Fixed pricing, clear timelines, no hourly billing surprises. Ship fast and iterate." },
   ];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      createOrganizationSchema(),
+      createBreadcrumbSchema([
+        { name: "Home", url: "/" },
+        { name: "About", url: "/About" }
+      ]),
+      {
+        "@type": "Person",
+        "name": "Will Kode",
+        "jobTitle": "Founder and CEO",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Kode Agency"
+        }
+      }
+    ]
+  };
+
   return (
     <div className="bg-slate-950 text-white">
+      <SEO 
+        title="About Us - Meet Will Kode, Founder & CEO"
+        description="30+ years of marketing expertise combined with full-stack development and AI. Learn about Kode Agency's AI-first approach, conversion focus, and philosophy of shipping fast."
+        keywords={["about Kode Agency", "Will Kode", "AI development agency", "marketing expert", "full-stack developer", "agency founder"]}
+        url="/About"
+        jsonLd={jsonLd}
+      />
       {/* Hero */}
       <PageHero 
         title="About" 
