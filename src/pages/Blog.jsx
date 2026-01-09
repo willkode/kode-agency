@@ -5,6 +5,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import Section from '@/components/ui-custom/Section';
 import PageHero from '@/components/ui-custom/PageHero';
+import SEO, { createBreadcrumbSchema } from '@/components/SEO';
 import { Skeleton } from "@/components/ui/skeleton";
 import { Calendar, MessageCircle } from 'lucide-react';
 import { format } from 'date-fns';
@@ -16,11 +17,33 @@ export default function BlogPage() {
     initialData: [],
   });
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      createBreadcrumbSchema([
+        { name: "Home", url: "/" },
+        { name: "Blog", url: "/Blog" }
+      ]),
+      {
+        "@type": "Blog",
+        "name": "Kode Agency Blog",
+        "description": "Insights on web development, AI, marketing, and building successful digital products."
+      }
+    ]
+  };
+
   return (
     <div className="bg-slate-950 text-white">
+      <SEO 
+        title="Blog - Web Development, AI & Marketing Insights"
+        description="Expert insights on web development, AI systems, digital marketing, and building successful SaaS products. Tips, tutorials, and case studies from 30+ years of experience."
+        keywords={["web development blog", "AI development tips", "marketing insights", "SaaS building", "startup advice", "Base44 tutorials"]}
+        url="/Blog"
+        jsonLd={jsonLd}
+      />
       {/* Hero */}
       <PageHero 
-        title="Blog Grid – 3 Columns" 
+        title="Blog" 
         backgroundImage="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1600&auto=format&fit=crop"
       />
 

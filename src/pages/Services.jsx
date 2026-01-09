@@ -9,6 +9,7 @@ import SectionLabel from '@/components/ui-custom/SectionLabel';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
+import SEO, { createServiceSchema, createBreadcrumbSchema } from '@/components/SEO';
 import { 
   Code, Rocket, Bot, Link2, Layers, Palette, Globe, Server,
   Search, TrendingUp, Target, FileText, Brush, Mail, BarChart3,
@@ -80,8 +81,27 @@ export default function ServicesPage() {
     </Link>
   );
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      createBreadcrumbSchema([
+        { name: "Home", url: "/" },
+        { name: "Services", url: "/Services" }
+      ]),
+      createServiceSchema("Web Development", "AI-accelerated web and app development services including MVP development, SaaS platforms, and custom applications.", "/Services"),
+      createServiceSchema("Digital Marketing", "Full-stack marketing services including SEO, paid ads, CRO, and content marketing.", "/Services")
+    ]
+  };
+
   return (
     <div className="bg-slate-950 text-white">
+      <SEO 
+        title="Web Development & Digital Marketing Services"
+        description="Full-stack development and marketing services: MVP development, AI systems, SaaS platforms, SEO, paid ads, and CRO. AI-accelerated delivery, 80% faster than traditional agencies."
+        keywords={["web development services", "digital marketing services", "MVP development", "AI automation", "SaaS development", "SEO services", "paid advertising", "app development"]}
+        url="/Services"
+        jsonLd={jsonLd}
+      />
       <PageHero 
         title="Services" 
         backgroundImage="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1600&auto=format&fit=crop"

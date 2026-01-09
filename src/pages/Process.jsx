@@ -10,6 +10,7 @@ import RotatingBadge from '@/components/ui-custom/RotatingBadge';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
+import SEO, { createBreadcrumbSchema } from '@/components/SEO';
 import { Search, PenTool, Hammer, Rocket, RefreshCw, ArrowRight } from 'lucide-react';
 
 export default function ProcessPage() {
@@ -66,8 +67,37 @@ export default function ProcessPage() {
     }
   ];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      createBreadcrumbSchema([
+        { name: "Home", url: "/" },
+        { name: "Process", url: "/Process" }
+      ]),
+      {
+        "@type": "HowTo",
+        "name": "Kode Agency Development Process",
+        "description": "Our proven 5-phase process: Discover, Scope, Sprint, Launch, Grow",
+        "step": [
+          { "@type": "HowToStep", "name": "Discover", "text": "Map out goals, target users, success metrics" },
+          { "@type": "HowToStep", "name": "Scope + Architecture", "text": "Define features, tech stack, wireframes, timeline" },
+          { "@type": "HowToStep", "name": "Sprint + Build", "text": "Ship working MVP with AI-accelerated development" },
+          { "@type": "HowToStep", "name": "Launch + Handover", "text": "Deploy, train, and hand over documentation" },
+          { "@type": "HowToStep", "name": "Grow", "text": "Ongoing improvements and optimization" }
+        ]
+      }
+    ]
+  };
+
   return (
     <div className="bg-slate-950 text-white">
+      <SEO 
+        title="Our Process - From Idea to Launch in 4-8 Weeks"
+        description="Discover our proven 5-phase development process: Discover, Scope, Sprint, Launch, Grow. No black boxes, no hourly billing surprises. Clear workflow designed to ship fast."
+        keywords={["development process", "agile development", "MVP process", "project workflow", "software development methodology", "rapid development"]}
+        url="/Process"
+        jsonLd={jsonLd}
+      />
       {/* Hero */}
       <PageHero 
         title="Process" 

@@ -6,6 +6,7 @@ import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
 import PageHero from '@/components/ui-custom/PageHero';
 import SectionLabel from '@/components/ui-custom/SectionLabel';
+import SEO, { createOrganizationSchema, createBreadcrumbSchema } from '@/components/SEO';
 
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';

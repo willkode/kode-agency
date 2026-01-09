@@ -9,6 +9,7 @@ import SectionLabel from '@/components/ui-custom/SectionLabel';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
+import SEO, { createFAQSchema, createBreadcrumbSchema } from '@/components/SEO';
 import { Check, ArrowRight } from 'lucide-react';
 
 export default function PricingPage() {
@@ -25,8 +26,26 @@ export default function PricingPage() {
     { q: "What if I don't have clear specs yet?", a: "That's fine! Our Discovery & Scoping phase is designed exactly for that." },
   ];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      createBreadcrumbSchema([
+        { name: "Home", url: "/" },
+        { name: "Pricing", url: "/Pricing" }
+      ]),
+      createFAQSchema(faqs)
+    ]
+  };
+
   return (
     <div className="bg-slate-950 text-white">
+      <SEO 
+        title="Pricing - Transparent Fixed-Price Development"
+        description="No hidden fees, no endless hourly billing. MVP Sprint from $1k, Launch Package $3k-$5k, Product Partner $2k-$5k/month. AI-accelerated efficiency means lower costs for you."
+        keywords={["web development pricing", "app development cost", "MVP development price", "SaaS development cost", "fixed price development", "agency pricing"]}
+        url="/Pricing"
+        jsonLd={jsonLd}
+      />
       {/* Hero */}
       <PageHero 
         title="Pricing" 

@@ -11,6 +11,7 @@ import RotatingBadge from '@/components/ui-custom/RotatingBadge';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
+import SEO, { createBreadcrumbSchema } from '@/components/SEO';
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ExternalLink, ArrowUpRight } from 'lucide-react';
@@ -72,8 +73,30 @@ export default function PortfolioPage() {
 
   const displayProjects = projects.length > 0 ? filteredProjects : sampleProjects;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      createBreadcrumbSchema([
+        { name: "Home", url: "/" },
+        { name: "Portfolio", url: "/Portfolio" }
+      ]),
+      {
+        "@type": "CollectionPage",
+        "name": "Portfolio - Kode Agency",
+        "description": "Explore our recent web development and marketing projects including SaaS dashboards, e-commerce platforms, and mobile apps."
+      }
+    ]
+  };
+
   return (
     <div className="bg-slate-950 text-white">
+      <SEO 
+        title="Portfolio - Our Recent Projects & Case Studies"
+        description="Explore Kode Agency's portfolio of web apps, SaaS platforms, mobile apps, and marketing campaigns. See real results from real projects built with Base44, Lovable, and custom code."
+        keywords={["web development portfolio", "app development case studies", "SaaS projects", "mobile app portfolio", "Base44 projects", "Lovable projects"]}
+        url="/Portfolio"
+        jsonLd={jsonLd}
+      />
       {/* Hero */}
       <PageHero 
         title="Portfolio" 

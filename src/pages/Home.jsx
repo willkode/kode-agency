@@ -7,6 +7,7 @@ import Card from '@/components/ui-custom/Card';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
+import SEO, { createOrganizationSchema, createLocalBusinessSchema } from '@/components/SEO';
 
 import SectionLabel from '@/components/ui-custom/SectionLabel';
 import { ArrowRight, ArrowUpRight, Rocket, Bot, Search, Target, TrendingUp, CheckCircle, Play, ChevronLeft, ChevronRight, Zap, Stethoscope, Package, Smartphone } from 'lucide-react';
@@ -60,8 +61,33 @@ export default function HomePage() {
   "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=150&h=50&fit=crop&q=80"];
 
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      createOrganizationSchema(),
+      createLocalBusinessSchema(),
+      {
+        "@type": "WebSite",
+        "name": "Kode Agency",
+        "url": "https://kodeagency.us",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://kodeagency.us/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    ]
+  };
+
   return (
     <div className="bg-slate-950 text-white overflow-hidden">
+      <SEO 
+        title="AI-Powered Web Development & Digital Marketing Agency"
+        description="30+ years of expertise meets AI-powered speed. We build MVPs in 4-8 weeks, create AI systems, and drive revenue through SEO & paid ads. $100M+ in client revenue generated."
+        keywords={["web development agency", "AI development", "MVP development", "digital marketing", "SEO services", "SaaS development", "Base44 developer", "app development"]}
+        url="/"
+        jsonLd={jsonLd}
+      />
       {/* Hero Section */}
       <section className="relative pt-32 pb-20">
         {/* Background Elements */}

@@ -8,6 +8,7 @@ import SectionLabel from '@/components/ui-custom/SectionLabel';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
+import SEO, { createLocalBusinessSchema, createBreadcrumbSchema } from '@/components/SEO';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -93,8 +94,26 @@ ${data.message || 'No message provided'}
      );
   }
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      createLocalBusinessSchema(),
+      createBreadcrumbSchema([
+        { name: "Home", url: "/" },
+        { name: "Contact", url: "/Contact" }
+      ])
+    ]
+  };
+
   return (
     <div className="flex flex-col bg-slate-950 text-white overflow-hidden">
+      <SEO 
+        title="Contact Us - Start Your Project Today"
+        description="Ready to build something amazing? Contact Kode Agency for web development, AI systems, or digital marketing. We typically respond within 24 hours."
+        keywords={["contact Kode Agency", "hire web developer", "project inquiry", "free consultation", "web development quote"]}
+        url="/Contact"
+        jsonLd={jsonLd}
+      />
       {/* Hero */}
       <PageHero 
         title="Contact" 

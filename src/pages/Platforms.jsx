@@ -9,6 +9,7 @@ import SectionLabel from '@/components/ui-custom/SectionLabel';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
+import SEO, { createBreadcrumbSchema } from '@/components/SEO';
 import { Check, ArrowRight } from 'lucide-react';
 
 export default function PlatformsPage() {
@@ -48,8 +49,34 @@ export default function PlatformsPage() {
     }
   ];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      createBreadcrumbSchema([
+        { name: "Home", url: "/" },
+        { name: "Platforms", url: "/Platforms" }
+      ]),
+      {
+        "@type": "ItemList",
+        "name": "Development Platforms",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Base44", "description": "Best for SaaS & Internal Tools" },
+          { "@type": "ListItem", "position": 2, "name": "Lovable", "description": "Best for Rapid Prototyping" },
+          { "@type": "ListItem", "position": 3, "name": "Replit", "description": "Best for Cloud-Native Code" }
+        ]
+      }
+    ]
+  };
+
   return (
     <div className="bg-slate-950 text-white">
+      <SEO 
+        title="Platforms - Base44, Lovable & Replit Development"
+        description="We pick the right tool for the job. Learn when we use Base44 for SaaS apps, Lovable for rapid prototyping, or Replit for cloud-native code. AI tools as power tools."
+        keywords={["Base44 developer", "Lovable developer", "Replit development", "no-code platforms", "low-code development", "AI development tools"]}
+        url="/Platforms"
+        jsonLd={jsonLd}
+      />
       {/* Hero */}
       <PageHero 
         title="Platforms" 
