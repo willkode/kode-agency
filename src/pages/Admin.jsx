@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList, Menu, X, ChevronRight } from 'lucide-react';
+import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList, Menu, X, ChevronRight, Smartphone } from 'lucide-react';
 
 import CRMSection from '@/components/admin/CRMSection';
 import ProjectsSection from '@/components/admin/ProjectsSection';
@@ -26,6 +26,7 @@ const menuGroups = [
       { id: 'projects', label: 'Projects', icon: FolderKanban },
       { id: 'sprints', label: 'Build Sprints', icon: Zap },
       { id: 'reviews', label: 'App Reviews', icon: Stethoscope },
+      { id: 'mobileapp', label: 'Mobile App', icon: Smartphone },
       { id: 'templates', label: 'Task Templates', icon: ClipboardList },
     ]
   },
