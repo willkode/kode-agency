@@ -12,7 +12,7 @@ import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 import { 
   Code, Rocket, Bot, Link2, Layers, Palette, Globe, Server,
   Search, TrendingUp, Target, FileText, Brush, Mail, BarChart3,
-  ArrowRight, CheckCircle, Phone, Zap, Stethoscope, Package
+  ArrowRight, CheckCircle, Phone, Zap, Stethoscope, Package, Smartphone
 } from 'lucide-react';
 
 export default function ServicesPage() {
@@ -31,6 +31,7 @@ export default function ServicesPage() {
     { icon: Zap, title: "Build Sprint", slug: "BuildSprint", desc: "Live screen-share session where I build your MVP while you watch and learn. $75/hr." },
     { icon: Stethoscope, title: "Base44 Emergency Room", slug: "Base44ER", desc: "Expert app review + optional $150 fix service. Get your Base44 app unstuck." },
     { icon: Package, title: "App Foundation", slug: "AppFoundation", desc: "Done-for-you app scaffolding with core data models and integrations. $250 flat." },
+    { icon: Smartphone, title: "Mobile App Conversion", slug: "MobileAppConversion", desc: "Turn your web app into a real mobile app (Android + iOS). $750 flat." },
   ];
 
   const marketingServices = [
@@ -129,7 +130,7 @@ export default function ServicesPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {specialtyServices.map((service, i) => (
               <ServiceCard key={i} service={service} />
             ))}
