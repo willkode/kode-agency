@@ -398,7 +398,7 @@ export default function MobileAppConversionPage() {
                 <Label className="text-slate-300">Name *</Label>
                 <Input 
                   required
-                  className="bg-slate-800 border-slate-700"
+                  className="bg-slate-800 border-slate-700 text-white"
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
                 />
@@ -408,7 +408,7 @@ export default function MobileAppConversionPage() {
                 <Input 
                   required
                   type="email"
-                  className="bg-slate-800 border-slate-700"
+                  className="bg-slate-800 border-slate-700 text-white"
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
                 />
@@ -418,7 +418,7 @@ export default function MobileAppConversionPage() {
             <div>
               <Label className="text-slate-300">Company</Label>
               <Input 
-                className="bg-slate-800 border-slate-700"
+                className="bg-slate-800 border-slate-700 text-white"
                 value={formData.company}
                 onChange={(e) => setFormData({...formData, company: e.target.value})}
               />
@@ -430,7 +430,7 @@ export default function MobileAppConversionPage() {
                 required
                 type="url"
                 placeholder="https://your-app.com"
-                className="bg-slate-800 border-slate-700"
+                className="bg-slate-800 border-slate-700 text-white"
                 value={formData.web_app_url}
                 onChange={(e) => setFormData({...formData, web_app_url: e.target.value})}
               />
@@ -441,7 +441,7 @@ export default function MobileAppConversionPage() {
               <Textarea 
                 required
                 placeholder="What does your web app do? Who uses it?"
-                className="bg-slate-800 border-slate-700 h-24"
+                className="bg-slate-800 border-slate-700 text-white h-24"
                 value={formData.description}
                 onChange={(e) => setFormData({...formData, description: e.target.value})}
               />
@@ -451,7 +451,7 @@ export default function MobileAppConversionPage() {
               <Label className="text-slate-300">Does your app require authentication/login?</Label>
               <Input 
                 placeholder="Yes/No and describe briefly"
-                className="bg-slate-800 border-slate-700"
+                className="bg-slate-800 border-slate-700 text-white"
                 value={formData.has_auth}
                 onChange={(e) => setFormData({...formData, has_auth: e.target.value})}
               />
@@ -513,7 +513,7 @@ export default function MobileAppConversionPage() {
               <Label className="text-slate-300">Questions or Special Requirements</Label>
               <Textarea 
                 placeholder="Anything else we should know?"
-                className="bg-slate-800 border-slate-700 h-24"
+                className="bg-slate-800 border-slate-700 text-white h-24"
                 value={formData.questions}
                 onChange={(e) => setFormData({...formData, questions: e.target.value})}
               />
