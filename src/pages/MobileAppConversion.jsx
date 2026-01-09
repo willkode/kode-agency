@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { CheckCircle, Smartphone, Zap, Shield, Globe, ArrowRight, Check, Stethoscope, Gift } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useMutation } from '@tanstack/react-query';
+import SEO, { createServiceSchema, createFAQSchema, createBreadcrumbSchema } from '@/components/SEO';
 
 export default function MobileAppConversionPage() {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -40,8 +41,36 @@ export default function MobileAppConversionPage() {
     createOrderMutation.mutate(formData);
   };
 
+  const faqs = [
+    { q: 'How long does it take?', a: 'Most conversions are fast once access is provided. Complexity depends on auth, responsiveness, and any native features requested.' },
+    { q: 'Will my app be approved?', a: 'We build to platform guidelines and handle submissions, but Apple/Google make the final decision.' },
+    { q: 'Do I need my own developer accounts?', a: 'Yes. We submit to your accounts. If you do not have them yet, we will guide setup.' },
+    { q: 'Are the Apple/Google fees included?', a: 'No. Those fees are paid directly to Apple/Google: $25 Google, $100 Apple.' },
+    { q: 'Can you add push notifications?', a: 'Yes—quoted as an add-on depending on your backend and notification requirements.' }
+  ];
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      createBreadcrumbSchema([
+        { name: "Home", url: "/" },
+        { name: "Services", url: "/Services" },
+        { name: "Mobile App Conversion", url: "/MobileAppConversion" }
+      ]),
+      createServiceSchema("Mobile App Conversion", "Convert your web app into a real mobile app for Android and iOS for $750.", "/MobileAppConversion"),
+      createFAQSchema(faqs)
+    ]
+  };
+
   return (
     <div className="bg-slate-950 text-white">
+      <SEO 
+        title="Mobile App Conversion - Web to Mobile App for $750"
+        description="Turn your web app into a real mobile app for Android and iOS. $750 flat rate includes app wrapper conversion, builds, UX pass, and store submission guidance. Includes free Base44 ER review."
+        keywords={["web to mobile app", "mobile app conversion", "PWA to native app", "Capacitor app", "Android app development", "iOS app development", "app store submission"]}
+        url="/MobileAppConversion"
+        jsonLd={jsonLd}
+      />
       {/* Hero */}
       <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[#73e28a]/5 to-indigo-500/5" />

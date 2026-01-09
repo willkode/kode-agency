@@ -5,6 +5,7 @@ import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
+import SEO, { createServiceSchema, createBreadcrumbSchema } from '@/components/SEO';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -134,8 +135,27 @@ export default function Base44ERPage() {
     }
   ];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      createBreadcrumbSchema([
+        { name: "Home", url: "/" },
+        { name: "Services", url: "/Services" },
+        { name: "Base44 ER", url: "/Base44ER" }
+      ]),
+      createServiceSchema("Base44 Emergency Room", "Professional Base44 app reviews and debugging. $50 review only or $150 with fixes.", "/Base44ER")
+    ]
+  };
+
   return (
     <div className="flex flex-col bg-slate-950 text-white overflow-hidden">
+      <SEO 
+        title="Base44 ER - Professional App Reviews & Debugging"
+        description="Expert Base44 app reviews by a full-stack developer since 1997. $50 review only or $150 with fixes. Security checks, code quality review, debugging, and actionable solutions."
+        keywords={["Base44 app review", "Base44 debugging", "Base44 help", "app code review", "Base44 expert", "Base44 developer"]}
+        url="/Base44ER"
+        jsonLd={jsonLd}
+      />
       {/* Hero Section */}
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden pt-20">
         <GridBackground />

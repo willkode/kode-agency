@@ -1,10 +1,30 @@
 import React from 'react';
 import ServicePageTemplate from '@/components/services/ServicePageTemplate';
 import { Bot, Workflow, Brain, Plug, Sparkles, Cog } from 'lucide-react';
+import SEO, { createServiceSchema, createBreadcrumbSchema } from '@/components/SEO';
 
 export default function AISystemsPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      createBreadcrumbSchema([
+        { name: "Home", url: "/" },
+        { name: "Services", url: "/Services" },
+        { name: "AI Systems", url: "/AISystems" }
+      ]),
+      createServiceSchema("AI Systems & Automations", "Build custom AI agents, workflow automation, and intelligent systems with OpenAI, Anthropic, and other AI providers.", "/AISystems")
+    ]
+  };
   return (
-    <ServicePageTemplate
+    <>
+      <SEO 
+        title="AI Systems & Automations - Custom AI Agents & Workflow Automation"
+        description="Build custom AI agents, internal automations, and intelligent workflows. Integration with OpenAI, Anthropic, Google AI. Reduce manual work by 90% with 24/7 automation."
+        keywords={["AI automation", "custom AI agents", "workflow automation", "OpenAI integration", "LLM integration", "business automation", "AI development"]}
+        url="/AISystems"
+        jsonLd={jsonLd}
+      />
+      <ServicePageTemplate
       title="AI Systems & Automations"
       subtitle="Automate & Scale"
       description="Build custom AI agents, internal automations, and intelligent workflows that save time and reduce costs. We integrate with OpenAI, Anthropic, Google, and other leading AI providers to create systems that work for your business."
@@ -38,5 +58,6 @@ export default function AISystemsPage() {
         { slug: "DevOps", title: "DevOps & Infrastructure", description: "Scale your AI systems reliably." }
       ]}
     />
+    </>
   );
 }

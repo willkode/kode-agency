@@ -13,6 +13,7 @@ import SectionLabel from '@/components/ui-custom/SectionLabel';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
+import SEO, { createServiceSchema, createFAQSchema, createBreadcrumbSchema } from '@/components/SEO';
 import { 
   ArrowRight, 
   CheckCircle, 
@@ -205,8 +206,28 @@ export default function BuildSprintPage() {
     );
   }
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      createBreadcrumbSchema([
+        { name: "Home", url: "/" },
+        { name: "Services", url: "/Services" },
+        { name: "Build Sprint", url: "/BuildSprint" }
+      ]),
+      createServiceSchema("Done-With-You Build Sprints", "Live screen-share MVP building sessions at $75/hour. Learn while we build your Base44 app together.", "/BuildSprint"),
+      createFAQSchema(faqs)
+    ]
+  };
+
   return (
     <div className="bg-slate-950 text-white">
+      <SEO 
+        title="Build Sprint - Done-With-You MVP Building Sessions"
+        description="Live screen-share sessions where I build your Base44 MVP while you watch and learn. $75/hour, 1-hour minimum. Scope lock, data models, user flows, and maintainable code."
+        keywords={["MVP building", "Base44 development", "co-building session", "app development help", "Base44 expert", "live coding session"]}
+        url="/BuildSprint"
+        jsonLd={jsonLd}
+      />
       <PageHero title="Done-With-You Build Sprints" />
 
       {/* Intro Section */}

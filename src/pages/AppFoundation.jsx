@@ -5,6 +5,7 @@ import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
+import SEO, { createServiceSchema, createFAQSchema, createBreadcrumbSchema } from '@/components/SEO';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -218,8 +219,28 @@ export default function AppFoundationPage() {
 
   const integrationOptions = ["Stripe", "PayPal", "SendGrid", "Mailchimp", "Twilio", "OpenAI", "Google APIs", "Supabase", "Firebase"];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      createBreadcrumbSchema([
+        { name: "Home", url: "/" },
+        { name: "Services", url: "/Services" },
+        { name: "App Foundation", url: "/AppFoundation" }
+      ]),
+      createServiceSchema("Done-For-You App Foundation", "Complete app scaffolding with data models and integrations for $250.", "/AppFoundation"),
+      createFAQSchema(faqs)
+    ]
+  };
+
   return (
     <div className="flex flex-col bg-slate-950 text-white overflow-hidden">
+      <SEO 
+        title="App Foundation - Done-For-You Scaffolding for $250"
+        description="Get a complete app foundation with organized structure, core data models, API integrations wired in, and deployment-ready project. $250 flat rate, one-time setup."
+        keywords={["app scaffolding", "app foundation", "Base44 setup", "MVP foundation", "app architecture", "startup app development"]}
+        url="/AppFoundation"
+        jsonLd={jsonLd}
+      />
       {/* Hero Section */}
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden pt-20">
         <GridBackground />
