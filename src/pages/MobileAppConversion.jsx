@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { CheckCircle, Smartphone, Zap, Shield, Globe, ArrowRight, Check } from 'lucide-react';
+import { CheckCircle, Smartphone, Zap, Shield, Globe, ArrowRight, Check, Stethoscope, Gift } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useMutation } from '@tanstack/react-query';
 
@@ -182,6 +182,24 @@ export default function MobileAppConversionPage() {
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">What You Get for $750</h2>
           
+          {/* Bonus Banner */}
+          <div className="mb-10 p-6 bg-gradient-to-r from-[#73e28a]/20 to-indigo-500/20 border border-[#73e28a]/30 rounded-2xl">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-[#73e28a] rounded-xl flex items-center justify-center flex-shrink-0">
+                <Gift className="w-6 h-6 text-black" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <h3 className="text-xl font-bold text-white">Bonus: Base44 ER Review + Fix Included</h3>
+                  <span className="px-2 py-1 bg-[#73e28a]/20 text-[#73e28a] text-xs font-bold rounded">$150 VALUE</span>
+                </div>
+                <p className="text-slate-300">
+                  Before we port your application, we run a full Base44 Emergency Room review to identify and fix any issues. This ensures your web app is clean, stable, and ready for mobile conversion—no surprises down the road.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="mb-12">
             <h3 className="text-2xl font-bold text-white mb-6">Included</h3>
             <div className="space-y-4">

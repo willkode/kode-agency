@@ -24,6 +24,7 @@ import FullFunnelMarketing from './pages/FullFunnelMarketing';
 import Home from './pages/Home';
 import Legal from './pages/Legal';
 import MVPDevelopment from './pages/MVPDevelopment';
+import MobileAppConversion from './pages/MobileAppConversion';
 import PaidAds from './pages/PaidAds';
 import Platforms from './pages/Platforms';
 import Portfolio from './pages/Portfolio';
@@ -37,7 +38,6 @@ import SaaSDevelopment from './pages/SaaSDevelopment';
 import Services from './pages/Services';
 import UIUXDesign from './pages/UIUXDesign';
 import WebsiteDevelopment from './pages/WebsiteDevelopment';
-import MobileAppConversion from './pages/MobileAppConversion';
 import __Layout from './Layout.jsx';
 
 
@@ -68,6 +68,7 @@ export const PAGES = {
     "Home": Home,
     "Legal": Legal,
     "MVPDevelopment": MVPDevelopment,
+    "MobileAppConversion": MobileAppConversion,
     "PaidAds": PaidAds,
     "Platforms": Platforms,
     "Portfolio": Portfolio,
@@ -81,7 +82,6 @@ export const PAGES = {
     "Services": Services,
     "UIUXDesign": UIUXDesign,
     "WebsiteDevelopment": WebsiteDevelopment,
-    "MobileAppConversion": MobileAppConversion,
 }
 
 export const pagesConfig = {
