@@ -11,6 +11,7 @@ import AppReviewsSection from '@/components/admin/AppReviewsSection';
 import BuildSprintsSection from '@/components/admin/BuildSprintsSection';
 import QuotesSection from '@/components/admin/QuotesSection';
 import TaskTemplatesSection from '@/components/admin/TaskTemplatesSection';
+import MobileAppSection from '@/components/admin/MobileAppSection';
 
 const menuGroups = [
   {
@@ -187,6 +188,9 @@ export default function AdminPage() {
           )}
           {activeTab === 'templates' && (
             <TaskTemplatesSection />
+          )}
+          {activeTab === 'mobileapp' && (
+            <MobileAppSection />
           )}
         </div>
       </main>
