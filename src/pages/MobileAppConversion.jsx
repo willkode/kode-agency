@@ -280,23 +280,10 @@ export default function MobileAppConversionPage() {
       {/* Add-Ons */}
       <section className="py-16">
         <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">Add-Ons (Optional)</h2>
-          <p className="text-xl text-slate-300 mb-6">If you want more than a basic conversion:</p>
-          <div className="space-y-3">
-            {[
-              'Push notifications (FCM/APNs + integration)',
-              'Deep linking (open the app from links, email, QR codes)',
-              'Camera / file upload optimization',
-              'Offline mode / caching',
-              'App Store submission support (screenshots, listings, compliance checks)'
-            ].map((item, idx) => (
-              <div key={idx} className="flex items-start gap-3">
-                <Check className="w-6 h-6 text-[#73e28a] flex-shrink-0 mt-1" />
-                <p className="text-slate-300">{item}</p>
-              </div>
-            ))}
-          </div>
-          <p className="text-slate-400 mt-4 italic">(Add-ons can be quoted after a quick review.)</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">Need Extra Features?</h2>
+          <p className="text-xl text-slate-300 mb-6">
+            We offer optional add-ons like push notifications, deep linking, offline mode, and more. Let us know what you need in your request and we'll provide a custom quote.
+          </p>
         </div>
       </section>
 
