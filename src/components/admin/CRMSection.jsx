@@ -209,7 +209,7 @@ export default function CRMSection({ onConvertToProject }) {
               variant={viewMode === 'pipeline' ? 'default' : 'ghost'} 
               size="sm"
               onClick={() => setViewMode('pipeline')}
-              className={viewMode === 'pipeline' ? 'bg-slate-700' : ''}
+              className={viewMode === 'pipeline' ? 'bg-slate-700 text-white' : 'text-slate-400 hover:text-white'}
             >
               Pipeline
             </Button>
@@ -217,7 +217,7 @@ export default function CRMSection({ onConvertToProject }) {
               variant={viewMode === 'list' ? 'default' : 'ghost'} 
               size="sm"
               onClick={() => setViewMode('list')}
-              className={viewMode === 'list' ? 'bg-slate-700' : ''}
+              className={viewMode === 'list' ? 'bg-slate-700 text-white' : 'text-slate-400 hover:text-white'}
             >
               List
             </Button>
@@ -287,7 +287,7 @@ export default function CRMSection({ onConvertToProject }) {
                     {lead.company && <p className="text-sm text-slate-400 truncate">{lead.company}</p>}
                     <div className="flex items-center gap-2 mt-2 flex-wrap">
                       {lead.service_sku && (
-                        <Badge variant="outline" className="border-slate-700 text-xs">
+                        <Badge variant="outline" className="border-slate-700 text-slate-300 text-xs">
                           {lead.service_sku}
                         </Badge>
                       )}
@@ -328,7 +328,7 @@ export default function CRMSection({ onConvertToProject }) {
                 </div>
                 <div className="flex items-center gap-4">
                   {lead.service_sku && (
-                    <Badge variant="outline" className="border-slate-700 text-xs">{lead.service_sku}</Badge>
+                    <Badge variant="outline" className="border-slate-700 text-slate-300 text-xs">{lead.service_sku}</Badge>
                   )}
                   {lead.payment_status && (
                     <Badge className={`text-xs ${
@@ -371,7 +371,7 @@ export default function CRMSection({ onConvertToProject }) {
             <div className="flex gap-3 pt-2">
               <Button 
                 variant="outline" 
-                className="flex-1 border-slate-700"
+                className="flex-1 border-slate-700 text-slate-300 hover:text-white"
                 onClick={() => { setIsConvertDialogOpen(false); setProjectType(''); }}
               >
                 Cancel
@@ -504,7 +504,7 @@ export default function CRMSection({ onConvertToProject }) {
                   <div className="space-y-2 max-h-48 overflow-y-auto">
                     {leadActivities.map(activity => (
                       <div key={activity.id} className="flex items-start gap-3 text-sm p-2 bg-slate-800/50 rounded">
-                        <Badge variant="outline" className="border-slate-700 text-xs">{activity.type}</Badge>
+                        <Badge variant="outline" className="border-slate-700 text-slate-300 text-xs">{activity.type}</Badge>
                         <span className="text-slate-300 flex-1">{activity.description}</span>
                         <span className="text-slate-500 text-xs">{new Date(activity.created_date).toLocaleDateString()}</span>
                       </div>

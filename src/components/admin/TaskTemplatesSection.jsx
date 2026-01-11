@@ -227,7 +227,7 @@ export default function TaskTemplatesSection() {
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsCreateOpen(false)} className="border-slate-700">
+            <Button variant="outline" onClick={() => setIsCreateOpen(false)} className="border-slate-700 text-slate-300 hover:text-white">
               Cancel
             </Button>
             <Button 
@@ -294,7 +294,7 @@ export default function TaskTemplatesSection() {
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsEditOpen(false)} className="border-slate-700">
+            <Button variant="outline" onClick={() => setIsEditOpen(false)} className="border-slate-700 text-slate-300 hover:text-white">
               Cancel
             </Button>
             <Button 
