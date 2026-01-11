@@ -337,7 +337,7 @@ Kode Agency Team
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsCreateOpen(false)} className="border-slate-700">
+            <Button variant="outline" onClick={() => setIsCreateOpen(false)} className="border-slate-700 text-slate-300 hover:text-white">
               Cancel
             </Button>
             <Button 
@@ -417,14 +417,14 @@ Kode Agency Team
             <Button
               variant="outline"
               onClick={() => copyQuoteLink(selectedQuote)}
-              className="border-slate-700"
+              className="border-slate-700 text-slate-300 hover:text-white"
             >
               <Copy className="w-4 h-4 mr-2" /> Copy Link
             </Button>
             <Button
               variant="outline"
               onClick={() => window.open(`/quote/${selectedQuote?.id}`, '_blank')}
-              className="border-slate-700"
+              className="border-slate-700 text-slate-300 hover:text-white"
             >
               <ExternalLink className="w-4 h-4 mr-2" /> Preview
             </Button>
