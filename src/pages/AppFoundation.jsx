@@ -99,6 +99,19 @@ export default function AppFoundationPage() {
         .then(res => {
           if (res.data.success) {
             setPaymentSuccess(true);
+            // Track purchase in GA4
+            if (typeof window !== 'undefined' && window.gtag) {
+              window.gtag('event', 'purchase', {
+                transaction_id: sessionId,
+                value: calculateTotal(),
+                currency: 'USD',
+                items: [{
+                  item_name: 'App Foundation',
+                  price: calculateTotal(),
+                  quantity: 1
+                }]
+              });
+            }
           }
         })
         .catch(err => console.error('Payment handling failed:', err));
