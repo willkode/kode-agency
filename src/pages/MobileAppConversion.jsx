@@ -25,6 +25,19 @@ export default function MobileAppConversionPage() {
         .then(res => {
           if (res.data.success) {
             setPaymentSuccess(true);
+            // Track purchase in GA4
+            if (typeof window !== 'undefined' && window.gtag) {
+              window.gtag('event', 'purchase', {
+                transaction_id: sessionId,
+                value: 750,
+                currency: 'USD',
+                items: [{
+                  item_name: 'Mobile App Conversion',
+                  price: 750,
+                  quantity: 1
+                }]
+              });
+            }
           }
         })
         .catch(err => console.error('Payment handling failed:', err));
