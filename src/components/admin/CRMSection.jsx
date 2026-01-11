@@ -285,8 +285,24 @@ export default function CRMSection({ onConvertToProject }) {
                   >
                     <h4 className="font-bold text-white truncate">{lead.name}</h4>
                     {lead.company && <p className="text-sm text-slate-400 truncate">{lead.company}</p>}
-                    {lead.deal_value > 0 && (
-                      <p className="text-sm text-[#73e28a] mt-2">${lead.deal_value.toLocaleString()}</p>
+                    <div className="flex items-center gap-2 mt-2 flex-wrap">
+                      {lead.service_sku && (
+                        <Badge variant="outline" className="border-slate-700 text-xs">
+                          {lead.service_sku}
+                        </Badge>
+                      )}
+                      {lead.payment_status && (
+                        <Badge className={`text-xs ${
+                          lead.payment_status === 'completed' ? 'bg-[#73e28a]/20 text-[#73e28a]' :
+                          lead.payment_status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
+                          'bg-red-500/20 text-red-400'
+                        }`}>
+                          {lead.payment_status}
+                        </Badge>
+                      )}
+                    </div>
+                    {(lead.amount || lead.deal_value) > 0 && (
+                      <p className="text-sm text-[#73e28a] mt-1">${(lead.amount || lead.deal_value).toLocaleString()}</p>
                     )}
                   </Card>
                 ))}
@@ -311,8 +327,20 @@ export default function CRMSection({ onConvertToProject }) {
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
+                  {lead.service_sku && (
+                    <Badge variant="outline" className="border-slate-700 text-xs">{lead.service_sku}</Badge>
+                  )}
+                  {lead.payment_status && (
+                    <Badge className={`text-xs ${
+                      lead.payment_status === 'completed' ? 'bg-[#73e28a]/20 text-[#73e28a]' :
+                      lead.payment_status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
+                      'bg-red-500/20 text-red-400'
+                    }`}>
+                      {lead.payment_status}
+                    </Badge>
+                  )}
                   {lead.company && <span className="text-slate-400">{lead.company}</span>}
-                  {lead.deal_value > 0 && <span className="text-[#73e28a]">${lead.deal_value.toLocaleString()}</span>}
+                  {(lead.amount || lead.deal_value) > 0 && <span className="text-[#73e28a]">${(lead.amount || lead.deal_value).toLocaleString()}</span>}
                   <Badge className={statusColors[lead.status || 'New']}>{lead.status || 'New'}</Badge>
                 </div>
               </div>
