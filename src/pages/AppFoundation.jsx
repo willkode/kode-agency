@@ -71,7 +71,7 @@ export default function AppFoundationPage() {
   ];
 
   const calculateTotal = () => {
-    const base = 250;
+    const base = 500;
     const addonsTotal = formData.addons.reduce((sum, addonId) => {
       const addon = addonOptions.find(a => a.id === addonId);
       return sum + (addon ? addon.price : 0);
@@ -238,7 +238,7 @@ export default function AppFoundationPage() {
   const notIdealFor = [
     "You need a pixel-perfect design or custom UI system",
     "You need complex logic and many edge cases handled immediately",
-    "You want full product build and ongoing feature development for $250"
+    "You want full product build and ongoing feature development for $500"
   ];
 
   const faqs = [
@@ -260,7 +260,7 @@ export default function AppFoundationPage() {
         { name: "Services", url: "/Services" },
         { name: "App Foundation", url: "/AppFoundation" }
       ]),
-      createServiceSchema("Done-For-You App Foundation", "Complete app scaffolding with data models and integrations for $250.", "/AppFoundation"),
+      createServiceSchema("Done-For-You App Foundation", "Complete app scaffolding with data models and integrations for $500.", "/AppFoundation"),
       createFAQSchema(faqs)
     ]
   };
@@ -268,8 +268,8 @@ export default function AppFoundationPage() {
   return (
     <div className="flex flex-col bg-slate-950 text-white overflow-hidden">
       <SEO 
-        title="App Foundation - Done-For-You Scaffolding for $250"
-        description="Get a complete app foundation with organized structure, core data models, API integrations wired in, and deployment-ready project. $250 flat rate, one-time setup."
+        title="App Foundation - Done-For-You Scaffolding for $500"
+        description="Get a complete app foundation with organized structure, core data models, API integrations wired in, and deployment-ready project. $500 flat rate, one-time setup."
         keywords={["app scaffolding", "app foundation", "Base44 setup", "MVP foundation", "app architecture", "startup app development"]}
         url="/AppFoundation"
         jsonLd={jsonLd}
@@ -293,7 +293,7 @@ export default function AppFoundationPage() {
           </p>
           
           <div className="mb-8">
-            <p className="text-5xl md:text-6xl font-bold text-[#73e28a]">$250</p>
+            <p className="text-5xl md:text-6xl font-bold text-[#73e28a]">$500</p>
             <p className="text-slate-500">Flat Rate • One-Time Setup</p>
           </div>
 
@@ -308,7 +308,7 @@ export default function AppFoundationPage() {
             onClick={() => setIsModalOpen(true)}
             className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold text-lg h-14 px-10 rounded-full"
           >
-            Get the $250 App Foundation <ArrowRight className="ml-2 w-5 h-5" />
+            Get the $500 App Foundation <ArrowRight className="ml-2 w-5 h-5" />
           </Button>
 
           <p className="text-slate-500 text-sm mt-6">
@@ -361,7 +361,7 @@ export default function AppFoundationPage() {
               What's Not Included
             </h2>
             <p className="text-slate-400">
-              To keep this $250 offer fast, predictable, and profitable:
+              To keep this $500 offer fast, predictable, and profitable:
             </p>
           </div>
 
@@ -473,7 +473,7 @@ export default function AppFoundationPage() {
         <GridBackground />
         <div className="relative z-10 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Get the $250 App Foundation
+            Get the $500 App Foundation
           </h2>
           <p className="text-slate-400 max-w-xl mx-auto mb-8">
             Start with a solid base you can grow—without wasting time or rebuilding later.
@@ -721,7 +721,7 @@ export default function AppFoundationPage() {
               <div className="p-4 bg-slate-800/50 rounded-lg">
                 <div className="flex justify-between text-sm text-slate-400 mb-2">
                   <span>Base Foundation</span>
-                  <span>$250</span>
+                  <span>$500</span>
                 </div>
                 {formData.addons.map(addonId => {
                   const addon = addonOptions.find(a => a.id === addonId);
