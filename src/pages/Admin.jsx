@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList, Menu, X, ChevronRight, Smartphone, Rocket } from 'lucide-react';
+import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList, Menu, X, ChevronRight, Smartphone, Rocket, Activity } from 'lucide-react';
 
 import CRMSection from '@/components/admin/CRMSection';
 import ProjectsSection from '@/components/admin/ProjectsSection';
@@ -13,11 +13,13 @@ import QuotesSection from '@/components/admin/QuotesSection';
 import TaskTemplatesSection from '@/components/admin/TaskTemplatesSection';
 import MobileAppSection from '@/components/admin/MobileAppSection';
 import AppFoundationSection from '@/components/admin/AppFoundationSection';
+import OperationsSection from '@/components/admin/OperationsSection';
 
 const menuGroups = [
   {
     title: 'Sales',
     items: [
+      { id: 'operations', label: 'Operations', icon: Activity },
       { id: 'crm', label: 'CRM', icon: Users },
       { id: 'quotes', label: 'Quotes', icon: Receipt },
     ]
@@ -45,7 +47,7 @@ const menuGroups = [
 
 export default function AdminPage() {
   const urlParams = new URLSearchParams(window.location.search);
-  const initialTab = urlParams.get('tab') || 'crm';
+  const initialTab = urlParams.get('tab') || 'operations';
   const [activeTab, setActiveTab] = useState(initialTab);
   const [convertingLead, setConvertingLead] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -161,6 +163,9 @@ export default function AdminPage() {
 
         {/* Page Content */}
         <div className="p-6">
+          {activeTab === 'operations' && (
+            <OperationsSection />
+          )}
           {activeTab === 'crm' && (
             <CRMSection onConvertToProject={handleConvertToProject} />
           )}
