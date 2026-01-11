@@ -49,6 +49,17 @@ export default function Layout({ children, currentPageName }) {
 
   return (
     <HelmetProvider>
+    <Helmet>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-GPQXGKWEX0"></script>
+      <script>
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-GPQXGKWEX0');
+        `}
+      </script>
+    </Helmet>
     <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-indigo-500/30">
       {/* Navigation */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800">
