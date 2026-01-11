@@ -163,11 +163,8 @@ A Lead has been automatically created in your CRM.
       `
     });
 
-    await base44.asServiceRole.integrations.Core.SendEmail({
-      to: requestData.email,
-      subject: 'Mobile App Conversion Payment Confirmed',
-      body: `Thank you! Your payment for the Mobile App Conversion service has been confirmed. We'll review your request and be in touch shortly.\n\nWeb App: ${requestData.web_app_url}`
-    });
+    // Send confirmation email to customer
+    await sendCustomerConfirmationEmail(requestData.email, requestData.name, 'Mobile App Conversion');
   }
 }
 
