@@ -167,7 +167,7 @@ export default function AppFoundationSection() {
                 <span className="truncate">{request.app_name}</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-slate-500 text-sm">${request.total_amount || request.payment_amount || 250}</span>
+                <span className="text-slate-500 text-sm">${request.total_amount || request.payment_amount || 500}</span>
                 <span className="text-slate-400 text-xs">
                   {moment(request.created_date).format('MMM D, YYYY')}
                 </span>
@@ -220,7 +220,7 @@ export default function AppFoundationSection() {
                       <p className="text-xs text-slate-500">Payment</p>
                       <div className="flex items-center gap-3">
                         <p className={`font-bold ${selectedRequest.payment_status === 'completed' ? 'text-green-400' : selectedRequest.payment_status === 'failed' ? 'text-red-400' : 'text-amber-400'}`}>
-                          {statusLabels[selectedRequest.payment_status || 'pending']} - ${selectedRequest.total_amount || selectedRequest.payment_amount || 250}
+                          {statusLabels[selectedRequest.payment_status || 'pending']} - ${selectedRequest.total_amount || selectedRequest.payment_amount || 500}
                         </p>
                         {(selectedRequest.payment_status === 'pending' || !selectedRequest.payment_status) && (
                           <Button

@@ -308,7 +308,7 @@ export default function HomePage() {
             {[
               { icon: Zap, title: "Build Sprint", slug: "BuildSprint", price: "$75/hr", desc: "Live screen-share session where I build your MVP while you watch and learn." },
               { icon: Stethoscope, title: "Base44 Emergency Room", slug: "Base44ER", price: "$50-$150", desc: "Expert app review + optional fix service. Get your Base44 app unstuck." },
-              { icon: Package, title: "App Foundation", slug: "AppFoundation", price: "$250", desc: "Done-for-you app scaffolding with core data models and integrations." },
+              { icon: Package, title: "App Foundation", slug: "AppFoundation", price: "$500", desc: "Done-for-you app scaffolding with core data models and integrations." },
               { icon: Smartphone, title: "Mobile App Conversion", slug: "MobileAppConversion", price: "$750", desc: "Turn your web app into a real mobile app for Android and iOS." },
             ].map((service, i) => (
               <Link key={i} to={createPageUrl(service.slug)}>
