@@ -43,6 +43,26 @@ export default function MobileAppSection() {
     }
   });
 
+  const sendPaymentLinkMutation = useMutation({
+    mutationFn: async (request) => {
+      const amount = request.payment_amount || 750;
+      return base44.functions.invoke('sendPaymentLinkEmail', {
+        requestId: request.id,
+        service: 'MobileAppConversion',
+        email: request.email,
+        name: request.name,
+        amount,
+        description: 'Mobile App Conversion'
+      });
+    },
+    onSuccess: () => {
+      alert('Payment link sent successfully!');
+    },
+    onError: (error) => {
+      alert('Failed to send payment link: ' + error.message);
+    }
+  });
+
   const filteredRequests = requests.filter(req => {
     const matchesSearch = 
       req.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
