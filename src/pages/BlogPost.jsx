@@ -147,26 +147,21 @@ Fusce tincidunt ac quis. A lobortis ras tincidunt or simply free text ever but w
             </h2>
 
             {/* Content */}
-            <div className="prose prose-invert max-w-none mb-8">
-              {displayPost.content?.split('\n\n').map((paragraph, i) => {
-                if (paragraph.startsWith('•')) {
-                  return (
-                    <ul key={i} className="space-y-3 my-6">
-                      {paragraph.split('\n').map((item, j) => (
-                        <li key={j} className="flex items-start gap-3 text-slate-300">
-                          <Check className="w-5 h-5 text-[#73e28a] flex-shrink-0 mt-0.5" />
-                          <span>{item.replace('• ', '')}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  );
-                }
-                if (paragraph.includes('Success') || paragraph.includes('Journey')) {
-                  return <h3 key={i} className="text-xl font-bold text-white mt-8 mb-4">{paragraph}</h3>;
-                }
-                return <p key={i} className="text-slate-400 leading-relaxed mb-4">{paragraph}</p>;
-              })}
-            </div>
+            <div 
+              className="prose prose-invert prose-lg max-w-none mb-8 
+                prose-headings:text-white prose-headings:font-bold
+                prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:border-b prose-h2:border-slate-800 prose-h2:pb-3
+                prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:text-[#73e28a]
+                prose-p:text-slate-300 prose-p:leading-relaxed prose-p:mb-4
+                prose-ul:my-4 prose-ul:space-y-2
+                prose-li:text-slate-300
+                prose-strong:text-white prose-strong:font-semibold
+                prose-a:text-[#73e28a] prose-a:no-underline hover:prose-a:underline
+                prose-code:bg-slate-800 prose-code:px-2 prose-code:py-0.5 prose-code:rounded prose-code:text-[#73e28a] prose-code:text-sm
+                prose-pre:bg-slate-900 prose-pre:border prose-pre:border-slate-700 prose-pre:rounded-xl prose-pre:p-4 prose-pre:overflow-x-auto
+                [&_pre_code]:bg-transparent [&_pre_code]:p-0"
+              dangerouslySetInnerHTML={{ __html: displayPost.content || '' }}
+            />
 
             {/* Tags */}
             <div className="flex flex-wrap items-center gap-3 py-6 border-t border-slate-800">
