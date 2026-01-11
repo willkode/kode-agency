@@ -53,30 +53,28 @@ export default function BuildSprintPage() {
 
   const totalAmount = formData.hours * HOURLY_RATE;
 
-  // Handle PayPal return
+  // Handle Stripe return
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const success = urlParams.get('success');
-    const token = urlParams.get('token');
+    const sessionId = urlParams.get('session_id');
     const reqId = urlParams.get('requestId');
     
-    if (success === 'true' && token && reqId) {
+    if (success === 'true' && sessionId) {
       setIsProcessing(true);
       setRequestId(reqId);
       
-      // Capture the payment
-      base44.functions.invoke('captureBuildSprintOrder', {
-        orderId: token,
-        requestId: reqId
-      }).then(() => {
-        setPaymentSuccess(true);
-        setIsProcessing(false);
-        // Clean URL
-        window.history.replaceState({}, document.title, window.location.pathname);
-      }).catch((error) => {
-        console.error('Payment capture failed:', error);
-        setIsProcessing(false);
-      });
+      // Handle the successful payment
+      base44.functions.invoke('handleStripeSuccess', { sessionId })
+        .then(() => {
+          setPaymentSuccess(true);
+          setIsProcessing(false);
+          // Clean URL
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }).catch((error) => {
+          console.error('Payment handling failed:', error);
+          setIsProcessing(false);
+        });
     }
   }, []);
 
@@ -89,16 +87,20 @@ export default function BuildSprintPage() {
         payment_status: 'pending'
       });
       
-      // Create PayPal order
-      const { data: paypalData } = await base44.functions.invoke('createBuildSprintOrder', {
+      // Create Stripe checkout session
+      const { data: stripeData } = await base44.functions.invoke('createStripeCheckout', {
+        service: 'BuildSprint',
         requestId: request.id,
-        hours: data.hours,
-        amount: totalAmount
+        amount: totalAmount,
+        description: `Done-With-You Build Sprint - ${data.hours} hours`,
+        customerEmail: data.email,
+        customerName: data.name,
+        metadata: { hours: data.hours.toString() }
       });
       
-      // Redirect to PayPal
-      if (paypalData.approvalUrl) {
-        window.location.href = paypalData.approvalUrl;
+      // Redirect to Stripe
+      if (stripeData.url) {
+        window.location.href = stripeData.url;
       }
       
       return request;
@@ -634,7 +636,7 @@ export default function BuildSprintPage() {
                       Processing...
                     </>
                   ) : (
-                    <>Pay ${totalAmount} with PayPal</>
+                    <>Pay ${totalAmount}</>
                   )}
                 </Button>
               </div>

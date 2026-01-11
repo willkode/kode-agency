@@ -47,22 +47,22 @@ export default function Base44ERPage() {
     include_fix: false
   });
 
-  // Handle return from PayPal
+  // Handle return from Stripe
   React.useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const success = urlParams.get('success');
-    const token = urlParams.get('token'); // PayPal order ID
+    const sessionId = urlParams.get('session_id');
     const reqId = urlParams.get('requestId');
     
-    if (success === 'true' && token && reqId) {
-      // Capture the payment
-      base44.functions.invoke('capturePayPalOrder', { orderId: token, requestId: reqId })
+    if (success === 'true' && sessionId) {
+      // Handle the successful payment
+      base44.functions.invoke('handleStripeSuccess', { sessionId })
         .then(res => {
           if (res.data.success) {
             setPaymentSuccess(true);
           }
         })
-        .catch(err => console.error('Payment capture failed:', err));
+        .catch(err => console.error('Payment handling failed:', err));
       
       // Clean URL
       window.history.replaceState({}, '', window.location.pathname);
@@ -72,20 +72,30 @@ export default function Base44ERPage() {
   const submitMutation = useMutation({
     mutationFn: async (data) => {
       // Save to database
-      const created = await base44.entities.AppReviewRequest.create(data);
+      const created = await base44.entities.AppReviewRequest.create({
+        ...data,
+        payment_amount: data.include_fix ? 150 : 50
+      });
       return created;
     },
     onSuccess: async (created) => {
       setRequestId(created.id);
       setStep(3);
       
-      // Create PayPal order and redirect
-      const response = await base44.functions.invoke('createPayPalOrder', { 
+      // Create Stripe checkout session and redirect
+      const response = await base44.functions.invoke('createStripeCheckout', { 
+        service: 'Base44ER',
         requestId: created.id,
-        includeFix: formData.include_fix 
+        amount: formData.include_fix ? 150 : 50,
+        description: formData.include_fix 
+          ? 'Base44 App Review + Fix Service' 
+          : 'Base44 App Review Service',
+        customerEmail: formData.email,
+        customerName: formData.name,
+        metadata: { includeFix: formData.include_fix ? 'true' : 'false' }
       });
-      if (response.data.approvalUrl) {
-        window.location.href = response.data.approvalUrl;
+      if (response.data.url) {
+        window.location.href = response.data.url;
       }
     }
   });
@@ -486,13 +496,13 @@ export default function Base44ERPage() {
                 <ExternalLink className="w-8 h-8 text-[#73e28a]" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white mb-2">Redirecting to PayPal...</h3>
+                <h3 className="text-xl font-bold text-white mb-2">Redirecting to Checkout...</h3>
                 <p className="text-slate-400">
                   Complete your ${formData.include_fix ? '150' : '50'} payment to finalize the review request.
                 </p>
               </div>
               <p className="text-sm text-slate-500">
-                Please wait while we redirect you to PayPal...
+                Please wait while we redirect you to secure checkout...
               </p>
             </div>
           )}

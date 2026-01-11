@@ -12,6 +12,27 @@ import SEO, { createServiceSchema, createFAQSchema, createBreadcrumbSchema } fro
 
 export default function MobileAppConversionPage() {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  
+  // Handle return from Stripe
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const success = urlParams.get('success');
+    const sessionId = urlParams.get('session_id');
+    
+    if (success === 'true' && sessionId) {
+      base44.functions.invoke('handleStripeSuccess', { sessionId })
+        .then(res => {
+          if (res.data.success) {
+            setPaymentSuccess(true);
+          }
+        })
+        .catch(err => console.error('Payment handling failed:', err));
+      
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, []);
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -26,12 +47,31 @@ export default function MobileAppConversionPage() {
 
   const createOrderMutation = useMutation({
     mutationFn: async (data) => {
-      const response = await base44.functions.invoke('createMobileAppConversionOrder', data);
+      // First create the request record
+      const created = await base44.entities.MobileAppConversionRequest.create({
+        ...data,
+        payment_status: 'pending',
+        payment_amount: 750
+      });
+      
+      // Then create Stripe checkout session
+      const response = await base44.functions.invoke('createStripeCheckout', {
+        service: 'MobileAppConversion',
+        requestId: created.id,
+        amount: 750,
+        description: 'Mobile App Conversion Service - Web to Mobile',
+        customerEmail: data.email,
+        customerName: data.name,
+        metadata: { 
+          platforms: data.platforms_needed?.join(', ') || '',
+          addons: data.add_ons?.join(', ') || ''
+        }
+      });
       return response.data;
     },
     onSuccess: (data) => {
-      if (data.approvalUrl) {
-        window.location.href = data.approvalUrl;
+      if (data.url) {
+        window.location.href = data.url;
       }
     }
   });

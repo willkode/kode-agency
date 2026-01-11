@@ -88,21 +88,20 @@ export default function AppFoundationPage() {
     }));
   };
 
-  // Handle return from PayPal
+  // Handle return from Stripe
   React.useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const success = urlParams.get('success');
-    const token = urlParams.get('token');
-    const reqId = urlParams.get('requestId');
+    const sessionId = urlParams.get('session_id');
     
-    if (success === 'true' && token && reqId) {
-      base44.functions.invoke('captureAppFoundationOrder', { orderId: token, requestId: reqId })
+    if (success === 'true' && sessionId) {
+      base44.functions.invoke('handleStripeSuccess', { sessionId })
         .then(res => {
           if (res.data.success) {
             setPaymentSuccess(true);
           }
         })
-        .catch(err => console.error('Payment capture failed:', err));
+        .catch(err => console.error('Payment handling failed:', err));
       
       window.history.replaceState({}, '', window.location.pathname);
     }
@@ -112,17 +111,27 @@ export default function AppFoundationPage() {
     mutationFn: async (data) => {
       const created = await base44.entities.AppFoundationRequest.create({
         ...data,
-        integrations: data.integrations.join(', ')
+        integrations: data.integrations.join(', '),
+        total_amount: calculateTotal(),
+        payment_status: 'pending'
       });
       return created;
     },
     onSuccess: async (created) => {
-      const response = await base44.functions.invoke('createAppFoundationOrder', { 
+      const response = await base44.functions.invoke('createStripeCheckout', { 
+        service: 'AppFoundation',
         requestId: created.id,
-        amount: calculateTotal()
+        amount: calculateTotal(),
+        description: 'Done-For-You App Foundation - Core scaffolding & integrations',
+        customerEmail: formData.email,
+        customerName: formData.name,
+        metadata: { 
+          appName: formData.app_name,
+          platform: formData.preferred_platform
+        }
       });
-      if (response.data.approvalUrl) {
-        window.location.href = response.data.approvalUrl;
+      if (response.data.url) {
+        window.location.href = response.data.url;
       }
     }
   });
@@ -785,7 +794,7 @@ export default function AppFoundationPage() {
                   disabled={!formData.confirm_foundation_only || !formData.confirm_no_ui_design || !formData.confirm_no_ongoing_dev || !formData.confirm_own_secrets || submitMutation.isPending}
                   className="flex-1 bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold"
                 >
-                  {submitMutation.isPending ? 'Processing...' : `Pay $${calculateTotal()} with PayPal`}
+                  {submitMutation.isPending ? 'Processing...' : `Pay $${calculateTotal()}`}
                 </Button>
               </div>
             </div>
@@ -797,13 +806,13 @@ export default function AppFoundationPage() {
                 <ExternalLink className="w-8 h-8 text-[#73e28a]" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white mb-2">Redirecting to PayPal...</h3>
+                <h3 className="text-xl font-bold text-white mb-2">Redirecting to Checkout...</h3>
                 <p className="text-slate-400">
-                  Complete your $250 payment to finalize your App Foundation request.
+                  Complete your ${calculateTotal()} payment to finalize your App Foundation request.
                 </p>
               </div>
               <p className="text-sm text-slate-500">
-                Please wait while we redirect you to PayPal...
+                Please wait while we redirect you to secure checkout...
               </p>
             </div>
           )}
