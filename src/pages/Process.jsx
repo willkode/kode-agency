@@ -162,6 +162,63 @@ export default function ProcessPage() {
         </div>
       </Section>
 
+      {/* Specialty Services */}
+      <Section className="py-24 bg-slate-900/50 relative overflow-hidden">
+        <FloatingPixels count={15} />
+        
+        <div className="relative z-10 text-center max-w-5xl mx-auto">
+          <SectionLabel text="Fast-Track Options" />
+          <h2 className="text-4xl font-bold text-white mb-4">Specialty Services</h2>
+          <p className="text-slate-300 mb-12">Need something fast? We offer fixed-scope services for specific needs.</p>
+          
+          <div className="grid md:grid-cols-2 gap-6">
+            <Card className="p-8 border-[#73e28a]/30 bg-slate-900/80 text-left hover:border-[#73e28a]/60">
+              <div className="text-[#73e28a] font-bold text-2xl mb-3">$250</div>
+              <h3 className="text-white font-bold text-xl mb-3">App Foundation</h3>
+              <p className="text-slate-400 text-sm leading-relaxed mb-4">Get your idea scaffolded on Base44, Lovable, or Replit. We handle auth, database setup, initial pages, and deployment.</p>
+              <Link to={createPageUrl('AppFoundation')}>
+                <Button variant="outline" className="border-[#73e28a] text-[#73e28a] hover:bg-[#73e28a] hover:text-black w-full">
+                  Learn More <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            </Card>
+
+            <Card className="p-8 border-blue-500/30 bg-slate-900/80 text-left hover:border-blue-500/60">
+              <div className="text-blue-400 font-bold text-2xl mb-3">$75/hour</div>
+              <h3 className="text-white font-bold text-xl mb-3">Build Sprint</h3>
+              <p className="text-slate-400 text-sm leading-relaxed mb-4">Book a live 2-4 hour session where we build your MVP features together, in real-time. Done-with-you, not done-for-you.</p>
+              <Link to={createPageUrl('BuildSprint')}>
+                <Button variant="outline" className="border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-black w-full">
+                  Learn More <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            </Card>
+
+            <Card className="p-8 border-violet-500/30 bg-slate-900/80 text-left hover:border-violet-500/60">
+              <div className="text-violet-400 font-bold text-2xl mb-3">$750</div>
+              <h3 className="text-white font-bold text-xl mb-3">Mobile App Conversion</h3>
+              <p className="text-slate-400 text-sm leading-relaxed mb-4">Convert your web app into native Android and iOS apps. Includes mobile UX fixes, app submissions, and store account setup.</p>
+              <Link to={createPageUrl('MobileAppConversion')}>
+                <Button variant="outline" className="border-violet-500 text-violet-400 hover:bg-violet-500 hover:text-black w-full">
+                  Learn More <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            </Card>
+
+            <Card className="p-8 border-orange-500/30 bg-slate-900/80 text-left hover:border-orange-500/60">
+              <div className="text-orange-400 font-bold text-2xl mb-3">$50-75</div>
+              <h3 className="text-white font-bold text-xl mb-3">Base44 ER (Debug & Review)</h3>
+              <p className="text-slate-400 text-sm leading-relaxed mb-4">Stuck on a Base44 app? We review, debug, and optionally fix broken features or optimization issues.</p>
+              <Link to={createPageUrl('Base44ER')}>
+                <Button variant="outline" className="border-orange-500 text-orange-400 hover:bg-orange-500 hover:text-black w-full">
+                  Learn More <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            </Card>
+          </div>
+        </div>
+      </Section>
+
       {/* Timelines */}
       <Section className="py-24 bg-slate-900/30 relative overflow-hidden">
         <GlowingOrb position="center" size="500px" opacity={0.1} />
