@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList, Menu, X, ChevronRight, Smartphone } from 'lucide-react';
+import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList, Menu, X, ChevronRight, Smartphone, Rocket } from 'lucide-react';
 
 import CRMSection from '@/components/admin/CRMSection';
 import ProjectsSection from '@/components/admin/ProjectsSection';
@@ -12,6 +12,7 @@ import BuildSprintsSection from '@/components/admin/BuildSprintsSection';
 import QuotesSection from '@/components/admin/QuotesSection';
 import TaskTemplatesSection from '@/components/admin/TaskTemplatesSection';
 import MobileAppSection from '@/components/admin/MobileAppSection';
+import AppFoundationSection from '@/components/admin/AppFoundationSection';
 
 const menuGroups = [
   {
