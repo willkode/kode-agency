@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label";
 import { Phone, Mail, MapPin, Clock, ArrowUpRight, CheckCircle } from 'lucide-react';
 
 export default function ContactPage() {
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
      name: '',
      email: '',
