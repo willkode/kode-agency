@@ -80,7 +80,7 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-white flex">
       {/* Sidebar */}
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 ${sidebarOpen ? 'w-64' : 'w-0 lg:w-16'} bg-slate-900 border-r border-slate-800 transition-all duration-300 overflow-hidden flex flex-col`}>
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 ${sidebarOpen ? 'w-64' : 'w-0 lg:w-16'} border-r border-slate-800 transition-all duration-300 overflow-hidden flex flex-col`} style={{ backgroundColor: '#0f172a' }}>
         {/* Sidebar Header */}
         <div className="h-16 flex items-center justify-between px-4 border-b border-slate-800">
           {sidebarOpen && (
