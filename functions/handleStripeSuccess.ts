@@ -5,6 +5,14 @@ import { Resend } from 'npm:resend@2.0.0';
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY'));
 const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
+// Service SKU mapping
+const SERVICE_SKU_MAP = {
+  'Base44ER': 'app_review',
+  'MobileAppConversion': 'mobile_app_conversion',
+  'BuildSprint': 'build_sprint',
+  'AppFoundation': 'app_foundation'
+};
+
 async function sendCustomerConfirmationEmail(email, name, serviceName) {
   await resend.emails.send({
     from: 'Kode Agency <hello@kodeagency.us>',
@@ -76,16 +84,30 @@ async function handleBase44ER(base44, session, requestId) {
   const requestData = requests[0];
 
   if (requestData) {
-    await base44.asServiceRole.entities.Lead.create({
-      name: requestData.name,
-      email: requestData.email,
-      phone: requestData.phone || '',
-      source: 'Website',
-      status: 'Won',
-      description: `Base44 ER App Review Request${requestData.include_fix ? ' + Fix' : ''}\n\nApp URL: ${requestData.app_url}\n\nIssue:\n${requestData.issue_description}`,
-      deal_value: requestData.payment_amount || (requestData.include_fix ? 150 : 50),
-      notes: `Country: ${requestData.country || 'Not provided'}\nService: Base44 ER${requestData.include_fix ? ' + Fix' : ''}\nStripe Session: ${session.id}`
-    });
+    // Idempotency: check if lead with this payment_reference already exists
+    const existingLeads = await base44.asServiceRole.entities.Lead.filter({ payment_reference: session.id });
+    let lead;
+    
+    if (existingLeads.length > 0) {
+      lead = existingLeads[0];
+      console.log(`Lead already exists for session ${session.id}, skipping creation`);
+    } else {
+      lead = await base44.asServiceRole.entities.Lead.create({
+        name: requestData.name,
+        email: requestData.email,
+        phone: requestData.phone || '',
+        source: 'Website',
+        status: 'Won',
+        description: `Base44 ER App Review Request${requestData.include_fix ? ' + Fix' : ''}\n\nApp URL: ${requestData.app_url}\n\nIssue:\n${requestData.issue_description}`,
+        deal_value: requestData.payment_amount || (requestData.include_fix ? 150 : 50),
+        notes: `Country: ${requestData.country || 'Not provided'}\nService: Base44 ER${requestData.include_fix ? ' + Fix' : ''}\nStripe Session: ${session.id}`,
+        service_sku: 'app_review',
+        payment_status: 'completed',
+        payment_provider: 'stripe',
+        payment_reference: session.id,
+        amount: (session.amount_total / 100)
+      });
+    }
 
     await base44.asServiceRole.integrations.Core.SendEmail({
       to: 'will@kodeagency.us',
@@ -115,6 +137,14 @@ A Lead has been automatically created in your CRM.
 
     // Send confirmation email to customer
     await sendCustomerConfirmationEmail(requestData.email, requestData.name, 'Base44 ER App Review');
+    
+    // Auto-convert to project
+    try {
+      await base44.asServiceRole.functions.invoke('convertLeadToProject', { lead_id: lead.id });
+      console.log(`Auto-converted lead ${lead.id} to project`);
+    } catch (err) {
+      console.error('Auto-conversion failed:', err);
+    }
   }
 }
 
@@ -127,15 +157,29 @@ async function handleMobileAppConversion(base44, session, requestId) {
   const requestData = requests[0];
 
   if (requestData) {
-    await base44.asServiceRole.entities.Lead.create({
-      name: requestData.name,
-      email: requestData.email,
-      source: 'Website',
-      status: 'Won',
-      description: `Mobile App Conversion\n\nWeb App: ${requestData.web_app_url}\nDescription: ${requestData.description}\nPlatforms: ${requestData.platforms_needed?.join(', ') || 'Not specified'}`,
-      deal_value: 750,
-      notes: `Stripe Session: ${session.id}\nAdd-ons: ${requestData.add_ons?.join(', ') || 'None'}`
-    });
+    // Idempotency check
+    const existingLeads = await base44.asServiceRole.entities.Lead.filter({ payment_reference: session.id });
+    let lead;
+    
+    if (existingLeads.length > 0) {
+      lead = existingLeads[0];
+      console.log(`Lead already exists for session ${session.id}, skipping creation`);
+    } else {
+      lead = await base44.asServiceRole.entities.Lead.create({
+        name: requestData.name,
+        email: requestData.email,
+        source: 'Website',
+        status: 'Won',
+        description: `Mobile App Conversion\n\nWeb App: ${requestData.web_app_url}\nDescription: ${requestData.description}\nPlatforms: ${requestData.platforms_needed?.join(', ') || 'Not specified'}`,
+        deal_value: 750,
+        notes: `Stripe Session: ${session.id}\nAdd-ons: ${requestData.add_ons?.join(', ') || 'None'}`,
+        service_sku: 'mobile_app_conversion',
+        payment_status: 'completed',
+        payment_provider: 'stripe',
+        payment_reference: session.id,
+        amount: 750
+      });
+    }
 
     await base44.asServiceRole.integrations.Core.SendEmail({
       to: 'will@kodeagency.us',
@@ -165,6 +209,14 @@ A Lead has been automatically created in your CRM.
 
     // Send confirmation email to customer
     await sendCustomerConfirmationEmail(requestData.email, requestData.name, 'Mobile App Conversion');
+    
+    // Auto-convert to project
+    try {
+      await base44.asServiceRole.functions.invoke('convertLeadToProject', { lead_id: lead.id });
+      console.log(`Auto-converted lead ${lead.id} to project`);
+    } catch (err) {
+      console.error('Auto-conversion failed:', err);
+    }
   }
 }
 
@@ -177,15 +229,29 @@ async function handleBuildSprint(base44, session, requestId) {
   const requestData = requests[0];
 
   if (requestData) {
-    await base44.asServiceRole.entities.Lead.create({
-      name: requestData.name,
-      email: requestData.email,
-      source: 'Website',
-      status: 'Won',
-      description: `Build Sprint - ${requestData.hours} hours\nMVP Goal: ${requestData.mvp_goal}\nTop 3 Actions: ${requestData.top_3_actions || 'N/A'}\nIntegrations: ${requestData.integrations_needed || 'N/A'}\nExisting Issues: ${requestData.existing_issues || 'N/A'}`,
-      deal_value: requestData.payment_amount,
-      notes: `Base44 App: ${requestData.base44_app_link || 'New project'}\nStripe Session: ${session.id}`
-    });
+    // Idempotency check
+    const existingLeads = await base44.asServiceRole.entities.Lead.filter({ payment_reference: session.id });
+    let lead;
+    
+    if (existingLeads.length > 0) {
+      lead = existingLeads[0];
+      console.log(`Lead already exists for session ${session.id}, skipping creation`);
+    } else {
+      lead = await base44.asServiceRole.entities.Lead.create({
+        name: requestData.name,
+        email: requestData.email,
+        source: 'Website',
+        status: 'Won',
+        description: `Build Sprint - ${requestData.hours} hours\nMVP Goal: ${requestData.mvp_goal}\nTop 3 Actions: ${requestData.top_3_actions || 'N/A'}\nIntegrations: ${requestData.integrations_needed || 'N/A'}\nExisting Issues: ${requestData.existing_issues || 'N/A'}`,
+        deal_value: requestData.payment_amount,
+        notes: `Base44 App: ${requestData.base44_app_link || 'New project'}\nStripe Session: ${session.id}`,
+        service_sku: 'build_sprint',
+        payment_status: 'completed',
+        payment_provider: 'stripe',
+        payment_reference: session.id,
+        amount: requestData.payment_amount
+      });
+    }
 
     await base44.asServiceRole.integrations.Core.SendEmail({
       to: 'will@kodeagency.us',
@@ -214,6 +280,14 @@ The client will now schedule their session via Calendly.
 
     // Send confirmation email to customer
     await sendCustomerConfirmationEmail(requestData.email, requestData.name, 'Build Sprint');
+    
+    // Auto-convert to project
+    try {
+      await base44.asServiceRole.functions.invoke('convertLeadToProject', { lead_id: lead.id });
+      console.log(`Auto-converted lead ${lead.id} to project`);
+    } catch (err) {
+      console.error('Auto-conversion failed:', err);
+    }
   }
 }
 
@@ -226,15 +300,29 @@ async function handleAppFoundation(base44, session, requestId) {
   const requestData = requests[0];
 
   if (requestData) {
-    await base44.asServiceRole.entities.Lead.create({
-      name: requestData.name,
-      email: requestData.email,
-      source: 'Website',
-      status: 'Won',
-      description: `App Foundation Request\n\nApp Name: ${requestData.app_name}\nDescription: ${requestData.app_description}\nPlatform: ${requestData.preferred_platform}\n\nCore Features:\n${requestData.core_features}\n\nIntegrations: ${requestData.integrations || 'None specified'}`,
-      deal_value: requestData.total_amount || 250,
-      notes: `App Foundation - ${requestData.app_name}\nStripe Session: ${session.id}`
-    });
+    // Idempotency check
+    const existingLeads = await base44.asServiceRole.entities.Lead.filter({ payment_reference: session.id });
+    let lead;
+    
+    if (existingLeads.length > 0) {
+      lead = existingLeads[0];
+      console.log(`Lead already exists for session ${session.id}, skipping creation`);
+    } else {
+      lead = await base44.asServiceRole.entities.Lead.create({
+        name: requestData.name,
+        email: requestData.email,
+        source: 'Website',
+        status: 'Won',
+        description: `App Foundation Request\n\nApp Name: ${requestData.app_name}\nDescription: ${requestData.app_description}\nPlatform: ${requestData.preferred_platform}\n\nCore Features:\n${requestData.core_features}\n\nIntegrations: ${requestData.integrations || 'None specified'}`,
+        deal_value: requestData.total_amount || 250,
+        notes: `App Foundation - ${requestData.app_name}\nStripe Session: ${session.id}`,
+        service_sku: 'app_foundation',
+        payment_status: 'completed',
+        payment_provider: 'stripe',
+        payment_reference: session.id,
+        amount: requestData.total_amount || 250
+      });
+    }
 
     await base44.asServiceRole.integrations.Core.SendEmail({
       to: 'will@kodeagency.us',
@@ -272,5 +360,13 @@ A Lead has been automatically created in your CRM.
 
     // Send confirmation email to customer
     await sendCustomerConfirmationEmail(requestData.email, requestData.name, 'App Foundation');
+    
+    // Auto-convert to project
+    try {
+      await base44.asServiceRole.functions.invoke('convertLeadToProject', { lead_id: lead.id });
+      console.log(`Auto-converted lead ${lead.id} to project`);
+    } catch (err) {
+      console.error('Auto-conversion failed:', err);
+    }
   }
 }
