@@ -211,6 +211,9 @@ Existing Issues: ${requestData.existing_issues || 'N/A'}
 The client will now schedule their session via Calendly.
       `
     });
+
+    // Send confirmation email to customer
+    await sendCustomerConfirmationEmail(requestData.email, requestData.name, 'Build Sprint');
   }
 }
 
