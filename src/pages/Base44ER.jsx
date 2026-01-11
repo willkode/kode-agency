@@ -53,6 +53,7 @@ export default function Base44ERPage() {
     const success = urlParams.get('success');
     const sessionId = urlParams.get('session_id');
     const reqId = urlParams.get('requestId');
+    const includeFix = urlParams.get('includeFix');
     
     if (success === 'true' && sessionId) {
       // Handle the successful payment
@@ -60,6 +61,20 @@ export default function Base44ERPage() {
         .then(res => {
           if (res.data.success) {
             setPaymentSuccess(true);
+            // Track purchase in GA4
+            const amount = includeFix === 'true' ? 75 : 50;
+            if (typeof window !== 'undefined' && window.gtag) {
+              window.gtag('event', 'purchase', {
+                transaction_id: sessionId,
+                value: amount,
+                currency: 'USD',
+                items: [{
+                  item_name: includeFix === 'true' ? 'Base44 ER Review + Fix' : 'Base44 ER Review',
+                  price: amount,
+                  quantity: 1
+                }]
+              });
+            }
           }
         })
         .catch(err => console.error('Payment handling failed:', err));
