@@ -54,6 +54,16 @@ export default function MobileAppConversionPage() {
         payment_amount: 750
       });
       
+      // Send lead notification email
+      base44.functions.invoke('notifyNewLead', {
+        name: data.name,
+        email: data.email,
+        phone: '',
+        payment_status: 'pending',
+        service: 'Mobile App Conversion',
+        amount: 750
+      }).catch(err => console.error('Lead notification failed:', err));
+      
       // Then create Stripe checkout session
       const response = await base44.functions.invoke('createStripeCheckout', {
         service: 'MobileAppConversion',

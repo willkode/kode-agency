@@ -87,6 +87,16 @@ export default function BuildSprintPage() {
         payment_status: 'pending'
       });
       
+      // Send lead notification email
+      base44.functions.invoke('notifyNewLead', {
+        name: data.name,
+        email: data.email,
+        phone: '',
+        payment_status: 'pending',
+        service: 'Build Sprint',
+        amount: totalAmount
+      }).catch(err => console.error('Lead notification failed:', err));
+      
       // Create Stripe checkout session
       const { data: stripeData } = await base44.functions.invoke('createStripeCheckout', {
         service: 'BuildSprint',

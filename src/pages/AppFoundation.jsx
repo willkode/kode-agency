@@ -115,6 +115,17 @@ export default function AppFoundationPage() {
         total_amount: calculateTotal(),
         payment_status: 'pending'
       });
+      
+      // Send lead notification email
+      base44.functions.invoke('notifyNewLead', {
+        name: data.name,
+        email: data.email,
+        phone: '',
+        payment_status: 'pending',
+        service: 'App Foundation',
+        amount: calculateTotal()
+      }).catch(err => console.error('Lead notification failed:', err));
+      
       return created;
     },
     onSuccess: async (created) => {
