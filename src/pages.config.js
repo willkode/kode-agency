@@ -21,7 +21,6 @@ import DevOps from './pages/DevOps';
 import EmailMarketing from './pages/EmailMarketing';
 import FAQ from './pages/FAQ';
 import FullFunnelMarketing from './pages/FullFunnelMarketing';
-import Home from './pages/Home';
 import Legal from './pages/Legal';
 import MVPDevelopment from './pages/MVPDevelopment';
 import MobileAppConversion from './pages/MobileAppConversion';
@@ -65,7 +64,6 @@ export const PAGES = {
     "EmailMarketing": EmailMarketing,
     "FAQ": FAQ,
     "FullFunnelMarketing": FullFunnelMarketing,
-    "Home": Home,
     "Legal": Legal,
     "MVPDevelopment": MVPDevelopment,
     "MobileAppConversion": MobileAppConversion,
@@ -85,7 +83,7 @@ export const PAGES = {
 }
 
 export const pagesConfig = {
-    mainPage: "Home",
+    mainPage: "AISystems",
     Pages: PAGES,
     Layout: __Layout,
 };
