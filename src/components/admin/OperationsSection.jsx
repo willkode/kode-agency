@@ -248,7 +248,7 @@ export default function OperationsSection() {
         <Button 
           onClick={exportAudienceCSV}
           variant="outline"
-          className="border-slate-700"
+          className="border-slate-700 text-slate-300 hover:text-white"
         >
           <Download className="w-4 h-4 mr-2" />
           Export Audience CSV
