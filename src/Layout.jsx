@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { Menu, X, ChevronRight, Github, Twitter, Linkedin } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { base44 } from '@/api/base44Client';
 import { HelmetProvider } from 'react-helmet-async';
 
