@@ -67,7 +67,7 @@ ${data.message || 'No message provided'}
       });
     },
     onSuccess: () => {
-       setIsSubmitted(true);
+       navigate(createPageUrl('ThankYou'));
     }
   });
 
