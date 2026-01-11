@@ -74,7 +74,7 @@ export default function Base44ERPage() {
       // Save to database
       const created = await base44.entities.AppReviewRequest.create({
         ...data,
-        payment_amount: data.include_fix ? 150 : 50
+        payment_amount: data.include_fix ? 75 : 50
       });
       
       // Send lead notification email
@@ -84,16 +84,16 @@ export default function Base44ERPage() {
         phone: data.phone || '',
         payment_status: 'pending',
         service: 'Base44 ER',
-        amount: data.include_fix ? 150 : 50
+        amount: data.include_fix ? 75 : 50
       }).catch(err => console.error('Lead notification failed:', err));
       
       // Create Stripe checkout session
       const response = await base44.functions.invoke('createStripeCheckout', { 
         service: 'Base44ER',
         requestId: created.id,
-        amount: data.include_fix ? 150 : 50,
+        amount: data.include_fix ? 75 : 50,
         description: data.include_fix 
-          ? 'Base44 App Review + Fix Service' 
+          ? 'Base44 App Review + Fix Service (Special Offer)' 
           : 'Base44 App Review Service',
         customerEmail: data.email,
         customerName: data.name,
@@ -201,11 +201,14 @@ export default function Base44ERPage() {
               <p className="text-slate-500 text-sm">Review Only</p>
             </div>
             <div className="text-slate-600 text-2xl">or</div>
-            <div className="text-center">
-              <p className="text-4xl md:text-5xl font-bold text-[#73e28a]">$150</p>
-              <p className="text-slate-500 text-sm">Review + Fix</p>
+            <div className="text-center relative">
+              <div className="absolute -top-3 -right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">SALE</div>
+              <p className="text-4xl md:text-5xl font-bold text-[#73e28a]">$75</p>
+              <p className="text-slate-500 text-sm line-through">$150</p>
+              <p className="text-slate-400 text-sm">Review + Fix</p>
             </div>
           </div>
+          <p className="text-amber-400 text-sm font-medium mb-4">🔥 Limited Time: Offer ends Feb 1st, 2026</p>
           
           <Button 
             onClick={() => setIsModalOpen(true)}
@@ -428,18 +431,22 @@ export default function Base44ERPage() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
                       <Hammer className="w-4 h-4 text-[#73e28a]" />
-                      <span className="font-bold text-white">Add Fix Service (+$100)</span>
+                      <span className="font-bold text-white">Add Fix Service</span>
+                      <span className="text-red-400 line-through text-sm">+$100</span>
+                      <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded">+$25</span>
                     </div>
                     <p className="text-sm text-slate-400">
                       I'll implement the fixes myself after the review. You get a working solution, not just advice.
                     </p>
+                    <p className="text-xs text-amber-400 mt-1">🔥 Sale ends Feb 1st, 2026</p>
                   </div>
                 </div>
               </div>
 
               <div className="p-3 bg-slate-800/50 rounded-lg text-center">
                 <span className="text-slate-400">Total: </span>
-                <span className="text-xl font-bold text-[#73e28a]">${formData.include_fix ? '150' : '50'}</span>
+                {formData.include_fix && <span className="text-slate-500 line-through mr-2">$150</span>}
+                <span className="text-xl font-bold text-[#73e28a]">${formData.include_fix ? '75' : '50'}</span>
               </div>
 
               <Button 
@@ -510,7 +517,7 @@ export default function Base44ERPage() {
               <div>
                 <h3 className="text-xl font-bold text-white mb-2">Redirecting to Checkout...</h3>
                 <p className="text-slate-400">
-                  Complete your ${formData.include_fix ? '150' : '50'} payment to finalize the review request.
+                  Complete your ${formData.include_fix ? '75' : '50'} payment to finalize the review request.
                 </p>
               </div>
               <p className="text-sm text-slate-500">
