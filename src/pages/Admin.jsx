@@ -29,6 +29,7 @@ const menuGroups = [
       { id: 'sprints', label: 'Build Sprints', icon: Zap },
       { id: 'reviews', label: 'App Reviews', icon: Stethoscope },
       { id: 'mobileapp', label: 'Mobile App', icon: Smartphone },
+      { id: 'foundation', label: 'App Foundation', icon: Rocket },
       { id: 'templates', label: 'Task Templates', icon: ClipboardList },
     ]
   },
@@ -192,6 +193,9 @@ export default function AdminPage() {
           )}
           {activeTab === 'mobileapp' && (
             <MobileAppSection />
+          )}
+          {activeTab === 'foundation' && (
+            <AppFoundationSection />
           )}
         </div>
       </main>
