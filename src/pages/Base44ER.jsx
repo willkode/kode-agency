@@ -76,26 +76,28 @@ export default function Base44ERPage() {
         ...data,
         payment_amount: data.include_fix ? 150 : 50
       });
-      return created;
-    },
-    onSuccess: async (created) => {
-      setRequestId(created.id);
-      setStep(3);
       
-      // Create Stripe checkout session and redirect
+      // Create Stripe checkout session
       const response = await base44.functions.invoke('createStripeCheckout', { 
         service: 'Base44ER',
         requestId: created.id,
-        amount: formData.include_fix ? 150 : 50,
-        description: formData.include_fix 
+        amount: data.include_fix ? 150 : 50,
+        description: data.include_fix 
           ? 'Base44 App Review + Fix Service' 
           : 'Base44 App Review Service',
-        customerEmail: formData.email,
-        customerName: formData.name,
-        metadata: { includeFix: formData.include_fix ? 'true' : 'false' }
+        customerEmail: data.email,
+        customerName: data.name,
+        metadata: { includeFix: data.include_fix ? 'true' : 'false' }
       });
-      if (response.data.url) {
-        window.location.href = response.data.url;
+      
+      return { created, stripeUrl: response.data.url };
+    },
+    onSuccess: ({ created, stripeUrl }) => {
+      setRequestId(created.id);
+      setStep(3);
+      
+      if (stripeUrl) {
+        window.location.href = stripeUrl;
       }
     }
   });
