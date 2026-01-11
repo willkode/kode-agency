@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Search, ExternalLink, Trash2, CheckCircle, Mail, Smartphone, Calendar, Building } from 'lucide-react';
+import { Search, ExternalLink, Trash2, CheckCircle, Mail, Smartphone, Calendar, Building, Send, Loader2, DollarSign } from 'lucide-react';
 
 const statusColors = {
   pending: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',

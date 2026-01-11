@@ -51,11 +51,18 @@ Deno.serve(async (req) => {
       },
     });
 
-    // Send email with payment link via Resend
+    // Send email with payment link via Resend (with link tracking enabled)
     await resend.emails.send({
       from: 'Kode Agency <hello@kodeagency.us>',
       to: email,
       subject: `Complete Your Payment - ${description || service}`,
+      headers: {
+        'X-Entity-Ref-ID': requestId
+      },
+      tags: [
+        { name: 'service', value: service },
+        { name: 'type', value: 'payment_link' }
+      ],
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h1 style="color: #73e28a;">Complete Your Payment</h1>
