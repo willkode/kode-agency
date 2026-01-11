@@ -269,5 +269,8 @@ Add-ons: ${requestData.addons?.join(', ') || 'None'}
 A Lead has been automatically created in your CRM.
       `
     });
+
+    // Send confirmation email to customer
+    await sendCustomerConfirmationEmail(requestData.email, requestData.name, 'App Foundation');
   }
 }
