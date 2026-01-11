@@ -158,7 +158,7 @@ export default function OperationsSection() {
           </div>
           <h3 className="font-bold text-white">{title}</h3>
         </div>
-        <Badge variant="outline" className="border-slate-700">{items.length}</Badge>
+        <Badge variant="outline" className="border-slate-700 text-slate-300">{items.length}</Badge>
       </div>
       <div className="space-y-2 max-h-64 overflow-y-auto">
         {items.length === 0 ? (
@@ -317,7 +317,7 @@ export default function OperationsSection() {
                 </div>
                 <div className="flex items-center gap-2">
                   {lead.reminder_count > 0 && (
-                    <Badge variant="outline" className="border-slate-700 text-xs">
+                    <Badge variant="outline" className="border-slate-700 text-slate-300 text-xs">
                       {lead.reminder_count} reminder{lead.reminder_count > 1 ? 's' : ''}
                     </Badge>
                   )}
@@ -381,7 +381,7 @@ export default function OperationsSection() {
                   <p className="text-white font-medium text-sm truncate max-w-[200px]">{project.title}</p>
                   <p className="text-slate-500 text-xs">{project.client_email || 'No email'}</p>
                 </div>
-                <Badge variant="outline" className="border-slate-700 text-xs">
+                <Badge variant="outline" className="border-slate-700 text-slate-300 text-xs">
                   {project.status}
                 </Badge>
               </div>
@@ -425,13 +425,13 @@ export default function OperationsSection() {
                   <p className="text-slate-500 text-sm mb-2">Marketing Tags</p>
                   <div className="flex flex-wrap gap-2">
                     {(selectedLead.marketing_tags || []).map((tag, i) => (
-                      <Badge key={i} variant="outline" className="border-slate-700">
+                      <Badge key={i} variant="outline" className="border-slate-700 text-slate-300">
                         <Tag className="w-3 h-3 mr-1" />{tag}
                       </Badge>
                     ))}
                     <Input
                       placeholder="Add tag..."
-                      className="w-32 h-7 text-xs bg-slate-800 border-slate-700"
+                      className="w-32 h-7 text-xs bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' && e.target.value.trim()) {
                           const newTags = [...(selectedLead.marketing_tags || []), e.target.value.trim()];
@@ -453,7 +453,7 @@ export default function OperationsSection() {
                     <Button 
                       variant="outline" 
                       size="sm"
-                      className="border-slate-700"
+                      className="border-slate-700 text-slate-300 hover:text-white"
                       onClick={() => {
                         updateLeadMutation.mutate({
                           id: selectedLead.id,
