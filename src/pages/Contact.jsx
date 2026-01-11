@@ -86,26 +86,7 @@ ${data.message || 'No message provided'}
     { id: "03", icon: Clock, text: "Mon - Fri, 9AM - 6PM", label: "Working Hours" },
   ];
 
-  if (isSubmitted) {
-     return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-950 pt-20">
-           <Card className="text-center p-12 max-w-lg mx-auto bg-slate-900 border-slate-800">
-              <div className="w-16 h-16 bg-[#73e28a]/20 text-[#73e28a] rounded-full flex items-center justify-center mx-auto mb-6">
-                 <CheckCircle className="w-8 h-8" />
-              </div>
-              <h2 className="text-3xl font-bold text-white mb-4">Message Sent!</h2>
-              <p className="text-slate-400 mb-8">
-                 Thanks for reaching out. We'll get back to you shortly.
-              </p>
-              <Button onClick={() => setIsSubmitted(false)} className="bg-[#73e28a] text-black hover:bg-[#5dbb72]">
-                 Send another message
-              </Button>
-           </Card>
-        </div>
-     );
-  }
-
-  const jsonLd = {
+const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       createLocalBusinessSchema(),
