@@ -94,7 +94,7 @@ export default function Layout({ children, currentPageName }) {
 
           {/* Mobile Nav Overlay */}
           {isMobileMenuOpen && (
-            <div className="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-40 flex flex-col pt-24 px-6 lg:hidden">
+            <div className="fixed inset-0 bg-slate-950 z-40 flex flex-col pt-24 px-6 lg:hidden" style={{ backgroundColor: '#020617' }}>
               <nav className="flex flex-col gap-4">
                 {navLinks.map((link) => (
                   <Link
