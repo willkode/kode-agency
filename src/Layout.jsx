@@ -85,41 +85,41 @@ export default function Layout({ children, currentPageName }) {
             </Button>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            className="lg:hidden p-2 text-slate-400 hover:text-white z-50"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X /> : <Menu />}
-          </button>
-
-         {/* Mobile Nav Overlay */}
-{isMobileMenuOpen && (
-  <div
-    className="fixed inset-x-0 top-16 bottom-0 z-[100] flex flex-col px-6 py-8 lg:hidden"
-    style={{ backgroundColor: '#020617' }}
-  >
-    <nav className="flex flex-col gap-4">
-      {navLinks.map((link) => (
-        <Link
-          key={link.name}
-          to={createPageUrl(link.path)}
-          className={`text-lg font-medium py-2 border-b border-slate-900 ${
-            currentPageName === link.path ? 'text-white' : 'text-slate-400'
-          }`}
-        >
-          {link.name}
-        </Link>
-      ))}
-      <Button
-        onClick={() => base44.auth.redirectToLogin()}
-        className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black h-12 text-lg mt-4"
-      >
-        Login
-      </Button>
-    </nav>
-  </div>
-)}
+          {/* Mobile Menu */}
+          <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+            <SheetTrigger asChild className="lg:hidden">
+              <button className="p-2 text-slate-400 hover:text-white">
+                <Menu />
+              </button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] bg-slate-950 border-slate-800 p-0">
+              <nav className="flex flex-col gap-2 p-6 pt-12">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    to={createPageUrl(link.path)}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`text-lg font-medium py-3 px-4 rounded-lg transition-colors ${
+                      currentPageName === link.path 
+                        ? 'text-black bg-[#73e28a]' 
+                        : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+                <Button
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    base44.auth.redirectToLogin();
+                  }}
+                  className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black h-12 text-lg mt-4"
+                >
+                  Login
+                </Button>
+              </nav>
+            </SheetContent>
+          </Sheet>
 
         </div>
       </header>
