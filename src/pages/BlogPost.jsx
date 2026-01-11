@@ -148,20 +148,79 @@ Fusce tincidunt ac quis. A lobortis ras tincidunt or simply free text ever but w
 
             {/* Content */}
             <div 
-              className="prose prose-invert prose-lg max-w-none mb-8 
-                prose-headings:text-white prose-headings:font-bold
-                prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h2:border-b prose-h2:border-slate-800 prose-h2:pb-3
-                prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-h3:text-[#73e28a]
-                prose-p:text-slate-300 prose-p:leading-relaxed prose-p:mb-4
-                prose-ul:my-4 prose-ul:space-y-2
-                prose-li:text-slate-300
-                prose-strong:text-white prose-strong:font-semibold
-                prose-a:text-[#73e28a] prose-a:no-underline hover:prose-a:underline
-                prose-code:bg-slate-800 prose-code:px-2 prose-code:py-0.5 prose-code:rounded prose-code:text-[#73e28a] prose-code:text-sm
-                prose-pre:bg-slate-900 prose-pre:border prose-pre:border-slate-700 prose-pre:rounded-xl prose-pre:p-4 prose-pre:overflow-x-auto
-                [&_pre_code]:bg-transparent [&_pre_code]:p-0"
+              className="blog-content max-w-none mb-8"
               dangerouslySetInnerHTML={{ __html: displayPost.content || '' }}
+              style={{
+                '--tw-prose-body': '#cbd5e1',
+                '--tw-prose-headings': '#fff',
+              }}
             />
+            <style>{`
+              .blog-content h2 {
+                font-size: 1.75rem;
+                font-weight: 700;
+                color: #fff;
+                margin-top: 2.5rem;
+                margin-bottom: 1rem;
+                padding-bottom: 0.75rem;
+                border-bottom: 1px solid #334155;
+              }
+              .blog-content h3 {
+                font-size: 1.25rem;
+                font-weight: 600;
+                color: #73e28a;
+                margin-top: 2rem;
+                margin-bottom: 0.75rem;
+              }
+              .blog-content p {
+                color: #cbd5e1;
+                line-height: 1.75;
+                margin-bottom: 1rem;
+              }
+              .blog-content ul {
+                margin: 1rem 0;
+                padding-left: 1.5rem;
+                list-style-type: disc;
+              }
+              .blog-content ul ul {
+                margin: 0.5rem 0;
+              }
+              .blog-content li {
+                color: #cbd5e1;
+                margin-bottom: 0.5rem;
+              }
+              .blog-content strong {
+                color: #fff;
+                font-weight: 600;
+              }
+              .blog-content a {
+                color: #73e28a;
+                text-decoration: none;
+              }
+              .blog-content a:hover {
+                text-decoration: underline;
+              }
+              .blog-content code {
+                background: #1e293b;
+                padding: 0.125rem 0.375rem;
+                border-radius: 0.25rem;
+                color: #73e28a;
+                font-size: 0.875rem;
+              }
+              .blog-content pre {
+                background: #0f172a;
+                border: 1px solid #334155;
+                border-radius: 0.75rem;
+                padding: 1rem;
+                overflow-x: auto;
+                margin: 1.5rem 0;
+              }
+              .blog-content pre code {
+                background: transparent;
+                padding: 0;
+                color: #e2e8f0;
+              }
+            `}</style>
 
             {/* Tags */}
             <div className="flex flex-wrap items-center gap-3 py-6 border-t border-slate-800">
