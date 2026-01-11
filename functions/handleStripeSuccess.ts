@@ -112,6 +112,9 @@ Admin invite should have been sent to: iamwillkode@gmail.com
 A Lead has been automatically created in your CRM.
       `
     });
+
+    // Send confirmation email to customer
+    await sendCustomerConfirmationEmail(requestData.email, requestData.name, 'Base44 ER App Review');
   }
 }
 
