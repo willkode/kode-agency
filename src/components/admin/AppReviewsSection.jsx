@@ -363,6 +363,27 @@ export default function AppReviewsSection() {
     },
   });
 
+  const sendPaymentLinkMutation = useMutation({
+    mutationFn: async (request) => {
+      const amount = request.include_fix ? 150 : 50;
+      const description = `Base44 ER App Review${request.include_fix ? ' + Fix' : ''}`;
+      return base44.functions.invoke('sendPaymentLinkEmail', {
+        requestId: request.id,
+        service: 'Base44ER',
+        email: request.email,
+        name: request.name,
+        amount,
+        description
+      });
+    },
+    onSuccess: () => {
+      alert('Payment link sent successfully!');
+    },
+    onError: (error) => {
+      alert('Failed to send payment link: ' + error.message);
+    }
+  });
+
   const createTaskMutation = useMutation({
     mutationFn: async ({ request, projectId, newProjectTitle }) => {
       let finalProjectId = projectId;
