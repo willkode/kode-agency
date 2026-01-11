@@ -1,7 +1,31 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 import Stripe from 'npm:stripe@14.21.0';
+import { Resend } from 'npm:resend@2.0.0';
 
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY'));
+const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
+
+async function sendCustomerConfirmationEmail(email, name, serviceName) {
+  await resend.emails.send({
+    from: 'Kode Agency <hello@kodeagency.us>',
+    to: email,
+    subject: `Thank You for Your Order - ${serviceName}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h1 style="color: #73e28a;">Thank You for Your Order!</h1>
+        <p>Hi ${name},</p>
+        <p>Thank you for purchasing our <strong>${serviceName}</strong> service. We're excited to work with you!</p>
+        <p>Our team will review your request and reach out to you <strong>within 24 hours (Monday - Friday)</strong> to confirm your order and provide an estimated timeline.</p>
+        <p>If you have any questions in the meantime, feel free to reply to this email.</p>
+        <br/>
+        <p>Best regards,</p>
+        <p><strong>The Kode Agency Team</strong></p>
+        <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;" />
+        <p style="color: #888; font-size: 12px;">Kode Agency | AI-Accelerated Development</p>
+      </div>
+    `
+  });
+}
 
 Deno.serve(async (req) => {
   try {
