@@ -520,9 +520,9 @@ export default function Base44ERPage() {
               <CheckCircle className="w-8 h-8 text-[#73e28a]" />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-white mb-2">Payment Successful!</h3>
+              <h3 className="text-xl font-bold text-white mb-2">Thank You for Your Order!</h3>
               <p className="text-slate-400">
-                Thank you! Your app review request has been submitted. I'll start reviewing your app soon and get back to you via email.
+                Your app review request has been received. We will reach out to you within 24 hours (excluding weekends).
               </p>
             </div>
             <Button 
