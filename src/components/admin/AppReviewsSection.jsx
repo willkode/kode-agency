@@ -668,7 +668,7 @@ export default function AppReviewsSection() {
                       </Button>
                       <Button 
                         variant="outline" 
-                        className="border-slate-700"
+                        className="border-slate-700 text-slate-300 hover:text-white"
                         onClick={() => { setShowCreateTask(false); setSelectedProjectId(''); setNewProjectTitle(''); }}
                       >
                         Cancel
