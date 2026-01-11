@@ -92,35 +92,31 @@ export default function Layout({ children, currentPageName }) {
             {isMobileMenuOpen ? <X /> : <Menu />}
           </button>
 
-{/* Mobile Nav Overlay */}
+         {/* Mobile Nav Overlay */}
 {isMobileMenuOpen && (
-  <div className="fixed inset-0 z-[10000] lg:hidden">
-    {/* Background layer */}
-    <div className="absolute inset-0 bg-[#020617]" />
-
-    {/* Content layer */}
-    <div className="relative flex h-full flex-col px-6 py-8 pt-16">
-      <nav className="flex flex-col gap-4">
-        {navLinks.map((link) => (
-          <Link
-            key={link.name}
-            to={createPageUrl(link.path)}
-            className={`text-lg font-medium py-2 border-b border-slate-900 ${
-              currentPageName === link.path ? "text-white" : "text-slate-400"
-            }`}
-          >
-            {link.name}
-          </Link>
-        ))}
-
-        <Button
-          onClick={() => base44.auth.redirectToLogin()}
-          className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black h-12 text-lg mt-4"
+  <div
+    className="fixed inset-x-0 top-16 bottom-0 z-[100] flex flex-col px-6 py-8 lg:hidden"
+    style={{ backgroundColor: '#020617' }}
+  >
+    <nav className="flex flex-col gap-4">
+      {navLinks.map((link) => (
+        <Link
+          key={link.name}
+          to={createPageUrl(link.path)}
+          className={`text-lg font-medium py-2 border-b border-slate-900 ${
+            currentPageName === link.path ? 'text-white' : 'text-slate-400'
+          }`}
         >
-          Login
-        </Button>
-      </nav>
-    </div>
+          {link.name}
+        </Link>
+      ))}
+      <Button
+        onClick={() => base44.auth.redirectToLogin()}
+        className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black h-12 text-lg mt-4"
+      >
+        Login
+      </Button>
+    </nav>
   </div>
 )}
 
