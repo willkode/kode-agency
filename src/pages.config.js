@@ -37,6 +37,7 @@ import SaaSDevelopment from './pages/SaaSDevelopment';
 import Services from './pages/Services';
 import UIUXDesign from './pages/UIUXDesign';
 import WebsiteDevelopment from './pages/WebsiteDevelopment';
+import Home from './pages/Home';
 import __Layout from './Layout.jsx';
 
 
@@ -80,6 +81,7 @@ export const PAGES = {
     "Services": Services,
     "UIUXDesign": UIUXDesign,
     "WebsiteDevelopment": WebsiteDevelopment,
+    "Home": Home,
 }
 
 export const pagesConfig = {
