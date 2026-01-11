@@ -214,9 +214,25 @@ export default function BuildSprintsSection() {
                   </div>
                   <div className="flex items-center gap-3 p-3 bg-slate-800 rounded-lg">
                     <DollarSign className="w-5 h-5 text-[#73e28a]" />
-                    <div>
+                    <div className="flex-1">
                       <p className="text-xs text-slate-500">Amount</p>
-                      <p className="text-white font-bold">${selectedRequest.payment_amount || selectedRequest.hours * 75}</p>
+                      <div className="flex items-center gap-3">
+                        <p className="text-white font-bold">${selectedRequest.payment_amount || selectedRequest.hours * 75}</p>
+                        {(selectedRequest.payment_status === 'pending' || !selectedRequest.payment_status) && (
+                          <Button
+                            size="sm"
+                            className="bg-blue-600 hover:bg-blue-700 text-white h-7 text-xs"
+                            onClick={() => sendPaymentLinkMutation.mutate(selectedRequest)}
+                            disabled={sendPaymentLinkMutation.isPending}
+                          >
+                            {sendPaymentLinkMutation.isPending ? (
+                              <><Loader2 className="w-3 h-3 mr-1 animate-spin" /> Sending...</>
+                            ) : (
+                              <><Send className="w-3 h-3 mr-1" /> Send Payment Link</>
+                            )}
+                          </Button>
+                        )}
+                      </div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-3 bg-slate-800 rounded-lg">
