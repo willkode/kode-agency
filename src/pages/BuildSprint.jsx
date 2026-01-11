@@ -69,6 +69,21 @@ export default function BuildSprintPage() {
         .then(() => {
           setPaymentSuccess(true);
           setIsProcessing(false);
+          // Track purchase in GA4
+          const urlHours = urlParams.get('hours');
+          const amount = urlHours ? parseInt(urlHours) * HOURLY_RATE : HOURLY_RATE;
+          if (typeof window !== 'undefined' && window.gtag) {
+            window.gtag('event', 'purchase', {
+              transaction_id: sessionId,
+              value: amount,
+              currency: 'USD',
+              items: [{
+                item_name: 'Build Sprint',
+                price: amount,
+                quantity: 1
+              }]
+            });
+          }
           // Clean URL
           window.history.replaceState({}, document.title, window.location.pathname);
         }).catch((error) => {
