@@ -77,6 +77,16 @@ export default function Base44ERPage() {
         payment_amount: data.include_fix ? 150 : 50
       });
       
+      // Send lead notification email
+      base44.functions.invoke('notifyNewLead', {
+        name: data.name,
+        email: data.email,
+        phone: data.phone || '',
+        payment_status: 'pending',
+        service: 'Base44 ER',
+        amount: data.include_fix ? 150 : 50
+      }).catch(err => console.error('Lead notification failed:', err));
+      
       // Create Stripe checkout session
       const response = await base44.functions.invoke('createStripeCheckout', { 
         service: 'Base44ER',

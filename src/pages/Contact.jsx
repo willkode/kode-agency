@@ -38,6 +38,15 @@ export default function ContactPage() {
         source: 'Contact Form',
         status: 'New'
       });
+      // Send lead notification email
+      base44.functions.invoke('notifyNewLead', {
+        name: data.name,
+        email: data.email,
+        phone: data.phone || '',
+        payment_status: 'N/A',
+        service: 'Contact Form',
+        amount: 0
+      }).catch(err => console.error('Lead notification failed:', err));
       // Send notification email
       await base44.integrations.Core.SendEmail({
         to: 'will@kodeagency.us',
