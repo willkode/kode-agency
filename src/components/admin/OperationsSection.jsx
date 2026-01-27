@@ -17,7 +17,7 @@ import {
   Send, ArrowRight, RefreshCw, Download, Mail, Eye, Loader2,
   DollarSign, Users, XCircle, Tag, MessageSquare
 } from 'lucide-react';
-import MassEmailModal from './MassEmailModal';
+import MassEmailModal from '@/components/admin/MassEmailModal';
 
 const SERVICE_LABELS = {
   'app_review': 'App Review',
