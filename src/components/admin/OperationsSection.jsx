@@ -494,6 +494,12 @@ export default function OperationsSection() {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Mass Email Modal */}
+      <MassEmailModal 
+        open={showMassEmailModal} 
+        onClose={() => setShowMassEmailModal(false)} 
+      />
     </div>
   );
 }
