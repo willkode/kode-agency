@@ -15,8 +15,9 @@ import {
 import {
   AlertTriangle, Clock, CreditCard, FolderKanban, CheckCircle,
   Send, ArrowRight, RefreshCw, Download, Mail, Eye, Loader2,
-  DollarSign, Users, XCircle, Tag
+  DollarSign, Users, XCircle, Tag, MessageSquare
 } from 'lucide-react';
+import MassEmailModal from './MassEmailModal';
 
 const SERVICE_LABELS = {
   'app_review': 'App Review',
@@ -48,6 +49,7 @@ export default function OperationsSection() {
   const [isRunningReminders, setIsRunningReminders] = useState(false);
   const [reminderResult, setReminderResult] = useState(null);
   const [exportFilter, setExportFilter] = useState({ tag: '', status: '' });
+  const [showMassEmailModal, setShowMassEmailModal] = useState(false);
 
   // Fetch all data
   const { data: leads = [], isLoading: leadsLoading } = useQuery({
