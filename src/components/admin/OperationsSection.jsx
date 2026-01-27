@@ -15,8 +15,9 @@ import {
 import {
   AlertTriangle, Clock, CreditCard, FolderKanban, CheckCircle,
   Send, ArrowRight, RefreshCw, Download, Mail, Eye, Loader2,
-  DollarSign, Users, XCircle, Tag
+  DollarSign, Users, XCircle, Tag, MessageSquare
 } from 'lucide-react';
+import MassEmailModal from './MassEmailModal';
 
 const SERVICE_LABELS = {
   'app_review': 'App Review',
