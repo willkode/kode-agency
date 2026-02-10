@@ -1,3 +1,52 @@
+/**
+ * pages.config.js - Page routing configuration
+ * 
+ * This file is AUTO-GENERATED. Do not add imports or modify PAGES manually.
+ * Pages are auto-registered when you create files in the ./pages/ folder.
+ * 
+ * THE ONLY EDITABLE VALUE: mainPage
+ * This controls which page is the landing page (shown when users visit the app).
+ * 
+ * Example file structure:
+ * 
+ *   import HomePage from './pages/HomePage';
+ *   import Dashboard from './pages/Dashboard';
+ *   import Settings from './pages/Settings';
+ *   
+ *   export const PAGES = {
+ *       "HomePage": HomePage,
+ *       "Dashboard": Dashboard,
+ *       "Settings": Settings,
+ *   }
+ *   
+ *   export const pagesConfig = {
+ *       mainPage: "HomePage",
+ *       Pages: PAGES,
+ *   };
+ * 
+ * Example with Layout (wraps all pages):
+ *
+ *   import Home from './pages/Home';
+ *   import Settings from './pages/Settings';
+ *   import __Layout from './Layout.jsx';
+ *
+ *   export const PAGES = {
+ *       "Home": Home,
+ *       "Settings": Settings,
+ *   }
+ *
+ *   export const pagesConfig = {
+ *       mainPage: "Home",
+ *       Pages: PAGES,
+ *       Layout: __Layout,
+ *   };
+ *
+ * To change the main page from HomePage to Dashboard, use find_replace:
+ *   Old: mainPage: "HomePage",
+ *   New: mainPage: "Dashboard",
+ *
+ * The mainPage value must match a key in the PAGES object exactly.
+ */
 import AISystems from './pages/AISystems';
 import APIDevelopment from './pages/APIDevelopment';
 import About from './pages/About';
@@ -21,6 +70,7 @@ import DevOps from './pages/DevOps';
 import EmailMarketing from './pages/EmailMarketing';
 import FAQ from './pages/FAQ';
 import FullFunnelMarketing from './pages/FullFunnelMarketing';
+import Home from './pages/Home';
 import Legal from './pages/Legal';
 import MVPDevelopment from './pages/MVPDevelopment';
 import MobileAppConversion from './pages/MobileAppConversion';
@@ -35,10 +85,9 @@ import RefundPolicy from './pages/RefundPolicy';
 import SEOServices from './pages/SEOServices';
 import SaaSDevelopment from './pages/SaaSDevelopment';
 import Services from './pages/Services';
+import ThankYou from './pages/ThankYou';
 import UIUXDesign from './pages/UIUXDesign';
 import WebsiteDevelopment from './pages/WebsiteDevelopment';
-import Home from './pages/Home';
-import ThankYou from './pages/ThankYou';
 import __Layout from './Layout.jsx';
 
 
@@ -66,6 +115,7 @@ export const PAGES = {
     "EmailMarketing": EmailMarketing,
     "FAQ": FAQ,
     "FullFunnelMarketing": FullFunnelMarketing,
+    "Home": Home,
     "Legal": Legal,
     "MVPDevelopment": MVPDevelopment,
     "MobileAppConversion": MobileAppConversion,
@@ -80,10 +130,9 @@ export const PAGES = {
     "SEOServices": SEOServices,
     "SaaSDevelopment": SaaSDevelopment,
     "Services": Services,
+    "ThankYou": ThankYou,
     "UIUXDesign": UIUXDesign,
     "WebsiteDevelopment": WebsiteDevelopment,
-    "Home": Home,
-    "ThankYou": ThankYou,
 }
 
 export const pagesConfig = {
