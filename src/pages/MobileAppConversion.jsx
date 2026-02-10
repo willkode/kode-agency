@@ -29,11 +29,11 @@ export default function MobileAppConversionPage() {
             if (typeof window !== 'undefined' && window.gtag) {
               window.gtag('event', 'purchase', {
                 transaction_id: sessionId,
-                value: 750,
+                value: 250,
                 currency: 'USD',
                 items: [{
                   item_name: 'Mobile App Conversion',
-                  price: 750,
+                  price: 250,
                   quantity: 1
                 }]
               });
@@ -64,7 +64,7 @@ export default function MobileAppConversionPage() {
       const created = await base44.entities.MobileAppConversionRequest.create({
         ...data,
         payment_status: 'pending',
-        payment_amount: 750
+        payment_amount: 250
       });
       
       // Send lead notification email
@@ -74,14 +74,14 @@ export default function MobileAppConversionPage() {
         phone: '',
         payment_status: 'pending',
         service: 'Mobile App Conversion',
-        amount: 750
+        amount: 250
       }).catch(err => console.error('Lead notification failed:', err));
       
       // Then create Stripe checkout session
       const response = await base44.functions.invoke('createStripeCheckout', {
         service: 'MobileAppConversion',
         requestId: created.id,
-        amount: 750,
+        amount: 250,
         description: 'Mobile App Conversion Service - Web to Mobile',
         customerEmail: data.email,
         customerName: data.name,
@@ -120,7 +120,7 @@ export default function MobileAppConversionPage() {
         { name: "Services", url: "/Services" },
         { name: "Mobile App Conversion", url: "/MobileAppConversion" }
       ]),
-      createServiceSchema("Mobile App Conversion", "Convert your web app into a real mobile app for Android and iOS for $750.", "/MobileAppConversion"),
+      createServiceSchema("Mobile App Conversion", "Convert your web app into a real mobile app for Android and iOS for $250.", "/MobileAppConversion"),
       createFAQSchema(faqs)
     ]
   };
@@ -128,8 +128,8 @@ export default function MobileAppConversionPage() {
   return (
     <div className="bg-slate-950 text-white">
       <SEO 
-        title="Mobile App Conversion - Web to Mobile App for $750"
-        description="Turn your web app into a real mobile app for Android and iOS. $750 flat rate includes app wrapper conversion, builds, UX pass, and store submission guidance. Includes free Base44 ER review."
+        title="Mobile App Conversion - Web to Mobile App for $250"
+        description="Turn your web app into a real mobile app for Android and iOS. $250 flat rate includes app wrapper conversion, builds, UX pass, and store submission guidance. Includes free Base44 ER review."
         keywords={["web to mobile app", "mobile app conversion", "PWA to native app", "Capacitor app", "Android app development", "iOS app development", "app store submission"]}
         url="/MobileAppConversion"
         jsonLd={jsonLd}
@@ -153,7 +153,7 @@ export default function MobileAppConversionPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center mb-8">
                 <div>
-                  <div className="text-5xl font-bold text-[#73e28a]">$750</div>
+                  <div className="text-5xl font-bold text-[#73e28a]">$250</div>
                   <p className="text-slate-400">One-time conversion</p>
                 </div>
                 <div className="hidden sm:block w-px h-12 bg-slate-700" />
@@ -272,7 +272,7 @@ export default function MobileAppConversionPage() {
       {/* What You Get */}
       <section className="py-16 bg-slate-900/50">
         <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">What You Get for $750</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">What You Get for $250</h2>
           
           {/* Bonus Banner */}
           <div className="mb-10 p-6 bg-gradient-to-r from-[#73e28a]/20 to-indigo-500/20 border border-[#73e28a]/30 rounded-2xl">
@@ -524,7 +524,7 @@ export default function MobileAppConversionPage() {
             Ready to put your web app in someone's pocket?
           </h2>
           <p className="text-xl text-slate-300 mb-8">
-            Convert your web app into a real mobile app for $750.
+            Convert your web app into a real mobile app for $250.
           </p>
           <Button 
             onClick={() => setIsFormOpen(true)}
@@ -674,7 +674,7 @@ export default function MobileAppConversionPage() {
               disabled={createOrderMutation.isPending}
               className="w-full bg-[#73e28a] text-black hover:bg-[#5dbb72] h-12 text-lg"
             >
-              {createOrderMutation.isPending ? 'Processing...' : 'Submit & Pay $750'}
+              {createOrderMutation.isPending ? 'Processing...' : 'Submit & Pay $250'}
             </Button>
 
             {createOrderMutation.isError && (
