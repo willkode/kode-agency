@@ -99,7 +99,7 @@ export default function Base44ERPage() {
         phone: data.phone || '',
         payment_status: 'pending',
         service: 'Base44 ER',
-        amount: data.include_fix ? 75 : 50
+        amount: data.include_fix ? 150 : 50
       }).catch(err => console.error('Lead notification failed:', err));
       
       // Create Stripe checkout session
