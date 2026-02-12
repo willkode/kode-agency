@@ -244,7 +244,7 @@ export default function BaseCMSPage() {
               target="_blank" 
               rel="noopener noreferrer"
             >
-              <Button variant="outline" className="border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 h-14 px-8 rounded-full">
+              <Button variant="outline" className="bg-slate-900 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 h-14 px-8 rounded-full">
                 View BaseCMS <ExternalLink className="ml-2 w-4 h-4" />
               </Button>
             </a>
