@@ -33,36 +33,152 @@ import {
 } from 'lucide-react';
 
 export default function BaseCMSPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState(null);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    description: ''
+  });
+
+  // Handle return from Stripe
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const success = urlParams.get('success');
+    const sessionId = urlParams.get('session_id');
+    const serviceType = urlParams.get('serviceType');
+    
+    if (success === 'true' && sessionId) {
+      base44.functions.invoke('handleStripeSuccess', { sessionId })
+        .then(res => {
+          if (res.data.success) {
+            setPaymentSuccess(true);
+            const service = services.find(s => s.key === serviceType);
+            if (typeof window !== 'undefined' && window.gtag && service) {
+              window.gtag('event', 'purchase', {
+                transaction_id: sessionId,
+                value: service.amount,
+                currency: 'USD',
+                items: [{
+                  item_name: `BaseCMS - ${service.title}`,
+                  price: service.amount,
+                  quantity: 1
+                }]
+              });
+            }
+          }
+        })
+        .catch(err => console.error('Payment handling failed:', err));
+      
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, []);
+
   const services = [
     {
+      key: "setup",
       icon: Settings,
       title: "CMS Setup & Configuration",
       price: "$150",
+      amount: 150,
       description: "Complete BaseCMS setup including content types, media management, and user roles configured for your needs.",
       items: ["Content model design", "User roles & permissions", "Media library setup", "Initial content migration"]
     },
     {
+      key: "integration",
       icon: Layout,
       title: "Website Integration",
       price: "$250",
+      amount: 250,
       description: "Connect BaseCMS to your frontend and build dynamic pages that pull content from your CMS.",
       items: ["API integration", "Dynamic page templates", "Content rendering", "SEO optimization"]
     },
     {
+      key: "theming",
       icon: Paintbrush,
       title: "Custom Theming",
-      price: "$200",
+      price: "$500",
+      priceSubtext: "starting at",
+      amount: 500,
       description: "Customize the look and feel of your BaseCMS dashboard and public-facing content.",
       items: ["Admin dashboard styling", "Custom components", "Brand alignment", "Responsive design"]
     },
     {
+      key: "debugging",
       icon: Bug,
       title: "Debugging Session",
       price: "$75/hr",
+      amount: 75,
       description: "Having issues with your BaseCMS setup? Book a debugging session and I'll help you fix it live.",
       items: ["Screen-share session", "Live troubleshooting", "Root cause analysis", "Implementation guidance"]
     }
   ];
+
+  const handleServiceClick = (service) => {
+    setSelectedService(service);
+    setIsModalOpen(true);
+  };
+
+  const handleChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const submitMutation = useMutation({
+    mutationFn: async (data) => {
+      // Create BaseCMS request
+      const created = await base44.entities.BaseCMSRequest.create({
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        service_type: selectedService.key,
+        description: data.description,
+        payment_amount: selectedService.amount
+      });
+
+      // Create lead for CRM
+      await base44.entities.Lead.create({
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        source: 'Website',
+        status: 'New',
+        service_sku: 'basecms_' + selectedService.key,
+        description: `BaseCMS Service: ${selectedService.title}\n\n${data.description}`,
+        amount: selectedService.amount,
+        payment_status: 'pending'
+      });
+
+      // Send lead notification
+      base44.functions.invoke('notifyNewLead', {
+        name: data.name,
+        email: data.email,
+        phone: data.phone || '',
+        payment_status: 'pending',
+        service: `BaseCMS - ${selectedService.title}`,
+        amount: selectedService.amount
+      }).catch(err => console.error('Lead notification failed:', err));
+
+      // Create Stripe checkout
+      const response = await base44.functions.invoke('createStripeCheckout', {
+        service: 'BaseCMS',
+        requestId: created.id,
+        amount: selectedService.amount,
+        description: `BaseCMS - ${selectedService.title}`,
+        customerEmail: data.email,
+        customerName: data.name,
+        metadata: { serviceType: selectedService.key }
+      });
+
+      return { created, stripeUrl: response.data.url };
+    },
+    onSuccess: ({ stripeUrl }) => {
+      if (stripeUrl) {
+        window.location.href = stripeUrl;
+      }
+    }
+  });
 
   const useCases = [
     "Blog or news website",
