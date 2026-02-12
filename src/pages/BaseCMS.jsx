@@ -269,12 +269,21 @@ export default function BaseCMSPage() {
 
         <div className="grid md:grid-cols-2 gap-6">
           {services.map((service, index) => (
-            <Card key={index} className="p-8 bg-slate-900/50 border-slate-800 hover:border-[#73e28a]/50 transition-colors">
+            <Card 
+              key={index} 
+              className="p-8 bg-slate-900/50 border-slate-800 hover:border-[#73e28a]/50 transition-colors cursor-pointer"
+              onClick={() => handleServiceClick(service)}
+            >
               <div className="flex items-start justify-between mb-4">
                 <div className="w-12 h-12 rounded-xl bg-[#73e28a]/10 flex items-center justify-center">
                   <service.icon className="w-6 h-6 text-[#73e28a]" />
                 </div>
-                <span className="text-2xl font-bold text-[#73e28a]">{service.price}</span>
+                <div className="text-right">
+                  {service.priceSubtext && (
+                    <span className="text-xs text-slate-500 block">{service.priceSubtext}</span>
+                  )}
+                  <span className="text-2xl font-bold text-[#73e28a]">{service.price}</span>
+                </div>
               </div>
               <h3 className="text-xl font-bold text-white mb-2">{service.title}</h3>
               <p className="text-slate-400 text-sm mb-6">{service.description}</p>
