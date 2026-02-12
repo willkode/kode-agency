@@ -57,6 +57,7 @@ import AppDevelopment from './pages/AppDevelopment';
 import AppFoundation from './pages/AppFoundation';
 import Apply from './pages/Apply';
 import Base44ER from './pages/Base44ER';
+import BaseCMS from './pages/BaseCMS';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import Branding from './pages/Branding';
@@ -88,7 +89,6 @@ import Services from './pages/Services';
 import ThankYou from './pages/ThankYou';
 import UIUXDesign from './pages/UIUXDesign';
 import WebsiteDevelopment from './pages/WebsiteDevelopment';
-import BaseCMS from './pages/BaseCMS';
 import __Layout from './Layout.jsx';
 
 
@@ -103,6 +103,7 @@ export const PAGES = {
     "AppFoundation": AppFoundation,
     "Apply": Apply,
     "Base44ER": Base44ER,
+    "BaseCMS": BaseCMS,
     "Blog": Blog,
     "BlogPost": BlogPost,
     "Branding": Branding,
@@ -134,7 +135,6 @@ export const PAGES = {
     "ThankYou": ThankYou,
     "UIUXDesign": UIUXDesign,
     "WebsiteDevelopment": WebsiteDevelopment,
-    "BaseCMS": BaseCMS,
 }
 
 export const pagesConfig = {
