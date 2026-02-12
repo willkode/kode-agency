@@ -33,6 +33,7 @@ export default function ServicesPage() {
     { icon: Stethoscope, title: "Base44 Emergency Room", slug: "Base44ER", desc: "Expert app review + optional $150 fix service. Get your Base44 app unstuck." },
     { icon: Package, title: "App Foundation", slug: "AppFoundation", desc: "Done-for-you app scaffolding with core data models and integrations. $250 flat." },
     { icon: Smartphone, title: "Mobile App Conversion", slug: "MobileAppConversion", desc: "Turn your web app into a real mobile app (Android + iOS). $250 flat." },
+    { icon: Layers, title: "BaseCMS Services", slug: "BaseCMS", desc: "Setup, customization, and support for your BaseCMS project. From $75/hr." },
   ];
 
   const marketingServices = [
