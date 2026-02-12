@@ -378,6 +378,28 @@ export default function BaseCMSPage() {
         </div>
       </Section>
 
+      {/* Already Own BaseCMS? */}
+      <Section className="py-16 relative">
+        <Card className="p-8 bg-slate-800/30 border-slate-700 max-w-3xl mx-auto text-center">
+          <div className="w-14 h-14 mx-auto mb-4 rounded-xl bg-[#73e28a]/10 flex items-center justify-center">
+            <Layout className="w-7 h-7 text-[#73e28a]" />
+          </div>
+          <h3 className="text-2xl font-bold text-white mb-2">Already Own BaseCMS?</h3>
+          <p className="text-slate-400 mb-6 max-w-lg mx-auto">
+            If you've already purchased BaseCMS from the Base44 marketplace and need support, access your app dashboard for help and documentation.
+          </p>
+          <a 
+            href="https://basecms.base44.app" 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-12 px-8 rounded-full">
+              Go to BaseCMS Dashboard <ExternalLink className="ml-2 w-4 h-4" />
+            </Button>
+          </a>
+        </Card>
+      </Section>
+
       {/* CTA */}
       <Section className="py-24 bg-slate-900/30 relative">
         <GlowingOrb position="center" size="500px" opacity={0.1} />
