@@ -396,6 +396,107 @@ export default function BaseCMSPage() {
           </Link>
         </div>
       </Section>
+
+      {/* Service Request Modal */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="bg-slate-900 border-slate-800 text-white max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold">
+              {selectedService?.title}
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-4 mt-4">
+            <div className="p-4 bg-slate-800/50 rounded-lg flex items-center justify-between">
+              <span className="text-slate-400">Service Price:</span>
+              <div className="text-right">
+                {selectedService?.priceSubtext && (
+                  <span className="text-xs text-slate-500 block">{selectedService.priceSubtext}</span>
+                )}
+                <span className="text-xl font-bold text-[#73e28a]">{selectedService?.price}</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label className="text-slate-400">Your Name *</Label>
+                <Input
+                  placeholder="John Doe"
+                  className="bg-slate-800 border-slate-700 text-white"
+                  value={formData.name}
+                  onChange={(e) => handleChange('name', e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label className="text-slate-400">Phone (optional)</Label>
+                <Input
+                  type="tel"
+                  placeholder="+1 555-123-4567"
+                  className="bg-slate-800 border-slate-700 text-white"
+                  value={formData.phone}
+                  onChange={(e) => handleChange('phone', e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-slate-400">Email *</Label>
+              <Input
+                type="email"
+                placeholder="john@example.com"
+                className="bg-slate-800 border-slate-700 text-white"
+                value={formData.email}
+                onChange={(e) => handleChange('email', e.target.value)}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-slate-400">Project Details *</Label>
+              <Textarea
+                placeholder="Tell me about your project and what you need help with..."
+                className="bg-slate-800 border-slate-700 text-white min-h-[100px]"
+                value={formData.description}
+                onChange={(e) => handleChange('description', e.target.value)}
+              />
+            </div>
+
+            <Button 
+              onClick={() => submitMutation.mutate(formData)}
+              disabled={!formData.name || !formData.email || !formData.description || submitMutation.isPending}
+              className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-12"
+            >
+              {submitMutation.isPending ? 'Processing...' : `Pay ${selectedService?.price} & Submit`}
+            </Button>
+
+            {submitMutation.isError && (
+              <p className="text-red-400 text-sm text-center">Something went wrong. Please try again.</p>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Payment Success Dialog */}
+      <Dialog open={paymentSuccess} onOpenChange={setPaymentSuccess}>
+        <DialogContent className="bg-slate-900 border-slate-800 text-white max-w-lg">
+          <div className="space-y-6 text-center py-4">
+            <div className="w-16 h-16 bg-[#73e28a]/20 rounded-full flex items-center justify-center mx-auto">
+              <CheckCircle className="w-8 h-8 text-[#73e28a]" />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-white mb-2">Thank You for Your Order!</h3>
+              <p className="text-slate-400">
+                Your BaseCMS service request has been received. I'll reach out to you within 24 hours to get started.
+              </p>
+            </div>
+            <Button 
+              onClick={() => setPaymentSuccess(false)}
+              className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold"
+            >
+              Close
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
