@@ -121,7 +121,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mb-16">
             <div className="min-h-[320px] md:min-h-[280px]">
-              <h1 className="text-white mr-40 mb-6 ml-1 text-4xl font-bold leading-tight md:text-5xl lg:text-6xl transition-all duration-500">
+              <h1 className="text-white mb-6 ml-1 text-4xl font-bold leading-tight md:text-5xl lg:text-6xl lg:mr-40 transition-all duration-500">
                 {heroSlides[currentSlide].headline}
               </h1>
               
