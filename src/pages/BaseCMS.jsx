@@ -56,6 +56,18 @@ export default function BaseCMSPage() {
           if (res.data.success) {
             setPaymentSuccess(true);
             const service = services.find(s => s.key === serviceType);
+            
+            // Track successful payment with Base44 analytics
+            base44.analytics.track({
+              eventName: 'basecms_payment_success',
+              properties: {
+                service_type: serviceType,
+                service_title: service?.title || serviceType,
+                service_amount: service?.amount || 0,
+                session_id: sessionId
+              }
+            });
+            
             if (typeof window !== 'undefined' && window.gtag && service) {
               window.gtag('event', 'purchase', {
                 transaction_id: sessionId,
@@ -119,6 +131,16 @@ export default function BaseCMSPage() {
   const handleServiceClick = (service) => {
     setSelectedService(service);
     setIsModalOpen(true);
+    
+    // Track modal open
+    base44.analytics.track({
+      eventName: 'basecms_modal_opened',
+      properties: {
+        service_type: service.key,
+        service_title: service.title,
+        service_amount: service.amount
+      }
+    });
   };
 
   const handleChange = (field, value) => {
@@ -174,6 +196,16 @@ export default function BaseCMSPage() {
       return { created, stripeUrl: response.data.url };
     },
     onSuccess: ({ stripeUrl }) => {
+      // Track form completion before redirect
+      base44.analytics.track({
+        eventName: 'basecms_form_completed',
+        properties: {
+          service_type: selectedService.key,
+          service_title: selectedService.title,
+          service_amount: selectedService.amount
+        }
+      });
+      
       if (stripeUrl) {
         window.location.href = stripeUrl;
       }
