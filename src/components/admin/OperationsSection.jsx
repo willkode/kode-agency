@@ -250,7 +250,7 @@ export default function OperationsSection() {
         <Button 
           onClick={exportAudienceCSV}
           variant="outline"
-          className="border-slate-700 text-slate-300 hover:text-white"
+          className="border-slate-700 bg-white text-black hover:bg-slate-100 hover:text-black"
         >
           <Download className="w-4 h-4 mr-2" />
           Export Audience CSV
@@ -258,7 +258,7 @@ export default function OperationsSection() {
         <Button 
           onClick={() => setShowMassEmailModal(true)}
           variant="outline"
-          className="border-slate-700 text-slate-300 hover:text-white"
+          className="border-slate-700 bg-white text-black hover:bg-slate-100 hover:text-black"
         >
           <MessageSquare className="w-4 h-4 mr-2" />
           Message
