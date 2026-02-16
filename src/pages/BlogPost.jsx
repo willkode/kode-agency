@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { createPageUrl } from '@/utils';
+import { track, useTimeOnPage } from '@/components/analytics/useAnalytics';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,6 +14,11 @@ import { format } from 'date-fns';
 export default function BlogPostPage() {
   const urlParams = new URLSearchParams(window.location.search);
   const postId = urlParams.get('id');
+  const viewTracked = useRef(false);
+  const scrollMilestones = useRef({ 50: false, 75: false, 90: false });
+
+  // Time on page tracking
+  useTimeOnPage('blog_post');
 
   const { data: post, isLoading } = useQuery({
     queryKey: ['post', postId],
@@ -25,6 +31,41 @@ export default function BlogPostPage() {
     queryFn: () => base44.entities.Post.list(),
     initialData: [],
   });
+
+  // Track post view
+  useEffect(() => {
+    if (post && !viewTracked.current) {
+      viewTracked.current = true;
+      track('blog_post_viewed', {
+        post_id: post.id,
+        post_slug: post.title?.toLowerCase().replace(/\s+/g, '-'),
+        tags: post.tags?.join(',') || ''
+      });
+    }
+  }, [post?.id]);
+
+  // Track scroll depth for blog posts
+  useEffect(() => {
+    if (!post) return;
+
+    const handleScroll = () => {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = Math.round((window.scrollY / scrollHeight) * 100);
+
+      [50, 75, 90].forEach((milestone) => {
+        if (scrollPercent >= milestone && !scrollMilestones.current[milestone]) {
+          scrollMilestones.current[milestone] = true;
+          track(`blog_post_scroll_${milestone}`, {
+            post_id: post.id,
+            post_slug: post.title?.toLowerCase().replace(/\s+/g, '-')
+          });
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [post?.id]);
 
   const categories = [
     { name: "Corporate Solution", count: null },

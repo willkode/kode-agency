@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { useMutation } from '@tanstack/react-query';
+import { track, usePageView, useScrollDepth, useTimeOnPage, getMessageLengthBucket } from '@/components/analytics/useAnalytics';
 import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
 import PageHero from '@/components/ui-custom/PageHero';
@@ -26,6 +27,13 @@ export default function ContactPage() {
      subject: '',
      message: ''
   });
+  const formStarted = useRef(false);
+  const formStartTime = useRef(null);
+
+  // Analytics tracking
+  usePageView('contact_form');
+  useScrollDepth('contact');
+  useTimeOnPage('contact');
 
   const submitMutation = useMutation({
     mutationFn: async (data) => {
@@ -67,16 +75,33 @@ ${data.message || 'No message provided'}
       });
     },
     onSuccess: () => {
+       track('contact_form_submit_success');
        navigate(createPageUrl('ThankYou'));
+    },
+    onError: (error) => {
+       track('contact_form_submit_error', { error_type: error?.message || 'unknown' });
     }
   });
 
   const handleChange = (field, value) => {
+     // Track first interaction
+     if (!formStarted.current && value) {
+       formStarted.current = true;
+       formStartTime.current = Date.now();
+       track('contact_form_started', { first_field: field });
+     }
      setFormData(prev => ({ ...prev, [field]: value }));
   };
 
   const handleSubmit = (e) => {
      e.preventDefault();
+     const timeToSubmit = formStartTime.current ? Math.round((Date.now() - formStartTime.current) / 1000) : 0;
+     track('contact_form_submitted', {
+       subject_filled: formData.subject ? 'yes' : 'no',
+       phone_provided: formData.phone ? 'yes' : 'no',
+       message_length_bucket: getMessageLengthBucket(formData.message?.length || 0),
+       time_to_submit_seconds: timeToSubmit
+     });
      submitMutation.mutate(formData);
   };
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useMutation } from '@tanstack/react-query';
+import { track, usePageView, useScrollDepth, useTimeOnPage } from '@/components/analytics/useAnalytics';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -39,6 +40,11 @@ export default function BuildSprintPage() {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [requestId, setRequestId] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
+
+  // Analytics tracking
+  usePageView('build_sprint');
+  useScrollDepth('build_sprint');
+  useTimeOnPage('build_sprint');
   
   const [formData, setFormData] = useState({
     name: '',
@@ -72,6 +78,15 @@ export default function BuildSprintPage() {
           // Track purchase in GA4
           const urlHours = urlParams.get('hours');
           const amount = urlHours ? parseInt(urlHours) * HOURLY_RATE : HOURLY_RATE;
+          
+          // Track with Base44 analytics
+          track('build_sprint_payment_success', {
+            hours: parseInt(urlHours) || 1,
+            amount,
+            session_id: sessionId,
+            request_id: reqId
+          });
+          
           if (typeof window !== 'undefined' && window.gtag) {
             window.gtag('event', 'purchase', {
               transaction_id: sessionId,
@@ -88,6 +103,7 @@ export default function BuildSprintPage() {
           window.history.replaceState({}, document.title, window.location.pathname);
         }).catch((error) => {
           console.error('Payment handling failed:', error);
+          track('build_sprint_payment_failed', { error_type: error?.message || 'handler_failed' });
           setIsProcessing(false);
         });
     }
@@ -123,6 +139,13 @@ export default function BuildSprintPage() {
         metadata: { hours: data.hours.toString() }
       });
       
+      // Track checkout started before redirect
+      track('build_sprint_checkout_started', {
+        hours: data.hours,
+        amount: totalAmount,
+        request_id: request.id
+      });
+      
       // Redirect to Stripe
       if (stripeData.url) {
         window.location.href = stripeData.url;
@@ -137,10 +160,17 @@ export default function BuildSprintPage() {
   };
 
   const handleHoursChange = (delta) => {
+    const newHours = Math.max(MIN_HOURS, formData.hours + delta);
+    track('build_sprint_hours_changed', { hours: newHours });
     setFormData(prev => ({
       ...prev,
-      hours: Math.max(MIN_HOURS, prev.hours + delta)
+      hours: newHours
     }));
+  };
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+    track('build_sprint_modal_opened');
   };
 
   const accomplishments = [
@@ -203,6 +233,7 @@ export default function BuildSprintPage() {
                 href="https://calendly.com/kodeagency/build-sprint" 
                 target="_blank" 
                 rel="noopener noreferrer"
+                onClick={() => track('build_sprint_calendly_clicked')}
               >
                 <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-8 text-lg">
                   <Calendar className="w-5 h-5 mr-2" />
@@ -280,7 +311,7 @@ export default function BuildSprintPage() {
             </p>
             
             <Button 
-              onClick={() => setShowModal(true)}
+              onClick={handleOpenModal}
               className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-8 text-lg"
             >
               Book a Build Sprint <ArrowRight className="ml-2 w-5 h-5" />
@@ -468,7 +499,7 @@ export default function BuildSprintPage() {
             If you are ready, book a session and include your Base44 link and MVP goal.
           </p>
           <Button 
-            onClick={() => setShowModal(true)}
+            onClick={handleOpenModal}
             className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg"
           >
             Book a Build Sprint

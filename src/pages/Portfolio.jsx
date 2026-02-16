@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import { track, usePageView, useScrollDepth, useTimeOnPage } from '@/components/analytics/useAnalytics';
 import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
 import PageHero from '@/components/ui-custom/PageHero';
@@ -18,6 +19,26 @@ import { ExternalLink, ArrowUpRight } from 'lucide-react';
 
 export default function PortfolioPage() {
   const [filter, setFilter] = useState('All');
+
+  // Analytics tracking
+  usePageView('portfolio');
+  useScrollDepth('portfolio');
+  useTimeOnPage('portfolio');
+
+  const handleFilterChange = (category) => {
+    setFilter(category);
+    if (category !== 'All') {
+      track('portfolio_filter_used', { category });
+    }
+  };
+
+  const handleProjectClick = (project) => {
+    track('portfolio_item_opened', {
+      item_name: project.title,
+      category: project.category || 'unknown',
+      platform: project.platform
+    });
+  };
 
   const { data: projects, isLoading } = useQuery({
     queryKey: ['projects'],
@@ -127,7 +148,7 @@ export default function PortfolioPage() {
             {categories.map(category => (
               <button
                 key={category}
-                onClick={() => setFilter(category)}
+                onClick={() => handleFilterChange(category)}
                 className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-[#73e28a] focus:ring-offset-2 focus:ring-offset-slate-950 ${
                   filter === category 
                     ? 'bg-[#73e28a] text-black' 
@@ -153,7 +174,7 @@ export default function PortfolioPage() {
           ) : (
             <div className="grid md:grid-cols-2 gap-8">
               {displayProjects.map((project, index) => (
-                <Card key={project.id} className="overflow-hidden group p-0 h-full flex flex-col bg-slate-900/80">
+                <Card key={project.id} className="overflow-hidden group p-0 h-full flex flex-col bg-slate-900/80" onClick={() => handleProjectClick(project)}>
                   <div className="overflow-hidden relative h-56">
                     <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-transparent transition-colors z-10" />
                     <img 

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { track } from '@/components/analytics/useAnalytics';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -28,11 +29,30 @@ export default function PublicQuotePage() {
     enabled: !!quoteId
   });
 
-  // Mark as viewed
+  // Track quote view and mark as viewed
+  const viewTracked = useRef(false);
   useEffect(() => {
-    if (quote && quote.status === 'sent') {
-      base44.entities.Quote.update(quote.id, { status: 'viewed' });
-      queryClient.invalidateQueries({ queryKey: ['public-quote', quoteId] });
+    if (quote && !viewTracked.current) {
+      viewTracked.current = true;
+      const isExpired = quote.valid_until && new Date(quote.valid_until) < new Date();
+      
+      track('quote_viewed', {
+        quote_id: quote.id,
+        quote_number: quote.quote_number,
+        amount: quote.price,
+        status: quote.status,
+        is_expired: isExpired ? 'yes' : 'no'
+      });
+      
+      if (quote.status === 'sent') {
+        track('quote_status_changed', {
+          quote_id: quote.id,
+          from_status: 'sent',
+          to_status: 'viewed'
+        });
+        base44.entities.Quote.update(quote.id, { status: 'viewed' });
+        queryClient.invalidateQueries({ queryKey: ['public-quote', quoteId] });
+      }
     }
   }, [quote?.id]);
 
@@ -47,16 +67,26 @@ export default function PublicQuotePage() {
       base44.functions.invoke('captureQuotePayment', { orderId, quoteId: requestId })
         .then(() => {
           setPaymentSuccess(true);
+          track('quote_payment_success', {
+            quote_id: requestId,
+            order_id: orderId
+          });
           queryClient.invalidateQueries({ queryKey: ['public-quote', requestId] });
           window.history.replaceState({}, '', `/quote/${requestId}`);
         })
-        .catch(console.error)
+        .catch((err) => {
+          console.error(err);
+          track('payment_handler_failed', { error_type: 'quote_payment', quote_id: requestId });
+        })
         .finally(() => setIsProcessing(false));
     }
   }, []);
 
   const acceptMutation = useMutation({
     mutationFn: async () => {
+      if (clientNotes) {
+        track('quote_note_added', { quote_id: quote.id });
+      }
       await base44.entities.Quote.update(quote.id, {
         status: 'accepted',
         client_notes: clientNotes,
@@ -64,12 +94,27 @@ export default function PublicQuotePage() {
       });
     },
     onSuccess: () => {
+      track('quote_accepted', {
+        quote_id: quote.id,
+        quote_number: quote.quote_number,
+        amount: quote.price
+      });
+      track('quote_status_changed', {
+        quote_id: quote.id,
+        from_status: quote.status,
+        to_status: 'accepted'
+      });
       queryClient.invalidateQueries({ queryKey: ['public-quote', quoteId] });
     }
   });
 
   const payMutation = useMutation({
     mutationFn: async () => {
+      track('quote_payment_clicked', {
+        quote_id: quote.id,
+        quote_number: quote.quote_number,
+        amount: quote.price
+      });
       const response = await base44.functions.invoke('createQuotePayment', {
         quoteId: quote.id,
         amount: quote.price

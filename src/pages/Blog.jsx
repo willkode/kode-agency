@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
+import { track, usePageView, useScrollDepth, useTimeOnPage } from '@/components/analytics/useAnalytics';
 import Section from '@/components/ui-custom/Section';
 import PageHero from '@/components/ui-custom/PageHero';
 import SEO, { createBreadcrumbSchema } from '@/components/SEO';
@@ -11,6 +12,19 @@ import { Calendar, MessageCircle } from 'lucide-react';
 import { format } from 'date-fns';
 
 export default function BlogPage() {
+  // Analytics tracking
+  usePageView('blog_list');
+  useScrollDepth('blog');
+  useTimeOnPage('blog');
+
+  const handlePostClick = (post) => {
+    track('blog_post_clicked', {
+      post_id: post.id,
+      post_title: post.title,
+      tags: post.tags?.join(',') || ''
+    });
+  };
+
   const { data: posts, isLoading } = useQuery({
     queryKey: ['posts'],
     queryFn: () => base44.entities.Post.list(),
@@ -62,7 +76,7 @@ export default function BlogPage() {
         ) : (
           <div className="grid md:grid-cols-3 gap-8">
             {posts.map((post) => (
-              <Link key={post.id} to={createPageUrl('BlogPost') + `?id=${post.id}`} className="group cursor-pointer block">
+              <Link key={post.id} to={createPageUrl('BlogPost') + `?id=${post.id}`} className="group cursor-pointer block" onClick={() => handlePostClick(post)}>
                 {/* Image Container */}
                 <div className="relative h-56 rounded-xl overflow-hidden mb-4">
                   <img 

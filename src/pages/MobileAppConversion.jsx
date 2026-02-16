@@ -9,10 +9,21 @@ import { CheckCircle, Smartphone, Zap, Shield, Globe, ArrowRight, Check, Stethos
 import { base44 } from '@/api/base44Client';
 import { useMutation } from '@tanstack/react-query';
 import SEO, { createServiceSchema, createFAQSchema, createBreadcrumbSchema } from '@/components/SEO';
+import { track, usePageView, useScrollDepth, useTimeOnPage } from '@/components/analytics/useAnalytics';
 
 export default function MobileAppConversionPage() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
+
+  // Analytics tracking
+  usePageView('mobile_conversion');
+  useScrollDepth('mobile_conversion');
+  useTimeOnPage('mobile_conversion');
+
+  const handleOpenForm = () => {
+    setIsFormOpen(true);
+    track('mobile_conversion_form_opened');
+  };
   
   // Handle return from Stripe
   React.useEffect(() => {
@@ -25,6 +36,13 @@ export default function MobileAppConversionPage() {
         .then(res => {
           if (res.data.success) {
             setPaymentSuccess(true);
+            
+            // Track with Base44 analytics
+            track('mobile_conversion_payment_success', {
+              session_id: sessionId,
+              amount: 250
+            });
+            
             // Track purchase in GA4
             if (typeof window !== 'undefined' && window.gtag) {
               window.gtag('event', 'purchase', {
@@ -40,7 +58,10 @@ export default function MobileAppConversionPage() {
             }
           }
         })
-        .catch(err => console.error('Payment handling failed:', err));
+        .catch(err => {
+          console.error('Payment handling failed:', err);
+          track('mobile_conversion_payment_failed', { error_type: err?.message || 'handler_failed' });
+        });
       
       window.history.replaceState({}, '', window.location.pathname);
     }
@@ -93,6 +114,12 @@ export default function MobileAppConversionPage() {
       return response.data;
     },
     onSuccess: (data) => {
+      track('mobile_conversion_checkout_started', {
+        platforms: formData.platforms_needed?.join(',') || '',
+        addons: formData.add_ons?.join(',') || '',
+        has_auth: formData.has_auth ? 'yes' : 'no',
+        web_app_url_provided: formData.web_app_url ? 'yes' : 'no'
+      });
       if (data.url) {
         window.location.href = data.url;
       }
@@ -169,7 +196,7 @@ export default function MobileAppConversionPage() {
                 </div>
               </div>
               <Button 
-                onClick={() => setIsFormOpen(true)}
+                onClick={handleOpenForm}
                 className="bg-[#73e28a] text-black hover:bg-[#5dbb72] text-lg px-8 py-6 h-auto"
               >
                 Get Started <ArrowRight className="ml-2 w-5 h-5" />
@@ -527,7 +554,7 @@ export default function MobileAppConversionPage() {
             Convert your web app into a real mobile app for $250.
           </p>
           <Button 
-            onClick={() => setIsFormOpen(true)}
+            onClick={handleOpenForm}
             className="bg-[#73e28a] text-black hover:bg-[#5dbb72] text-lg px-8 py-6 h-auto"
           >
             Get Started <ArrowRight className="ml-2 w-5 h-5" />

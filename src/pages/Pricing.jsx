@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { Button } from "@/components/ui/button";
+import { track, usePageView, useScrollDepth, useTimeOnPage } from '@/components/analytics/useAnalytics';
 import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
 import PageHero from '@/components/ui-custom/PageHero';
@@ -13,6 +14,15 @@ import SEO, { createFAQSchema, createBreadcrumbSchema } from '@/components/SEO';
 import { Check, ArrowRight } from 'lucide-react';
 
 export default function PricingPage() {
+  // Analytics tracking
+  usePageView('pricing');
+  useScrollDepth('pricing');
+  useTimeOnPage('pricing');
+
+  const handlePlanClick = (planName) => {
+    track('pricing_plan_clicked', { plan_name: planName });
+  };
+
   const pricingFactors = [
     { title: "Complexity", desc: "Simple CRUD vs. complex algorithms, workflows, and business logic." },
     { title: "User Roles", desc: "Single user type vs. multi-tenant with admin/manager/user roles." },
@@ -87,7 +97,7 @@ export default function PricingPage() {
                 <li className="flex gap-3"><Check className="w-5 h-5 text-[#73e28a] flex-shrink-0" /> 30-day warranty</li>
               </ul>
 
-              <Link to={createPageUrl('Contact')} className="w-full">
+              <Link to={createPageUrl('Contact')} className="w-full" onClick={() => handlePlanClick('MVP Sprint')}>
                 <Button className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold">Get Started</Button>
               </Link>
             </Card>
@@ -113,7 +123,7 @@ export default function PricingPage() {
                 <li className="flex gap-3"><Check className="w-5 h-5 text-[#73e28a] flex-shrink-0" /> 60-day support</li>
               </ul>
 
-              <Link to={createPageUrl('Contact')} className="w-full">
+              <Link to={createPageUrl('Contact')} className="w-full" onClick={() => handlePlanClick('Launch Package')}>
                 <Button className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold">Request Quote</Button>
               </Link>
             </Card>
@@ -135,7 +145,7 @@ export default function PricingPage() {
                 <li className="flex gap-3"><Check className="w-5 h-5 text-violet-400 flex-shrink-0" /> Performance monitoring</li>
               </ul>
 
-              <Link to={createPageUrl('Contact')} className="w-full">
+              <Link to={createPageUrl('Contact')} className="w-full" onClick={() => handlePlanClick('Product Partner')}>
                 <Button className="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold">Let's Talk</Button>
               </Link>
             </Card>
