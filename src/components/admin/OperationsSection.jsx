@@ -323,6 +323,7 @@ export default function OperationsSection() {
                   <p className="text-slate-500 text-xs">
                     {SERVICE_LABELS[lead.service_sku] || lead.service_sku || 'Unknown'} 
                     {lead.amount && ` • $${lead.amount}`}
+                    {lead.created_date && ` • ${new Date(lead.created_date).toLocaleDateString()}`}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
