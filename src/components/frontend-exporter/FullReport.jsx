@@ -121,6 +121,25 @@ export default function FullReport({ scan, onNewScan }) {
         </div>
       </Card>
 
+      {/* AI Agent Prompts */}
+      {prompts.length > 0 && (
+        <Card className="p-6 bg-slate-900/80 border-slate-700">
+          <h3 className="text-white font-bold text-lg mb-1">🤖 AI Agent Prompts</h3>
+          <p className="text-slate-400 text-sm mb-5">Copy these prompts and paste them directly into an AI coding assistant to execute each migration step.</p>
+          <div className="space-y-4">
+            {prompts.map((prompt, i) => (
+              <div key={i} className="bg-slate-800 border border-slate-700 rounded-lg p-4">
+                <div className="flex items-start justify-between gap-3 mb-3">
+                  <span className="text-[#73e28a] font-semibold text-sm">Prompt {i + 1}: {prompt.title}</span>
+                  <CopyButton text={prompt.text} />
+                </div>
+                <pre className="text-slate-300 text-xs whitespace-pre-wrap leading-relaxed font-mono bg-slate-900 rounded p-3 max-h-48 overflow-y-auto">{prompt.text}</pre>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
       <div className="text-center">
         <button
           onClick={onNewScan}
