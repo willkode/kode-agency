@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Github, ArrowRight, Loader2, Lock } from 'lucide-react';
+import { Github, ArrowRight, Loader2, Lock, ChevronDown, ChevronUp } from 'lucide-react';
 import Card from '@/components/ui-custom/Card';
 
 export default function ScanForm({ onScanStart, isScanning, user }) {
   const [githubUrl, setGithubUrl] = useState('');
+  const [showGuide, setShowGuide] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,7 +49,31 @@ export default function ScanForm({ onScanStart, isScanning, user }) {
               disabled={isScanning || !user}
             />
           </div>
-          <p className="text-slate-500 text-xs">Repository must be public. Private repo support coming soon.</p>
+          <div className="mt-1">
+            <button
+              type="button"
+              onClick={() => setShowGuide(!showGuide)}
+              className="text-xs text-slate-500 hover:text-slate-300 flex items-center gap-1 transition-colors"
+            >
+              Repository must be public.{' '}
+              <span className="text-[#73e28a] underline underline-offset-2">How to make it public</span>
+              {showGuide ? <ChevronUp className="w-3 h-3 text-[#73e28a]" /> : <ChevronDown className="w-3 h-3 text-[#73e28a]" />}
+            </button>
+
+            {showGuide && (
+              <div className="mt-3 p-4 bg-slate-800/80 border border-slate-700 rounded-lg text-sm text-slate-300 space-y-2">
+                <p className="font-semibold text-white">How to make your GitHub repo public:</p>
+                <ol className="list-decimal list-inside space-y-1.5 text-slate-400">
+                  <li>Go to your repository on <span className="text-white">github.com</span></li>
+                  <li>Click <span className="text-white">Settings</span> (top tab)</li>
+                  <li>Scroll to the bottom — <span className="text-white">Danger Zone</span></li>
+                  <li>Click <span className="text-white">"Change repository visibility"</span></li>
+                  <li>Select <span className="text-white">"Make public"</span> and confirm</li>
+                </ol>
+                <p className="text-slate-500 text-xs pt-1">You can make it private again after the scan. Private repo support coming soon.</p>
+              </div>
+            )}
+          </div>
         </div>
 
         <Button
