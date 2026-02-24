@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Lock, CheckCircle, AlertTriangle, Loader2, RotateCcw } from 'lucide-react';
+import { Lock, CheckCircle, AlertTriangle, Loader2, RotateCcw, ShieldAlert } from 'lucide-react';
 import Card from '@/components/ui-custom/Card';
 
 const complexityColors = {
