@@ -20,6 +20,18 @@ export default function Layout({ children, currentPageName }) {
         if (isAuth) {
           const user = await base44.auth.me();
           setAuthUser(user);
+          // Silently capture email for Mailchimp sync (only if not already stored)
+          try {
+            const existing = await base44.entities.MailchimpContact.filter({ email: user.email });
+            if (!existing || existing.length === 0) {
+              await base44.entities.MailchimpContact.create({
+                email: user.email,
+                full_name: user.full_name || '',
+                status: 'pending',
+                source: 'signup'
+              });
+            }
+          } catch (_) {}
         } else {
           setAuthUser(null);
         }
