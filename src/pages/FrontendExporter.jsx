@@ -26,10 +26,9 @@ const FEATURES = [
 export default function FrontendExporterPage() {
   const [user, setUser] = useState(null);
   const [userLoading, setUserLoading] = useState(true);
-  const [scanState, setScanState] = useState('idle'); // idle | scanning | preview | unlocked | error
+  const [scanState, setScanState] = useState('idle'); // idle | scanning | done | error
   const [currentScan, setCurrentScan] = useState(null);
   const [isScanning, setIsScanning] = useState(false);
-  const [isPaying, setIsPaying] = useState(false);
   const [scanningUrl, setScanningUrl] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -38,39 +37,16 @@ export default function FrontendExporterPage() {
     base44.auth.me().then(setUser).catch(() => setUser(null)).finally(() => setUserLoading(false));
   }, []);
 
-  // Handle Stripe return
+  // Resume from URL param
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const success = urlParams.get('success');
-    const sessionId = urlParams.get('session_id');
     const scanId = urlParams.get('scan_id');
-
-    if (success === 'true' && sessionId && scanId) {
-      // Unlock the scan
-      base44.functions.invoke('unlockFrontendExporterScan', { session_id: sessionId, scan_id: scanId })
-        .then(() => base44.entities.FrontendExporterScan.filter({ id: scanId }))
+    if (scanId) {
+      base44.entities.FrontendExporterScan.filter({ id: scanId })
         .then((scans) => {
           if (scans && scans.length > 0) {
             setCurrentScan(scans[0]);
-            setScanState('unlocked');
-          }
-        })
-        .catch((err) => {
-          setErrorMsg(err.message);
-          setScanState('error');
-        });
-      window.history.replaceState({}, document.title, window.location.pathname);
-      return;
-    }
-
-    // Resume from cancelled payment
-    const cancelledScanId = urlParams.get('scan_id');
-    if (cancelledScanId) {
-      base44.entities.FrontendExporterScan.filter({ id: cancelledScanId })
-        .then((scans) => {
-          if (scans && scans.length > 0) {
-            setCurrentScan(scans[0]);
-            setScanState(scans[0].status === 'completed' ? 'unlocked' : 'preview');
+            setScanState('done');
           }
         })
         .catch(() => {});
@@ -102,29 +78,13 @@ export default function FrontendExporterPage() {
       const updated = await base44.entities.FrontendExporterScan.filter({ id: scan.id });
       if (updated && updated.length > 0) {
         setCurrentScan(updated[0]);
-        setScanState(updated[0].status === 'completed' ? 'unlocked' : 'preview');
+        setScanState('done');
       }
     } catch (err) {
       setErrorMsg(err.message || 'Scan failed. Please try again.');
       setScanState('error');
     } finally {
       setIsScanning(false);
-    }
-  };
-
-  const handlePay = async () => {
-    if (!currentScan) return;
-    setIsPaying(true);
-    try {
-      const { data } = await base44.functions.invoke('createFrontendExporterCheckout', {
-        scan_id: currentScan.id
-      });
-      if (data.url) {
-        window.location.href = data.url;
-      }
-    } catch (err) {
-      setErrorMsg(err.message);
-      setIsPaying(false);
     }
   };
 
@@ -168,11 +128,11 @@ export default function FrontendExporterPage() {
                 <div className="flex items-center gap-4 flex-wrap">
                   <div className="flex items-center gap-2 text-[#73e28a] text-sm font-medium">
                     <CheckCircle className="w-4 h-4" />
-                    Free scan
+                    100% free
                   </div>
                   <div className="flex items-center gap-2 text-[#73e28a] text-sm font-medium">
                     <CheckCircle className="w-4 h-4" />
-                    $25 to unlock full plan
+                    Full report included
                   </div>
                   <div className="flex items-center gap-2 text-[#73e28a] text-sm font-medium">
                     <CheckCircle className="w-4 h-4" />
@@ -199,20 +159,11 @@ export default function FrontendExporterPage() {
             <ScanProgress githubUrl={scanningUrl} />
           )}
 
-          {scanState === 'preview' && currentScan && (
-            <ScanPreview
-              scan={currentScan}
-              onPay={handlePay}
-              isPaying={isPaying}
-              onNewScan={handleNewScan}
-            />
-          )}
-
-          {scanState === 'unlocked' && currentScan && (
-            <FullReport
-              scan={currentScan}
-              onNewScan={handleNewScan}
-            />
+          {scanState === 'done' && currentScan && (
+            <div className="max-w-4xl mx-auto space-y-8">
+              <FullReport scan={currentScan} onNewScan={handleNewScan} />
+              <MigrationQuoteForm scan={currentScan} user={user} />
+            </div>
           )}
 
           {scanState === 'error' && (
@@ -240,7 +191,7 @@ export default function FrontendExporterPage() {
               <SectionLabel text="What's Included" />
               <h2 className="text-4xl md:text-5xl font-bold text-white">Everything in your report</h2>
               <p className="text-slate-400 mt-4 max-w-2xl mx-auto">
-                A full $25 migration plan. Run the scan free, pay once to unlock.
+                Completely free. Scan your repo and get the full migration plan instantly.
               </p>
             </div>
 
@@ -266,7 +217,7 @@ export default function FrontendExporterPage() {
           <div className="relative z-10 text-center">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Ready to migrate?</h2>
             <p className="text-slate-400 mb-8 max-w-2xl mx-auto">
-              Paste your repo URL above and get your executive summary free. Unlock the full plan for $25.
+              Paste your repo URL above and get your complete migration plan instantly — free.
             </p>
             <Button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
