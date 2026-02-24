@@ -198,7 +198,19 @@ Manual QA test plan:
 - Rollback triggers
 
 # Copy-Paste Action List (for AI Agent)
-Sequential numbered task list another AI coding agent can execute safely, with clear CHECKPOINT markers after each step.`;
+ Sequential numbered task list another AI coding agent can execute safely, with clear CHECKPOINT markers after each step.
+
+# 10. AI Agent Prompts
+Generate 5-10 ready-to-use copy-paste prompts that a developer can drop directly into an AI coding assistant (like Base44 AI, Cursor, or Claude) to execute specific migration steps.
+
+Format each prompt EXACTLY like this:
+
+## Prompt 1: [Short Title]
+\`\`\`prompt
+[Full prompt text here — write it as if speaking directly to an AI agent. Be specific, reference actual file paths and code from this repo. Make it actionable and self-contained so the AI knows exactly what to do without extra context.]
+\`\`\`
+
+Cover prompts for: config updates, env variable setup, auth redirect fixes, SPA routing config, Base44 SDK initialization, deployment setup, and any repo-specific fixes identified above.`;
 
     const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
       prompt,
