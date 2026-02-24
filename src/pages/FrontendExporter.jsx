@@ -11,8 +11,8 @@ import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 import SEO from '@/components/SEO';
 import ScanForm from '@/components/frontend-exporter/ScanForm';
 import ScanProgress from '@/components/frontend-exporter/ScanProgress';
-import ScanPreview from '@/components/frontend-exporter/ScanPreview';
 import FullReport from '@/components/frontend-exporter/FullReport';
+import MigrationQuoteForm from '@/components/frontend-exporter/MigrationQuoteForm';
 
 const FEATURES = [
   { icon: GitBranch, title: 'Repo Structure Analysis', desc: 'Maps all Base44 SDK usages, config files, entities, and backend function calls.' },
