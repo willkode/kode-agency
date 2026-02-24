@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList, Menu, X, ChevronRight, Smartphone, Rocket, Activity } from 'lucide-react';
+import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList, Menu, X, ChevronRight, Smartphone, Rocket, Activity, GitBranch } from 'lucide-react';
 
 import CRMSection from '@/components/admin/CRMSection';
 import ProjectsSection from '@/components/admin/ProjectsSection';
@@ -14,6 +14,7 @@ import TaskTemplatesSection from '@/components/admin/TaskTemplatesSection';
 import MobileAppSection from '@/components/admin/MobileAppSection';
 import AppFoundationSection from '@/components/admin/AppFoundationSection';
 import OperationsSection from '@/components/admin/OperationsSection';
+import MigrationQuotesSection from '@/components/admin/MigrationQuotesSection';
 
 const menuGroups = [
   {
@@ -33,6 +34,7 @@ const menuGroups = [
       { id: 'mobileapp', label: 'Mobile App', icon: Smartphone },
       { id: 'foundation', label: 'App Foundation', icon: Rocket },
       { id: 'templates', label: 'Task Templates', icon: ClipboardList },
+      { id: 'migration-quotes', label: 'Migration Quotes', icon: GitBranch },
     ]
   },
   {
@@ -201,6 +203,9 @@ export default function AdminPage() {
           )}
           {activeTab === 'foundation' && (
             <AppFoundationSection />
+          )}
+          {activeTab === 'migration-quotes' && (
+            <MigrationQuotesSection />
           )}
         </div>
       </main>

@@ -218,10 +218,10 @@ Sequential numbered task list another AI coding agent can execute safely, with c
     const canMigrateMatch = report.match(/\b(Yes|No|Mostly)\b/i);
     const canMigrate = canMigrateMatch ? canMigrateMatch[1] : 'Mostly';
 
-    // Save completed scan
+    // Save completed scan - free, no payment needed
     await base44.asServiceRole.entities.FrontendExporterScan.update(scan_id, {
-      status: 'locked',
-      payment_status: 'pending',
+      status: 'completed',
+      payment_status: 'completed',
       report,
       executive_summary: executiveSummary,
       complexity,
