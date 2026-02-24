@@ -7,7 +7,7 @@ import Card from '@/components/ui-custom/Card';
 
 export default function ScanForm({ onScanStart, isScanning, user }) {
   const [githubUrl, setGithubUrl] = useState('');
-  const [showGuide, setShowGuide] = useState(false);
+  const [showGuide, setShowGuide] = useState(true);
 
   const handleSubmit = (e) => {
     e.preventDefault();
