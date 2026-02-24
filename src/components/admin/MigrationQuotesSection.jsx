@@ -91,7 +91,7 @@ export default function MigrationQuotesSection() {
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-slate-700 text-slate-300 hover:text-white h-8 text-xs"
+                      className="border-slate-700 text-black hover:text-black h-8 text-xs"
                       onClick={() => { setSelectedRequest(req); handleViewScan(req.scan_id); }}
                     >
                       <Eye className="w-3.5 h-3.5 mr-1" />
