@@ -127,43 +127,65 @@ export default function PlatformsPage() {
         
         <div className="relative z-10 space-y-12">
           {platforms.map((platform, i) => (
-            <Card key={i} className={`p-8 ${platform.borderColor} ${platform.bgColor}`}>
-              <div className="flex flex-col lg:flex-row gap-8">
-                <div className="lg:w-1/3">
-                  <div className="text-4xl font-bold text-white mb-4">{platform.name}</div>
-                  <div className={`inline-block ${platform.tagColor} px-3 py-1 rounded-full text-sm font-medium mb-6`}>
-                    {platform.tagline}
+            <div key={i}>
+              <Card className={`p-8 ${platform.borderColor} ${platform.bgColor}`}>
+                <div className="flex flex-col lg:flex-row gap-8">
+                  <div className="lg:w-1/3">
+                    <div className="text-4xl font-bold text-white mb-4">{platform.name}</div>
+                    <div className={`inline-block ${platform.tagColor} px-3 py-1 rounded-full text-sm font-medium mb-6`}>
+                      {platform.tagline}
+                    </div>
+                    <p className="text-slate-300 mb-6">
+                      {platform.description}
+                    </p>
+                    <div className="space-y-2">
+                       <div className="text-sm text-slate-500 uppercase tracking-wider font-semibold">We Handle:</div>
+                       <ul className="space-y-1 text-slate-400">
+                         {platform.handles.map((item, j) => (
+                           <li key={j}>• {item}</li>
+                         ))}
+                       </ul>
+                    </div>
                   </div>
-                  <p className="text-slate-300 mb-6">
-                    {platform.description}
-                  </p>
-                  <div className="space-y-2">
-                     <div className="text-sm text-slate-500 uppercase tracking-wider font-semibold">We Handle:</div>
-                     <ul className="space-y-1 text-slate-400">
-                       {platform.handles.map((item, j) => (
-                         <li key={j}>• {item}</li>
-                       ))}
-                     </ul>
+                  <div className="lg:w-2/3 grid md:grid-cols-2 gap-6">
+                     <Card className="p-6 bg-slate-900/80 border-slate-800">
+                        <h4 className="text-white font-bold mb-3">Why we love it</h4>
+                        <p className="text-slate-400 text-sm">{platform.whyLove}</p>
+                     </Card>
+                     <Card className="p-6 bg-slate-900/80 border-slate-800">
+                        <h4 className="text-white font-bold mb-3">Perfect for</h4>
+                        <ul className="text-slate-400 text-sm space-y-2">
+                          {platform.perfectFor.map((item, j) => (
+                            <li key={j} className="flex items-start gap-2">
+                              <Check className="w-4 h-4 text-[#73e28a] mt-0.5 flex-shrink-0" /> {item}
+                            </li>
+                          ))}
+                        </ul>
+                     </Card>
                   </div>
                 </div>
-                <div className="lg:w-2/3 grid md:grid-cols-2 gap-6">
-                   <Card className="p-6 bg-slate-900/80 border-slate-800">
-                      <h4 className="text-white font-bold mb-3">Why we love it</h4>
-                      <p className="text-slate-400 text-sm">{platform.whyLove}</p>
-                   </Card>
-                   <Card className="p-6 bg-slate-900/80 border-slate-800">
-                      <h4 className="text-white font-bold mb-3">Perfect for</h4>
-                      <ul className="text-slate-400 text-sm space-y-2">
-                        {platform.perfectFor.map((item, j) => (
-                          <li key={j} className="flex items-start gap-2">
-                            <Check className="w-4 h-4 text-[#73e28a] mt-0.5 flex-shrink-0" /> {item}
-                          </li>
-                        ))}
-                      </ul>
-                   </Card>
+              </Card>
+
+              {/* Base44 recent updates panel */}
+              {platform.isBase44 && (
+                <div className="mt-6 border border-[#73e28a]/20 rounded-xl bg-[#73e28a]/5 p-6">
+                  <h4 className="text-[#73e28a] font-bold text-sm uppercase tracking-wider mb-5">
+                    🚀 Recent Base44 Platform Updates
+                  </h4>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    {base44Updates.map((u, j) => (
+                      <div key={j} className="flex items-start gap-3 bg-slate-900/60 rounded-lg p-3 border border-slate-800">
+                        <span className="text-[#73e28a] text-xs font-bold mt-0.5 whitespace-nowrap">{u.date}</span>
+                        <div>
+                          <div className="text-white text-sm font-semibold leading-tight">{u.feature}</div>
+                          <div className="text-slate-400 text-xs mt-0.5">{u.desc}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </Card>
+              )}
+            </div>
           ))}
         </div>
       </Section>
