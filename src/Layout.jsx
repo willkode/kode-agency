@@ -146,15 +146,27 @@ export default function Layout({ children, currentPageName }) {
                     {link.name}
                   </Link>
                 ))}
-                <Button
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    base44.auth.redirectToLogin();
-                  }}
-                  className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black h-12 text-lg mt-4"
-                >
-                  Login
-                </Button>
+                {authUser ? (
+                  <Button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      navigate(createPageUrl(authUser.role === 'admin' ? 'Admin' : 'ClientPortal'));
+                    }}
+                    className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black h-12 text-lg mt-4"
+                  >
+                    {authUser.role === 'admin' ? 'Admin' : 'Dashboard'}
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      base44.auth.redirectToLogin();
+                    }}
+                    className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black h-12 text-lg mt-4"
+                  >
+                    Login
+                  </Button>
+                )}
               </nav>
             </SheetContent>
           </Sheet>
