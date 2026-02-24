@@ -106,12 +106,21 @@ export default function Layout({ children, currentPageName }) {
           </nav>
 
           <div className="hidden lg:flex items-center gap-4">
-            <Button 
-              onClick={() => base44.auth.redirectToLogin()}
-              className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold border-0 rounded-full px-6"
-            >
-              Login
-            </Button>
+            {authUser ? (
+              <Button
+                onClick={() => navigate(createPageUrl(authUser.role === 'admin' ? 'Admin' : 'ClientPortal'))}
+                className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold border-0 rounded-full px-6"
+              >
+                {authUser.role === 'admin' ? 'Admin' : 'Dashboard'}
+              </Button>
+            ) : (
+              <Button
+                onClick={() => base44.auth.redirectToLogin()}
+                className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold border-0 rounded-full px-6"
+              >
+                Login
+              </Button>
+            )}
           </div>
 
           {/* Mobile Menu */}
