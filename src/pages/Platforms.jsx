@@ -13,6 +13,26 @@ import SEO, { createBreadcrumbSchema } from '@/components/SEO';
 import { Check, ArrowRight } from 'lucide-react';
 
 export default function PlatformsPage() {
+  const base44Updates = [
+    { date: "Feb 2026", feature: "Mobile App Publishing", desc: "Create and publish native mobile apps directly from Base44." },
+    { date: "Jan 2026", feature: "Debug Mode", desc: "Built-in debugger to identify and fix issues faster than ever." },
+    { date: "Jan 2026", feature: "Safe Testing", desc: "Test changes in a sandbox before pushing to production." },
+    { date: "Jan 2026", feature: "Upgraded Analytics", desc: "Deeper insights into your app's usage and performance." },
+    { date: "Dec 2025", feature: "Automations", desc: "Scheduled and event-based tasks that run automatically." },
+    { date: "Dec 2025", feature: "GitHub 2-Way Sync", desc: "Sync your codebase to GitHub and back in real time." },
+    { date: "Dec 2025", feature: "Custom Email Domains", desc: "Send emails from your own branded domain." },
+    { date: "Dec 2025", feature: "NPM Packages", desc: "Install any NPM package directly into your app." },
+    { date: "Nov 2025", feature: "One-Click Connectors", desc: "OAuth integrations with Slack, Google, Notion, HubSpot & more." },
+    { date: "Oct 2025", feature: "New Agent Builder", desc: "Build AI-powered agents that act autonomously inside your app." },
+    { date: "Sep 2025", feature: "WhatsApp for Agents", desc: "AI agents can now communicate via WhatsApp." },
+    { date: "Jul 2025", feature: "Workspaces & SSO", desc: "Team workspaces with custom SSO and role-based permissions." },
+    { date: "Jul 2025", feature: "Visual Edits", desc: "Click-to-edit UI elements without writing code." },
+    { date: "May 2025", feature: "Backend Functions", desc: "Write custom server-side logic and API integrations." },
+    { date: "May 2025", feature: "Custom Domains", desc: "Launch your app on your own domain in one click." },
+    { date: "Apr 2025", feature: "App Security Dashboard", desc: "Manage roles, permissions, and access controls visually." },
+    { date: "Mar 2025", feature: "GitHub Integration", desc: "Export and sync your project to a GitHub repository." },
+  ];
+
   const platforms = [
     {
       name: "Base44",
@@ -20,10 +40,11 @@ export default function PlatformsPage() {
       tagColor: "bg-[#73e28a]/20 text-[#73e28a]",
       borderColor: "border-[#73e28a]/30",
       bgColor: "bg-[#73e28a]/5",
-      description: "Our go-to platform for building robust, scalable web applications with built-in backend, database, and authentication.",
-      handles: ["Data Modeling & Schema", "Frontend Logic & UI", "Integrations & Functions"],
-      whyLove: "Base44 provides an incredible balance of speed and flexibility. It handles the boring infrastructure stuff so we can focus on your unique business logic.",
-      perfectFor: ["Full-featured SaaS apps", "Complex internal dashboards", "Data-heavy applications"]
+      description: "Our go-to platform for building robust, scalable web applications with built-in backend, database, authentication — and a rapidly growing feature set that rivals traditional dev stacks.",
+      handles: ["Data Modeling & Schema", "Frontend Logic & UI", "Integrations, Functions & Automations"],
+      whyLove: "Base44 is evolving faster than any other AI dev platform. Mobile apps, agents, GitHub sync, custom domains, backend functions — it keeps shipping features that used to require a full engineering team.",
+      perfectFor: ["Full-featured SaaS apps", "Complex internal dashboards", "AI-powered agent apps"],
+      isBase44: true
     },
     {
       name: "Lovable",
