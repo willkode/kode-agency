@@ -13,7 +13,7 @@ import SEO, { createServiceSchema, createBreadcrumbSchema } from '@/components/S
 import { 
   Code, Rocket, Bot, Link2, Layers, Palette, Globe, Server,
   Search, TrendingUp, Target, FileText, Brush, Mail, BarChart3,
-  ArrowRight, CheckCircle, Phone, Zap, Stethoscope, Package, Smartphone
+  ArrowRight, CheckCircle, Phone, Zap, Stethoscope, Package, Smartphone, GitBranch
 } from 'lucide-react';
 
 export default function ServicesPage() {
@@ -34,6 +34,7 @@ export default function ServicesPage() {
     { icon: Package, title: "App Foundation", slug: "AppFoundation", desc: "Done-for-you app scaffolding with core data models and integrations. $250 flat." },
     { icon: Smartphone, title: "Mobile App Conversion", slug: "MobileAppConversion", desc: "Turn your web app into a real mobile app (Android + iOS). $250 flat." },
     { icon: Layers, title: "BaseCMS Services", slug: "BaseCMS", desc: "Setup, customization, and support for your BaseCMS project. From $75/hr." },
+    { icon: GitBranch, title: "Frontend Exporter", slug: "FrontendExporter", desc: "Scan your Base44 repo and get a full migration plan to host your frontend externally. Free." },
   ];
 
   const marketingServices = [
