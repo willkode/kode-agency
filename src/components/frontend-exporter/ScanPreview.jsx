@@ -19,6 +19,31 @@ const migrateColors = {
 export default function ScanPreview({ scan, onPay, isPaying, onNewScan }) {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
+      {/* Private Repo Warning */}
+      <div className="bg-red-500/15 border border-red-500/50 rounded-xl p-5">
+        <div className="flex items-start gap-3">
+          <ShieldAlert className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
+          <div>
+            <h3 className="text-red-400 font-bold text-sm mb-2">⚠️ Make your repository private again</h3>
+            <p className="text-red-300 text-sm mb-3">
+              Your repo was set to public to allow scanning. You should revert it to private now to protect your source code.
+            </p>
+            <details className="group">
+              <summary className="text-red-400 text-xs font-semibold cursor-pointer hover:text-red-300 transition-colors select-none">
+                How to make it private again ▾
+              </summary>
+              <ol className="mt-3 space-y-1.5 text-red-300 text-xs list-decimal list-inside">
+                <li>Go to your repository on <strong>github.com</strong></li>
+                <li>Click <strong>Settings</strong> (top-right of the repo tabs)</li>
+                <li>Scroll down to the <strong>Danger Zone</strong> section</li>
+                <li>Click <strong>"Change repository visibility"</strong></li>
+                <li>Select <strong>Private</strong> and confirm</li>
+              </ol>
+            </details>
+          </div>
+        </div>
+      </div>
+
       {/* Header card */}
       <Card className="p-6 bg-slate-900/80 border-slate-700">
         <div className="flex items-start justify-between gap-4 flex-wrap">
