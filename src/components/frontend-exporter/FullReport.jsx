@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Download, RotateCcw } from 'lucide-react';
+import { CheckCircle, Download, RotateCcw, Copy, Check } from 'lucide-react';
 import Card from '@/components/ui-custom/Card';
 
 const complexityColors = {
