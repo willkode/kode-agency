@@ -55,7 +55,7 @@ export default function FullReport({ scan, onNewScan }) {
               onClick={handleDownload}
               variant="outline"
               size="sm"
-              className="border-slate-700 text-slate-300 hover:text-white"
+              className="border-slate-700 text-black hover:text-black"
             >
               <Download className="w-3.5 h-3.5 mr-1" />
               Download .md
