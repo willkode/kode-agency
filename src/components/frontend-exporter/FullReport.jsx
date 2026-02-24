@@ -17,7 +17,40 @@ const migrateColors = {
   No: 'bg-red-500/20 text-red-400 border-red-500/30'
 };
 
+function extractPrompts(report) {
+  const promptSection = report.match(/# 10\. AI Agent Prompts([\s\S]*?)(?=\n# \d+\.|$)/);
+  if (!promptSection) return [];
+  const block = promptSection[1];
+  const promptRegex = /## Prompt \d+: (.+?)\n```prompt\n([\s\S]*?)```/g;
+  const prompts = [];
+  let match;
+  while ((match = promptRegex.exec(block)) !== null) {
+    prompts.push({ title: match[1].trim(), text: match[2].trim() });
+  }
+  return prompts;
+}
+
+function CopyButton({ text }) {
+  const [copied, setCopied] = useState(false);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <button
+      onClick={handleCopy}
+      className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-md bg-slate-700 hover:bg-slate-600 text-slate-300 hover:text-white transition-colors flex-shrink-0"
+    >
+      {copied ? <Check className="w-3.5 h-3.5 text-[#73e28a]" /> : <Copy className="w-3.5 h-3.5" />}
+      {copied ? 'Copied!' : 'Copy'}
+    </button>
+  );
+}
+
 export default function FullReport({ scan, onNewScan }) {
+  const prompts = extractPrompts(scan.report || '');
+
   const handleDownload = () => {
     const blob = new Blob([scan.report], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
