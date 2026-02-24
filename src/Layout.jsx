@@ -9,8 +9,26 @@ import { HelmetProvider, Helmet } from 'react-helmet-async';
 
 export default function Layout({ children, currentPageName }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [authUser, setAuthUser] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const isAuth = await base44.auth.isAuthenticated();
+        if (isAuth) {
+          const user = await base44.auth.me();
+          setAuthUser(user);
+        } else {
+          setAuthUser(null);
+        }
+      } catch (e) {
+        setAuthUser(null);
+      }
+    };
+    fetchUser();
+  }, [location.pathname]);
 
   // Check if admin user and redirect
   useEffect(() => {
