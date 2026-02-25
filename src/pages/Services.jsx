@@ -18,6 +18,10 @@ import {
 } from 'lucide-react';
 
 export default function ServicesPage() {
+  usePageView('services');
+  useScrollDepth('services');
+  useTimeOnPage('services');
+
   const developmentServices = [
     { icon: Code, title: "App Development", slug: "AppDevelopment", desc: "Native, web, and cross-platform apps with AI-enhanced workflows." },
     { icon: Rocket, title: "MVP Development", slug: "MVPDevelopment", desc: "Rapid MVPs using Base44, Lovable, Replit — launch in weeks." },
@@ -69,8 +73,12 @@ export default function ServicesPage() {
     }
   ];
 
+  const handleServiceClick = (service) => {
+    track('service_card_clicked', { service_name: service.title, service_slug: service.slug });
+  };
+
   const ServiceCard = ({ service }) => (
-    <Link to={createPageUrl(service.slug)}>
+    <Link to={createPageUrl(service.slug)} onClick={() => handleServiceClick(service)}>
       <Card className="p-6 group hover:border-[#73e28a]/50 bg-slate-900/80 h-full cursor-pointer">
         <div className="w-14 h-14 mb-4 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-[#73e28a] group-hover:bg-[#73e28a] group-hover:text-black transition-all duration-300">
           <service.icon className="w-6 h-6" />
@@ -238,7 +246,7 @@ export default function ServicesPage() {
             </div>
 
             <div className="flex items-center gap-6">
-              <Link to={createPageUrl('Contact')}>
+              <Link to={createPageUrl('Contact')} onClick={() => track('services_cta_clicked', { cta: 'start_project' })}>
                 <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-12 px-6">
                   Start a Project <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
