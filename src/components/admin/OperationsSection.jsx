@@ -67,6 +67,11 @@ export default function OperationsSection() {
     queryFn: () => base44.entities.Task.list(),
   });
 
+  const { data: frontendExporterScans = [] } = useQuery({
+    queryKey: ['frontendExporterScans'],
+    queryFn: () => base44.entities.FrontendExporterScan.list(),
+  });
+
   // Computed lists
   const needsFollowUp = leads.filter(l => 
     ['New', 'Contacted'].includes(l.status) && 
