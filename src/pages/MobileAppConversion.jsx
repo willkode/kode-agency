@@ -9,7 +9,7 @@ import { CheckCircle, Smartphone, Zap, Shield, Globe, ArrowRight, Check, Stethos
 import { base44 } from '@/api/base44Client';
 import { useMutation } from '@tanstack/react-query';
 import SEO, { createServiceSchema, createFAQSchema, createBreadcrumbSchema } from '@/components/SEO';
-import { track, usePageView, useScrollDepth, useTimeOnPage } from '@/components/analytics/useAnalytics';
+import { track, trackPurchase, usePageView, useScrollDepth, useTimeOnPage } from '@/components/analytics/useAnalytics';
 
 export default function MobileAppConversionPage() {
   const [isFormOpen, setIsFormOpen] = useState(false);
