@@ -39,6 +39,13 @@ const getMessageLengthBucket = (length) => {
   return '200+';
 };
 
+// Fire GA4 event via gtag
+const fireGtag = (eventName, properties = {}) => {
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    window.gtag('event', eventName, properties);
+  }
+};
+
 // Core tracking function with common properties
 export const track = (eventName, properties = {}) => {
   const commonProps = {
@@ -56,6 +63,23 @@ export const track = (eventName, properties = {}) => {
   base44.analytics.track({
     eventName,
     properties: filteredProps,
+  });
+
+  // Mirror key events to GA4
+  fireGtag(eventName, filteredProps);
+};
+
+// Track a purchase/conversion in GA4 with proper ecommerce schema
+export const trackPurchase = (transactionId, value, itemName, currency = 'USD') => {
+  // Base44 analytics
+  track('purchase', { transaction_id: transactionId, value, item_name: itemName, currency });
+
+  // GA4 ecommerce purchase event (standard schema GA4 expects)
+  fireGtag('purchase', {
+    transaction_id: transactionId,
+    value,
+    currency,
+    items: [{ item_name: itemName, price: value, quantity: 1 }],
   });
 };
 
