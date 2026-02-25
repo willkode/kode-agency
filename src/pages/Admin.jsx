@@ -61,11 +61,29 @@ export default function AdminPage() {
 
   const markAsRead = (section, id) => {
     setReadIds(prev => {
-      const next = { ...prev, [section]: [...(prev[section] || []), id] };
+      const next = { ...prev, [section]: [...new Set([...(prev[section] || []), id])] };
       localStorage.setItem('admin_read_ids', JSON.stringify(next));
       return next;
     });
     setBadges(prev => ({ ...prev, [section]: Math.max(0, (prev[section] || 1) - 1) }));
+  };
+
+  const markAsUnread = (section, id) => {
+    setReadIds(prev => {
+      const next = { ...prev, [section]: (prev[section] || []).filter(x => x !== id) };
+      localStorage.setItem('admin_read_ids', JSON.stringify(next));
+      return next;
+    });
+    setBadges(prev => ({ ...prev, [section]: (prev[section] || 0) + 1 }));
+  };
+
+  const markAllAsRead = (section, ids) => {
+    setReadIds(prev => {
+      const next = { ...prev, [section]: [...new Set([...(prev[section] || []), ...ids])] };
+      localStorage.setItem('admin_read_ids', JSON.stringify(next));
+      return next;
+    });
+    setBadges(prev => ({ ...prev, [section]: 0 }));
   };
 
   useEffect(() => {
