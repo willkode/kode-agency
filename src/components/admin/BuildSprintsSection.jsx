@@ -115,7 +115,7 @@ export default function BuildSprintsSection({ readIds = [], onMarkRead, onMarkUn
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           {['all', 'pending', 'completed', 'failed'].map((status) => (
             <Button
               key={status}
@@ -129,6 +129,16 @@ export default function BuildSprintsSection({ readIds = [], onMarkRead, onMarkUn
               {status === 'all' ? 'All' : statusLabels[status]}
             </Button>
           ))}
+          {requests.some(r => !readIds.includes(r.id)) && (
+            <Button
+              size="sm"
+              variant="outline"
+              className="border-slate-600 text-slate-300 hover:text-white"
+              onClick={() => onMarkAllRead && onMarkAllRead(requests.map(r => r.id))}
+            >
+              <BellOff className="w-4 h-4 mr-1" /> Mark All Read
+            </Button>
+          )}
         </div>
       </div>
 
