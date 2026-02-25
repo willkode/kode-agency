@@ -252,19 +252,39 @@ export default function AdminPage() {
             <CareersSection />
           )}
           {activeTab === 'sprints' && (
-            <BuildSprintsSection readIds={readIds.sprints || []} onMarkRead={(id) => markAsRead('sprints', id)} />
+            <BuildSprintsSection 
+              readIds={readIds.sprints || []} 
+              onMarkRead={(id) => markAsRead('sprints', id)} 
+              onMarkUnread={(id) => markAsUnread('sprints', id)}
+              onMarkAllRead={(ids) => markAllAsRead('sprints', ids)}
+            />
           )}
           {activeTab === 'reviews' && (
-            <AppReviewsSection readIds={readIds.reviews || []} onMarkRead={(id) => markAsRead('reviews', id)} />
+            <AppReviewsSection 
+              readIds={readIds.reviews || []} 
+              onMarkRead={(id) => markAsRead('reviews', id)} 
+              onMarkUnread={(id) => markAsUnread('reviews', id)}
+              onMarkAllRead={(ids) => markAllAsRead('reviews', ids)}
+            />
           )}
           {activeTab === 'templates' && (
             <TaskTemplatesSection />
           )}
           {activeTab === 'mobileapp' && (
-            <MobileAppSection readIds={readIds.mobileapp || []} onMarkRead={(id) => markAsRead('mobileapp', id)} />
+            <MobileAppSection 
+              readIds={readIds.mobileapp || []} 
+              onMarkRead={(id) => markAsRead('mobileapp', id)} 
+              onMarkUnread={(id) => markAsUnread('mobileapp', id)}
+              onMarkAllRead={(ids) => markAllAsRead('mobileapp', ids)}
+            />
           )}
           {activeTab === 'foundation' && (
-            <AppFoundationSection readIds={readIds.foundation || []} onMarkRead={(id) => markAsRead('foundation', id)} />
+            <AppFoundationSection 
+              readIds={readIds.foundation || []} 
+              onMarkRead={(id) => markAsRead('foundation', id)} 
+              onMarkUnread={(id) => markAsUnread('foundation', id)}
+              onMarkAllRead={(ids) => markAllAsRead('foundation', ids)}
+            />
           )}
           {activeTab === 'migration-quotes' && (
             <MigrationQuotesSection />
