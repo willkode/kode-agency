@@ -100,13 +100,12 @@ export default function AppFoundationPage() {
     const sessionId = urlParams.get('session_id');
     
     if (success === 'true' && sessionId) {
-      // Read total from URL param since calculateTotal() uses state which resets on page reload
-      const totalParam = urlParams.get('total');
-      const amount = totalParam ? parseInt(totalParam) : 500;
       base44.functions.invoke('handleStripeSuccess', { sessionId })
         .then(res => {
           if (res.data.success) {
             setPaymentSuccess(true);
+            // Amount comes back from the stripe session via handleStripeSuccess
+            const amount = res.data.amount || 500;
             track('app_foundation_payment_success', { session_id: sessionId, amount });
             trackPurchase(sessionId, amount, 'App Foundation');
           }
