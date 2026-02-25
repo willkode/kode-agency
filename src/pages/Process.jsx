@@ -15,6 +15,10 @@ import { usePageView, useScrollDepth, useTimeOnPage, track } from '@/components/
 import { Search, PenTool, Hammer, Rocket, RefreshCw, ArrowRight } from 'lucide-react';
 
 export default function ProcessPage() {
+  usePageView('process');
+  useScrollDepth('process');
+  useTimeOnPage('process');
+
   const steps = [
     {
       icon: Search,
@@ -262,7 +266,7 @@ export default function ProcessPage() {
             </div>
           </Card>
           
-          <Link to={createPageUrl('Contact')}>
+          <Link to={createPageUrl('Contact')} onClick={() => track('process_cta_clicked')}>
             <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg">
                See if your idea fits our process
             </Button>

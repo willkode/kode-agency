@@ -15,6 +15,10 @@ import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 import { ArrowRight, Play, CheckCircle, Sparkles, Target, Zap, Award, Users, Clock } from 'lucide-react';
 
 export default function AboutPage() {
+  usePageView('about');
+  useScrollDepth('about');
+  useTimeOnPage('about');
+
   const stats = [
     { value: "30+", label: "Years Experience" },
     { value: "80%", label: "Faster Development" },
