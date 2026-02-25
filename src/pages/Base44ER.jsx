@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useMutation } from '@tanstack/react-query';
+import { track, trackPurchase, usePageView, useScrollDepth, useTimeOnPage } from '@/components/analytics/useAnalytics';
 import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
 import GridBackground from '@/components/ui-custom/GridBackground';
