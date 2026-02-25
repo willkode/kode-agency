@@ -16,6 +16,10 @@ import { usePageView, useScrollDepth, useTimeOnPage, track } from '@/components/
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  usePageView('home');
+  useScrollDepth('home');
+  useTimeOnPage('home');
+
   const heroSlides = [
   {
     headline: "30 Years of Expertise. AI-Powered Speed.",
