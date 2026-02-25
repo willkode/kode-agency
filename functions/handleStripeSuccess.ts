@@ -67,7 +67,8 @@ Deno.serve(async (req) => {
     return Response.json({ 
       success: true,
       service,
-      requestId
+      requestId,
+      amount: session.amount_total ? session.amount_total / 100 : null
     });
 
   } catch (error) {
