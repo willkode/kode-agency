@@ -10,6 +10,7 @@ import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 import SEO, { createBreadcrumbSchema } from '@/components/SEO';
+import { usePageView, useScrollDepth, useTimeOnPage, track } from '@/components/analytics/useAnalytics';
 import { Check, ArrowRight } from 'lucide-react';
 
 export default function PlatformsPage() {

@@ -10,6 +10,7 @@ import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 import SEO, { createServiceSchema, createBreadcrumbSchema } from '@/components/SEO';
+import { usePageView, useScrollDepth, useTimeOnPage, track } from '@/components/analytics/useAnalytics';
 import { 
   Code, Rocket, Bot, Link2, Layers, Palette, Globe, Server,
   Search, TrendingUp, Target, FileText, Brush, Mail, BarChart3,

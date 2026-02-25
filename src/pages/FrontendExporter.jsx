@@ -9,6 +9,7 @@ import SectionLabel from '@/components/ui-custom/SectionLabel';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 import SEO from '@/components/SEO';
+import { usePageView, useScrollDepth, useTimeOnPage, track } from '@/components/analytics/useAnalytics';
 import ScanForm from '@/components/frontend-exporter/ScanForm';
 import ScanProgress from '@/components/frontend-exporter/ScanProgress';
 import FullReport from '@/components/frontend-exporter/FullReport';

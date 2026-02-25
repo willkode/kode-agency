@@ -1,5 +1,6 @@
 import React from 'react';
 import Section from '@/components/ui-custom/Section';
+import { usePageView, useScrollDepth, useTimeOnPage } from '@/components/analytics/useAnalytics';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function FAQPage() {

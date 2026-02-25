@@ -7,6 +7,7 @@ import Card from '@/components/ui-custom/Card';
 import PageHero from '@/components/ui-custom/PageHero';
 import SectionLabel from '@/components/ui-custom/SectionLabel';
 import SEO, { createOrganizationSchema, createBreadcrumbSchema } from '@/components/SEO';
+import { usePageView, useScrollDepth, useTimeOnPage } from '@/components/analytics/useAnalytics';
 
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
