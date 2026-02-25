@@ -60,6 +60,7 @@ export default function FrontendExporterPage() {
   }, []);
 
   const handleScanStart = async (githubUrl) => {
+    track('frontend_exporter_scan_started', { github_url: githubUrl });
     setIsScanning(true);
     setScanningUrl(githubUrl);
     setScanState('scanning');
@@ -83,9 +84,11 @@ export default function FrontendExporterPage() {
       const updated = await base44.entities.FrontendExporterScan.filter({ id: scan.id });
       if (updated && updated.length > 0) {
         setCurrentScan(updated[0]);
+        track('frontend_exporter_scan_completed', { github_url: githubUrl });
         setScanState('done');
       }
     } catch (err) {
+      track('frontend_exporter_scan_failed', { github_url: githubUrl, error: err.message });
       setErrorMsg(err.message || 'Scan failed. Please try again.');
       setScanState('error');
     } finally {
