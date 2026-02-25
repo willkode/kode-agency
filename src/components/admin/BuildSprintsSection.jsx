@@ -21,7 +21,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Search, ExternalLink, Mail, Clock, Calendar, DollarSign, Trash2, CheckCircle, Copy, Target, Zap, AlertCircle, Send, Loader2 } from 'lucide-react';
+import { Search, ExternalLink, Mail, Clock, Calendar, DollarSign, Trash2, CheckCircle, Copy, Target, Zap, AlertCircle, Send, Loader2, BellOff } from 'lucide-react';
 import moment from 'moment';
 
 const statusColors = {
