@@ -33,6 +33,10 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 
 export default function Base44ERPage() {
+  usePageView('base44_er');
+  useScrollDepth('base44_er');
+  useTimeOnPage('base44_er');
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [copied, setCopied] = useState(false);
@@ -62,20 +66,10 @@ export default function Base44ERPage() {
         .then(res => {
           if (res.data.success) {
             setPaymentSuccess(true);
-            // Track purchase in GA4
             const amount = includeFix === 'true' ? 150 : 50;
-            if (typeof window !== 'undefined' && window.gtag) {
-              window.gtag('event', 'purchase', {
-                transaction_id: sessionId,
-                value: amount,
-                currency: 'USD',
-                items: [{
-                  item_name: includeFix === 'true' ? 'Base44 ER Review + Fix' : 'Base44 ER Review',
-                  price: amount,
-                  quantity: 1
-                }]
-              });
-            }
+            const itemName = includeFix === 'true' ? 'Base44 ER Review + Fix' : 'Base44 ER Review';
+            track('base44_er_payment_success', { session_id: sessionId, amount, include_fix: includeFix });
+            trackPurchase(sessionId, amount, itemName);
           }
         })
         .catch(err => console.error('Payment handling failed:', err));
