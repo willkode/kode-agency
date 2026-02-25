@@ -145,7 +145,7 @@ export default function HomePage() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
-              <Link to={createPageUrl('Contact')}>
+              <Link to={createPageUrl('Contact')} onClick={() => track('home_hero_cta_clicked', { slide: currentSlide })}>
                 <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-8 text-lg rounded-lg">
                   Let's Build Together
                 </Button>
