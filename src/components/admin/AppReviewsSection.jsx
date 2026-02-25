@@ -585,6 +585,9 @@ export default function AppReviewsSection() {
                       <div className="flex items-center gap-3">
                         <p className={`font-bold ${selectedRequest.payment_status === 'completed' ? 'text-green-400' : selectedRequest.payment_status === 'failed' ? 'text-red-400' : 'text-amber-400'}`}>
                           {statusLabels[selectedRequest.payment_status || 'pending']}
+                          {selectedRequest.payment_status === 'completed' && selectedRequest.payment_amount && (
+                            <span className="text-white font-normal ml-2">${selectedRequest.payment_amount.toLocaleString()}</span>
+                          )}
                         </p>
                         {(selectedRequest.payment_status === 'pending' || !selectedRequest.payment_status) && (
                           <Button
