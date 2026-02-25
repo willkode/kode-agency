@@ -11,6 +11,7 @@ import SEO, { createOrganizationSchema, createLocalBusinessSchema } from '@/comp
 
 import SectionLabel from '@/components/ui-custom/SectionLabel';
 import { ArrowRight, ArrowUpRight, Rocket, Bot, Search, Target, TrendingUp, CheckCircle, Play, ChevronLeft, ChevronRight, Zap, Stethoscope, Package, Smartphone } from 'lucide-react';
+import { usePageView, useScrollDepth, useTimeOnPage, track } from '@/components/analytics/useAnalytics';
 
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
