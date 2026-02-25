@@ -4,6 +4,10 @@ import { usePageView, useScrollDepth, useTimeOnPage } from '@/components/analyti
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function FAQPage() {
+  usePageView('faq');
+  useScrollDepth('faq');
+  useTimeOnPage('faq');
+
   const faqs = [
     {
       q: "Can you fix or extend an existing app on Base44 / Lovable / Replit?",

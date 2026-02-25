@@ -25,6 +25,10 @@ const FEATURES = [
 ];
 
 export default function FrontendExporterPage() {
+  usePageView('frontend_exporter');
+  useScrollDepth('frontend_exporter');
+  useTimeOnPage('frontend_exporter');
+
   const [user, setUser] = useState(null);
   const [userLoading, setUserLoading] = useState(true);
   const [scanState, setScanState] = useState('idle'); // idle | scanning | done | error
