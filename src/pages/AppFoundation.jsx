@@ -139,16 +139,18 @@ export default function AppFoundationPage() {
       return created;
     },
     onSuccess: async (created) => {
+      const total = calculateTotal();
       const response = await base44.functions.invoke('createStripeCheckout', { 
-        service: 'AppFoundation',
+        service: `AppFoundation?total=${total}`,
         requestId: created.id,
-        amount: calculateTotal(),
+        amount: total,
         description: 'Done-For-You App Foundation - Core scaffolding & integrations',
         customerEmail: formData.email,
         customerName: formData.name,
         metadata: { 
           appName: formData.app_name,
-          platform: formData.preferred_platform
+          platform: formData.preferred_platform,
+          total: String(total)
         }
       });
       if (response.data.url) {
