@@ -14,6 +14,10 @@ import { usePageView, useScrollDepth, useTimeOnPage, track } from '@/components/
 import { Check, ArrowRight } from 'lucide-react';
 
 export default function PlatformsPage() {
+  usePageView('platforms');
+  useScrollDepth('platforms');
+  useTimeOnPage('platforms');
+
   const base44Updates = [
     { date: "Feb 2026", feature: "Mobile App Publishing", desc: "Create and publish native mobile apps directly from Base44." },
     { date: "Jan 2026", feature: "Debug Mode", desc: "Built-in debugger to identify and fix issues faster than ever." },
@@ -202,7 +206,7 @@ export default function PlatformsPage() {
           <p className="text-slate-300 text-lg mb-10 max-w-2xl mx-auto">
             That's our job. We'll analyze your requirements and recommend the best path forward.
           </p>
-          <Link to={createPageUrl('Contact')}>
+          <Link to={createPageUrl('Contact')} onClick={() => track('platforms_cta_clicked')}>
             <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg">
               Schedule a Platform Fit Call <ArrowRight className="ml-2" />
             </Button>
