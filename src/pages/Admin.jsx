@@ -234,19 +234,19 @@ export default function AdminPage() {
             <CareersSection />
           )}
           {activeTab === 'sprints' && (
-            <BuildSprintsSection />
+            <BuildSprintsSection readIds={readIds.sprints || []} onMarkRead={(id) => markAsRead('sprints', id)} />
           )}
           {activeTab === 'reviews' && (
-            <AppReviewsSection />
+            <AppReviewsSection readIds={readIds.reviews || []} onMarkRead={(id) => markAsRead('reviews', id)} />
           )}
           {activeTab === 'templates' && (
             <TaskTemplatesSection />
           )}
           {activeTab === 'mobileapp' && (
-            <MobileAppSection />
+            <MobileAppSection readIds={readIds.mobileapp || []} onMarkRead={(id) => markAsRead('mobileapp', id)} />
           )}
           {activeTab === 'foundation' && (
-            <AppFoundationSection />
+            <AppFoundationSection readIds={readIds.foundation || []} onMarkRead={(id) => markAsRead('foundation', id)} />
           )}
           {activeTab === 'migration-quotes' && (
             <MigrationQuotesSection />
