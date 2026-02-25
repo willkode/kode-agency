@@ -45,6 +45,31 @@ export default function HomePage() {
     headline: "Design That Sells. Not Just Looks Pretty.",
     subhead: "Every pixel is a persuasion trigger. We've optimized thousands of interfaces. We know what converts.",
     bullets: ["Psychology-Driven UI/UX Design", "Brands That Command Premium Prices", "Websites That Turn Visitors Into Buyers"]
+  },
+  {
+    headline: "Build Sprint. Ship Your MVP Today.",
+    subhead: "Live screen-share session. I build your Base44 app while you watch, learn, and launch — no waiting weeks.",
+    bullets: ["$75/hr — No Long-Term Commitment", "Watch Your App Come to Life in Real Time", "Walk Away With a Working Product"]
+  },
+  {
+    headline: "Base44 App Broken? We Fix It Fast.",
+    subhead: "The Base44 Emergency Room is your expert triage service. Submit your app, get a full review, and optional same-day fix.",
+    bullets: ["Expert App Review From $50", "Optional Fix Add-On for $150", "Fast Turnaround — No Waiting in Line"]
+  },
+  {
+    headline: "App Foundation. Built Right From Day One.",
+    subhead: "Skip the setup chaos. We build your app scaffold with the right data models, auth, and integrations — done for you.",
+    bullets: ["$500 Flat — Core Architecture Delivered", "Data Models, Auth & Integrations Included", "Launch-Ready in Days, Not Weeks"]
+  },
+  {
+    headline: "Your Web App. Now a Mobile App.",
+    subhead: "We convert your existing web app into a real Android and iOS mobile app — no rebuilding from scratch required.",
+    bullets: ["$250 Flat — Android + iOS", "Real Native App Store Submission", "Retain All Existing Functionality"]
+  },
+  {
+    headline: "Export Your Frontend. Own Your Stack.",
+    subhead: "Scan your Base44 GitHub repo and get a full migration plan to self-host your frontend — free instant report.",
+    bullets: ["Free Scan — No Credit Card Required", "Full AI-Generated Migration Report", "Know Exactly What It Takes to Migrate"]
   }];
 
 
