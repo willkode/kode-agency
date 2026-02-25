@@ -313,7 +313,26 @@ export default function MobileAppSection({ readIds = [], onMarkRead, onMarkUnrea
                 Submitted on {new Date(selectedRequest.created_date).toLocaleString()}
               </div>
               
-              <div className="flex gap-3 pt-4 border-t border-slate-800">
+              <div className="flex gap-3 pt-4 border-t border-slate-800 flex-wrap">
+                {readIds.includes(selectedRequest.id) ? (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-slate-600 text-slate-400 hover:text-white"
+                    onClick={() => onMarkUnread && onMarkUnread(selectedRequest.id)}
+                  >
+                    <BellOff className="w-4 h-4 mr-2" /> Mark as Unread
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-slate-600 text-slate-400 hover:text-white"
+                    onClick={() => onMarkRead && onMarkRead(selectedRequest.id)}
+                  >
+                    <BellOff className="w-4 h-4 mr-2" /> Mark as Read
+                  </Button>
+                )}
                 <Button 
                   variant="outline" 
                   className="border-slate-700 text-black bg-slate-200 hover:bg-slate-300"

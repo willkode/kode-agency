@@ -321,7 +321,26 @@ export default function BuildSprintsSection({ readIds = [], onMarkRead, onMarkUn
                 )}
 
                 {/* Actions */}
-                <div className="flex gap-3 pt-4">
+                <div className="flex gap-3 pt-4 flex-wrap">
+                  {readIds.includes(selectedRequest.id) ? (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="border-slate-600 text-slate-400 hover:text-white"
+                      onClick={() => onMarkUnread && onMarkUnread(selectedRequest.id)}
+                    >
+                      <BellOff className="w-4 h-4 mr-2" /> Mark as Unread
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="border-slate-600 text-slate-400 hover:text-white"
+                      onClick={() => onMarkRead && onMarkRead(selectedRequest.id)}
+                    >
+                      <BellOff className="w-4 h-4 mr-2" /> Mark as Read
+                    </Button>
+                  )}
                   {selectedRequest.payment_status !== 'completed' && (
                     <Button 
                       variant="outline" 
