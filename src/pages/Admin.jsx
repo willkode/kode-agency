@@ -54,6 +54,29 @@ export default function AdminPage() {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [convertingLead, setConvertingLead] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [badges, setBadges] = useState({});
+
+  useEffect(() => {
+    const fetchBadges = async () => {
+      try {
+        const [sprints, reviews, mobileapp, foundation, migrationQuotes] = await Promise.all([
+          base44.entities.BuildSprintRequest.filter({ payment_status: 'completed' }),
+          base44.entities.AppReviewRequest.filter({ payment_status: 'completed' }),
+          base44.entities.MobileAppConversionRequest.filter({ payment_status: 'completed' }),
+          base44.entities.AppFoundationRequest.filter({ payment_status: 'completed' }),
+          base44.entities.MigrationQuoteRequest.filter({ status: 'New' }),
+        ]);
+        setBadges({
+          sprints: sprints.length,
+          reviews: reviews.length,
+          mobileapp: mobileapp.length,
+          foundation: foundation.length,
+          'migration-quotes': migrationQuotes.length,
+        });
+      } catch (_) {}
+    };
+    fetchBadges();
+  }, []);
 
   const handleConvertToProject = (lead, projectType) => {
     const projectTypeLabels = {
