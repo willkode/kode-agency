@@ -37,130 +37,341 @@ const statusLabels = {
   failed: 'Cancelled',
 };
 
-const BASE44_PROMPT = `You are an expert code reviewer analyzing a live Base44 application. 
-Scan the complete structure and configuration, all pages and functions of my app.
-Your task is to analyze it thoroughly and respond ONLY with a detailed findings report.
+const BASE44_PROMPT = `You are an expert code reviewer, application auditor, and security analyst analyzing a live Base44 application.
+
+Your job is to perform a **deep static analysis** of the app I provide (pages, functions, entities/schema, access rules, integrations, configuration, and supporting code) and return a **detailed findings report only**.
+
+You must evaluate not only code quality and security, but also whether the app appears to be built correctly to accomplish the creator's intended goals.
 
 Do NOT create any pages, interfaces, or automation workflows.
-Do NOT provide code to build anything.
+Do NOT provide build code or implementation code unless a tiny example is necessary to explain a fix.
+Do NOT rewrite the app.
 Simply analyze what I provide and return findings.
-
-
-## YOUR ANALYSIS TASK
-
-Conduct a comprehensive review across two dimensions:
-
-### CODE QUALITY ASSESSMENT
-- **Backend Function Quality**: Parameter validation, error handling, code patterns, reusability
-- **Database Design**: Schema normalization, relationship integrity, field types, naming consistency
-- **Access Rules**: CRUD rule logic, permission enforcement, data safety
-- **Integration Setup**: Proper configuration, error handling, secret management
-- **Overall Architecture**: Modularity, separation of concerns, maintainability
-
-### SECURITY ASSESSMENT
-- **Authentication & Authorization**: Proper identity verification, role enforcement, access control
-- **Secrets Management**: API keys, credentials, tokens (stored securely, not hardcoded)
-- **Data Access**: Access rules prevent unauthorized data exposure, sensitive fields protected
-- **Input Validation**: Parameters validated to prevent injection attacks
-- **Error Handling**: No sensitive information (stack traces, API URLs) exposed to client
-- **Integration Security**: Third-party services properly authenticated, no credential leaks
-- **Common Vulnerabilities**: SQL injection, XSS, CSRF, privilege escalation risks
 
 ---
 
-## REPORT FORMAT
+## PRIMARY OBJECTIVE
 
-Return your analysis in the following structure:
+Audit the app across **three dimensions**:
 
-## Code Quality Review
+1. **Code Quality & Architecture**
+2. **Security & Data Protection**
+3. **Product Intent / Functional Alignment** (does the implementation appear to achieve what the app is intended to do?)
+
+You must prioritize **correctness of behavior and business logic**, not just syntax or style.
+
+---
+
+## REQUIRED ANALYSIS METHOD (FOLLOW IN ORDER)
+
+### Phase 1: Inferred Product Intent (Required)
+Before listing issues, first infer and summarize:
+- What the app appears to do
+- Who the likely users are
+- Core workflows/use cases
+- Key success outcomes the app is likely intended to achieve
+
+Use only the evidence I provide (code, entities, functions, rules, page names, config, UI structure, etc.).
+If anything is unclear, state your assumptions explicitly.
+
+### Phase 2: Complete App Surface Review (Required)
+Scan and review all provided app surfaces relevant to behavior and risk, including:
+- Pages / components / layouts
+- Backend functions / actions / triggers
+- Entities / schema / field design / relationships
+- Access rules / permissions / role logic
+- Integrations (APIs, webhooks, auth providers, email/SMS/payment/etc.)
+- Environment/config usage
+- Client-side state/data-fetching patterns
+- Form handling and validation
+- Error handling and logging behavior
+
+### Phase 3: Functional Alignment & Workflow Validation (Required)
+For each major workflow/page/function:
+- State what it appears intended to do
+- State what the implementation currently does (based on code evidence)
+- Identify gaps that could prevent success (logic flaws, missing steps, partial integrations, broken assumptions, edge cases)
+- Note whether the issue is:
+  - **Confirmed (code evidence)**
+  - **Probable (strong indicators)**
+  - **Unverified (requires runtime testing/logs/live env)**
+
+### Phase 4: Deep Logic Review (Required)
+Perform line-level or near line-level review for **critical logic**, including:
+- Authentication / authorization
+- Access rules / permission checks
+- Data writes / updates / deletes
+- Payment/revenue/subscription flows
+- External integrations and secret usage
+- User onboarding and role assignment
+- Any workflow that changes business-critical data
+- Any workflow that affects trust/safety/privacy
+
+Do not assume logic is correct just because syntax is valid.
+Check for missing branches, edge cases, race conditions, error paths, and silent failures.
+
+### Phase 5: Risk Prioritization (Required)
+Prioritize findings by **real-world impact** on:
+- Security / privacy
+- Data integrity
+- App reliability
+- User experience / conversion
+- Revenue / operations
+- Maintainability / future development speed
+
+Distinguish clearly between:
+- Must fix before launch
+- Should fix soon
+- Nice to improve later
+
+---
+
+## YOUR ANALYSIS TASK
+
+Conduct a comprehensive review across these three dimensions:
+
+### A) PRODUCT INTENT & FUNCTIONAL ALIGNMENT
+- **App Goal Understanding**: Infer intended purpose, target users, and primary workflows
+- **Workflow Validation**: For each major workflow/page, determine whether implementation supports intended outcome
+- **Business Logic Correctness**: Check if logic matches likely expected behavior, including edge cases and failure handling
+- **Implementation Coverage**: Identify incomplete flows, placeholders, TODO logic, dead code, disconnected UI/backend paths, missing states, and partial feature implementations
+- **Operational Readiness Gaps**: Flag missing observability, admin controls, recovery paths, or validation needed for real-world use
+- **Assumption Gaps**: Clearly state what cannot be proven without runtime testing, logs, or production credentials/data
+
+### B) CODE QUALITY ASSESSMENT
+- **Backend Function Quality**: Parameter validation, error handling, code patterns, reusability, idempotency where relevant
+- **Frontend Quality**: State management, component boundaries, loading/error/empty states, form validation, UX resilience
+- **Database Design**: Schema normalization, relationship integrity, field types, naming consistency, auditability
+- **Access Rules**: CRUD rule logic, permission enforcement, data safety, least privilege
+- **Integration Setup**: Proper configuration, retry/error handling, secret management, failure modes
+- **Overall Architecture**: Modularity, separation of concerns, maintainability, scalability risks, coupling
+
+### C) SECURITY ASSESSMENT
+- **Authentication & Authorization**: Proper identity verification, role enforcement, access control, privilege boundaries
+- **Secrets Management**: API keys, credentials, tokens (secure storage, no hardcoding, no accidental exposure)
+- **Data Access**: Access rules prevent unauthorized reads/writes, sensitive fields protected
+- **Input Validation**: Validation/sanitization to reduce injection and abuse risk
+- **Error Handling**: No sensitive details leaked to clients (stack traces, internal URLs, tokens, schema details)
+- **Integration Security**: Third-party services authenticated correctly, webhook verification if applicable, credential leakage risks
+- **Common Vulnerabilities**: XSS, CSRF, injection, SSRF (if relevant), insecure direct object references, privilege escalation, unsafe file handling
+- **Abuse & Misuse Risks**: Spam, brute force, replay, rate-limit gaps, role misuse, unbounded queries/uploads
+
+---
+
+## REVIEW DEPTH REQUIREMENTS (MANDATORY)
+
+- Review **all provided files** relevant to app behavior.
+- Do not stop at high-level summaries.
+- Perform a **line-level review for critical logic** and a function/component-level review for non-critical areas.
+- Reference exact page names, function names, entities, fields, and rule names whenever possible.
+- Flag broken or suspicious patterns even if they might be intentional.
+- Do not assume "works" unless supported by code flow evidence.
+- If something appears correct but cannot be confirmed without runtime execution, mark it **Unverified**.
+
+---
+
+## EVIDENCE STANDARDS (MANDATORY)
+
+For every finding, include:
+- **Severity**: Critical / High / Medium / Low
+- **Area**: Product Fit / Code Quality / Security
+- **Confidence**: Confirmed / Probable / Unverified
+- **Location**: Exact file path(s), function/component/entity/rule name(s), and line number(s) when available
+- **What We Found** (plain language)
+- **Why It Matters** (security, reliability, UX, business impact, etc.)
+- **Risk If Not Fixed** (concrete impact)
+- **Recommendation** (specific, actionable)
+- **Backend Changes Required**: Yes / No / Maybe
+- **Blocks Intended Outcome?**: Yes / No / Partially (for product-fit findings)
+
+If line numbers are not available in the provided material, state that clearly and use the most precise location reference possible.
+
+---
+
+## REPORT FORMAT (RETURN IN THIS EXACT STRUCTURE)
+
+# Deep App Audit Report
+
+## 1) Inferred App Goal & Intended Outcomes
+### Inferred Purpose
+- [What the app appears to do]
+
+### Likely User Types
+- [User type 1]
+- [User type 2]
+
+### Core Workflows (Inferred)
+1. [Workflow]
+2. [Workflow]
+3. [Workflow]
+
+### Assumptions / Unknowns
+- [Assumption]
+- [Missing information preventing stronger validation]
+
+---
+
+## 2) Product Intent & Functional Fit Review
+
+### Workflow Validation Findings
+Group findings by workflow/page/feature.
+
+#### Critical Issues
+- [Finding title]
+  - Severity:
+  - Confidence:
+  - Location:
+  - Intended Outcome:
+  - Current Behavior (from code evidence):
+  - Gap / Failure Mode:
+  - Why It Matters:
+  - Risk If Not Fixed:
+  - Recommendation:
+  - Backend Changes Required:
+  - Blocks Intended Outcome?:
+
+#### High Priority Findings
+- [Repeat same format]
+
+#### Medium Priority Findings
+- [Repeat same format]
+
+#### Low Priority Findings
+- [Repeat same format]
+
+### Missing / Incomplete Features Blocking Success
+- [Item]: [Why this prevents the app from achieving likely intended outcomes]
+
+### Positive Observations
+- [Good practice]: [Brief description]
+- [Good practice]: [Brief description]
+
+---
+
+## 3) Code Quality Review
 
 ### Critical Issues
-- [Issue 1]: [Description] → [Recommendation]
-- [Issue 2]: [Description] → [Recommendation]
-- [etc.]
+- [Finding title]
+  - Severity:
+  - Confidence:
+  - Area:
+  - Location:
+  - What We Found:
+  - Why It Matters:
+  - Risk If Not Fixed:
+  - Recommendation:
+  - Backend Changes Required:
 
 ### High Priority Findings
-- [Finding 1]: [Description] → [Recommendation]
-- [Finding 2]: [Description] → [Recommendation]
-- [etc.]
+- [Repeat same format]
 
 ### Medium Priority Findings
-- [Finding 1]: [Description] → [Recommendation]
-- [etc.]
+- [Repeat same format]
 
 ### Low Priority Findings
-- [Finding 1]: [Description] → [Recommendation]
-- [etc.]
+- [Repeat same format]
 
 ### Positive Observations
 - [Good practice 1]: [Brief description]
 - [Good practice 2]: [Brief description]
-- [etc.]
 
 ---
 
-## Security Review
+## 4) Security Review
 
 ### Critical Issues
-- [Issue 1]: [Description] → [Recommendation]
-- [Issue 2]: [Description] → [Recommendation]
-- [etc.]
+- [Finding title]
+  - Severity:
+  - Confidence:
+  - Area:
+  - Location:
+  - What We Found:
+  - Why It Matters:
+  - Risk If Not Fixed:
+  - Recommendation:
+  - Backend Changes Required:
 
 ### High Priority Findings
-- [Finding 1]: [Description] → [Recommendation]
-- [Finding 2]: [Description] → [Recommendation]
-- [etc.]
+- [Repeat same format]
 
 ### Medium Priority Findings
-- [Finding 1]: [Description] → [Recommendation]
-- [etc.]
+- [Repeat same format]
 
 ### Low Priority Findings
-- [Finding 1]: [Description] → [Recommendation]
-- [etc.]
+- [Repeat same format]
 
 ### Positive Observations
-- [Good practice 1]: [Brief description]
-- [etc.]
+- [Good practice]: [Brief description]
 
 ---
 
-## Summary
+## 5) Cross-Cutting Risks & Architecture Concerns
+List issues that impact multiple parts of the app (e.g., role model design, shared validation gaps, duplicated logic, weak observability, fragile integration patterns).
 
-**Code Quality Score**: [1-10] with brief justification
-**Security Score**: [1-10] with brief justification
+- [Concern 1]: [Description] → [Recommendation]
+- [Concern 2]: [Description] → [Recommendation]
 
-**Total Issues by Severity**:
+---
+
+## 6) Verification Limits (Static Analysis vs Runtime)
+Clearly separate:
+- **Confirmed by code evidence**
+- **Probable issues inferred from patterns**
+- **Unverified risks requiring runtime testing / logs / environment access**
+
+Also list what would be needed to fully validate behavior (e.g., test users, API keys, staging URL, logs, sample data).
+
+---
+
+## 7) Summary Scorecard
+
+**Product Fit Score**: [1-10] with brief justification  
+**Code Quality Score**: [1-10] with brief justification  
+**Security Score**: [1-10] with brief justification  
+
+### Total Findings by Severity
 - Critical: [count]
 - High: [count]
 - Medium: [count]
 - Low: [count]
 
-**Top 5 Action Items** (prioritized by impact):
+### Total Findings by Confidence
+- Confirmed: [count]
+- Probable: [count]
+- Unverified: [count]
+
+### Top 5 Action Items (Highest Impact First)
 1. [Action 1]
 2. [Action 2]
 3. [Action 3]
 4. [Action 4]
 5. [Action 5]
 
-**Estimated Effort to Remediate Critical/High Issues**: [rough estimate]
+### Must-Fix Before Launch
+- [Item 1]
+- [Item 2]
+
+### Estimated Effort to Remediate Critical/High Issues
+- [Rough estimate with assumptions]
 
 ---
 
 ## ANALYSIS GUIDELINES
 
-- Be specific: Reference exact function names, entity names, or field names when applicable
-- Be actionable: Each finding should include a concrete recommendation
-- Be thorough: Check for business logic flaws, not just syntax
-- Be realistic: Distinguish between "must fix" and "nice to have"
-- Flag assumptions: If I haven't provided certain information, note what's missing
-- Context matters: Consider the app's purpose and user base when assessing risk severity
+- Be specific: Reference exact function names, entity names, page names, and field names when possible
+- Be actionable: Every finding must include a concrete recommendation
+- Be thorough: Check business logic correctness, edge cases, and failure modes
+- Be realistic: Distinguish between launch-blocking issues and improvements
+- Flag assumptions: If information is missing, say so explicitly
+- Context matters: Evaluate severity relative to the app's likely purpose and users
+- Do not provide implementation code unless a tiny snippet is necessary to explain a fix
+- Return findings only (no app creation, no workflow generation)
 
 ---
 
 ## NOW ANALYZE MY APP
 
-Provide the full analysis in the report format above based on the data I share with you next.`;
+Provide the full analysis in the exact report format above based on the data I share next.`;
 
 const GPT_PROMPT = `You are a senior software architect and security expert. I will upload a ZIP file containing the entire codebase of a React + TypeScript (or React + JS) web application.
 
