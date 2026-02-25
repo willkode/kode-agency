@@ -295,7 +295,7 @@ export default function MobileAppSection() {
               <div className="flex gap-3 pt-4 border-t border-slate-800">
                 <Button 
                   variant="outline" 
-                  className="border-slate-700 text-slate-300 hover:bg-slate-800"
+                  className="border-slate-700 text-black bg-slate-200 hover:bg-slate-300"
                   onClick={() => window.open(`mailto:${selectedRequest.email}`, '_blank')}
                 >
                   <Mail className="w-4 h-4 mr-2" />
@@ -303,7 +303,7 @@ export default function MobileAppSection() {
                 </Button>
                 <Button 
                   variant="outline" 
-                  className="border-slate-700 text-slate-300 hover:bg-slate-800"
+                  className="border-slate-700 text-black bg-slate-200 hover:bg-slate-300"
                   onClick={() => window.open(selectedRequest.web_app_url, '_blank')}
                 >
                   <ExternalLink className="w-4 h-4 mr-2" />
