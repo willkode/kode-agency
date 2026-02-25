@@ -148,7 +148,15 @@ export default function AdminPage() {
                       }`}
                     >
                       <Icon className="w-5 h-5 flex-shrink-0" />
-                      {sidebarOpen && <span>{item.label}</span>}
+                      {sidebarOpen && <span className="flex-1">{item.label}</span>}
+                      {sidebarOpen && badges[item.id] > 0 && (
+                        <span className={`text-xs font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center leading-none ${isActive ? 'bg-black/20 text-black' : 'bg-red-500 text-white'}`}>
+                          {badges[item.id]}
+                        </span>
+                      )}
+                      {!sidebarOpen && badges[item.id] > 0 && (
+                        <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500" />
+                      )}
                     </button>
                   );
                 })}
