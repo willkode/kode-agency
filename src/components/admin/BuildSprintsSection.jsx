@@ -152,14 +152,25 @@ export default function BuildSprintsSection({ readIds = [], onMarkRead }) {
           {filteredRequests.map((request) => (
             <Card 
               key={request.id} 
-              className="p-6 bg-slate-900/50 border-slate-800 hover:border-[#73e28a]/50 cursor-pointer transition-colors"
+              className={`p-6 border hover:border-[#73e28a]/50 cursor-pointer transition-colors ${readIds.includes(request.id) ? 'bg-slate-900/30 border-slate-800/50' : 'bg-slate-900/50 border-slate-800'}`}
               onClick={() => setSelectedRequest(request)}
             >
               <div className="flex items-start justify-between mb-3">
                 <h3 className="font-bold text-white text-lg">{request.name}</h3>
-                <Badge className={`${statusColors[request.payment_status || 'pending']} border`}>
-                  {statusLabels[request.payment_status || 'pending']}
-                </Badge>
+                <div className="flex items-center gap-2">
+                  {!readIds.includes(request.id) && (
+                    <button
+                      className="text-slate-500 hover:text-slate-300 p-1 rounded"
+                      onClick={(e) => { e.stopPropagation(); onMarkRead && onMarkRead(request.id); }}
+                      title="Mark as read"
+                    >
+                      <BellOff className="w-4 h-4" />
+                    </button>
+                  )}
+                  <Badge className={`${statusColors[request.payment_status || 'pending']} border`}>
+                    {statusLabels[request.payment_status || 'pending']}
+                  </Badge>
+                </div>
               </div>
               <p className="text-slate-400 text-sm mb-2">{request.email}</p>
               <div className="flex items-center gap-4 text-sm mb-3">

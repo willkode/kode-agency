@@ -141,7 +141,7 @@ export default function MobileAppSection({ readIds = [], onMarkRead }) {
           {filteredRequests.map(request => (
             <Card 
               key={request.id} 
-              className="p-4 bg-slate-800/50 border-slate-700 hover:border-slate-600 cursor-pointer transition-colors"
+              className={`p-4 border hover:border-slate-600 cursor-pointer transition-colors ${readIds.includes(request.id) ? 'bg-slate-800/30 border-slate-700/50' : 'bg-slate-800/50 border-slate-700'}`}
               onClick={() => setSelectedRequest(request)}
             >
               <div className="flex items-start justify-between mb-3">
@@ -154,9 +154,20 @@ export default function MobileAppSection({ readIds = [], onMarkRead }) {
                     <p className="text-slate-400 text-sm">{request.email}</p>
                   </div>
                 </div>
-                <Badge className={statusColors[request.payment_status || 'pending']}>
-                  {statusLabels[request.payment_status || 'pending']}
-                </Badge>
+                <div className="flex items-center gap-2">
+                  {!readIds.includes(request.id) && (
+                    <button
+                      className="text-slate-500 hover:text-slate-300 p-1 rounded"
+                      onClick={(e) => { e.stopPropagation(); onMarkRead && onMarkRead(request.id); }}
+                      title="Mark as read"
+                    >
+                      <BellOff className="w-4 h-4" />
+                    </button>
+                  )}
+                  <Badge className={statusColors[request.payment_status || 'pending']}>
+                    {statusLabels[request.payment_status || 'pending']}
+                  </Badge>
+                </div>
               </div>
               
               {request.company && (
