@@ -21,7 +21,7 @@ const statusLabels = {
   failed: 'Payment Failed'
 };
 
-export default function MobileAppSection() {
+export default function MobileAppSection({ readIds = [], onMarkRead }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [selectedRequest, setSelectedRequest] = useState(null);

@@ -36,7 +36,7 @@ const statusLabels = {
   failed: 'Cancelled',
 };
 
-export default function BuildSprintsSection() {
+export default function BuildSprintsSection({ readIds = [], onMarkRead }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [statusFilter, setStatusFilter] = useState('all');

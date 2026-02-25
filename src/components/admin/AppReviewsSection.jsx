@@ -316,7 +316,7 @@ MANUAL FINDINGS ADD-ON (I WILL FILL THIS IN)
 [Paste any extra findings here, with severity, file paths, and notes]
 ==========================================================`;
 
-export default function AppReviewsSection() {
+export default function AppReviewsSection({ readIds = [], onMarkRead }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [statusFilter, setStatusFilter] = useState('all');
