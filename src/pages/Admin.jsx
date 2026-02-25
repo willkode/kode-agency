@@ -55,6 +55,18 @@ export default function AdminPage() {
   const [convertingLead, setConvertingLead] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [badges, setBadges] = useState({});
+  const [readIds, setReadIds] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('admin_read_ids') || '{}'); } catch { return {}; }
+  });
+
+  const markAsRead = (section, id) => {
+    setReadIds(prev => {
+      const next = { ...prev, [section]: [...(prev[section] || []), id] };
+      localStorage.setItem('admin_read_ids', JSON.stringify(next));
+      return next;
+    });
+    setBadges(prev => ({ ...prev, [section]: Math.max(0, (prev[section] || 1) - 1) }));
+  };
 
   useEffect(() => {
     const fetchBadges = async () => {
