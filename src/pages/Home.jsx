@@ -192,7 +192,7 @@ export default function HomePage() {
 
                 <ChevronRight className="w-5 h-5" />
               </button>
-              <span className="text-slate-500 text-sm ml-2">0{currentSlide + 1} / 05</span>
+              <span className="text-slate-500 text-sm ml-2">{String(currentSlide + 1).padStart(2, '0')} / {String(heroSlides.length).padStart(2, '0')}</span>
             </div>
           </div>
         </div>
@@ -201,17 +201,9 @@ export default function HomePage() {
 
         {/* Slide indicators with text */}
         <div className="absolute left-8 top-1/3 hidden lg:flex flex-col items-center gap-4">
-          <span className="text-slate-500 text-sm">0{currentSlide + 1}</span>
-          <div className="flex flex-col gap-2">
-            {heroSlides.map((_, i) =>
-            <button
-              key={i}
-              onClick={() => setCurrentSlide(i)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${i === currentSlide ? 'bg-[#73e28a] scale-125' : 'border border-slate-600 hover:border-[#73e28a]'}`} />
-
-            )}
-          </div>
-          <span className="text-slate-500 text-sm">05</span>
+          <span className="text-slate-500 text-sm">{String(currentSlide + 1).padStart(2, '0')}</span>
+...
+          <span className="text-slate-500 text-sm">{String(heroSlides.length).padStart(2, '0')}</span>
         </div>
 
         {/* Next Slide Preview */}
