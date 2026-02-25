@@ -36,7 +36,7 @@ const statusLabels = {
   failed: 'Cancelled',
 };
 
-export default function AppFoundationSection({ readIds = [], onMarkRead }) {
+export default function AppFoundationSection({ readIds = [], onMarkRead, onMarkUnread, onMarkAllRead }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [statusFilter, setStatusFilter] = useState('all');
