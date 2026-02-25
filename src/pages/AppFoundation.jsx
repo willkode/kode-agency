@@ -41,6 +41,10 @@ import {
 } from 'lucide-react';
 
 export default function AppFoundationPage() {
+  usePageView('app_foundation');
+  useScrollDepth('app_foundation');
+  useTimeOnPage('app_foundation');
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
@@ -96,23 +100,15 @@ export default function AppFoundationPage() {
     const sessionId = urlParams.get('session_id');
     
     if (success === 'true' && sessionId) {
+      // Read total from URL param since calculateTotal() uses state which resets on page reload
+      const totalParam = urlParams.get('total');
+      const amount = totalParam ? parseInt(totalParam) : 500;
       base44.functions.invoke('handleStripeSuccess', { sessionId })
         .then(res => {
           if (res.data.success) {
             setPaymentSuccess(true);
-            // Track purchase in GA4
-            if (typeof window !== 'undefined' && window.gtag) {
-              window.gtag('event', 'purchase', {
-                transaction_id: sessionId,
-                value: calculateTotal(),
-                currency: 'USD',
-                items: [{
-                  item_name: 'App Foundation',
-                  price: calculateTotal(),
-                  quantity: 1
-                }]
-              });
-            }
+            track('app_foundation_payment_success', { session_id: sessionId, amount });
+            trackPurchase(sessionId, amount, 'App Foundation');
           }
         })
         .catch(err => console.error('Payment handling failed:', err));
