@@ -79,26 +79,14 @@ export default function BuildSprintPage() {
           const urlHours = urlParams.get('hours');
           const amount = urlHours ? parseInt(urlHours) * HOURLY_RATE : HOURLY_RATE;
           
-          // Track with Base44 analytics
+          // Track with Base44 analytics + GA4
           track('build_sprint_payment_success', {
             hours: parseInt(urlHours) || 1,
             amount,
             session_id: sessionId,
             request_id: reqId
           });
-          
-          if (typeof window !== 'undefined' && window.gtag) {
-            window.gtag('event', 'purchase', {
-              transaction_id: sessionId,
-              value: amount,
-              currency: 'USD',
-              items: [{
-                item_name: 'Build Sprint',
-                price: amount,
-                quantity: 1
-              }]
-            });
-          }
+          trackPurchase(sessionId, amount, 'Build Sprint');
           // Clean URL
           window.history.replaceState({}, document.title, window.location.pathname);
         }).catch((error) => {

@@ -37,25 +37,9 @@ export default function MobileAppConversionPage() {
           if (res.data.success) {
             setPaymentSuccess(true);
             
-            // Track with Base44 analytics
-            track('mobile_conversion_payment_success', {
-              session_id: sessionId,
-              amount: 250
-            });
-            
-            // Track purchase in GA4
-            if (typeof window !== 'undefined' && window.gtag) {
-              window.gtag('event', 'purchase', {
-                transaction_id: sessionId,
-                value: 250,
-                currency: 'USD',
-                items: [{
-                  item_name: 'Mobile App Conversion',
-                  price: 250,
-                  quantity: 1
-                }]
-              });
-            }
+            // Track with Base44 analytics + GA4
+            track('mobile_conversion_payment_success', { session_id: sessionId, amount: 250 });
+            trackPurchase(sessionId, 250, 'Mobile App Conversion');
           }
         })
         .catch(err => {
