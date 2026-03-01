@@ -669,6 +669,43 @@ Provide the full analysis in the exact report format above based on the data I s
         </div>
       </Section>
 
+      {/* Reviews */}
+      <Section className="py-24 bg-slate-900/50 relative">
+        <GridBackground />
+        <div className="relative z-10">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              What Clients Are Saying
+            </h2>
+            <p className="text-slate-400 max-w-xl mx-auto">
+              Real feedback from Base44 builders who've used the ER service.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {[
+              { name: "James K.", quote: "Will found issues I never would have caught. The fix was done same day. Worth every penny." },
+              { name: "Sarah M.", quote: "My app was completely broken and I was stuck for days. One session with Will and everything was working perfectly." },
+              { name: "David R.", quote: "The security audit alone saved me from a huge mistake. Super thorough and actionable." },
+              { name: "Emily T.", quote: "Fast, professional, and actually fixed my problems instead of just pointing them out. Highly recommend." },
+              { name: "Michael B.", quote: "I was skeptical at first but the review uncovered 12 issues I had no idea existed. Great service." },
+              { name: "Amanda L.", quote: "Will explained everything in a way I could understand. My app runs 10x better now." },
+              { name: "Chris P.", quote: "Best $50 I've spent on my Base44 project. The detailed report was incredibly helpful." },
+            ].map((review, i) => (
+              <Card key={i} className="p-6 bg-slate-800/50 border-slate-700">
+                <div className="flex gap-1 mb-3">
+                  {[...Array(5)].map((_, j) => (
+                    <span key={j} className="text-[#73e28a]">★</span>
+                  ))}
+                </div>
+                <p className="text-slate-300 text-sm mb-4 italic">"{review.quote}"</p>
+                <p className="text-white font-medium">{review.name}</p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </Section>
+
       {/* CTA */}
       <Section className="py-24 relative">
         <div className="text-center">
