@@ -628,7 +628,7 @@ Provide the full analysis in the exact report format above based on the data I s
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-[#73e28a] mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">Tested with 10 Base44 users — all feedback positive</span>
+                  <span className="text-slate-300">Tested with 150+ Base44 users</span>
                 </li>
               </ul>
             </div>
