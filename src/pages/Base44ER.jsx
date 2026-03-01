@@ -82,9 +82,14 @@ export default function Base44ERPage() {
   const submitMutation = useMutation({
     mutationFn: async (data) => {
       // Save to database
+      // March Special: Review + Fix is $50 (ends April 1, 2026)
+      const marchSpecialEndDate = new Date('2026-04-01T06:00:00Z'); // Midnight CST = 6am UTC
+      const isMarchSpecial = new Date() < marchSpecialEndDate;
+      const amount = isMarchSpecial ? 50 : (data.include_fix ? 150 : 50);
+      
       const created = await base44.entities.AppReviewRequest.create({
         ...data,
-        payment_amount: data.include_fix ? 150 : 50
+        payment_amount: amount
       });
       
       // Send lead notification email
@@ -94,16 +99,16 @@ export default function Base44ERPage() {
         phone: data.phone || '',
         payment_status: 'pending',
         service: 'Base44 ER',
-        amount: data.include_fix ? 150 : 50
+        amount: amount
       }).catch(err => console.error('Lead notification failed:', err));
       
       // Create Stripe checkout session
       const response = await base44.functions.invoke('createStripeCheckout', { 
         service: 'Base44ER',
         requestId: created.id,
-        amount: data.include_fix ? 150 : 50,
+        amount: amount,
         description: data.include_fix 
-          ? 'Base44 App Review + Fix Service' 
+          ? (isMarchSpecial ? 'Base44 App Review + Fix Service (March Special)' : 'Base44 App Review + Fix Service')
           : 'Base44 App Review Service',
         customerEmail: data.email,
         customerName: data.name,
@@ -511,7 +516,7 @@ Provide the full analysis in the exact report format above based on the data I s
         { name: "Services", url: "/Services" },
         { name: "Base44 ER", url: "/Base44ER" }
       ]),
-      createServiceSchema("Base44 Emergency Room", "Professional Base44 app reviews and debugging. $50 review only or $150 with fixes.", "/Base44ER")
+      createServiceSchema("Base44 Emergency Room", "Professional Base44 app reviews and debugging. $50 review only or $50 with fixes (March Special - ends April 1st).", "/Base44ER")
     ]
   };
 
@@ -519,7 +524,7 @@ Provide the full analysis in the exact report format above based on the data I s
     <div className="flex flex-col bg-slate-950 text-white overflow-hidden">
       <SEO 
         title="Base44 ER - Professional App Reviews & Debugging"
-        description="Expert Base44 app reviews by a full-stack developer since 1997. $50 review only or $150 with fixes. Security checks, code quality review, debugging, and actionable solutions."
+        description="Expert Base44 app reviews by a full-stack developer since 1997. $50 review only or $50 with fixes (March Special - ends April 1st). Security checks, code quality review, debugging, and actionable solutions."
         keywords={["Base44 app review", "Base44 debugging", "Base44 help", "app code review", "Base44 expert", "Base44 developer"]}
         url="/Base44ER"
         jsonLd={jsonLd}
@@ -547,9 +552,13 @@ Provide the full analysis in the exact report format above based on the data I s
               <p className="text-slate-500 text-sm">Review Only</p>
             </div>
             <div className="text-slate-600 text-2xl">or</div>
-            <div className="text-center">
-              <p className="text-4xl md:text-5xl font-bold text-[#73e28a]">$150</p>
-              <p className="text-slate-400 text-sm">Review + Fix</p>
+            <div className="text-center relative">
+              <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-amber-500 text-black text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
+                MARCH SPECIAL
+              </div>
+              <p className="text-4xl md:text-5xl font-bold text-[#73e28a]">$50</p>
+              <p className="text-slate-400 text-sm">Review + Fix <span className="line-through text-slate-600">$150</span></p>
+              <p className="text-amber-400 text-xs mt-1">Ends April 1st</p>
             </div>
           </div>
           
@@ -775,7 +784,8 @@ Provide the full analysis in the exact report format above based on the data I s
                     <div className="flex items-center gap-2 mb-1">
                       <Hammer className="w-4 h-4 text-[#73e28a]" />
                       <span className="font-bold text-white">Add Fix Service</span>
-                      <span className="text-[#73e28a] text-sm">+$100</span>
+                      <span className="text-[#73e28a] text-sm">FREE</span>
+                      <span className="text-amber-400 text-xs bg-amber-500/20 px-2 py-0.5 rounded-full">March Special</span>
                     </div>
                     <p className="text-sm text-slate-400">
                       I'll implement the fixes myself after the review. You get a working solution, not just advice.
@@ -786,7 +796,8 @@ Provide the full analysis in the exact report format above based on the data I s
 
               <div className="p-3 bg-slate-800/50 rounded-lg text-center">
                 <span className="text-slate-400">Total: </span>
-                <span className="text-xl font-bold text-[#73e28a]">${formData.include_fix ? '150' : '50'}</span>
+                <span className="text-xl font-bold text-[#73e28a]">$50</span>
+                {formData.include_fix && <span className="text-amber-400 text-sm ml-2">(March Special - Fix included FREE!)</span>}
               </div>
 
               <Button 
@@ -857,7 +868,7 @@ Provide the full analysis in the exact report format above based on the data I s
               <div>
                 <h3 className="text-xl font-bold text-white mb-2">Redirecting to Checkout...</h3>
                 <p className="text-slate-400">
-                  Complete your ${formData.include_fix ? '150' : '50'} payment to finalize the review request.
+                  Complete your $50 payment to finalize the review request.
                 </p>
               </div>
               <p className="text-sm text-slate-500">
