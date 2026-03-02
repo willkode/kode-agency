@@ -22,8 +22,8 @@ export function generateHostPresets(profile) {
 function buildAllSpaConfigs({ hosting_target, app_name, frontend_domain }) {
   const domain = frontend_domain.replace(/https?:\/\//, '');
 
-  const configs = [
-    {
+  const allConfigs = {
+    nginx: {
       title: 'Nginx — server block',
       lang: 'nginx',
       content: `# /etc/nginx/sites-available/${app_name}
@@ -53,19 +53,19 @@ server {
     }
 }`,
     },
-    {
+    cloudflare: {
       title: 'Cloudflare Pages — public/_redirects',
       lang: 'text',
       content: `/api/*  https://api.base44.com/api/:splat  200
 /*      /index.html                         200`,
     },
-    {
+    netlify: {
       title: 'Netlify — _redirects (place in public/)',
       lang: 'text',
       content: `/api/*  https://api.base44.com/api/:splat  200
 /*      /index.html                         200`,
     },
-    {
+    vercel: {
       title: 'Vercel — vercel.json',
       lang: 'json',
       content: `{
@@ -81,17 +81,15 @@ server {
   ]
 }`,
     },
-  ];
+  };
 
-  // If a specific host is selected, put its config first
-  const order = { nginx: 0, cloudflare: 1, netlify: 2, vercel: 3 };
-  if (hosting_target && order[hosting_target] !== undefined) {
-    const idx = order[hosting_target];
-    const [selected] = configs.splice(idx, 1);
-    configs.unshift(selected);
+  // Return only the config for the selected hosting target
+  if (hosting_target && allConfigs[hosting_target]) {
+    return [allConfigs[hosting_target]];
   }
 
-  return configs;
+  // Fallback: return all if no target selected
+  return Object.values(allConfigs);
 }
 
 function buildEnvVarList({ base44_api_base_url, base44_app_id, frontend_domain, stripe_used, auth_enabled }) {
