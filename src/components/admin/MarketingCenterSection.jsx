@@ -260,29 +260,37 @@ export default function MarketingCenterSection() {
                   size="sm"
                   variant="outline"
                   onClick={() => {
-                    const today = new Date().toISOString().split('T')[0];
-                    let checkDate = today;
+                    const now = new Date();
+                    const currentHourCST = now.getHours();
                     let foundSlot = null;
+                    let foundDate = null;
+                    
+                    // Slot hours in CST: morning=9, afternoon=13, evening=19
+                    const slotHours = { morning: 9, afternoon: 13, evening: 19 };
                     
                     for (let i = 0; i < 30 && !foundSlot; i++) {
                       const dateObj = new Date();
                       dateObj.setDate(dateObj.getDate() + i);
-                      checkDate = dateObj.toISOString().split('T')[0];
+                      const checkDate = dateObj.toISOString().split('T')[0];
                       
                       const takenSlots = scheduledPosts
                         .filter(p => p.scheduled_date === checkDate)
                         .map(p => p.scheduled_slot);
                       
                       for (const slot of SCHEDULE_SLOTS) {
-                        if (!takenSlots.includes(slot.value)) {
-                          foundSlot = slot.value;
-                          break;
-                        }
+                        if (takenSlots.includes(slot.value)) continue;
+                        
+                        // If today, skip slots that have already passed
+                        if (i === 0 && currentHourCST >= slotHours[slot.value]) continue;
+                        
+                        foundSlot = slot.value;
+                        foundDate = checkDate;
+                        break;
                       }
                     }
                     
-                    if (foundSlot) {
-                      scheduleMutation.mutate({ postId: post.id, slot: foundSlot, date: checkDate });
+                    if (foundSlot && foundDate) {
+                      scheduleMutation.mutate({ postId: post.id, slot: foundSlot, date: foundDate });
                     }
                   }}
                   disabled={scheduleMutation.isPending}
