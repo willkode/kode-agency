@@ -83,6 +83,7 @@ import MATemplates from './pages/MATemplates';
 import MAVerification from './pages/MAVerification';
 import MVPDevelopment from './pages/MVPDevelopment';
 import MigrationAssistant from './pages/MigrationAssistant';
+import MigrationAssistantLanding from './pages/MigrationAssistantLanding';
 import MobileAppConversion from './pages/MobileAppConversion';
 import PaidAds from './pages/PaidAds';
 import Platforms from './pages/Platforms';
@@ -98,7 +99,6 @@ import Services from './pages/Services';
 import ThankYou from './pages/ThankYou';
 import UIUXDesign from './pages/UIUXDesign';
 import WebsiteDevelopment from './pages/WebsiteDevelopment';
-import MigrationAssistantLanding from './pages/MigrationAssistantLanding';
 import __Layout from './Layout.jsx';
 
 
@@ -139,6 +139,7 @@ export const PAGES = {
     "MAVerification": MAVerification,
     "MVPDevelopment": MVPDevelopment,
     "MigrationAssistant": MigrationAssistant,
+    "MigrationAssistantLanding": MigrationAssistantLanding,
     "MobileAppConversion": MobileAppConversion,
     "PaidAds": PaidAds,
     "Platforms": Platforms,
@@ -154,7 +155,6 @@ export const PAGES = {
     "ThankYou": ThankYou,
     "UIUXDesign": UIUXDesign,
     "WebsiteDevelopment": WebsiteDevelopment,
-    "MigrationAssistantLanding": MigrationAssistantLanding,
 }
 
 export const pagesConfig = {

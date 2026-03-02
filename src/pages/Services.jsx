@@ -40,7 +40,7 @@ export default function ServicesPage() {
     { icon: Smartphone, title: "Mobile App Conversion", slug: "MobileAppConversion", desc: "Turn your web app into a real mobile app (Android + iOS). $250 flat." },
     { icon: Layers, title: "BaseCMS Services", slug: "BaseCMS", desc: "Setup, customization, and support for your BaseCMS project. From $75/hr." },
     { icon: GitBranch, title: "Frontend Exporter", slug: "FrontendExporter", desc: "Scan your Base44 repo and get a full migration plan to host your frontend externally. Free." },
-    { icon: ArrowRightLeft, title: "Migration Assistant", slug: "MigrationAssistantLanding", desc: "Self-serve wizard to generate configs, env vars, and deploy checklists for external hosting. Free." },
+    { icon: ArrowRightLeft, title: "Migration Assistant", slug: "MigrationAssistant", desc: "Self-serve wizard to generate configs, env vars, and deploy checklists for external hosting. Free." },
   ];
 
   const marketingServices = [
