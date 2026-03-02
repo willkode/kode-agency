@@ -257,34 +257,50 @@ export default function MarketingCenterSection() {
                   Post Now
                 </Button>
               </div>
-              <div className="flex gap-2 items-center flex-wrap">
-                <Select value={scheduleSlot} onValueChange={setScheduleSlot}>
-                  <SelectTrigger className="w-32 h-8 bg-slate-700 border-slate-600 text-xs">
-                    <SelectValue placeholder="Time slot" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-slate-800 border-slate-700">
-                    {SCHEDULE_SLOTS.map(s => (
-                      <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <input 
-                  type="date" 
-                  value={scheduleDate}
-                  onChange={(e) => setScheduleDate(e.target.value)}
-                  min={new Date().toISOString().split('T')[0]}
-                  className="h-8 px-2 rounded bg-slate-700 border border-slate-600 text-white text-xs"
-                />
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => scheduleMutation.mutate({ postId: post.id, slot: scheduleSlot, date: scheduleDate })}
-                  disabled={!scheduleSlot || !scheduleDate || scheduleMutation.isPending}
-                  className="h-8 border-slate-600 text-xs"
-                >
-                  <Clock className="w-3 h-3 mr-1" /> Schedule
-                </Button>
-              </div>
+              {(() => {
+                const takenSlots = scheduledPosts
+                  .filter(p => p.scheduled_date === scheduleDate)
+                  .map(p => p.scheduled_slot);
+                const availableSlots = SCHEDULE_SLOTS.filter(s => !takenSlots.includes(s.value));
+                
+                return (
+                  <div className="flex gap-2 items-center flex-wrap">
+                    <input 
+                      type="date" 
+                      value={scheduleDate}
+                      onChange={(e) => {
+                        setScheduleDate(e.target.value);
+                        setScheduleSlot('');
+                      }}
+                      min={new Date().toISOString().split('T')[0]}
+                      className="h-8 px-2 rounded bg-slate-700 border border-slate-600 text-white text-xs"
+                    />
+                    <Select value={scheduleSlot} onValueChange={setScheduleSlot} disabled={!scheduleDate}>
+                      <SelectTrigger className="w-32 h-8 bg-slate-700 border-slate-600 text-xs">
+                        <SelectValue placeholder={!scheduleDate ? "Pick date first" : (availableSlots.length === 0 ? "Day full" : "Time slot")} />
+                      </SelectTrigger>
+                      <SelectContent className="bg-slate-800 border-slate-700">
+                        {availableSlots.length === 0 ? (
+                          <div className="px-2 py-1 text-xs text-slate-500">All slots taken</div>
+                        ) : (
+                          availableSlots.map(s => (
+                            <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+                          ))
+                        )}
+                      </SelectContent>
+                    </Select>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => scheduleMutation.mutate({ postId: post.id, slot: scheduleSlot, date: scheduleDate })}
+                      disabled={!scheduleSlot || !scheduleDate || scheduleMutation.isPending || availableSlots.length === 0}
+                      className="h-8 border-slate-600 text-xs"
+                    >
+                      <Clock className="w-3 h-3 mr-1" /> Schedule
+                    </Button>
+                  </div>
+                );
+              })()}
             </div>
           )}
           
