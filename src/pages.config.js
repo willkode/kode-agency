@@ -95,6 +95,7 @@ import MADashboard from './pages/MADashboard';
 import MAProjects from './pages/MAProjects';
 import MAProjectDetail from './pages/MAProjectDetail';
 import MATemplates from './pages/MATemplates';
+import MAVerification from './pages/MAVerification';
 import __Layout from './Layout.jsx';
 
 
@@ -147,6 +148,7 @@ export const PAGES = {
     "MAProjects": MAProjects,
     "MAProjectDetail": MAProjectDetail,
     "MATemplates": MATemplates,
+    "MAVerification": MAVerification,
 }
 
 export const pagesConfig = {
