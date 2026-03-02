@@ -82,21 +82,32 @@ function VerificationInner() {
                       {Array.isArray(run.checks) && run.checks.length > 0 ? (
                         <div className="mt-4 space-y-2">
                           {run.checks.map((c, i) => (
-                            <div key={i} className="flex items-start gap-3">
+                            <div key={i} className="flex items-start gap-3 py-2 border-b border-slate-800 last:border-0">
                               {c.passed
                                 ? <CheckCircle className="w-4 h-4 text-[#73e28a] mt-0.5 flex-shrink-0" />
                                 : <XCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />}
-                              <div>
+                              <div className="min-w-0">
                                 <p className="text-slate-200 text-sm">{c.title}</p>
                                 {c.notes && <p className="text-slate-500 text-xs mt-0.5">{c.notes}</p>}
+                                {c.evidence && (
+                                  <pre className="mt-1 text-xs text-slate-400 bg-slate-950 rounded p-2 overflow-x-auto whitespace-pre-wrap max-h-20">{c.evidence}</pre>
+                                )}
                               </div>
                             </div>
                           ))}
                         </div>
                       ) : <p className="text-slate-500 text-sm mt-4">No checks recorded.</p>}
                       {run.log && (
-                        <pre className="mt-4 text-xs text-slate-400 bg-slate-900 rounded-lg p-3 overflow-x-auto whitespace-pre-wrap">{run.log}</pre>
+                        <p className="text-slate-600 text-xs mt-3">{run.log}</p>
                       )}
+                      <div className="mt-4 flex justify-end">
+                        <button
+                          onClick={() => downloadReport(run)}
+                          className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-[#73e28a] transition-colors"
+                        >
+                          <Download className="w-3.5 h-3.5" /> Export Report
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
