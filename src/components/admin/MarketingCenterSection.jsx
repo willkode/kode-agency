@@ -26,7 +26,17 @@ const SERVICES = [
   { slug: 'saas_development', name: 'SaaS Development', description: 'Build scalable SaaS applications', url: 'https://kodebase.us/SaaSDevelopment' },
   { slug: 'api_development', name: 'API Development', description: 'Custom API integrations and development', url: 'https://kodebase.us/APIDevelopment' },
   { slug: 'ui_ux_design', name: 'UI/UX Design', description: 'Beautiful, user-friendly designs', url: 'https://kodebase.us/UIUXDesign' },
-  { slug: 'seo_services', name: 'SEO Services', description: 'Improve your search rankings', url: 'https://kodebase.us/SEOServices' }
+  { slug: 'seo_services', name: 'SEO Services', description: 'Improve your search rankings', url: 'https://kodebase.us/SEOServices' },
+  { slug: 'app_development', name: 'App Development', description: 'Custom web application development', url: 'https://kodebase.us/AppDevelopment' },
+  { slug: 'website_development', name: 'Website Development', description: 'Professional website design and development', url: 'https://kodebase.us/WebsiteDevelopment' },
+  { slug: 'ai_systems', name: 'AI Systems', description: 'AI-powered solutions and integrations', url: 'https://kodebase.us/AISystems' },
+  { slug: 'devops', name: 'DevOps', description: 'CI/CD, infrastructure, and deployment automation', url: 'https://kodebase.us/DevOps' },
+  { slug: 'branding', name: 'Branding', description: 'Brand identity and visual design', url: 'https://kodebase.us/Branding' },
+  { slug: 'content_marketing', name: 'Content Marketing', description: 'Strategic content creation and marketing', url: 'https://kodebase.us/ContentMarketing' },
+  { slug: 'email_marketing', name: 'Email Marketing', description: 'Email campaigns and automation', url: 'https://kodebase.us/EmailMarketing' },
+  { slug: 'paid_ads', name: 'Paid Ads', description: 'PPC and paid advertising management', url: 'https://kodebase.us/PaidAds' },
+  { slug: 'cro_services', name: 'CRO Services', description: 'Conversion rate optimization', url: 'https://kodebase.us/CROServices' },
+  { slug: 'full_funnel_marketing', name: 'Full Funnel Marketing', description: 'End-to-end marketing strategy', url: 'https://kodebase.us/FullFunnelMarketing' }
 ];
 
 const MAX_POSTS_PER_DAY = 3;
@@ -255,7 +265,7 @@ export default function MarketingCenterSection() {
       {/* Generate New Post */}
       <Card className="bg-slate-900 border-slate-800 mb-6">
         <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-lg">
+          <CardTitle className="flex items-center gap-2 text-lg text-white">
             <Sparkles className="w-5 h-5 text-[#73e28a]" />
             Generate New Post
           </CardTitle>
