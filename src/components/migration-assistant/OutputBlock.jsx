@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Copy, Check } from 'lucide-react';
 
-export default function OutputBlock({ title, content, language = 'plaintext' }) {
+export default function OutputBlock({ title, content }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
