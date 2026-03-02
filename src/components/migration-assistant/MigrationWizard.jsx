@@ -9,7 +9,7 @@ import StepAppConfig from './StepAppConfig.jsx';
 import StepOutputs from './StepOutputs.jsx';
 import { ProfileRepo } from '@/components/migration-assistant/lib/repository.js';
 
-const STEPS = ['Project Intake', 'Hosting Target', 'App Config', 'Generated Outputs'];
+const STEPS = ['Project Intake', 'Hosting Target', 'Host Presets', 'App Config', 'Generated Outputs'];
 
 const EMPTY_PROFILE = {
   project_name: '',
