@@ -19,24 +19,31 @@ import {
 } from 'lucide-react';
 
 const SERVICES = [
-  { slug: 'build_sprint', name: 'Build Sprint', description: 'Done-with-you MVP building sessions at $75/hour', url: 'https://kodebase.us/BuildSprint' },
-  { slug: 'app_foundation', name: 'App Foundation', description: 'Get a solid foundation for your Base44 app', url: 'https://kodebase.us/AppFoundation' },
-  { slug: 'mobile_app', name: 'Mobile App Conversion', description: 'Convert your web app to iOS and Android', url: 'https://kodebase.us/MobileAppConversion' },
-  { slug: 'mvp_development', name: 'MVP Development', description: 'Full MVP development services', url: 'https://kodebase.us/MVPDevelopment' },
-  { slug: 'saas_development', name: 'SaaS Development', description: 'Build scalable SaaS applications', url: 'https://kodebase.us/SaaSDevelopment' },
-  { slug: 'api_development', name: 'API Development', description: 'Custom API integrations and development', url: 'https://kodebase.us/APIDevelopment' },
-  { slug: 'ui_ux_design', name: 'UI/UX Design', description: 'Beautiful, user-friendly designs', url: 'https://kodebase.us/UIUXDesign' },
-  { slug: 'seo_services', name: 'SEO Services', description: 'Improve your search rankings', url: 'https://kodebase.us/SEOServices' },
-  { slug: 'app_development', name: 'App Development', description: 'Custom web application development', url: 'https://kodebase.us/AppDevelopment' },
-  { slug: 'website_development', name: 'Website Development', description: 'Professional website design and development', url: 'https://kodebase.us/WebsiteDevelopment' },
-  { slug: 'ai_systems', name: 'AI Systems', description: 'AI-powered solutions and integrations', url: 'https://kodebase.us/AISystems' },
-  { slug: 'devops', name: 'DevOps', description: 'CI/CD, infrastructure, and deployment automation', url: 'https://kodebase.us/DevOps' },
-  { slug: 'branding', name: 'Branding', description: 'Brand identity and visual design', url: 'https://kodebase.us/Branding' },
-  { slug: 'content_marketing', name: 'Content Marketing', description: 'Strategic content creation and marketing', url: 'https://kodebase.us/ContentMarketing' },
-  { slug: 'email_marketing', name: 'Email Marketing', description: 'Email campaigns and automation', url: 'https://kodebase.us/EmailMarketing' },
-  { slug: 'paid_ads', name: 'Paid Ads', description: 'PPC and paid advertising management', url: 'https://kodebase.us/PaidAds' },
-  { slug: 'cro_services', name: 'CRO Services', description: 'Conversion rate optimization', url: 'https://kodebase.us/CROServices' },
-  { slug: 'full_funnel_marketing', name: 'Full Funnel Marketing', description: 'End-to-end marketing strategy', url: 'https://kodebase.us/FullFunnelMarketing' }
+  // Development Services (8)
+  { slug: 'app_development', name: 'App Development', description: 'Native, web, and cross-platform apps with AI-enhanced workflows', url: 'https://kodebase.us/AppDevelopment' },
+  { slug: 'mvp_development', name: 'MVP Development', description: 'Rapid MVPs using Base44, Lovable, Replit — launch in weeks', url: 'https://kodebase.us/MVPDevelopment' },
+  { slug: 'ai_systems', name: 'AI Systems & Automations', description: 'Custom AI agents, workflow automation, and LLM integrations', url: 'https://kodebase.us/AISystems' },
+  { slug: 'api_development', name: 'API Development', description: 'REST & GraphQL APIs with third-party integrations', url: 'https://kodebase.us/APIDevelopment' },
+  { slug: 'saas_development', name: 'Custom SaaS', description: 'Multi-tenant platforms with billing, auth, and dashboards', url: 'https://kodebase.us/SaaSDevelopment' },
+  { slug: 'ui_ux_design', name: 'UI/UX Design', description: 'Conversion-focused interfaces and full design systems', url: 'https://kodebase.us/UIUXDesign' },
+  { slug: 'website_development', name: 'Website Development', description: 'High-performance sites, landing pages, and e-commerce', url: 'https://kodebase.us/WebsiteDevelopment' },
+  { slug: 'devops', name: 'DevOps & Infrastructure', description: 'Cloud setup, monitoring, scaling, and deployment', url: 'https://kodebase.us/DevOps' },
+  // Specialty Services (7)
+  { slug: 'build_sprint', name: 'Build Sprint', description: 'Live screen-share session where I build your MVP while you watch and learn. $75/hr', url: 'https://kodebase.us/BuildSprint' },
+  { slug: 'base44_er', name: 'Base44 Emergency Room', description: 'Expert app review + fix service for just $50', url: 'https://kodebase.us/Base44ER' },
+  { slug: 'app_foundation', name: 'App Foundation', description: 'Done-for-you app scaffolding with core data models and integrations. $250 flat', url: 'https://kodebase.us/AppFoundation' },
+  { slug: 'mobile_app', name: 'Mobile App Conversion', description: 'Turn your web app into a real mobile app (Android + iOS). $250 flat', url: 'https://kodebase.us/MobileAppConversion' },
+  { slug: 'basecms', name: 'BaseCMS Services', description: 'Setup, customization, and support for your BaseCMS project. From $75/hr', url: 'https://kodebase.us/BaseCMS' },
+  { slug: 'frontend_exporter', name: 'Frontend Exporter', description: 'Scan your Base44 repo and get a full migration plan to host your frontend externally', url: 'https://kodebase.us/FrontendExporter' },
+  { slug: 'migration_assistant', name: 'Migration Assistant', description: 'Self-serve wizard to generate configs, env vars, and deploy checklists for external hosting', url: 'https://kodebase.us/MigrationAssistant' },
+  // Marketing Services (7)
+  { slug: 'seo_services', name: 'SEO Services', description: 'Technical SEO, on-page optimization, and AI-powered audits', url: 'https://kodebase.us/SEOServices' },
+  { slug: 'cro_services', name: 'Conversion Rate Optimization', description: 'Funnel optimization, A/B testing, and UX improvements', url: 'https://kodebase.us/CROServices' },
+  { slug: 'paid_ads', name: 'Paid Ads Management', description: 'Google Ads, Facebook/Instagram Ads, and retargeting', url: 'https://kodebase.us/PaidAds' },
+  { slug: 'content_marketing', name: 'Content Marketing', description: 'Blog writing, AI-generated content, and social media', url: 'https://kodebase.us/ContentMarketing' },
+  { slug: 'branding', name: 'Branding & Creative', description: 'Logo design, brand identity, and messaging strategy', url: 'https://kodebase.us/Branding' },
+  { slug: 'email_marketing', name: 'Email Marketing', description: 'Automation, lead nurturing, and list growth strategy', url: 'https://kodebase.us/EmailMarketing' },
+  { slug: 'full_funnel_marketing', name: 'Full Funnel Marketing', description: 'End-to-end strategy, lead gen, and multi-channel campaigns', url: 'https://kodebase.us/FullFunnelMarketing' }
 ];
 
 const MAX_POSTS_PER_DAY = 3;
