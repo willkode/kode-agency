@@ -112,30 +112,53 @@ export default function MigrationWizard({ onReset, projectId, existingProfileId 
       </div>
 
       <Card className="p-8 bg-slate-900/80 border-slate-700">
-        {step === 0 && <StepHostingTarget profile={profile} onChange={updateProfile} />}
-        {step === 1 && <StepAppConfig profile={profile} onChange={updateProfile} />}
-        {step === 2 && <StepOutputs profile={profile} />}
+        {step === 0 && <StepProjectIntake profile={profile} onChange={updateProfile} />}
+        {step === 1 && <StepHostingTarget profile={profile} onChange={updateProfile} />}
+        {step === 2 && <StepAppConfig profile={profile} onChange={updateProfile} />}
+        {step === 3 && <StepOutputs profile={profile} />}
       </Card>
 
       <div className="flex items-center justify-between mt-6">
         <div>
           {step === 0 ? (
-            <Button variant="outline" onClick={onReset} className="border-slate-700 text-slate-400 hover:text-white">
-              <RotateCcw className="w-4 h-4 mr-2" /> Start Over
-            </Button>
+            onReset && (
+              <Button variant="outline" onClick={onReset} className="border-slate-700 text-slate-400 hover:text-white">
+                <RotateCcw className="w-4 h-4 mr-2" /> Start Over
+              </Button>
+            )
           ) : (
             <Button variant="outline" onClick={() => setStep(s => s - 1)} className="border-slate-700 text-slate-400 hover:text-white">
               <ArrowLeft className="w-4 h-4 mr-2" /> Back
             </Button>
           )}
         </div>
-        <div className="flex gap-3">
-          {step === 2 && (
+        <div className="flex items-center gap-3">
+          {/* Save draft button — visible on step 0 */}
+          {step === 0 && projectId && (
+            <Button
+              variant="outline"
+              onClick={handleSaveDraft}
+              disabled={saving}
+              className="border-slate-700 text-slate-300 hover:text-white gap-2"
+            >
+              {saving ? (
+                'Saving…'
+              ) : saveStatus === 'saved' ? (
+                <><CheckCircle className="w-4 h-4 text-[#73e28a]" /> Saved</>
+              ) : saveStatus === 'error' ? (
+                'Save failed'
+              ) : (
+                <><Save className="w-4 h-4" /> Save Draft</>
+              )}
+            </Button>
+          )}
+
+          {step === 3 && (
             <Button variant="outline" onClick={handleExportJSON} className="border-[#73e28a] text-[#73e28a] hover:bg-[#73e28a]/10">
               <Download className="w-4 h-4 mr-2" /> Export Profile JSON
             </Button>
           )}
-          {step < 2 && (
+          {step < 3 && (
             <Button
               onClick={() => setStep(s => s + 1)}
               disabled={!canProceed()}
