@@ -332,6 +332,14 @@ export default function BuildSprintPage() {
                 <div className="text-slate-400 text-sm">Minimum session cost</div>
                 <div className="text-2xl font-bold text-white">$75 <span className="text-slate-500 text-sm font-normal">(1 hour)</span></div>
               </div>
+              
+              <div className="mt-4 flex items-center justify-center gap-2 text-sm">
+                <div className="flex text-yellow-400">
+                  {'★★★★'.split('').map((_, i) => <span key={i}>★</span>)}
+                  <span className="text-slate-600">★</span>
+                </div>
+                <span className="text-slate-400">4/5 from 130+ customers</span>
+              </div>
             </Card>
           </div>
         </div>
