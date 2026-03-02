@@ -7,7 +7,7 @@ import GridBackground from '@/components/ui-custom/GridBackground';
 import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 import SEO from '@/components/SEO';
 import { usePageView, useScrollDepth } from '@/components/analytics/useAnalytics';
-import MigrationWizard from '@/components/migration-assistant/MigrationWizard';
+import MigrationWizard from '@/components/migration-assistant/MigrationWizard.jsx';
 import { Server, Globe, Zap, CheckCircle, Shield, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
