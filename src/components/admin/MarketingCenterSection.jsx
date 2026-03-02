@@ -193,6 +193,8 @@ export default function MarketingCenterSection() {
 
   const [bulkGenerating, setBulkGenerating] = useState(false);
   const [bulkProgress, setBulkProgress] = useState({ current: 0, total: 0 });
+  const [bulkScheduling, setBulkScheduling] = useState(false);
+  const [bulkScheduleProgress, setBulkScheduleProgress] = useState({ current: 0, total: 0 });
 
   const handleBulkGenerate = async () => {
     setBulkGenerating(true);
