@@ -597,7 +597,233 @@ ORIGIN_URL = "${ew_origin_url || 'https://your-origin.pages.dev'}"
 # cpu_ms = 50  # default is 10ms for free plan`;
 }
 
-// ── Legacy full outputs (Step 5) ─────────────────────────────────────────────
+// ── Outage Banner Kit (Step 5) ────────────────────────────────────────────────
+
+export function generateOutageBanner(profile) {
+  const {
+    banner_interval_ms = 30000,
+    banner_fail_threshold = 3,
+    banner_success_threshold = 2,
+    banner_text = 'We are currently experiencing platform issues. Some features may be unavailable.',
+    banner_bg = '#f59e0b',
+    banner_health_endpoint = '/api/platform-health',
+  } = profile;
+
+  const interval = Number(banner_interval_ms) || 30000;
+  const failT = Number(banner_fail_threshold) || 3;
+  const successT = Number(banner_success_threshold) || 2;
+
+  return {
+    reactHook: buildReactHook({ interval, failT, successT, banner_health_endpoint }),
+    reactComponent: buildReactComponent({ banner_text, banner_bg }),
+    vanillaJs: buildVanillaJs({ interval, failT, successT, banner_health_endpoint, banner_text, banner_bg }),
+  };
+}
+
+function buildReactHook({ interval, failT, successT, banner_health_endpoint }) {
+  return `// usePlatformHealth.js
+// Place in: src/hooks/usePlatformHealth.js (or any hooks folder)
+// Usage:    const { isDown } = usePlatformHealth();
+
+import { useState, useEffect, useRef } from 'react';
+
+const ENDPOINT = '${banner_health_endpoint}';
+const INTERVAL_MS = ${interval};
+const FAIL_THRESHOLD = ${failT};   // show banner after N consecutive failures
+const SUCCESS_THRESHOLD = ${successT}; // hide banner after N consecutive successes
+
+export function usePlatformHealth({
+  intervalMs = INTERVAL_MS,
+  failThreshold = FAIL_THRESHOLD,
+  successThreshold = SUCCESS_THRESHOLD,
+} = {}) {
+  const [isDown, setIsDown] = useState(false);
+  const failCount = useRef(0);
+  const successCount = useRef(0);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function poll() {
+      try {
+        const res = await fetch(ENDPOINT, { cache: 'no-store' });
+        const data = await res.json();
+        if (cancelled) return;
+
+        if (data.ok) {
+          failCount.current = 0;
+          successCount.current += 1;
+          if (successCount.current >= successThreshold) setIsDown(false);
+        } else {
+          successCount.current = 0;
+          failCount.current += 1;
+          if (failCount.current >= failThreshold) setIsDown(true);
+        }
+      } catch (_) {
+        if (cancelled) return;
+        successCount.current = 0;
+        failCount.current += 1;
+        if (failCount.current >= failThreshold) setIsDown(true);
+      }
+    }
+
+    poll(); // immediate first check
+    const id = setInterval(poll, intervalMs);
+    return () => { cancelled = true; clearInterval(id); };
+  }, [intervalMs, failThreshold, successThreshold]);
+
+  return { isDown };
+}`;
+}
+
+function buildReactComponent({ banner_text, banner_bg }) {
+  return `// OutageBanner.jsx
+// Place this at the very top of your root layout or App shell.
+// It renders nothing when the platform is healthy.
+//
+// Example usage in Layout.jsx:
+//   import OutageBanner from './OutageBanner';
+//   ...
+//   return (
+//     <>
+//       <OutageBanner />
+//       <nav>...</nav>
+//       {children}
+//     </>
+//   );
+
+import React from 'react';
+import { usePlatformHealth } from './usePlatformHealth'; // adjust path as needed
+
+const BANNER_TEXT = '${banner_text}';
+const BANNER_BG = '${banner_bg}';
+
+// Pass forceShow={true} during local testing to bypass polling
+export default function OutageBanner({ forceShow = false }) {
+  const { isDown } = usePlatformHealth();
+
+  if (!isDown && !forceShow) return null;
+
+  return (
+    <div
+      role="alert"
+      aria-live="assertive"
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 9999,
+        backgroundColor: BANNER_BG,
+        color: '#000',
+        textAlign: 'center',
+        padding: '10px 16px',
+        fontSize: '14px',
+        fontWeight: '500',
+        lineHeight: '1.4',
+      }}
+    >
+      {BANNER_TEXT}
+    </div>
+  );
+}`;
+}
+
+function buildVanillaJs({ interval, failT, successT, banner_health_endpoint, banner_text, banner_bg }) {
+  return `// outage-banner.js — Vanilla JS self-contained outage banner
+// No build step required. Drop this before </body> or inject via Edge Worker.
+//
+// Debug override: set window.__b44_forceDown = true in DevTools console
+// to immediately show the banner without waiting for poll cycles.
+
+(function () {
+  var ENDPOINT = '${banner_health_endpoint}';
+  var INTERVAL_MS = ${interval};
+  var FAIL_THRESHOLD = ${failT};
+  var SUCCESS_THRESHOLD = ${successT};
+  var BANNER_TEXT = '${banner_text}';
+  var BANNER_BG = '${banner_bg}';
+  var BANNER_ID = 'b44-outage-banner';
+
+  var failCount = 0;
+  var successCount = 0;
+
+  function getBanner() {
+    return document.getElementById(BANNER_ID);
+  }
+
+  function createBanner() {
+    var existing = getBanner();
+    if (existing) return existing;
+    var el = document.createElement('div');
+    el.id = BANNER_ID;
+    el.setAttribute('role', 'alert');
+    el.setAttribute('aria-live', 'assertive');
+    el.style.cssText = [
+      'position:fixed',
+      'top:0',
+      'left:0',
+      'right:0',
+      'z-index:9999',
+      'background:' + BANNER_BG,
+      'color:#000',
+      'text-align:center',
+      'padding:10px 16px',
+      'font-size:14px',
+      'font-weight:500',
+      'line-height:1.4',
+      'display:none',
+    ].join(';');
+    el.textContent = BANNER_TEXT;
+    document.body.insertBefore(el, document.body.firstChild);
+    return el;
+  }
+
+  function showBanner() {
+    var el = createBanner();
+    el.style.display = 'block';
+  }
+
+  function hideBanner() {
+    var el = getBanner();
+    if (el) el.style.display = 'none';
+  }
+
+  function poll() {
+    // Debug override
+    if (window.__b44_forceDown) { showBanner(); return; }
+
+    fetch(ENDPOINT, { cache: 'no-store' })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        if (data.ok) {
+          failCount = 0;
+          successCount++;
+          if (successCount >= SUCCESS_THRESHOLD) hideBanner();
+        } else {
+          successCount = 0;
+          failCount++;
+          if (failCount >= FAIL_THRESHOLD) showBanner();
+        }
+      })
+      .catch(function () {
+        successCount = 0;
+        failCount++;
+        if (failCount >= FAIL_THRESHOLD) showBanner();
+      });
+  }
+
+  // Wait for DOM to be ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { poll(); setInterval(poll, INTERVAL_MS); });
+  } else {
+    poll();
+    setInterval(poll, INTERVAL_MS);
+  }
+})();`;
+}
+
+// ── Legacy full outputs (Step 6) ─────────────────────────────────────────────
 
 export function generateOutputs(profile) {
   const {
