@@ -44,7 +44,7 @@ Deno.serve(async (req) => {
       }
     };
 
-    const calendarId = 'primary';
+    const calendarId = 'c_fd6c99e91f0b71aa4be8ce9d3b3ef94c34c9b2bb0e00fb5dc5e3ef09b1b5a5e8@group.calendar.google.com';
     const createUrl = `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?conferenceDataVersion=1&sendUpdates=all`;
     
     const createResponse = await fetch(createUrl, {

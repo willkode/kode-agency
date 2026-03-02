@@ -17,8 +17,8 @@ Deno.serve(async (req) => {
     const endOfDay = new Date(date);
     endOfDay.setUTCHours(23, 59, 59, 999);
 
-    // Fetch existing events for that day
-    const calendarId = 'primary';
+    // Fetch existing events for that day from the Build Sprints calendar
+    const calendarId = 'c_fd6c99e91f0b71aa4be8ce9d3b3ef94c34c9b2bb0e00fb5dc5e3ef09b1b5a5e8@group.calendar.google.com';
     const eventsUrl = `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?timeMin=${startOfDay.toISOString()}&timeMax=${endOfDay.toISOString()}&singleEvents=true&orderBy=startTime`;
     
     const eventsResponse = await fetch(eventsUrl, {
