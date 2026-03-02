@@ -30,6 +30,7 @@ import {
   Plus,
   Minus
 } from 'lucide-react';
+import CalendarScheduler from '@/components/build-sprint/CalendarScheduler';
 
 const HOURLY_RATE = 75;
 const MIN_HOURS = 1;
@@ -40,6 +41,7 @@ export default function BuildSprintPage() {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [requestId, setRequestId] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [customerData, setCustomerData] = useState(null);
 
   // Analytics tracking
   usePageView('build_sprint');
@@ -72,12 +74,25 @@ export default function BuildSprintPage() {
       
       // Handle the successful payment
       base44.functions.invoke('handleStripeSuccess', { sessionId })
-        .then(() => {
-          setPaymentSuccess(true);
-          setIsProcessing(false);
+        .then(async () => {
           // Track purchase in GA4
           const urlHours = urlParams.get('hours');
           const amount = urlHours ? parseInt(urlHours) * HOURLY_RATE : HOURLY_RATE;
+          
+          // Fetch the request data for scheduling
+          if (reqId) {
+            try {
+              const requests = await base44.entities.BuildSprintRequest.filter({ id: reqId });
+              if (requests.length > 0) {
+                setCustomerData(requests[0]);
+              }
+            } catch (e) {
+              console.error('Failed to fetch request data:', e);
+            }
+          }
+          
+          setPaymentSuccess(true);
+          setIsProcessing(false);
           
           // Track with Base44 analytics + GA4
           track('build_sprint_payment_success', {
@@ -201,36 +216,31 @@ export default function BuildSprintPage() {
         
         <Section className="py-24 relative overflow-hidden">
           <GridBackground />
-          <div className="relative z-10 max-w-2xl mx-auto text-center">
-            <div className="w-20 h-20 mx-auto mb-8 rounded-full bg-[#73e28a]/20 flex items-center justify-center">
-              <CheckCircle className="w-10 h-10 text-[#73e28a]" />
+          <div className="relative z-10 max-w-3xl mx-auto">
+            <div className="text-center mb-8">
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[#73e28a]/20 flex items-center justify-center">
+                <CheckCircle className="w-10 h-10 text-[#73e28a]" />
+              </div>
+              
+              <h2 className="text-3xl font-bold text-white mb-4">You're all set!</h2>
+              <p className="text-slate-300 text-lg">
+                Your payment has been processed. Now let's schedule your Build Sprint session.
+              </p>
             </div>
             
-            <h2 className="text-3xl font-bold text-white mb-4">You're all set!</h2>
-            <p className="text-slate-300 text-lg mb-8">
-              Your payment has been processed. Now let's schedule your Build Sprint session.
-            </p>
-            
             <Card className="p-8 bg-slate-900/80 mb-8">
-              <h3 className="text-xl font-bold text-white mb-4">Next Step: Schedule Your Session</h3>
-              <p className="text-slate-400 mb-6">
-                Click the button below to pick a time that works for you. You'll receive a calendar invite with the video call link.
-              </p>
-              
-              <a 
-                href="https://calendly.com/kodeagency/build-sprint" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                onClick={() => track('build_sprint_calendly_clicked')}
-              >
-                <Button className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-8 text-lg">
-                  <Calendar className="w-5 h-5 mr-2" />
-                  Schedule Your Build Sprint
-                </Button>
-              </a>
+              <h3 className="text-xl font-bold text-white mb-6 text-center">Schedule Your Session</h3>
+              <CalendarScheduler
+                customerName={customerData?.name || formData.name}
+                customerEmail={customerData?.email || formData.email}
+                hours={customerData?.hours || formData.hours}
+                mvpGoal={customerData?.mvp_goal || formData.mvp_goal}
+                requestId={requestId}
+                onScheduled={() => track('build_sprint_session_scheduled')}
+              />
             </Card>
             
-            <p className="text-slate-500 text-sm">
+            <p className="text-slate-500 text-sm text-center">
               A confirmation email has been sent to your inbox with these details.
             </p>
           </div>
