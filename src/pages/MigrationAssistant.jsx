@@ -164,6 +164,10 @@ export default function MigrationAssistantPage() {
                     'Start the Wizard'
                   )}
                 </Button>
+                <p className="text-slate-400 text-sm mt-4 flex items-center gap-2">
+                  <Shield className="w-4 h-4 text-[#73e28a]" />
+                  <span><strong className="text-slate-300">Support Guarantee:</strong> If you can't get this to work, we'll help you do it.</span>
+                </p>
               </div>
 
               <div>
