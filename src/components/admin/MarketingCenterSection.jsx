@@ -732,9 +732,31 @@ export default function MarketingCenterSection() {
                   No approved posts waiting to be published.
                 </div>
               ) : (
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {approvedPosts.map(post => <PostCard key={post.id} post={post} />)}
-                </div>
+                <>
+                  <div className="mb-4">
+                    <Button
+                      onClick={handleBulkScheduleApproved}
+                      disabled={bulkScheduling || approvedPosts.length === 0}
+                      variant="outline"
+                      className="border-blue-500 text-blue-400 hover:bg-blue-500/10"
+                    >
+                      {bulkScheduling ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          {bulkScheduleProgress.current}/{bulkScheduleProgress.total}
+                        </>
+                      ) : (
+                        <>
+                          <Clock className="w-4 h-4 mr-2" />
+                          Auto Schedule All ({approvedPosts.length})
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {approvedPosts.map(post => <PostCard key={post.id} post={post} />)}
+                  </div>
+                </>
               )}
             </TabsContent>
 
