@@ -36,14 +36,22 @@ Deno.serve(async (req) => {
       end: new Date(event.end.dateTime || event.end.date).getTime()
     }));
 
-    // Generate available slots (9 AM - 5 PM CT, which is UTC-6)
-    // So 9 AM CT = 15:00 UTC, 5 PM CT = 23:00 UTC
+    // Generate available slots (10 AM - 3 PM CT, Tue-Fri only)
     const slots = [];
     const slotDuration = duration * 60 * 1000; // duration in milliseconds
     
-    // Business hours: 9 AM - 5 PM Central Time (UTC-6)
-    const businessStartHour = 15; // 9 AM CT in UTC
-    const businessEndHour = 23;   // 5 PM CT in UTC
+    // Check if day is Tue-Fri (2-5)
+    const requestedDate = new Date(date);
+    const dayOfWeek = requestedDate.getUTCDay();
+    if (dayOfWeek < 2 || dayOfWeek > 5) {
+      // Sun=0, Mon=1, Sat=6 are unavailable
+      return Response.json({ slots: [] });
+    }
+    
+    // Business hours: 10 AM - 3 PM Central Time (UTC-6 or UTC-5 DST)
+    // Using 16:00 UTC for 10 AM CT, 21:00 UTC for 3 PM CT (standard time)
+    const businessStartHour = 16; // 10 AM CT in UTC
+    const businessEndHour = 21;   // 3 PM CT in UTC
     
     const dayStart = new Date(date);
     dayStart.setUTCHours(businessStartHour, 0, 0, 0);

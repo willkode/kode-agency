@@ -70,9 +70,11 @@ export default function CalendarScheduler({ customerName, customerEmail, hours, 
     }
   };
 
-  // Disable weekends and past dates
+  // Disable weekends, Monday, and past dates (only Tue-Fri available)
   const disabledDays = (date) => {
-    return isWeekend(date) || date < new Date();
+    const day = date.getDay();
+    // 0=Sun, 1=Mon, 6=Sat are disabled
+    return day === 0 || day === 1 || day === 6 || date < new Date();
   };
 
   if (booked && bookingResult) {
