@@ -16,7 +16,7 @@ import MobileAppSection from '@/components/admin/MobileAppSection';
 import AppFoundationSection from '@/components/admin/AppFoundationSection';
 import OperationsSection from '@/components/admin/OperationsSection';
 import MigrationQuotesSection from '@/components/admin/MigrationQuotesSection';
-import MarketingCenterSection from '@/components/admin/MarketingCenterSection';
+import MarketingCenterSection from '@/components/admin/MarketingCenterSection.jsx';
 
 const menuGroups = [
   {
