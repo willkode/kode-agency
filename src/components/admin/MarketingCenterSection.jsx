@@ -405,6 +405,84 @@ export default function MarketingCenterSection() {
         </CardContent>
       </Card>
 
+      {/* Calendar View */}
+      <Card className="bg-slate-900 border-slate-800 mb-6">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-lg text-white">
+            <Calendar className="w-5 h-5 text-[#73e28a]" />
+            Post Calendar
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col lg:flex-row gap-6">
+            <div className="flex-shrink-0">
+              <Calendar
+                mode="single"
+                selected={selectedCalendarDate}
+                onSelect={setSelectedCalendarDate}
+                month={calendarMonth}
+                onMonthChange={setCalendarMonth}
+                className="rounded-md border border-slate-700 bg-slate-800"
+                modifiers={{
+                  scheduled: (date) => scheduledDates.includes(date.toISOString().split('T')[0]),
+                  posted: (date) => postedDates.includes(date.toISOString().split('T')[0])
+                }}
+                modifiersStyles={{
+                  scheduled: { backgroundColor: 'rgb(168 85 247 / 0.3)', color: '#c084fc', fontWeight: 'bold' },
+                  posted: { backgroundColor: 'rgb(34 197 94 / 0.3)', color: '#4ade80', fontWeight: 'bold' }
+                }}
+              />
+              <div className="flex gap-4 mt-3 text-xs">
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-3 rounded bg-purple-500/30 border border-purple-500"></div>
+                  <span className="text-slate-400">Scheduled</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-3 rounded bg-green-500/30 border border-green-500"></div>
+                  <span className="text-slate-400">Posted</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="flex-1 min-w-0">
+              {selectedCalendarDate ? (
+                <div>
+                  <h4 className="text-white font-medium mb-3">
+                    {selectedCalendarDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+                  </h4>
+                  {selectedDatePosts.length === 0 ? (
+                    <p className="text-slate-500 text-sm">No posts on this date.</p>
+                  ) : (
+                    <div className="space-y-2 max-h-60 overflow-y-auto">
+                      {selectedDatePosts.map(post => (
+                        <div key={post.id} className="p-3 bg-slate-800 rounded-lg border border-slate-700">
+                          <div className="flex items-center gap-2 mb-1">
+                            <Badge className={statusColors[post.status]}>{post.status}</Badge>
+                            {post.scheduled_slot && (
+                              <span className="text-xs text-slate-400">
+                                {SCHEDULE_SLOTS.find(s => s.value === post.scheduled_slot)?.label}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-slate-300 text-sm line-clamp-2">{post.text}</p>
+                          <p className="text-slate-500 text-xs mt-1">
+                            {SERVICES.find(s => s.slug === post.service_slug)?.name}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="flex items-center justify-center h-full text-slate-500 text-sm">
+                  Select a date to view posts
+                </div>
+              )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Posts Tabs */}
       <Tabs defaultValue="drafts">
         <TabsList className="bg-slate-800 mb-4">
