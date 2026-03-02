@@ -17,7 +17,6 @@ const HOSTING_TARGETS = [
 const PROVISION_METHODS = [
   { id: 'cli_local', label: 'I will run CLI export locally' },
   { id: 'existing_repo', label: 'I already have a repo' },
-  { id: 'zip_export', label: 'I have a zip export' },
 ];
 
 function CopyButton({ text }) {
@@ -98,28 +97,82 @@ function CLIInstructionsPanel({ profile, onChange }) {
       {open && (
         <div className="px-5 py-5 bg-slate-900 space-y-5">
           <p className="text-slate-400 text-sm">
-            Follow these steps to prepare your frontend export locally, then paste the relevant values below.
+            Follow these steps to export your Base44 frontend locally.
           </p>
 
           {/* Steps */}
-          <ol className="space-y-3 text-sm">
-            {[
-              'Open your Base44 project and navigate to the export or code settings panel.',
-              'Download or clone the frontend source code to your local machine.',
-              'Install dependencies using your package manager (e.g. npm install).',
-              'Set your environment variables — including the Base44 API base URL — in a .env file.',
-              'Run your framework\'s build command (e.g. npm run build) to produce the static output.',
-              'Note the output folder path (usually dist/ or out/) and paste it below.',
-            ].map((step, i) => (
-              <li key={i} className="flex gap-3">
-                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-slate-700 text-slate-300 text-xs flex items-center justify-center font-bold">{i + 1}</span>
-                <span className="text-slate-300">{step}</span>
-              </li>
-            ))}
+          <ol className="space-y-4 text-sm">
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#73e28a]/20 text-[#73e28a] text-xs flex items-center justify-center font-bold">1</span>
+              <div className="flex-1">
+                <span className="text-slate-200 font-medium">Install the Base44 CLI</span>
+                <div className="mt-2 flex items-center gap-2 bg-slate-950 rounded-lg px-3 py-2 font-mono text-xs">
+                  <code className="text-[#73e28a] flex-1">npm install -g @base44/cli</code>
+                  <CopyButton text="npm install -g @base44/cli" />
+                </div>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#73e28a]/20 text-[#73e28a] text-xs flex items-center justify-center font-bold">2</span>
+              <div className="flex-1">
+                <span className="text-slate-200 font-medium">Log in to your Base44 account</span>
+                <div className="mt-2 flex items-center gap-2 bg-slate-950 rounded-lg px-3 py-2 font-mono text-xs">
+                  <code className="text-[#73e28a] flex-1">base44 login</code>
+                  <CopyButton text="base44 login" />
+                </div>
+                <p className="text-slate-500 text-xs mt-1">This will open a browser window for authentication.</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#73e28a]/20 text-[#73e28a] text-xs flex items-center justify-center font-bold">3</span>
+              <div className="flex-1">
+                <span className="text-slate-200 font-medium">Export your app's frontend</span>
+                <div className="mt-2 flex items-center gap-2 bg-slate-950 rounded-lg px-3 py-2 font-mono text-xs">
+                  <code className="text-[#73e28a] flex-1">base44 export --app {profile.base44_app_id || '<APP_ID>'}</code>
+                  <CopyButton text={`base44 export --app ${profile.base44_app_id || '<APP_ID>'}`} />
+                </div>
+                <p className="text-slate-500 text-xs mt-1">This creates a folder with your frontend source code.</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#73e28a]/20 text-[#73e28a] text-xs flex items-center justify-center font-bold">4</span>
+              <div className="flex-1">
+                <span className="text-slate-200 font-medium">Navigate to the exported folder and install dependencies</span>
+                <div className="mt-2 flex items-center gap-2 bg-slate-950 rounded-lg px-3 py-2 font-mono text-xs">
+                  <code className="text-[#73e28a] flex-1">cd my-app && npm install</code>
+                  <CopyButton text="cd my-app && npm install" />
+                </div>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#73e28a]/20 text-[#73e28a] text-xs flex items-center justify-center font-bold">5</span>
+              <div className="flex-1">
+                <span className="text-slate-200 font-medium">Create your .env file with required variables</span>
+                <p className="text-slate-500 text-xs mt-1">Copy the environment variables from the "Host Presets" step later in this wizard.</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#73e28a]/20 text-[#73e28a] text-xs flex items-center justify-center font-bold">6</span>
+              <div className="flex-1">
+                <span className="text-slate-200 font-medium">Build the production bundle</span>
+                <div className="mt-2 flex items-center gap-2 bg-slate-950 rounded-lg px-3 py-2 font-mono text-xs">
+                  <code className="text-[#73e28a] flex-1">npm run build</code>
+                  <CopyButton text="npm run build" />
+                </div>
+                <p className="text-slate-500 text-xs mt-1">Output will be in the <code className="bg-slate-800 px-1 rounded">dist/</code> folder (Vite) or <code className="bg-slate-800 px-1 rounded">out/</code> folder (Next.js).</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#73e28a]/20 text-[#73e28a] text-xs flex items-center justify-center font-bold">7</span>
+              <div className="flex-1">
+                <span className="text-slate-200 font-medium">Deploy to your hosting platform</span>
+                <p className="text-slate-500 text-xs mt-1">Upload the build output to your chosen host (Vercel, Netlify, Cloudflare, or Nginx).</p>
+              </div>
+            </li>
           </ol>
 
           <div className="border-t border-slate-700 pt-5 space-y-4">
-            <p className="text-slate-400 text-xs uppercase tracking-wider font-medium">Paste your values below</p>
+            <p className="text-slate-400 text-xs uppercase tracking-wider font-medium">Optional: Provide your values</p>
 
             {/* Build output path */}
             <div>
@@ -177,6 +230,95 @@ function CLIInstructionsPanel({ profile, onChange }) {
                     </button>
                   );
                 })}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ExistingRepoInstructionsPanel({ profile, onChange }) {
+  const [open, setOpen] = useState(true);
+
+  return (
+    <div className="border border-slate-700 rounded-xl overflow-hidden">
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center justify-between px-5 py-4 bg-slate-800/60 hover:bg-slate-800 transition-colors"
+      >
+        <div className="flex items-center gap-2 text-slate-200 text-sm font-medium">
+          <Terminal className="w-4 h-4 text-[#73e28a]" />
+          Make Your Repo Public for Scanning
+        </div>
+        {open ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+      </button>
+
+      {open && (
+        <div className="px-5 py-5 bg-slate-900 space-y-5">
+          <p className="text-slate-400 text-sm">
+            To scan your repository, it needs to be publicly accessible on GitHub. Follow these steps to make it public:
+          </p>
+
+          <ol className="space-y-4 text-sm">
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#73e28a]/20 text-[#73e28a] text-xs flex items-center justify-center font-bold">1</span>
+              <div className="flex-1">
+                <span className="text-slate-200 font-medium">Go to your GitHub repository</span>
+                <p className="text-slate-500 text-xs mt-1">Navigate to <code className="bg-slate-800 px-1 rounded">github.com/your-username/your-repo</code></p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#73e28a]/20 text-[#73e28a] text-xs flex items-center justify-center font-bold">2</span>
+              <div className="flex-1">
+                <span className="text-slate-200 font-medium">Click "Settings" in the repository menu</span>
+                <p className="text-slate-500 text-xs mt-1">It's in the top navigation bar of your repo (you need admin access).</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#73e28a]/20 text-[#73e28a] text-xs flex items-center justify-center font-bold">3</span>
+              <div className="flex-1">
+                <span className="text-slate-200 font-medium">Scroll down to the "Danger Zone" section</span>
+                <p className="text-slate-500 text-xs mt-1">At the bottom of the General settings page.</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#73e28a]/20 text-[#73e28a] text-xs flex items-center justify-center font-bold">4</span>
+              <div className="flex-1">
+                <span className="text-slate-200 font-medium">Click "Change repository visibility"</span>
+                <p className="text-slate-500 text-xs mt-1">Then select "Make public" and confirm.</p>
+              </div>
+            </li>
+            <li className="flex gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#73e28a]/20 text-[#73e28a] text-xs flex items-center justify-center font-bold">5</span>
+              <div className="flex-1">
+                <span className="text-slate-200 font-medium">Copy your public repo URL</span>
+                <p className="text-slate-500 text-xs mt-1">Example: <code className="bg-slate-800 px-1 rounded">https://github.com/username/repo-name</code></p>
+              </div>
+            </li>
+          </ol>
+
+          <div className="border-t border-slate-700 pt-5 space-y-4">
+            <div className="flex gap-3 px-4 py-3 rounded-lg bg-yellow-500/10 border border-yellow-500/30">
+              <AlertTriangle className="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5" />
+              <div className="text-yellow-300 text-sm">
+                <span className="font-semibold">Security Note:</span> Making your repo public means anyone can view your code. Ensure you don't have any secrets, API keys, or sensitive data committed to the repository. Use environment variables for sensitive values.
+              </div>
+            </div>
+
+            <div>
+              <label className="text-slate-300 text-xs font-medium block mb-1">
+                GitHub Repository URL
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  className="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-white text-sm placeholder:text-slate-500 focus:outline-none focus:border-[#73e28a] font-mono"
+                  placeholder="https://github.com/username/repo-name"
+                  value={profile.github_repo_url || ''}
+                  onChange={e => onChange({ github_repo_url: e.target.value })}
+                />
               </div>
             </div>
           </div>
@@ -256,6 +398,11 @@ export default function StepProjectIntake({ profile, onChange }) {
       {/* CLI panel — shown when cli_local selected */}
       {profile.provision_method === 'cli_local' && (
         <CLIInstructionsPanel profile={profile} onChange={onChange} />
+      )}
+
+      {/* Existing repo panel — shown when existing_repo selected */}
+      {profile.provision_method === 'existing_repo' && (
+        <ExistingRepoInstructionsPanel profile={profile} onChange={onChange} />
       )}
     </div>
   );
