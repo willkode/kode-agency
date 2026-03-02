@@ -5,7 +5,8 @@ Deno.serve(async (req) => {
     const base44 = createClientFromRequest(req);
     const accessToken = await base44.asServiceRole.connectors.getAccessToken("googlecalendar");
     
-    const { date, duration = 60 } = await req.json();
+    const { date, duration = 60, hours = 1 } = await req.json();
+    const sessionDuration = hours * 60; // Convert hours to minutes
     
     if (!date) {
       return Response.json({ error: 'Date is required' }, { status: 400 });
@@ -38,7 +39,7 @@ Deno.serve(async (req) => {
 
     // Generate available slots (10 AM - 3 PM CT, Tue-Fri only)
     const slots = [];
-    const slotDuration = duration * 60 * 1000; // duration in milliseconds
+    const slotDuration = sessionDuration * 60 * 1000; // session duration in milliseconds
     
     // Check if day is Tue-Fri (2-5)
     const requestedDate = new Date(date);
@@ -73,14 +74,21 @@ Deno.serve(async (req) => {
       
       // Only add future slots
       if (isAvailable && currentSlot > Date.now()) {
+        const startDisplay = new Date(currentSlot).toLocaleTimeString('en-US', { 
+          hour: 'numeric', 
+          minute: '2-digit',
+          timeZone: 'America/Chicago'
+        });
+        const endDisplay = new Date(slotEnd).toLocaleTimeString('en-US', { 
+          hour: 'numeric', 
+          minute: '2-digit',
+          timeZone: 'America/Chicago'
+        });
         slots.push({
           start: new Date(currentSlot).toISOString(),
           end: new Date(slotEnd).toISOString(),
-          displayTime: new Date(currentSlot).toLocaleTimeString('en-US', { 
-            hour: 'numeric', 
-            minute: '2-digit',
-            timeZone: 'America/Chicago'
-          })
+          displayTime: `${startDisplay} - ${endDisplay}`,
+          hours: hours
         });
       }
       

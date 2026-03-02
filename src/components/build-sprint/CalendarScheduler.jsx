@@ -32,7 +32,8 @@ export default function CalendarScheduler({ customerName, customerEmail, hours, 
     try {
       const { data } = await base44.functions.invoke('getAvailableSlots', {
         date: format(date, 'yyyy-MM-dd'),
-        duration: 60
+        duration: 60,
+        hours: hours || 1
       });
       setAvailableSlots(data.slots || []);
     } catch (err) {
@@ -142,7 +143,7 @@ export default function CalendarScheduler({ customerName, customerEmail, hours, 
         <div>
           <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
             <Clock className="w-4 h-4 text-[#73e28a]" />
-            Select a Time (Central Time)
+            Select a {hours}-Hour Slot (CT)
           </h4>
           
           {!selectedDate && (
