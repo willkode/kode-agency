@@ -256,6 +256,45 @@ export default function MarketingCenterSection() {
                   )}
                   Post Now
                 </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => {
+                    const today = new Date().toISOString().split('T')[0];
+                    let checkDate = today;
+                    let foundSlot = null;
+                    
+                    for (let i = 0; i < 30 && !foundSlot; i++) {
+                      const dateObj = new Date();
+                      dateObj.setDate(dateObj.getDate() + i);
+                      checkDate = dateObj.toISOString().split('T')[0];
+                      
+                      const takenSlots = scheduledPosts
+                        .filter(p => p.scheduled_date === checkDate)
+                        .map(p => p.scheduled_slot);
+                      
+                      for (const slot of SCHEDULE_SLOTS) {
+                        if (!takenSlots.includes(slot.value)) {
+                          foundSlot = slot.value;
+                          break;
+                        }
+                      }
+                    }
+                    
+                    if (foundSlot) {
+                      scheduleMutation.mutate({ postId: post.id, slot: foundSlot, date: checkDate });
+                    }
+                  }}
+                  disabled={scheduleMutation.isPending}
+                  className="border-slate-600"
+                >
+                  {scheduleMutation.isPending ? (
+                    <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+                  ) : (
+                    <Clock className="w-3 h-3 mr-1" />
+                  )}
+                  Auto Schedule
+                </Button>
               </div>
               {(() => {
                 const takenSlots = scheduledPosts
