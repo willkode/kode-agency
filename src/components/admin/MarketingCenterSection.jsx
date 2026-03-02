@@ -506,6 +506,25 @@ export default function MarketingCenterSection() {
                 </>
               )}
             </Button>
+            
+            <Button 
+              onClick={handleSmartGenerate}
+              disabled={generateMutation.isPending}
+              variant="outline"
+              className="border-slate-600"
+            >
+              {generateMutation.isPending ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Generating...
+                </>
+              ) : (
+                <>
+                  <Wand2 className="w-4 h-4 mr-2" />
+                  Smart Generate
+                </>
+              )}
+            </Button>
           </div>
           
           {generateMutation.isPending && (
