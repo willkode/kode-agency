@@ -1,5 +1,150 @@
 // Generator engine — produces all copy-paste-ready outputs based on migration profile
 
+// ── Host Presets (Step 2) ────────────────────────────────────────────────────
+
+export function generateHostPresets(profile) {
+  const {
+    hosting_target,
+    app_name = 'my-app',
+    base44_api_base_url = 'https://api.base44.com/api/apps/YOUR_APP_ID',
+    base44_app_id = 'YOUR_APP_ID',
+    frontend_domain = 'https://app.yourdomain.com',
+    stripe_used,
+    auth_enabled,
+  } = profile;
+
+  return {
+    spaConfigs: buildAllSpaConfigs({ hosting_target, app_name, frontend_domain }),
+    envVars: buildEnvVarList({ base44_api_base_url, base44_app_id, frontend_domain, stripe_used, auth_enabled }),
+  };
+}
+
+function buildAllSpaConfigs({ hosting_target, app_name, frontend_domain }) {
+  const domain = frontend_domain.replace(/https?:\/\//, '');
+
+  const configs = [
+    {
+      title: 'Nginx — server block',
+      lang: 'nginx',
+      content: `# /etc/nginx/sites-available/${app_name}
+server {
+    listen 80;
+    server_name ${domain};
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name ${domain};
+
+    ssl_certificate     /etc/letsencrypt/live/${domain}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${domain}/privkey.pem;
+
+    root /var/www/${app_name}/dist;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location ~* \\.(js|css|png|jpg|gif|ico|svg|woff2)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+}`,
+    },
+    {
+      title: 'Cloudflare Pages — public/_redirects',
+      lang: 'text',
+      content: `/api/*  https://api.base44.com/api/:splat  200
+/*      /index.html                         200`,
+    },
+    {
+      title: 'Netlify — _redirects (place in public/)',
+      lang: 'text',
+      content: `/api/*  https://api.base44.com/api/:splat  200
+/*      /index.html                         200`,
+    },
+    {
+      title: 'Vercel — vercel.json',
+      lang: 'json',
+      content: `{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://api.base44.com/api/:path*"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}`,
+    },
+  ];
+
+  // If a specific host is selected, put its config first
+  const order = { nginx: 0, cloudflare: 1, netlify: 2, vercel: 3 };
+  if (hosting_target && order[hosting_target] !== undefined) {
+    const idx = order[hosting_target];
+    const [selected] = configs.splice(idx, 1);
+    configs.unshift(selected);
+  }
+
+  return configs;
+}
+
+function buildEnvVarList({ base44_api_base_url, base44_app_id, frontend_domain, stripe_used, auth_enabled }) {
+  const vars = [
+    {
+      key: 'VITE_BASE44_API_URL',
+      example: base44_api_base_url || 'https://api.base44.com/api/apps/YOUR_APP_ID',
+      required: true,
+      note: 'Base44 backend API URL',
+    },
+    {
+      key: 'VITE_BASE44_APP_ID',
+      example: base44_app_id || 'YOUR_APP_ID',
+      required: true,
+      note: 'Base44 App ID from dashboard',
+    },
+    {
+      key: 'VITE_APP_URL',
+      example: frontend_domain || 'https://app.yourdomain.com',
+      required: true,
+      note: 'Your self-hosted frontend URL',
+    },
+  ];
+
+  if (stripe_used) {
+    vars.push({
+      key: 'VITE_STRIPE_PUBLISHABLE_KEY',
+      example: 'pk_live_YOUR_STRIPE_KEY',
+      required: true,
+      note: 'Stripe Dashboard → Developers → API keys',
+    });
+    vars.push({
+      key: 'STRIPE_SECRET_KEY',
+      example: 'sk_live_YOUR_STRIPE_SECRET',
+      required: true,
+      note: 'SERVER SIDE ONLY — never use VITE_ prefix',
+    });
+  }
+
+  if (auth_enabled) {
+    vars.push({
+      key: 'VITE_AUTH_REDIRECT_URL',
+      example: (frontend_domain || 'https://app.yourdomain.com') + '/auth/callback',
+      required: false,
+      note: 'Auth callback URL after login',
+    });
+  }
+
+  return vars;
+}
+
+// ── Legacy full outputs (Step 4) ─────────────────────────────────────────────
+
 export function generateOutputs(profile) {
   const {
     hosting_target,
