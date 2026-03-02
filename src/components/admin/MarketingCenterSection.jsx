@@ -150,6 +150,24 @@ export default function MarketingCenterSection() {
   const scheduledPosts = posts.filter(p => p.status === 'scheduled');
   const postedPosts = posts.filter(p => p.status === 'posted');
 
+  // Calendar data
+  const getPostsForDate = (date) => {
+    const dateStr = date.toISOString().split('T')[0];
+    return posts.filter(p => {
+      if (p.status === 'scheduled' && p.scheduled_date === dateStr) return true;
+      if (p.status === 'posted' && p.posted_at) {
+        const postedDate = new Date(p.posted_at).toISOString().split('T')[0];
+        return postedDate === dateStr;
+      }
+      return false;
+    });
+  };
+
+  const scheduledDates = scheduledPosts.map(p => p.scheduled_date);
+  const postedDates = postedPosts.filter(p => p.posted_at).map(p => new Date(p.posted_at).toISOString().split('T')[0]);
+  
+  const selectedDatePosts = selectedCalendarDate ? getPostsForDate(selectedCalendarDate) : [];
+
   const statusColors = {
     draft: 'bg-yellow-500/20 text-yellow-400',
     approved: 'bg-blue-500/20 text-blue-400',
