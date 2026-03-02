@@ -125,8 +125,9 @@ export default function MigrationWizard({ onReset, projectId, existingProfileId 
         {step === 2 && <StepHostPresets profile={profile} onChange={updateProfile} />}
         {step === 3 && <StepHealthSystem profile={profile} onChange={updateProfile} />}
         {step === 4 && <StepEdgeWorker profile={profile} onChange={updateProfile} />}
-        {step === 5 && <StepAppConfig profile={profile} onChange={updateProfile} />}
-        {step === 6 && <StepOutputs profile={profile} />}
+        {step === 5 && <StepOutageBanner profile={profile} onChange={updateProfile} />}
+        {step === 6 && <StepAppConfig profile={profile} onChange={updateProfile} />}
+        {step === 7 && <StepOutputs profile={profile} />}
       </Card>
 
       <div className="flex items-center justify-between mt-6">
