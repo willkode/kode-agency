@@ -3,7 +3,7 @@ import AppShell from '@/components/migration-assistant/layout/AppShell';
 import { ToastProvider, useToast } from '@/components/migration-assistant/lib/toast';
 import { VerificationRepo } from '@/components/migration-assistant/lib/repository';
 import { base44 } from '@/api/base44Client';
-import { CheckCircle, XCircle, Clock, ShieldCheck } from 'lucide-react';
+import { CheckCircle, XCircle, Clock, ShieldCheck, Download } from 'lucide-react';
 
 const STATUS_CONFIG = {
   passed:      { icon: CheckCircle, color: 'text-[#73e28a]', bg: 'bg-[#73e28a]/10 border-[#73e28a]/30' },
