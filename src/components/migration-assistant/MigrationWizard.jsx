@@ -1,33 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '@/components/ui-custom/Card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, ArrowRight, Download, RotateCcw } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Download, RotateCcw, Save, CheckCircle } from 'lucide-react';
+import StepProjectIntake from './StepProjectIntake.jsx';
 import StepHostingTarget from './StepHostingTarget.jsx';
 import StepAppConfig from './StepAppConfig.jsx';
 import StepOutputs from './StepOutputs.jsx';
+import { ProfileRepo } from './lib/repository.js';
 
-const STEPS = ['Hosting Target', 'App Config', 'Generated Outputs'];
+const STEPS = ['Project Intake', 'Hosting Target', 'App Config', 'Generated Outputs'];
 
-export default function MigrationWizard({ onReset }) {
+const EMPTY_PROFILE = {
+  project_name: '',
+  framework: '',
+  hosting_target: '',
+  provision_method: '',
+  build_output_path: '',
+  base_url_assumption: '/',
+  route_type: 'spa',
+  app_name: '',
+  base44_app_id: '',
+  base44_api_base_url: '',
+  frontend_domain: '',
+  cors_origins: '',
+  auth_enabled: true,
+  stripe_used: false,
+  custom_domain: '',
+  label: '',
+};
+
+export default function MigrationWizard({ onReset, projectId, existingProfileId }) {
   const [step, setStep] = useState(0);
-  const [profile, setProfile] = useState({
-    hosting_target: '',
-    app_name: '',
-    base44_app_id: '',
-    base44_api_base_url: '',
-    frontend_domain: '',
-    cors_origins: '',
-    auth_enabled: true,
-    stripe_used: false,
-    custom_domain: '',
-  });
+  const [profile, setProfile] = useState(EMPTY_PROFILE);
+  const [savedProfileId, setSavedProfileId] = useState(existingProfileId || null);
+  const [saving, setSaving] = useState(false);
+  const [saveStatus, setSaveStatus] = useState(null); // 'saved' | 'error' | null
+
+  // Load existing profile if editing
+  useEffect(() => {
+    if (existingProfileId) {
+      ProfileRepo.get(existingProfileId).then(p => {
+        if (p) setProfile(prev => ({ ...prev, ...p }));
+      });
+    }
+  }, [existingProfileId]);
 
   const updateProfile = (fields) => setProfile(prev => ({ ...prev, ...fields }));
 
   const canProceed = () => {
-    if (step === 0) return !!profile.hosting_target;
-    if (step === 1) return !!profile.app_name && !!profile.base44_api_base_url && !!profile.frontend_domain;
+    if (step === 0) return !!profile.project_name && !!profile.framework && !!profile.hosting_target && !!profile.provision_method;
+    if (step === 1) return !!profile.hosting_target;
+    if (step === 2) return !!profile.app_name && !!profile.base44_api_base_url && !!profile.frontend_domain;
     return true;
+  };
+
+  const handleSaveDraft = async () => {
+    setSaving(true);
+    setSaveStatus(null);
+    try {
+      const draftData = {
+        ...profile,
+        project_id: projectId || 'local',
+        label: profile.project_name || profile.app_name || 'Draft',
+        app_name: profile.app_name || profile.project_name || 'App',
+        base44_api_base_url: profile.base44_api_base_url || '',
+        frontend_domain: profile.frontend_domain || '',
+      };
+      if (savedProfileId) {
+        await ProfileRepo.update(savedProfileId, draftData);
+      } else {
+        const created = await ProfileRepo.create(draftData);
+        if (created?.id) setSavedProfileId(created.id);
+      }
+      setSaveStatus('saved');
+      setTimeout(() => setSaveStatus(null), 3000);
+    } catch {
+      setSaveStatus('error');
+      setTimeout(() => setSaveStatus(null), 3000);
+    }
+    setSaving(false);
   };
 
   const handleExportJSON = () => {
