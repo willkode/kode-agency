@@ -129,7 +129,7 @@ export default function MigrationAssistantLanding() {
                 </Button>
               </Link>
               <Link to={createPageUrl('KnowledgeBase')}>
-                <Button variant="outline" className="border-slate-600 text-white hover:bg-slate-800 h-12 px-6">
+                <Button variant="outline" className="border-slate-600 text-white hover:bg-slate-800 bg-slate-800 h-12 px-6">
                   View Documentation
                 </Button>
               </Link>
