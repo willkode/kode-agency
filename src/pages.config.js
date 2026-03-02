@@ -74,7 +74,14 @@ import FrontendExporter from './pages/FrontendExporter';
 import FullFunnelMarketing from './pages/FullFunnelMarketing';
 import Home from './pages/Home';
 import Legal from './pages/Legal';
+import MADashboard from './pages/MADashboard';
+import MAProjectDetail from './pages/MAProjectDetail';
+import MAProjects from './pages/MAProjects';
+import MASettings from './pages/MASettings';
+import MATemplates from './pages/MATemplates';
+import MAVerification from './pages/MAVerification';
 import MVPDevelopment from './pages/MVPDevelopment';
+import MigrationAssistant from './pages/MigrationAssistant';
 import MobileAppConversion from './pages/MobileAppConversion';
 import PaidAds from './pages/PaidAds';
 import Platforms from './pages/Platforms';
@@ -90,13 +97,6 @@ import Services from './pages/Services';
 import ThankYou from './pages/ThankYou';
 import UIUXDesign from './pages/UIUXDesign';
 import WebsiteDevelopment from './pages/WebsiteDevelopment';
-import MigrationAssistant from './pages/MigrationAssistant';
-import MADashboard from './pages/MADashboard';
-import MAProjects from './pages/MAProjects';
-import MAProjectDetail from './pages/MAProjectDetail';
-import MATemplates from './pages/MATemplates';
-import MAVerification from './pages/MAVerification';
-import MASettings from './pages/MASettings';
 import __Layout from './Layout.jsx';
 
 
@@ -128,7 +128,14 @@ export const PAGES = {
     "FullFunnelMarketing": FullFunnelMarketing,
     "Home": Home,
     "Legal": Legal,
+    "MADashboard": MADashboard,
+    "MAProjectDetail": MAProjectDetail,
+    "MAProjects": MAProjects,
+    "MASettings": MASettings,
+    "MATemplates": MATemplates,
+    "MAVerification": MAVerification,
     "MVPDevelopment": MVPDevelopment,
+    "MigrationAssistant": MigrationAssistant,
     "MobileAppConversion": MobileAppConversion,
     "PaidAds": PaidAds,
     "Platforms": Platforms,
@@ -144,13 +151,6 @@ export const PAGES = {
     "ThankYou": ThankYou,
     "UIUXDesign": UIUXDesign,
     "WebsiteDevelopment": WebsiteDevelopment,
-    "MigrationAssistant": MigrationAssistant,
-    "MADashboard": MADashboard,
-    "MAProjects": MAProjects,
-    "MAProjectDetail": MAProjectDetail,
-    "MATemplates": MATemplates,
-    "MAVerification": MAVerification,
-    "MASettings": MASettings,
 }
 
 export const pagesConfig = {

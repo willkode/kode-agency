@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppShell from '@/components/migration-assistant/layout/AppShell';
-import { ToastProvider, useToast } from '@/components/migration-assistant/lib/toast';
+import { ToastProvider } from '@/components/migration-assistant/lib/toast';
 import { base44 } from '@/api/base44Client';
 import OutputBlock from '@/components/migration-assistant/OutputBlock.jsx';
-import { useEffect } from 'react';
-import { Server, Globe, Zap, Cloud } from 'lucide-react';
+import TemplateTestRunner from '@/components/migration-assistant/TemplateTestRunner.jsx';
+import { Server, Globe, Zap, Cloud, FlaskConical } from 'lucide-react';
 
 const TEMPLATES = [
   {
@@ -132,6 +132,7 @@ function TemplatesInner() {
   const [user, setUser] = useState(null);
   const [localMode, setLocalMode] = useState(false);
   const [selected, setSelected] = useState(TEMPLATES[0]);
+  const [showEngine, setShowEngine] = useState(false);
 
   useEffect(() => {
     const init = async () => {
@@ -147,10 +148,24 @@ function TemplatesInner() {
   return (
     <AppShell user={user} localMode={localMode}>
       <div className="p-6 max-w-5xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-white">Templates Library</h1>
-          <p className="text-slate-400 mt-1">Reusable starter templates for each hosting platform. Use them as a base before running the wizard.</p>
+        <div className="mb-8 flex items-start justify-between gap-4 flex-wrap">
+          <div>
+            <h1 className="text-2xl font-bold text-white">Templates Library</h1>
+            <p className="text-slate-400 mt-1">Reusable starter templates for each hosting platform. Use them as a base before running the wizard.</p>
+          </div>
+          <button
+            onClick={() => setShowEngine(e => !e)}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-sm font-medium transition-colors ${showEngine ? 'border-[#73e28a] bg-[#73e28a]/10 text-[#73e28a]' : 'border-slate-700 text-slate-400 hover:text-white hover:border-slate-500'}`}
+          >
+            <FlaskConical className="w-4 h-4" /> Template Engine
+          </button>
         </div>
+
+        {showEngine && (
+          <div className="mb-8">
+            <TemplateTestRunner />
+          </div>
+        )}
 
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Template picker */}
