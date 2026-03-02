@@ -143,6 +143,261 @@ function buildEnvVarList({ base44_api_base_url, base44_app_id, frontend_domain, 
   return vars;
 }
 
+// ── Health System (Step 3) ────────────────────────────────────────────────────
+
+export function generateHealthSystem(profile) {
+  const {
+    base44_api_base_url = 'https://api.base44.com/api/apps/YOUR_APP_ID',
+    base44_app_id = 'YOUR_APP_ID',
+    frontend_domain = 'https://app.yourdomain.com',
+    cors_origins = '',
+    health_ping_url = '',
+    health_deep_enabled = false,
+    health_runtime = 'express',
+    health_timeout_ms = 2500,
+    health_failure_threshold = 3,
+    health_success_threshold = 2,
+  } = profile;
+
+  const pingUrl = health_ping_url || `${base44_api_base_url.replace(/\/$/, '')}/health_ping`;
+  const origins = cors_origins || frontend_domain;
+
+  return {
+    backendPing: buildHealthPingFunction({ base44_app_id, frontend_domain, health_deep_enabled }),
+    platformHealthEndpoint: buildPlatformHealthEndpoint({ pingUrl, frontend_domain, origins, health_runtime, health_timeout_ms }),
+    pollingContract: buildPollingContract({ health_failure_threshold, health_success_threshold }),
+  };
+}
+
+function buildHealthPingFunction({ base44_app_id, frontend_domain, health_deep_enabled }) {
+  const deepChecks = health_deep_enabled ? `
+    // ── Deep health check ─────────────────────────────────────────────────────
+    // PLACEHOLDER: Replace this block with your actual DB connectivity check.
+    // Example: query a lightweight entity or call base44.entities.YourEntity.list() with limit 1.
+    let dbOk = false;
+    try {
+      // const rows = await base44.entities.YourEntity.list('created_date', 1);
+      // dbOk = Array.isArray(rows);
+      dbOk = true; // ← Remove this line once you wire in a real check
+    } catch (_) {
+      dbOk = false;
+    }
+
+    const checks = { db: dbOk ? 'pass' : 'fail' };
+    const ok = dbOk;` : `
+    const checks = undefined;
+    const ok = true;`;
+
+  return `// ─────────────────────────────────────────────────────────────────────────────
+// Base44 Backend Function: health_ping
+// ─────────────────────────────────────────────────────────────────────────────
+// HOW TO DEPLOY:
+//   1. Go to your Base44 dashboard → Code → Functions
+//   2. Click "New Function" and name it "health_ping"
+//   3. Paste this template and adjust the PLACEHOLDER sections
+//   4. Click Deploy
+//
+// IMPORTANT: This is an adaptable template. Sections marked PLACEHOLDER require
+// manual adjustment to match your app's actual entities and data model.
+// ─────────────────────────────────────────────────────────────────────────────
+
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
+
+Deno.serve(async (req) => {
+  // Allow preflight
+  if (req.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
+      headers: {
+        'Access-Control-Allow-Origin': '${frontend_domain}',
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+      },
+    });
+  }
+${deepChecks}
+
+  return Response.json(
+    {
+      ok,
+      ts: new Date().toISOString(),
+      ${health_deep_enabled ? 'checks,' : '// checks: undefined  ← enable deep mode to include this'}
+    },
+    {
+      status: ok ? 200 : 503,
+      headers: {
+        'Access-Control-Allow-Origin': '${frontend_domain}',
+        'Cache-Control': 'no-store',
+      },
+    }
+  );
+});`;
+}
+
+function buildPlatformHealthEndpoint({ pingUrl, frontend_domain, origins, health_runtime, health_timeout_ms }) {
+  const originsArr = origins.split(',').map(o => `'${o.trim()}'`).join(', ');
+  const timeout = Number(health_timeout_ms) || 2500;
+
+  const body = `
+  const ALLOWED_ORIGINS = [${originsArr}];
+  // ── Caching guidance ─────────────────────────────────────────────────────────
+  // Cache this response for 10 seconds on the CDN edge to avoid hammering
+  // the upstream. Set 'Cache-Control: public, max-age=10, s-maxage=10'.
+  // ── Rate limiting guidance ────────────────────────────────────────────────────
+  // Limit callers to max 6 requests/minute per IP. If using Cloudflare, enable
+  // the "Rate Limiting" rule targeting this path (/api/platform-health).
+
+  const t0 = Date.now();
+  let upstreamStatus = 0;
+  let ok = false;
+
+  try {
+    const res = await fetch('${pingUrl}', {
+      signal: AbortSignal.timeout(${timeout}),
+    });
+    upstreamStatus = res.status;
+    ok = res.ok;
+  } catch (_) {
+    upstreamStatus = 0;
+    ok = false;
+  }
+
+  const latencyMs = Date.now() - t0;
+  const payload = { ok, upstreamStatus, latencyMs, ts: new Date().toISOString() };`;
+
+  const templates = {
+    express: `// /api/platform-health — Express (Node.js)
+// Mount with: app.use('/api/platform-health', require('./platform-health'))
+
+const express = require('express');
+const router = express.Router();
+${body}
+
+  const origin = req.headers['origin'] || '';
+  if (ALLOWED_ORIGINS.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Cache-Control', 'public, max-age=10, s-maxage=10');
+  return res.status(ok ? 200 : 503).json(payload);
+});
+
+module.exports = router;`,
+
+    nextjs: `// pages/api/platform-health.js  (or app/api/platform-health/route.js for App Router)
+// Next.js API Route
+${body}
+
+  const origin = req.headers['origin'] || '';
+  if (ALLOWED_ORIGINS.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Cache-Control', 'public, max-age=10, s-maxage=10');
+  return res.status(ok ? 200 : 503).json(payload);
+}`,
+
+    cloudflare: `// Cloudflare Worker Route: /api/platform-health
+// Attach to your existing Worker or create a new one.
+// Add a route pattern: yourdomain.com/api/platform-health*
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+    if (!url.pathname.startsWith('/api/platform-health')) {
+      return fetch(request);
+    }
+
+    ${body.trim().replace(/^/gm, '    ').trim()}
+
+    const origin = request.headers.get('Origin') || '';
+    const headers = {
+      'Content-Type': 'application/json',
+      'Cache-Control': 'public, max-age=10, s-maxage=10',
+    };
+    if (ALLOWED_ORIGINS.includes(origin)) headers['Access-Control-Allow-Origin'] = origin;
+    return new Response(JSON.stringify(payload), { status: ok ? 200 : 503, headers });
+  },
+};`,
+
+    any: `// ── Pseudo-code: Any server runtime ──────────────────────────────────────────
+// Adapt the logic below to your language/framework.
+
+// 1. Receive GET /api/platform-health
+// 2. Set CORS headers if origin is in allowed list
+// 3. Set Cache-Control: public, max-age=10, s-maxage=10
+
+const PING_URL = '${pingUrl}';
+const TIMEOUT_MS = ${timeout};
+
+// 4. Time a fetch call with timeout
+const t0 = now();
+const { status: upstreamStatus, ok } = await fetchWithTimeout(PING_URL, TIMEOUT_MS);
+const latencyMs = now() - t0;
+
+// 5. Return JSON matching the frontend polling contract:
+return json({
+  ok,             // boolean
+  upstreamStatus, // number — HTTP status from upstream (0 = network error)
+  latencyMs,      // number — round-trip ms
+  ts,             // string — ISO 8601 timestamp
+}, status: ok ? 200 : 503);`,
+  };
+
+  return templates[health_runtime] || templates['express'];
+}
+
+function buildPollingContract({ health_failure_threshold, health_success_threshold }) {
+  const ft = Number(health_failure_threshold) || 3;
+  const st = Number(health_success_threshold) || 2;
+
+  return `// ─────────────────────────────────────────────────────────────────────────────
+// Frontend Polling Contract
+// ─────────────────────────────────────────────────────────────────────────────
+// Your frontend polls GET /api/platform-health every N seconds.
+// The endpoint must return JSON matching this exact schema:
+
+// TypeScript interface:
+interface PlatformHealthResponse {
+  ok: boolean;           // true = system healthy, false = degraded / down
+  upstreamStatus: number; // HTTP status from the upstream ping (0 = network error)
+  latencyMs: number;     // round-trip latency in milliseconds
+  ts: string;            // ISO 8601 timestamp of the check
+}
+
+// Example success response:
+// { "ok": true, "upstreamStatus": 200, "latencyMs": 142, "ts": "2024-01-15T10:30:00.000Z" }
+
+// Example failure response (status 503):
+// { "ok": false, "upstreamStatus": 0, "latencyMs": ${Number(2500)}, "ts": "2024-01-15T10:30:00.000Z" }
+
+// ── Banner display thresholds (editable) ────────────────────────────────────
+const FAILURE_THRESHOLD = ${ft};
+// Show "degraded" banner after this many CONSECUTIVE failed polls.
+
+const SUCCESS_THRESHOLD = ${st};
+// Remove banner only after this many CONSECUTIVE successful polls.
+// (Hysteresis — prevents banner flicker on transient errors.)
+
+// ── Suggested poll logic ─────────────────────────────────────────────────────
+// let failCount = 0, successCount = 0;
+//
+// async function poll() {
+//   try {
+//     const data = await fetch('/api/platform-health').then(r => r.json());
+//     if (data.ok) {
+//       successCount++; failCount = 0;
+//       if (successCount >= SUCCESS_THRESHOLD) hideBanner();
+//     } else {
+//       failCount++; successCount = 0;
+//       if (failCount >= FAILURE_THRESHOLD) showBanner();
+//     }
+//   } catch (_) {
+//     failCount++; successCount = 0;
+//     if (failCount >= FAILURE_THRESHOLD) showBanner();
+//   }
+// }
+//
+// setInterval(poll, 30_000); // poll every 30 seconds`;
+}
+
 // ── Legacy full outputs (Step 4) ─────────────────────────────────────────────
 
 export function generateOutputs(profile) {
