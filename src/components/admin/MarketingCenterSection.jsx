@@ -144,6 +144,7 @@ export default function MarketingCenterSection() {
 
   const draftPosts = posts.filter(p => p.status === 'draft');
   const approvedPosts = posts.filter(p => p.status === 'approved');
+  const scheduledPosts = posts.filter(p => p.status === 'scheduled');
   const postedPosts = posts.filter(p => p.status === 'posted');
 
   const statusColors = {
