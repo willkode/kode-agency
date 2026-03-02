@@ -393,6 +393,9 @@ export default function MarketingCenterSection() {
           <TabsTrigger value="approved" className="data-[state=active]:bg-slate-700">
             Approved ({approvedPosts.length})
           </TabsTrigger>
+          <TabsTrigger value="scheduled" className="data-[state=active]:bg-slate-700">
+            Scheduled ({scheduledPosts.length})
+          </TabsTrigger>
           <TabsTrigger value="posted" className="data-[state=active]:bg-slate-700">
             Posted ({postedPosts.length})
           </TabsTrigger>
