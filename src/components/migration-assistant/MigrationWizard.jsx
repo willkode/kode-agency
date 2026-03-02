@@ -11,8 +11,9 @@ import StepOutageBanner from './StepOutageBanner.jsx';
 import StepAppConfig from './StepAppConfig.jsx';
 import StepOutputs from './StepOutputs.jsx';
 import { ProfileRepo } from '@/components/migration-assistant/lib/repository';
+import VerificationRunner from './VerificationRunner.jsx';
 
-const STEPS = ['Project Intake', 'Hosting Target', 'Host Presets', 'Health System', 'Edge Worker', 'Outage Banner', 'App Config', 'Generated Outputs'];
+const STEPS = ['Project Intake', 'Hosting Target', 'Host Presets', 'Health System', 'Edge Worker', 'Outage Banner', 'App Config', 'Generated Outputs', 'Verify'];
 
 const EMPTY_PROFILE = {
   project_name: '',
@@ -59,6 +60,7 @@ export default function MigrationWizard({ onReset, projectId, existingProfileId 
     if (step === 4) return true; // Edge Worker — always can proceed
     if (step === 5) return true; // Outage Banner — always can proceed
     if (step === 6) return !!profile.app_name && !!profile.base44_api_base_url && !!profile.frontend_domain;
+    if (step === 7) return true; // Generated Outputs — always can proceed to Verify
     return true;
   };
 
@@ -128,6 +130,13 @@ export default function MigrationWizard({ onReset, projectId, existingProfileId 
         {step === 5 && <StepOutageBanner profile={profile} onChange={updateProfile} />}
         {step === 6 && <StepAppConfig profile={profile} onChange={updateProfile} />}
         {step === 7 && <StepOutputs profile={profile} />}
+        {step === 8 && (
+          <div>
+            <h2 className="text-xl font-bold text-white mb-1">Verify Deployment</h2>
+            <p className="text-slate-400 text-sm mb-6">Run each check below to confirm your self-hosted setup is correct before going live.</p>
+            <VerificationRunner profile={profile} profileId={savedProfileId} projectId={projectId} />
+          </div>
+        )}
       </Card>
 
       <div className="flex items-center justify-between mt-6">
@@ -165,12 +174,12 @@ export default function MigrationWizard({ onReset, projectId, existingProfileId 
             </Button>
           )}
 
-          {step === 7 && (
+          {(step === 7 || step === 8) && (
             <Button variant="outline" onClick={handleExportJSON} className="border-[#73e28a] text-[#73e28a] hover:bg-[#73e28a]/10">
               <Download className="w-4 h-4 mr-2" /> Export Profile JSON
             </Button>
           )}
-          {step < 7 && (
+          {step < 8 && (
             <Button
               onClick={() => setStep(s => s + 1)}
               disabled={!canProceed()}
