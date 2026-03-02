@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList, Menu, X, ChevronRight, Smartphone, Rocket, Activity, GitBranch } from 'lucide-react';
+import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList, Menu, X, ChevronRight, Smartphone, Rocket, Activity, GitBranch, Megaphone } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 import CRMSection from '@/components/admin/CRMSection';
@@ -16,6 +16,7 @@ import MobileAppSection from '@/components/admin/MobileAppSection';
 import AppFoundationSection from '@/components/admin/AppFoundationSection';
 import OperationsSection from '@/components/admin/OperationsSection';
 import MigrationQuotesSection from '@/components/admin/MigrationQuotesSection';
+import MarketingCenterSection from '@/components/admin/MarketingCenterSection';
 
 const menuGroups = [
   {
@@ -44,6 +45,12 @@ const menuGroups = [
       { id: 'portfolio', label: 'Portfolio', icon: Layout },
       { id: 'blog', label: 'Blog', icon: FileText },
       { id: 'careers', label: 'Careers', icon: Briefcase },
+    ]
+  },
+  {
+    title: 'Marketing',
+    items: [
+      { id: 'marketing', label: 'Marketing Center', icon: Megaphone },
     ]
   },
 ];
@@ -288,6 +295,9 @@ export default function AdminPage() {
           )}
           {activeTab === 'migration-quotes' && (
             <MigrationQuotesSection />
+          )}
+          {activeTab === 'marketing' && (
+            <MarketingCenterSection />
           )}
         </div>
       </main>
