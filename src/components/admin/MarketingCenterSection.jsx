@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Calendar } from "@/components/ui/calendar";
 import { 
   Loader2, 
   Sparkles, 
@@ -62,6 +63,8 @@ export default function MarketingCenterSection() {
   const [editText, setEditText] = useState('');
   const [scheduleSlot, setScheduleSlot] = useState('');
   const [scheduleDate, setScheduleDate] = useState('');
+  const [calendarMonth, setCalendarMonth] = useState(new Date());
+  const [selectedCalendarDate, setSelectedCalendarDate] = useState(null);
   const queryClient = useQueryClient();
 
   const { data: posts = [], isLoading } = useQuery({
