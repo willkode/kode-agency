@@ -344,10 +344,30 @@ export default function MarketingCenterSection() {
           )}
           
           {post.status === 'scheduled' && (
-            <div className="flex items-center gap-2 text-purple-400 text-xs">
-              <Calendar className="w-3 h-3" />
-              Scheduled: {SCHEDULE_SLOTS.find(s => s.value === post.scheduled_slot)?.label} on {post.scheduled_date}
-            </div>
+            <>
+              <div className="flex items-center gap-2 text-purple-400 text-xs mb-2">
+                <Calendar className="w-3 h-3" />
+                Scheduled: {SCHEDULE_SLOTS.find(s => s.value === post.scheduled_slot)?.label} on {post.scheduled_date}
+              </div>
+              <div className="flex gap-2">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  onClick={() => handleEdit(post)}
+                  className="border-slate-600"
+                >
+                  <Edit2 className="w-3 h-3 mr-1" /> Edit
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => base44.entities.LinkedInPost.update(post.id, { status: 'approved', scheduled_slot: null, scheduled_date: null }).then(() => queryClient.invalidateQueries({ queryKey: ['linkedin-posts'] }))}
+                  className="border-slate-600"
+                >
+                  Unschedule
+                </Button>
+              </div>
+            </>
           )}
           
           {post.status === 'posted' && post.linkedin_post_id && (
