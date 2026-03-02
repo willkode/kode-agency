@@ -693,7 +693,7 @@ export default function MarketingCenterSection() {
 
       {/* Posts Tabs */}
       <Tabs defaultValue="drafts">
-        <TabsList className="bg-slate-800 mb-4">
+        <TabsList className="bg-slate-800 mb-4 text-white">
           <TabsTrigger value="drafts" className="data-[state=active]:bg-slate-700">
             Drafts ({draftPosts.length})
           </TabsTrigger>
