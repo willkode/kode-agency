@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { generateOutputs } from './generator.js';
+import { generateOutputs } from './generator';
 import OutputBlock from './OutputBlock.jsx';
 import { CheckCircle, AlertTriangle } from 'lucide-react';
 
