@@ -241,19 +241,58 @@ export default function MarketingCenterSection() {
           )}
           
           {post.status === 'approved' && (
-            <Button 
-              size="sm" 
-              onClick={() => postMutation.mutate(post.id)}
-              disabled={postMutation.isPending || postsRemaining <= 0}
-              className="bg-[#73e28a] hover:bg-[#5dbb72] text-black"
-            >
-              {postMutation.isPending ? (
-                <Loader2 className="w-3 h-3 mr-1 animate-spin" />
-              ) : (
-                <Send className="w-3 h-3 mr-1" />
-              )}
-              Post to LinkedIn
-            </Button>
+            <div className="flex flex-col gap-2 w-full">
+              <div className="flex gap-2">
+                <Button 
+                  size="sm" 
+                  onClick={() => postMutation.mutate(post.id)}
+                  disabled={postMutation.isPending || postsRemaining <= 0}
+                  className="bg-[#73e28a] hover:bg-[#5dbb72] text-black"
+                >
+                  {postMutation.isPending ? (
+                    <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+                  ) : (
+                    <Send className="w-3 h-3 mr-1" />
+                  )}
+                  Post Now
+                </Button>
+              </div>
+              <div className="flex gap-2 items-center flex-wrap">
+                <Select value={scheduleSlot} onValueChange={setScheduleSlot}>
+                  <SelectTrigger className="w-32 h-8 bg-slate-700 border-slate-600 text-xs">
+                    <SelectValue placeholder="Time slot" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-slate-800 border-slate-700">
+                    {SCHEDULE_SLOTS.map(s => (
+                      <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <input 
+                  type="date" 
+                  value={scheduleDate}
+                  onChange={(e) => setScheduleDate(e.target.value)}
+                  min={new Date().toISOString().split('T')[0]}
+                  className="h-8 px-2 rounded bg-slate-700 border border-slate-600 text-white text-xs"
+                />
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => scheduleMutation.mutate({ postId: post.id, slot: scheduleSlot, date: scheduleDate })}
+                  disabled={!scheduleSlot || !scheduleDate || scheduleMutation.isPending}
+                  className="h-8 border-slate-600 text-xs"
+                >
+                  <Clock className="w-3 h-3 mr-1" /> Schedule
+                </Button>
+              </div>
+            </div>
+          )}
+          
+          {post.status === 'scheduled' && (
+            <div className="flex items-center gap-2 text-purple-400 text-xs">
+              <Calendar className="w-3 h-3" />
+              Scheduled: {SCHEDULE_SLOTS.find(s => s.value === post.scheduled_slot)?.label} on {post.scheduled_date}
+            </div>
           )}
           
           {post.status === 'posted' && post.linkedin_post_id && (
