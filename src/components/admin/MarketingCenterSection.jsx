@@ -134,11 +134,31 @@ export default function MarketingCenterSection() {
     }
   };
 
-  const handleSmartGenerate = () => {
+  const getNextServiceToPost = (serviceLastActivity) => {
     const threeDaysAgo = new Date();
     threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     
-    // Find services that don't have a scheduled post OR haven't been posted in 3+ days
+    let bestService = null;
+    let oldestDate = new Date();
+    
+    for (const service of SERVICES) {
+      const lastActivity = serviceLastActivity[service.slug];
+      
+      if (!lastActivity) {
+        bestService = service;
+        break;
+      }
+      
+      if (lastActivity < threeDaysAgo && lastActivity < oldestDate) {
+        oldestDate = lastActivity;
+        bestService = service;
+      }
+    }
+    
+    return bestService;
+  };
+
+  const buildServiceActivityMap = () => {
     const serviceLastActivity = {};
     
     posts.forEach(post => {
@@ -151,7 +171,7 @@ export default function MarketingCenterSection() {
       } else if (post.status === 'posted' && post.posted_at) {
         activityDate = new Date(post.posted_at);
       } else if (post.status === 'draft' || post.status === 'approved') {
-        activityDate = new Date(); // Treat pending posts as recent
+        activityDate = new Date();
       }
       
       if (activityDate && (!serviceLastActivity[slug] || activityDate > serviceLastActivity[slug])) {
@@ -159,28 +179,84 @@ export default function MarketingCenterSection() {
       }
     });
     
-    // Find best candidate: no activity or oldest activity
-    let bestService = null;
-    let oldestDate = new Date();
-    
-    for (const service of SERVICES) {
-      const lastActivity = serviceLastActivity[service.slug];
-      
-      if (!lastActivity) {
-        // No posts for this service - use it
-        bestService = service;
-        break;
-      }
-      
-      if (lastActivity < threeDaysAgo && lastActivity < oldestDate) {
-        oldestDate = lastActivity;
-        bestService = service;
-      }
-    }
+    return serviceLastActivity;
+  };
+
+  const handleSmartGenerate = () => {
+    const serviceLastActivity = buildServiceActivityMap();
+    const bestService = getNextServiceToPost(serviceLastActivity);
     
     if (bestService) {
       generateMutation.mutate(bestService);
     }
+  };
+
+  const [bulkGenerating, setBulkGenerating] = useState(false);
+  const [bulkProgress, setBulkProgress] = useState({ current: 0, total: 0 });
+
+  const handleBulkGenerate = async () => {
+    setBulkGenerating(true);
+    
+    // Get all empty slots for the next 30 days
+    const emptySlots = [];
+    const now = new Date();
+    const currentHourCST = now.getHours();
+    const slotHours = { morning: 9, afternoon: 13, evening: 19 };
+    
+    for (let i = 0; i < 30; i++) {
+      const dateObj = new Date();
+      dateObj.setDate(dateObj.getDate() + i);
+      const checkDate = dateObj.toISOString().split('T')[0];
+      
+      const takenSlots = scheduledPosts
+        .filter(p => p.scheduled_date === checkDate)
+        .map(p => p.scheduled_slot);
+      
+      for (const slot of SCHEDULE_SLOTS) {
+        if (takenSlots.includes(slot.value)) continue;
+        if (i === 0 && currentHourCST >= slotHours[slot.value]) continue;
+        
+        emptySlots.push({ date: checkDate, slot: slot.value });
+      }
+    }
+    
+    setBulkProgress({ current: 0, total: emptySlots.length });
+    
+    const serviceLastActivity = buildServiceActivityMap();
+    
+    for (let i = 0; i < emptySlots.length; i++) {
+      const { date, slot } = emptySlots[i];
+      const service = getNextServiceToPost(serviceLastActivity);
+      
+      if (!service) break;
+      
+      try {
+        const { data } = await base44.functions.invoke('generateLinkedInPost', {
+          service_slug: service.slug,
+          service_name: service.name,
+          service_description: service.description,
+          service_url: service.url
+        });
+        
+        if (data?.postId) {
+          await base44.entities.LinkedInPost.update(data.postId, {
+            status: 'scheduled',
+            scheduled_slot: slot,
+            scheduled_date: date
+          });
+        }
+        
+        // Update activity map
+        serviceLastActivity[service.slug] = new Date(date);
+        
+        setBulkProgress({ current: i + 1, total: emptySlots.length });
+      } catch (err) {
+        console.error('Bulk generate error:', err);
+      }
+    }
+    
+    setBulkGenerating(false);
+    queryClient.invalidateQueries({ queryKey: ['linkedin-posts'] });
   };
 
   const handleEdit = (post) => {
