@@ -86,6 +86,16 @@ export default function MigrationWizard({ onReset, projectId, existingProfileId 
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
+    a.download = `migration-profile-${profile.project_name || profile.app_name || 'app'}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleExportJSON = () => {
+    const blob = new Blob([JSON.stringify(profile, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
     a.download = `migration-profile-${profile.app_name || 'app'}.json`;
     a.click();
     URL.revokeObjectURL(url);
