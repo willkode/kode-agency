@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
 import PageHero from '@/components/ui-custom/PageHero';
@@ -8,8 +8,9 @@ import GlowingOrb from '@/components/ui-custom/GlowingOrb';
 import SEO from '@/components/SEO';
 import { usePageView, useScrollDepth } from '@/components/analytics/useAnalytics';
 import MigrationWizard from '@/components/migration-assistant/MigrationWizard.jsx';
-import { Server, Globe, Zap, CheckCircle, Shield, FileText } from 'lucide-react';
+import { Server, Globe, Zap, CheckCircle, Shield, FileText, Loader2, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { base44 } from '@/api/base44Client';
 
 const FEATURES = [
   { icon: Server, title: 'Hosting Config Generator', desc: 'Generates Nginx, Cloudflare Pages, Vercel, and Netlify configs for your SPA.' },
@@ -25,6 +26,94 @@ export default function MigrationAssistantPage() {
   useScrollDepth('migration_assistant');
 
   const [wizardStarted, setWizardStarted] = useState(false);
+  const [user, setUser] = useState(null);
+  const [hasAccess, setHasAccess] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+
+  useEffect(() => {
+    checkAccess();
+    handleSuccessRedirect();
+  }, []);
+
+  const checkAccess = async () => {
+    try {
+      const isAuth = await base44.auth.isAuthenticated();
+      if (isAuth) {
+        const currentUser = await base44.auth.me();
+        setUser(currentUser);
+        
+        // Check if user has paid access
+        const accessRecords = await base44.entities.MigrationAssistantAccess.filter({
+          user_email: currentUser.email,
+          payment_status: 'completed'
+        });
+        setHasAccess(accessRecords.length > 0);
+      }
+    } catch (e) {
+      console.error('Error checking access:', e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSuccessRedirect = async () => {
+    const params = new URLSearchParams(window.location.search);
+    const success = params.get('success');
+    const sessionId = params.get('session_id');
+    
+    if (success === 'true' && sessionId) {
+      try {
+        await base44.functions.invoke('handleMigrationAssistantSuccess', { sessionId });
+        // Re-check access after successful payment
+        await checkAccess();
+        // Clean URL
+        window.history.replaceState({}, '', window.location.pathname);
+      } catch (e) {
+        console.error('Error handling success:', e);
+      }
+    }
+  };
+
+  const handlePurchase = async () => {
+    if (!user) {
+      base44.auth.redirectToLogin(window.location.pathname);
+      return;
+    }
+    
+    setCheckoutLoading(true);
+    try {
+      const { data } = await base44.functions.invoke('createMigrationAssistantCheckout', {});
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (e) {
+      console.error('Error creating checkout:', e);
+      alert('Error creating checkout. Please try again.');
+    } finally {
+      setCheckoutLoading(false);
+    }
+  };
+
+  const handleStartWizard = () => {
+    if (!user) {
+      base44.auth.redirectToLogin(window.location.pathname);
+      return;
+    }
+    if (!hasAccess) {
+      handlePurchase();
+      return;
+    }
+    setWizardStarted(true);
+  };
+
+  if (loading) {
+    return (
+      <div className="bg-slate-950 text-white min-h-screen flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-[#73e28a]" />
+      </div>
+    );
+  }
 
   return (
     <div className="bg-slate-950 text-white">
@@ -61,10 +150,19 @@ export default function MigrationAssistantPage() {
                   ))}
                 </div>
                 <Button
-                  onClick={() => setWizardStarted(true)}
+                  onClick={handleStartWizard}
+                  disabled={checkoutLoading}
                   className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg"
                 >
-                  Start the Wizard
+                  {checkoutLoading ? (
+                    <><Loader2 className="w-5 h-5 animate-spin mr-2" /> Processing...</>
+                  ) : !user ? (
+                    'Sign Up to Get Started'
+                  ) : !hasAccess ? (
+                    <><Lock className="w-5 h-5 mr-2" /> Unlock for $15</>
+                  ) : (
+                    'Start the Wizard'
+                  )}
                 </Button>
               </div>
 
@@ -121,10 +219,19 @@ export default function MigrationAssistantPage() {
                 Takes about 3 minutes. Walk through the wizard and download your complete migration profile.
               </p>
               <Button
-                onClick={() => setWizardStarted(true)}
+                onClick={handleStartWizard}
+                disabled={checkoutLoading}
                 className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg"
               >
-                Start the Wizard
+                {checkoutLoading ? (
+                  <><Loader2 className="w-5 h-5 animate-spin mr-2" /> Processing...</>
+                ) : !user ? (
+                  'Sign Up to Get Started'
+                ) : !hasAccess ? (
+                  <><Lock className="w-5 h-5 mr-2" /> Unlock for $15</>
+                ) : (
+                  'Start the Wizard'
+                )}
               </Button>
             </div>
           </Section>
