@@ -17,7 +17,8 @@ import {
   Trash2,
   Edit2,
   Clock,
-  Calendar
+  Calendar,
+  Wand2
 } from 'lucide-react';
 
 const SERVICES = [
