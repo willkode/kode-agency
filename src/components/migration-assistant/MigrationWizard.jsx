@@ -51,7 +51,8 @@ export default function MigrationWizard({ onReset, projectId, existingProfileId 
   const canProceed = () => {
     if (step === 0) return !!profile.project_name && !!profile.framework && !!profile.hosting_target && !!profile.provision_method;
     if (step === 1) return !!profile.hosting_target;
-    if (step === 2) return !!profile.app_name && !!profile.base44_api_base_url && !!profile.frontend_domain;
+    if (step === 2) return true; // Host Presets — informational, always can proceed
+    if (step === 3) return !!profile.app_name && !!profile.base44_api_base_url && !!profile.frontend_domain;
     return true;
   };
 
