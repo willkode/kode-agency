@@ -409,7 +409,7 @@ export default function MarketingCenterSection() {
       <Card className="bg-slate-900 border-slate-800 mb-6">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-lg text-white">
-            <Calendar className="w-5 h-5 text-[#73e28a]" />
+            <CalendarDays className="w-5 h-5 text-[#73e28a]" />
             Post Calendar
           </CardTitle>
         </CardHeader>
