@@ -6,6 +6,7 @@ import StepProjectIntake from './StepProjectIntake.jsx';
 import StepHostingTarget from './StepHostingTarget.jsx';
 import StepHostPresets from './StepHostPresets.jsx';
 import StepHealthSystem from './StepHealthSystem.jsx';
+import StepEdgeWorker from './StepEdgeWorker.jsx';
 import StepAppConfig from './StepAppConfig.jsx';
 import StepOutputs from './StepOutputs.jsx';
 import { ProfileRepo } from '@/components/migration-assistant/lib/repository';
