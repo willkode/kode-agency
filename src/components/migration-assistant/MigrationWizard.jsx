@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight, Download, RotateCcw, Save, CheckCircle } from 'lucide-react';
 import StepProjectIntake from './StepProjectIntake.jsx';
 import StepHostingTarget from './StepHostingTarget.jsx';
+import StepHostPresets from './StepHostPresets.jsx';
 import StepAppConfig from './StepAppConfig.jsx';
 import StepOutputs from './StepOutputs.jsx';
 import { ProfileRepo } from '@/components/migration-assistant/lib/repository.js';
