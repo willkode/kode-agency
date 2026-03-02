@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { generateOutputs } from './generator';
-import OutputBlock from './OutputBlock';
+import { generateOutputs } from './generator.js';
+import OutputBlock from './OutputBlock.jsx';
 import { CheckCircle, AlertTriangle } from 'lucide-react';
 
 const TABS = [
@@ -20,36 +20,24 @@ export default function StepOutputs({ profile }) {
   return (
     <div>
       <h2 className="text-2xl font-bold text-white mb-2">Generated Outputs</h2>
-      <p className="text-slate-400 mb-6">
-        All outputs are copy-paste ready. Use the tabs to navigate between sections.
-      </p>
+      <p className="text-slate-400 mb-6">All outputs are copy-paste ready. Use the tabs to navigate between sections.</p>
 
-      {/* Profile summary */}
       <div className="flex flex-wrap gap-3 mb-6">
         <span className="px-3 py-1 rounded-full bg-[#73e28a]/10 border border-[#73e28a]/30 text-[#73e28a] text-xs font-medium">
           {profile.hosting_target?.toUpperCase()}
         </span>
-        <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs">
-          {profile.app_name}
-        </span>
-        {profile.auth_enabled && (
-          <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs">Auth enabled</span>
-        )}
-        {profile.stripe_used && (
-          <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs">Stripe</span>
-        )}
+        <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs">{profile.app_name}</span>
+        {profile.auth_enabled && <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs">Auth enabled</span>}
+        {profile.stripe_used && <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-300 text-xs">Stripe</span>}
       </div>
 
-      {/* Tabs */}
       <div className="flex flex-wrap gap-2 mb-6">
         {TABS.map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-              activeTab === tab.id
-                ? 'bg-[#73e28a] text-black'
-                : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700'
+              activeTab === tab.id ? 'bg-[#73e28a] text-black' : 'bg-slate-800 text-slate-400 hover:text-white border border-slate-700'
             }`}
           >
             {tab.label}
@@ -57,17 +45,12 @@ export default function StepOutputs({ profile }) {
         ))}
       </div>
 
-      {/* Output */}
       {activeTab === 'verification' ? (
         <VerificationPanel items={outputs.verification} />
       ) : activeTab === 'failure_modes' ? (
         <FailureModesPanel items={outputs.failure_modes} />
       ) : (
-        <OutputBlock
-          title={TABS.find(t => t.id === activeTab)?.label}
-          language={activeTab === 'env_vars' ? 'bash' : 'plaintext'}
-          content={outputs[activeTab]}
-        />
+        <OutputBlock title={TABS.find(t => t.id === activeTab)?.label} content={outputs[activeTab]} />
       )}
     </div>
   );
@@ -77,7 +60,7 @@ function VerificationPanel({ items }) {
   const [checked, setChecked] = useState({});
   return (
     <div className="space-y-3">
-      <p className="text-slate-400 text-sm mb-4">Check off each step as you complete it. These tests confirm your migration is working end-to-end.</p>
+      <p className="text-slate-400 text-sm mb-4">Check off each step as you complete it.</p>
       {items.map((item, i) => (
         <button
           key={i}
@@ -100,7 +83,7 @@ function VerificationPanel({ items }) {
 function FailureModesPanel({ items }) {
   return (
     <div className="space-y-4">
-      <p className="text-slate-400 text-sm mb-4">These are the most common issues when self-hosting a Base44 frontend. Review before going live.</p>
+      <p className="text-slate-400 text-sm mb-4">Most common issues when self-hosting. Review before going live.</p>
       {items.map((item, i) => (
         <div key={i} className="p-4 rounded-xl border border-red-500/20 bg-red-500/5">
           <div className="flex items-start gap-3">
