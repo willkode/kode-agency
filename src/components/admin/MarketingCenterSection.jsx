@@ -149,9 +149,25 @@ export default function MarketingCenterSection() {
   const statusColors = {
     draft: 'bg-yellow-500/20 text-yellow-400',
     approved: 'bg-blue-500/20 text-blue-400',
+    scheduled: 'bg-purple-500/20 text-purple-400',
     posted: 'bg-green-500/20 text-green-400',
     failed: 'bg-red-500/20 text-red-400'
   };
+
+  const scheduleMutation = useMutation({
+    mutationFn: async ({ postId, slot, date }) => {
+      await base44.entities.LinkedInPost.update(postId, { 
+        status: 'scheduled',
+        scheduled_slot: slot,
+        scheduled_date: date
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['linkedin-posts'] });
+      setScheduleSlot('');
+      setScheduleDate('');
+    }
+  });
 
   const PostCard = ({ post }) => (
     <Card className="bg-slate-800 border-slate-700">
