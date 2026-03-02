@@ -261,6 +261,64 @@ export default function MarketingCenterSection() {
     queryClient.invalidateQueries({ queryKey: ['linkedin-posts'] });
   };
 
+  const handleBulkScheduleApproved = async () => {
+    if (approvedPosts.length === 0) return;
+    
+    setBulkScheduling(true);
+    setBulkScheduleProgress({ current: 0, total: approvedPosts.length });
+    
+    const now = new Date();
+    const currentHourCST = now.getHours();
+    const slotHours = { morning: 9, afternoon: 13, evening: 19 };
+    
+    // Build list of taken slots including ones we're about to fill
+    const takenSlotsMap = {};
+    scheduledPosts.forEach(p => {
+      if (!takenSlotsMap[p.scheduled_date]) takenSlotsMap[p.scheduled_date] = [];
+      takenSlotsMap[p.scheduled_date].push(p.scheduled_slot);
+    });
+    
+    for (let i = 0; i < approvedPosts.length; i++) {
+      const post = approvedPosts[i];
+      let foundSlot = null;
+      let foundDate = null;
+      
+      for (let dayOffset = 0; dayOffset < 30 && !foundSlot; dayOffset++) {
+        const dateObj = new Date();
+        dateObj.setDate(dateObj.getDate() + dayOffset);
+        const checkDate = dateObj.toISOString().split('T')[0];
+        
+        const takenSlots = takenSlotsMap[checkDate] || [];
+        
+        for (const slot of SCHEDULE_SLOTS) {
+          if (takenSlots.includes(slot.value)) continue;
+          if (dayOffset === 0 && currentHourCST >= slotHours[slot.value]) continue;
+          
+          foundSlot = slot.value;
+          foundDate = checkDate;
+          break;
+        }
+      }
+      
+      if (foundSlot && foundDate) {
+        await base44.entities.LinkedInPost.update(post.id, {
+          status: 'scheduled',
+          scheduled_slot: foundSlot,
+          scheduled_date: foundDate
+        });
+        
+        // Mark this slot as taken for subsequent iterations
+        if (!takenSlotsMap[foundDate]) takenSlotsMap[foundDate] = [];
+        takenSlotsMap[foundDate].push(foundSlot);
+      }
+      
+      setBulkScheduleProgress({ current: i + 1, total: approvedPosts.length });
+    }
+    
+    setBulkScheduling(false);
+    queryClient.invalidateQueries({ queryKey: ['linkedin-posts'] });
+  };
+
   const handleEdit = (post) => {
     setEditingPost(post.id);
     setEditText(post.text);
