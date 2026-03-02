@@ -37,6 +37,35 @@ function VerificationInner() {
     init();
   }, []);
 
+  const downloadReport = (run) => {
+    const lines = [
+      `# Migration Verification Report`,
+      ``,
+      `**Run ID:** ${run.id}`,
+      `**Status:** ${run.status}`,
+      `**Timestamp:** ${new Date(run.created_date || Date.now()).toLocaleString()}`,
+      `**Result:** ${run.passed_count ?? 0} / ${run.total_checks ?? 0} passed`,
+      ``,
+      `---`,
+      ``,
+      `## Checks`,
+      ``,
+      ...(run.checks || []).flatMap(c => [
+        `### ${c.passed ? '✅' : '❌'} ${c.title}`,
+        c.notes ? `> ${c.notes}` : '',
+        c.evidence ? `\n\`\`\`\n${c.evidence}\n\`\`\`` : '',
+        ``,
+      ]),
+    ];
+    const blob = new Blob([lines.join('\n')], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `verification-report-${run.id?.slice(-8) || 'run'}.md`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <AppShell user={user} localMode={localMode}>
       <div className="p-6 max-w-4xl mx-auto">
