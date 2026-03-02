@@ -97,6 +97,7 @@ import Services from './pages/Services';
 import ThankYou from './pages/ThankYou';
 import UIUXDesign from './pages/UIUXDesign';
 import WebsiteDevelopment from './pages/WebsiteDevelopment';
+import KnowledgeBase from './pages/KnowledgeBase';
 import __Layout from './Layout.jsx';
 
 
@@ -151,6 +152,7 @@ export const PAGES = {
     "ThankYou": ThankYou,
     "UIUXDesign": UIUXDesign,
     "WebsiteDevelopment": WebsiteDevelopment,
+    "KnowledgeBase": KnowledgeBase,
 }
 
 export const pagesConfig = {
