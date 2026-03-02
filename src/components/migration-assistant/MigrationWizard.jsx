@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import Card from '@/components/ui-custom/Card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight, Download, RotateCcw } from 'lucide-react';
-import StepHostingTarget from './StepHostingTarget';
-import StepAppConfig from './StepAppConfig';
-import StepOutputs from './StepOutputs';
+import StepHostingTarget from './StepHostingTarget.jsx';
+import StepAppConfig from './StepAppConfig.jsx';
+import StepOutputs from './StepOutputs.jsx';
 
 const STEPS = ['Hosting Target', 'App Config', 'Generated Outputs'];
 
 export default function MigrationWizard({ onReset }) {
   const [step, setStep] = useState(0);
   const [profile, setProfile] = useState({
-    hosting_target: '',       // nginx | cloudflare | vercel | netlify
+    hosting_target: '',
     app_name: '',
     base44_app_id: '',
-    base44_api_base_url: '',  // user pastes this
+    base44_api_base_url: '',
     frontend_domain: '',
     cors_origins: '',
     auth_enabled: true,
@@ -42,7 +42,6 @@ export default function MigrationWizard({ onReset }) {
 
   return (
     <div className="max-w-4xl mx-auto">
-      {/* Step indicator */}
       <div className="flex items-center justify-center gap-2 mb-12">
         {STEPS.map((label, i) => (
           <React.Fragment key={i}>
@@ -61,14 +60,12 @@ export default function MigrationWizard({ onReset }) {
         ))}
       </div>
 
-      {/* Step content */}
       <Card className="p-8 bg-slate-900/80 border-slate-700">
         {step === 0 && <StepHostingTarget profile={profile} onChange={updateProfile} />}
         {step === 1 && <StepAppConfig profile={profile} onChange={updateProfile} />}
         {step === 2 && <StepOutputs profile={profile} />}
       </Card>
 
-      {/* Navigation */}
       <div className="flex items-center justify-between mt-6">
         <div>
           {step === 0 ? (
@@ -81,7 +78,6 @@ export default function MigrationWizard({ onReset }) {
             </Button>
           )}
         </div>
-
         <div className="flex gap-3">
           {step === 2 && (
             <Button variant="outline" onClick={handleExportJSON} className="border-[#73e28a] text-[#73e28a] hover:bg-[#73e28a]/10">
