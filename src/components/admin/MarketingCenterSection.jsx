@@ -50,10 +50,18 @@ const SERVICES = [
 
 const MAX_POSTS_PER_DAY = 3;
 
+const SCHEDULE_SLOTS = [
+  { value: 'morning', label: '9:00 AM CST', description: 'Morning' },
+  { value: 'afternoon', label: '1:00 PM CST', description: 'Afternoon' },
+  { value: 'evening', label: '7:00 PM CST', description: 'Evening' }
+];
+
 export default function MarketingCenterSection() {
   const [selectedService, setSelectedService] = useState('');
   const [editingPost, setEditingPost] = useState(null);
   const [editText, setEditText] = useState('');
+  const [scheduleSlot, setScheduleSlot] = useState('');
+  const [scheduleDate, setScheduleDate] = useState('');
   const queryClient = useQueryClient();
 
   const { data: posts = [], isLoading } = useQuery({
