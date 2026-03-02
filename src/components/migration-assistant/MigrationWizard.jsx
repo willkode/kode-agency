@@ -91,16 +91,6 @@ export default function MigrationWizard({ onReset, projectId, existingProfileId 
     URL.revokeObjectURL(url);
   };
 
-  const handleExportJSON = () => {
-    const blob = new Blob([JSON.stringify(profile, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `migration-profile-${profile.app_name || 'app'}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
   return (
     <div className="max-w-4xl mx-auto">
       <div className="flex items-center justify-center gap-2 mb-12">
