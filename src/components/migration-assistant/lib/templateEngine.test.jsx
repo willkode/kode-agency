@@ -3,7 +3,7 @@
 // Run in browser console: import { runTests } from './templateEngine.test.js'; runTests();
 // Or paste the output in any JS REPL.
 // ─────────────────────────────────────────────────────────────────────────────
-import { renderTemplate, validateInputs, getAllTemplates } from './templateEngine.js';
+import { renderTemplate, validateInputs, getAllTemplates } from './templateEngine';
 
 function assert(description, condition) {
   if (condition) {
