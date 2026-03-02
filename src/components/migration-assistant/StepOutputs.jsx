@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { generateOutputs } from './generator';
 import OutputBlock from './OutputBlock.jsx';
+import ArtifactsHistory from './ArtifactsHistory.jsx';
 import { CheckCircle, AlertTriangle } from 'lucide-react';
 
 const TABS = [
@@ -13,7 +14,7 @@ const TABS = [
   { id: 'failure_modes', label: 'Failure Modes' },
 ];
 
-export default function StepOutputs({ profile }) {
+export default function StepOutputs({ profile, profileId }) {
   const [activeTab, setActiveTab] = useState('spa_config');
   const outputs = generateOutputs(profile);
 
@@ -51,6 +52,12 @@ export default function StepOutputs({ profile }) {
         <FailureModesPanel items={outputs.failure_modes} />
       ) : (
         <OutputBlock title={TABS.find(t => t.id === activeTab)?.label} content={outputs[activeTab]} />
+      )}
+
+      {profileId && (
+        <div className="mt-8 pt-6 border-t border-slate-800">
+          <ArtifactsHistory profileId={profileId} />
+        </div>
       )}
     </div>
   );
