@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Copy, Check, Download, ChevronDown, ChevronUp } from 'lucide-react';
-import { generateHostPresets } from './generator.js';
+import { generateHostPresets } from './generator';
 
 // ── Shared helpers ──────────────────────────────────────────────────────────
 

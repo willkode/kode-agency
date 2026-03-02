@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Copy, Check, ChevronDown, ChevronUp } from 'lucide-react';
-import { generateHealthSystem } from './generator.js';
+import { generateHealthSystem } from './generator';
 
 // ── Shared helpers ───────────────────────────────────────────────────────────
 
