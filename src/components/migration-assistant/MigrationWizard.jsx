@@ -116,8 +116,9 @@ export default function MigrationWizard({ onReset, projectId, existingProfileId 
       <Card className="p-8 bg-slate-900/80 border-slate-700">
         {step === 0 && <StepProjectIntake profile={profile} onChange={updateProfile} />}
         {step === 1 && <StepHostingTarget profile={profile} onChange={updateProfile} />}
-        {step === 2 && <StepAppConfig profile={profile} onChange={updateProfile} />}
-        {step === 3 && <StepOutputs profile={profile} />}
+        {step === 2 && <StepHostPresets profile={profile} onChange={updateProfile} />}
+        {step === 3 && <StepAppConfig profile={profile} onChange={updateProfile} />}
+        {step === 4 && <StepOutputs profile={profile} />}
       </Card>
 
       <div className="flex items-center justify-between mt-6">
