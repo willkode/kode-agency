@@ -159,12 +159,12 @@ export default function MigrationWizard({ onReset, projectId, existingProfileId 
             </Button>
           )}
 
-          {step === 4 && (
+          {step === 5 && (
             <Button variant="outline" onClick={handleExportJSON} className="border-[#73e28a] text-[#73e28a] hover:bg-[#73e28a]/10">
               <Download className="w-4 h-4 mr-2" /> Export Profile JSON
             </Button>
           )}
-          {step < 4 && (
+          {step < 5 && (
             <Button
               onClick={() => setStep(s => s + 1)}
               disabled={!canProceed()}
