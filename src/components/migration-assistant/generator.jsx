@@ -398,7 +398,206 @@ const SUCCESS_THRESHOLD = ${st};
 // setInterval(poll, 30_000); // poll every 30 seconds`;
 }
 
-// ── Legacy full outputs (Step 4) ─────────────────────────────────────────────
+// ── Edge Worker (Step 4) ─────────────────────────────────────────────────────
+
+export function generateEdgeWorker(profile) {
+  const {
+    ew_mode = 'html_inject',
+    ew_origin_url = 'https://your-origin.pages.dev',
+    ew_inject_banner = true,
+    ew_inject_script = true,
+    ew_security_headers = true,
+    ew_cache_headers = true,
+    ew_meta_tags = false,
+    app_name = 'my-app',
+  } = profile;
+
+  return {
+    workerScript: buildWorkerScript({ ew_mode, ew_origin_url, ew_inject_banner, ew_inject_script, ew_security_headers, ew_cache_headers, ew_meta_tags }),
+    wranglerToml: buildWranglerToml({ app_name, ew_origin_url }),
+  };
+}
+
+function buildWorkerScript({ ew_mode, ew_origin_url, ew_inject_banner, ew_inject_script, ew_security_headers, ew_cache_headers, ew_meta_tags }) {
+  const origin = ew_origin_url || 'https://your-origin.pages.dev';
+
+  const secHeadersCode = ew_security_headers ? `
+    // Security headers
+    newHeaders.set('X-Frame-Options', 'SAMEORIGIN');
+    newHeaders.set('X-Content-Type-Options', 'nosniff');
+    newHeaders.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+    newHeaders.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+    newHeaders.set(
+      'Content-Security-Policy',
+      "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://api.base44.com; frame-ancestors 'none';"
+    );` : '';
+
+  const cacheHeaderCode = ew_cache_headers ? `
+    newHeaders.set('Cache-Control', 'public, max-age=3600, s-maxage=3600');` : '';
+
+  const bannerSnippet = (ew_mode === 'html_inject' && ew_inject_banner)
+    ? `'<div id="b44-banner" hidden style="position:fixed;top:0;left:0;right:0;z-index:9999;background:#f59e0b;color:#000;text-align:center;padding:8px 16px;font-size:14px;">Platform degraded – we are working on it.</div>\\n'`
+    : "''";
+
+  const scriptSnippet = (ew_mode === 'script_inject' && ew_inject_script)
+    ? `\`<script id="b44-health-loader">
+(function(){
+  var FAIL=0,PASS=0,FAIL_T=3,PASS_T=2;
+  function show(){var b=document.getElementById('b44-banner');if(b)b.hidden=false;}
+  function hide(){var b=document.getElementById('b44-banner');if(b)b.hidden=true;}
+  function poll(){
+    fetch('/api/platform-health').then(function(r){return r.json();}).then(function(d){
+      if(d.ok){PASS++;FAIL=0;if(PASS>=PASS_T)hide();}
+      else{FAIL++;PASS=0;if(FAIL>=FAIL_T)show();}
+    }).catch(function(){FAIL++;PASS=0;if(FAIL>=FAIL_T)show();});
+  }
+  poll();setInterval(poll,30000);
+})();
+</script>\``
+    : "''";
+
+  const metaSnippet = ew_meta_tags
+    ? `
+      // Inject meta tags if not present
+      if (!html.includes('<meta name="description"')) {
+        htmlToReturn = htmlToReturn.replace(
+          '</head>',
+          '<meta name="description" content="Your app description here">\\n</head>'
+        );
+      }
+      if (!html.includes('<meta name="title"')) {
+        htmlToReturn = htmlToReturn.replace(
+          '</head>',
+          '<meta name="title" content="Your App Title">\\n</head>'
+        );
+      }`
+    : '';
+
+  if (ew_mode === 'edge_fallback') {
+    return `// ─────────────────────────────────────────────────────────────────────────────
+// Cloudflare Worker — Edge Fallback (headers only, no HTML injection)
+// ─────────────────────────────────────────────────────────────────────────────
+// Configure ORIGIN_URL as a Worker env variable in your Cloudflare dashboard.
+
+const ORIGIN_URL = '${origin}'; // fallback if env var not set
+
+export default {
+  async fetch(request, env) {
+    const origin = env.ORIGIN_URL || ORIGIN_URL;
+    const url = new URL(request.url);
+    const targetUrl = new URL(url.pathname + url.search, origin);
+
+    const originResponse = await fetch(targetUrl.toString(), {
+      method: request.method,
+      headers: request.headers,
+      body: request.method !== 'GET' && request.method !== 'HEAD' ? request.body : undefined,
+    });
+
+    const newHeaders = new Headers(originResponse.headers);
+${secHeadersCode}${cacheHeaderCode}
+
+    return new Response(originResponse.body, {
+      status: originResponse.status,
+      headers: newHeaders,
+    });
+  },
+};`;
+  }
+
+  const injectVar = ew_mode === 'html_inject' ? `  const bannerHtml = ${bannerSnippet};` : `  const scriptHtml = ${scriptSnippet};`;
+  const injectLogic = ew_mode === 'html_inject'
+    ? `
+      // Inject banner container after <body> (idempotent via marker)
+      if (!html.includes('<!-- b44-injected -->')) {
+        htmlToReturn = htmlToReturn.replace(
+          /<body([^>]*)>/i,
+          '<body$1>\\n<!-- b44-injected -->\\n' + bannerHtml
+        );
+      }`
+    : `
+      // Inject script loader before </body> (idempotent via marker)
+      if (!html.includes('b44-health-loader')) {
+        htmlToReturn = htmlToReturn.replace('</body>', scriptHtml + '\\n</body>');
+      }`;
+
+  return `// ─────────────────────────────────────────────────────────────────────────────
+// Cloudflare Worker — ${ew_mode === 'html_inject' ? 'HTML Inject' : 'Script Inject'} Mode
+// ─────────────────────────────────────────────────────────────────────────────
+// ⚠ WARNING: Uses full HTML buffering. Not compatible with streaming/SSR origins.
+// ⚠ For streaming origins, use Edge Fallback mode or inject at build time instead.
+//
+// Set ORIGIN_URL as a Worker environment variable in your Cloudflare dashboard.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const ORIGIN_URL = '${origin}'; // fallback if env var not set
+
+export default {
+  async fetch(request, env) {
+    const origin = env.ORIGIN_URL || ORIGIN_URL;
+    const url = new URL(request.url);
+    const targetUrl = new URL(url.pathname + url.search, origin);
+
+    // Proxy request to origin
+    const originResponse = await fetch(targetUrl.toString(), {
+      method: request.method,
+      headers: request.headers,
+      body: request.method !== 'GET' && request.method !== 'HEAD' ? request.body : undefined,
+    });
+
+    const contentType = originResponse.headers.get('Content-Type') || '';
+
+    // Only modify text/html responses — pass everything else through untouched
+    if (!contentType.includes('text/html')) {
+      return originResponse;
+    }
+
+    // Buffer the HTML body
+    const html = await originResponse.text();
+    let htmlToReturn = html;
+
+${injectVar}
+${injectLogic}
+${metaSnippet}
+
+    const newHeaders = new Headers(originResponse.headers);
+${secHeadersCode}${cacheHeaderCode}
+
+    return new Response(htmlToReturn, {
+      status: originResponse.status,
+      headers: newHeaders,
+    });
+  },
+};`;
+}
+
+function buildWranglerToml({ app_name, ew_origin_url }) {
+  return `# wrangler.toml — Cloudflare Worker configuration
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/
+
+name = "${(app_name || 'my-app').toLowerCase().replace(/\s+/g, '-')}-edge-worker"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# ─── Environment variables ────────────────────────────────────────────────────
+# Set secret values using: wrangler secret put ORIGIN_URL
+# Or configure them in Cloudflare Dashboard → Workers → Settings → Variables
+
+[vars]
+ORIGIN_URL = "${ew_origin_url || 'https://your-origin.pages.dev'}"
+# Add any other non-secret env vars here
+
+# ─── Routes ──────────────────────────────────────────────────────────────────
+# Uncomment and fill in your domain:
+# [[routes]]
+# pattern = "yourdomain.com/*"
+# zone_name = "yourdomain.com"
+
+# ─── Limits (optional) ───────────────────────────────────────────────────────
+# [limits]
+# cpu_ms = 50  # default is 10ms for free plan`;
+}
+
+// ── Legacy full outputs (Step 5) ─────────────────────────────────────────────
 
 export function generateOutputs(profile) {
   const {
