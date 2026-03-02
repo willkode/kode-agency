@@ -431,6 +431,18 @@ export default function MarketingCenterSection() {
               )}
             </TabsContent>
 
+            <TabsContent value="scheduled">
+              {scheduledPosts.length === 0 ? (
+                <div className="text-center py-12 text-slate-500">
+                  No scheduled posts.
+                </div>
+              ) : (
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {scheduledPosts.map(post => <PostCard key={post.id} post={post} />)}
+                </div>
+              )}
+            </TabsContent>
+
             <TabsContent value="posted">
               {postedPosts.length === 0 ? (
                 <div className="text-center py-12 text-slate-500">
