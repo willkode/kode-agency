@@ -7,7 +7,7 @@ import StepHostingTarget from './StepHostingTarget.jsx';
 import StepHostPresets from './StepHostPresets.jsx';
 import StepAppConfig from './StepAppConfig.jsx';
 import StepOutputs from './StepOutputs.jsx';
-import { ProfileRepo } from '@/components/migration-assistant/lib/repository.js';
+import { ProfileRepo } from '@/components/migration-assistant/lib/repository';
 
 const STEPS = ['Project Intake', 'Hosting Target', 'Host Presets', 'App Config', 'Generated Outputs'];
 
