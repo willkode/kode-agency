@@ -25,6 +25,8 @@ Requirements:
 - Include the URL at the end
 - Keep it under 200 words
 - Make it feel authentic, not salesy
+- End with relevant hashtags including vibe coding hashtags like #VibeCoding #NoCode #BuildInPublic
+- MUST include #Base44 and @Base44 in the hashtags
 
 Write only the post text, nothing else.`;
 
