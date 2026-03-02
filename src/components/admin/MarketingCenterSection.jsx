@@ -15,7 +15,9 @@ import {
   Image as ImageIcon,
   ExternalLink,
   Trash2,
-  Edit2
+  Edit2,
+  Clock,
+  Calendar
 } from 'lucide-react';
 
 const SERVICES = [
