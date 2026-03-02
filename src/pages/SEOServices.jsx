@@ -6,36 +6,36 @@ export default function SEOServicesPage() {
   return (
     <ServicePageTemplate
       title="SEO Services"
-      subtitle="Rank & Grow"
-      description="Data-driven SEO strategies powered by AI to improve your organic visibility. From technical audits to on-page optimization, we help you rank higher and drive more qualified traffic."
+      subtitle="SaaS & App SEO Experts"
+      description="We specialize in SEO for SaaS platforms, web apps, and mobile applications. Our data-driven strategies help software companies rank for high-intent keywords, drive qualified signups, and reduce customer acquisition costs through organic search."
       heroImage="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1600&auto=format&fit=crop"
       Icon={Search}
       features={[
-        { icon: Code, title: "Technical SEO", description: "Site structure, speed, mobile optimization, and Core Web Vitals." },
-        { icon: FileText, title: "On-Page Optimization", description: "Content, meta tags, headers, and keyword strategy." },
-        { icon: BarChart3, title: "Rank Tracking", description: "Monitor keyword positions and organic traffic growth." },
-        { icon: Settings, title: "GSC/GTM/GA4 Setup", description: "Complete analytics and tracking configuration." },
-        { icon: Bot, title: "AI-Powered Audits", description: "Comprehensive site audits using AI analysis tools." },
-        { icon: Search, title: "Competitor Analysis", description: "Understand and outrank your competition." },
+        { icon: Code, title: "Technical SEO for Apps", description: "SPA/PWA optimization, JavaScript rendering, app indexing, and Core Web Vitals for complex web applications." },
+        { icon: FileText, title: "SaaS Content Strategy", description: "Bottom-of-funnel keyword targeting, feature pages, comparison content, and integration pages that convert." },
+        { icon: BarChart3, title: "Product-Led SEO", description: "Programmatic pages, user-generated content optimization, and scalable SEO for growing platforms." },
+        { icon: Settings, title: "Analytics & Attribution", description: "GA4, Mixpanel, Amplitude integration to track organic signups, trials, and conversions." },
+        { icon: Bot, title: "AI-Powered Audits", description: "Comprehensive technical audits tailored for modern JavaScript frameworks and SaaS architecture." },
+        { icon: Search, title: "Competitor Intelligence", description: "SaaS competitor keyword gaps, backlink analysis, and content opportunity mapping." },
       ]}
       benefits={[
-        "AI-powered SEO audits and recommendations",
-        "Focus on high-intent keywords that convert",
-        "Technical fixes that improve performance",
-        "Monthly reporting with clear metrics",
-        "White-hat strategies for long-term results",
-        "Integration with your content strategy"
+        "Deep expertise in SaaS and app SEO challenges",
+        "Focus on keywords that drive trials and signups",
+        "Technical SEO for React, Next.js, and modern stacks",
+        "Integration with your product analytics",
+        "Scalable strategies that grow with your platform",
+        "Monthly reporting tied to business metrics, not just rankings"
       ]}
       process={[
-        { title: "Audit", description: "Comprehensive technical and content analysis." },
-        { title: "Strategy", description: "Keyword research and prioritization plan." },
-        { title: "Optimize", description: "Implement on-page and technical fixes." },
-        { title: "Monitor", description: "Track rankings and refine strategy." }
+        { title: "Audit", description: "Deep-dive into your app's technical SEO, content gaps, and competitor landscape." },
+        { title: "Strategy", description: "Prioritized roadmap targeting high-intent SaaS keywords and quick wins." },
+        { title: "Execute", description: "Technical fixes, content optimization, and programmatic SEO implementation." },
+        { title: "Scale", description: "Ongoing optimization, A/B testing, and expansion to new keyword territories." }
       ]}
       relatedServices={[
-        { slug: "ContentMarketing", title: "Content Marketing", description: "Create SEO-optimized content." },
-        { slug: "WebsiteDevelopment", title: "Website Development", description: "Build SEO-friendly sites." },
-        { slug: "CROServices", title: "CRO Services", description: "Convert your organic traffic." }
+        { slug: "ContentMarketing", title: "Content Marketing", description: "SaaS content that ranks and converts." },
+        { slug: "SaaSDevelopment", title: "SaaS Development", description: "Build SEO-friendly SaaS platforms." },
+        { slug: "CROServices", title: "CRO Services", description: "Convert organic traffic into paying users." }
       ]}
     />
   );

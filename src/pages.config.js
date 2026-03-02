@@ -82,6 +82,7 @@ import MASettings from './pages/MASettings';
 import MATemplates from './pages/MATemplates';
 import MAVerification from './pages/MAVerification';
 import MVPDevelopment from './pages/MVPDevelopment';
+import MarketingCenter from './pages/MarketingCenter';
 import MigrationAssistant from './pages/MigrationAssistant';
 import MigrationAssistantLanding from './pages/MigrationAssistantLanding';
 import MobileAppConversion from './pages/MobileAppConversion';
@@ -99,7 +100,6 @@ import Services from './pages/Services';
 import ThankYou from './pages/ThankYou';
 import UIUXDesign from './pages/UIUXDesign';
 import WebsiteDevelopment from './pages/WebsiteDevelopment';
-import MarketingCenter from './pages/MarketingCenter';
 import __Layout from './Layout.jsx';
 
 
@@ -139,6 +139,7 @@ export const PAGES = {
     "MATemplates": MATemplates,
     "MAVerification": MAVerification,
     "MVPDevelopment": MVPDevelopment,
+    "MarketingCenter": MarketingCenter,
     "MigrationAssistant": MigrationAssistant,
     "MigrationAssistantLanding": MigrationAssistantLanding,
     "MobileAppConversion": MobileAppConversion,
@@ -156,7 +157,6 @@ export const PAGES = {
     "ThankYou": ThankYou,
     "UIUXDesign": UIUXDesign,
     "WebsiteDevelopment": WebsiteDevelopment,
-    "MarketingCenter": MarketingCenter,
 }
 
 export const pagesConfig = {
