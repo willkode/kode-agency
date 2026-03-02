@@ -134,6 +134,55 @@ export default function MarketingCenterSection() {
     }
   };
 
+  const handleSmartGenerate = () => {
+    const threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+    
+    // Find services that don't have a scheduled post OR haven't been posted in 3+ days
+    const serviceLastActivity = {};
+    
+    posts.forEach(post => {
+      const slug = post.service_slug;
+      if (!slug) return;
+      
+      let activityDate = null;
+      if (post.status === 'scheduled' && post.scheduled_date) {
+        activityDate = new Date(post.scheduled_date);
+      } else if (post.status === 'posted' && post.posted_at) {
+        activityDate = new Date(post.posted_at);
+      } else if (post.status === 'draft' || post.status === 'approved') {
+        activityDate = new Date(); // Treat pending posts as recent
+      }
+      
+      if (activityDate && (!serviceLastActivity[slug] || activityDate > serviceLastActivity[slug])) {
+        serviceLastActivity[slug] = activityDate;
+      }
+    });
+    
+    // Find best candidate: no activity or oldest activity
+    let bestService = null;
+    let oldestDate = new Date();
+    
+    for (const service of SERVICES) {
+      const lastActivity = serviceLastActivity[service.slug];
+      
+      if (!lastActivity) {
+        // No posts for this service - use it
+        bestService = service;
+        break;
+      }
+      
+      if (lastActivity < threeDaysAgo && lastActivity < oldestDate) {
+        oldestDate = lastActivity;
+        bestService = service;
+      }
+    }
+    
+    if (bestService) {
+      generateMutation.mutate(bestService);
+    }
+  };
+
   const handleEdit = (post) => {
     setEditingPost(post.id);
     setEditText(post.text);
