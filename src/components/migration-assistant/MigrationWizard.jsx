@@ -57,7 +57,8 @@ export default function MigrationWizard({ onReset, projectId, existingProfileId 
     if (step === 2) return true; // Host Presets — informational, always can proceed
     if (step === 3) return true; // Health System — always can proceed
     if (step === 4) return true; // Edge Worker — always can proceed
-    if (step === 5) return !!profile.app_name && !!profile.base44_api_base_url && !!profile.frontend_domain;
+    if (step === 5) return true; // Outage Banner — always can proceed
+    if (step === 6) return !!profile.app_name && !!profile.base44_api_base_url && !!profile.frontend_domain;
     return true;
   };
 
