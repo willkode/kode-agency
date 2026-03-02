@@ -129,7 +129,7 @@ export default function MigrationWizard({ onReset, projectId, existingProfileId 
         {step === 4 && <StepEdgeWorker profile={profile} onChange={updateProfile} />}
         {step === 5 && <StepOutageBanner profile={profile} onChange={updateProfile} />}
         {step === 6 && <StepAppConfig profile={profile} onChange={updateProfile} />}
-        {step === 7 && <StepOutputs profile={profile} />}
+        {step === 7 && <StepOutputs profile={profile} profileId={savedProfileId} />}
         {step === 8 && (
           <div>
             <h2 className="text-xl font-bold text-white mb-1">Verify Deployment</h2>
