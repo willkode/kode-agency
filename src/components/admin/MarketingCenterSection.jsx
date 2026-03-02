@@ -585,7 +585,7 @@ export default function MarketingCenterSection() {
             
             <Button 
               onClick={handleSmartGenerate}
-              disabled={generateMutation.isPending}
+              disabled={generateMutation.isPending || bulkGenerating}
               variant="outline"
               className="border-slate-600"
             >
@@ -598,6 +598,25 @@ export default function MarketingCenterSection() {
                 <>
                   <Wand2 className="w-4 h-4 mr-2" />
                   Smart Generate
+                </>
+              )}
+            </Button>
+            
+            <Button 
+              onClick={handleBulkGenerate}
+              disabled={generateMutation.isPending || bulkGenerating}
+              variant="outline"
+              className="border-purple-500 text-purple-400 hover:bg-purple-500/10"
+            >
+              {bulkGenerating ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  {bulkProgress.current}/{bulkProgress.total}
+                </>
+              ) : (
+                <>
+                  <Calendar className="w-4 h-4 mr-2" />
+                  Bulk Create Month
                 </>
               )}
             </Button>
