@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { runTests } from './lib/templateEngine.test';
-import { getAllTemplates, renderTemplate, validateInputs } from './lib/templateEngine';
+import { runTests } from './lib/templateEngine.test.js';
+import { getAllTemplates, renderTemplate, validateInputs } from './lib/templateEngine.js';
 import { CheckCircle, XCircle, Play, ChevronDown, ChevronUp, FlaskConical } from 'lucide-react';
 
 // ── Single template sandbox ───────────────────────────────────────────────────
