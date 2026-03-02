@@ -91,6 +91,7 @@ import ThankYou from './pages/ThankYou';
 import UIUXDesign from './pages/UIUXDesign';
 import WebsiteDevelopment from './pages/WebsiteDevelopment';
 import MigrationAssistant from './pages/MigrationAssistant';
+import MADashboard from './pages/MADashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -139,6 +140,7 @@ export const PAGES = {
     "UIUXDesign": UIUXDesign,
     "WebsiteDevelopment": WebsiteDevelopment,
     "MigrationAssistant": MigrationAssistant,
+    "MADashboard": MADashboard,
 }
 
 export const pagesConfig = {
