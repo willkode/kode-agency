@@ -73,6 +73,7 @@ import FAQ from './pages/FAQ';
 import FrontendExporter from './pages/FrontendExporter';
 import FullFunnelMarketing from './pages/FullFunnelMarketing';
 import Home from './pages/Home';
+import KnowledgeBase from './pages/KnowledgeBase';
 import Legal from './pages/Legal';
 import MADashboard from './pages/MADashboard';
 import MAProjectDetail from './pages/MAProjectDetail';
@@ -97,7 +98,7 @@ import Services from './pages/Services';
 import ThankYou from './pages/ThankYou';
 import UIUXDesign from './pages/UIUXDesign';
 import WebsiteDevelopment from './pages/WebsiteDevelopment';
-import KnowledgeBase from './pages/KnowledgeBase';
+import MigrationAssistantLanding from './pages/MigrationAssistantLanding';
 import __Layout from './Layout.jsx';
 
 
@@ -128,6 +129,7 @@ export const PAGES = {
     "FrontendExporter": FrontendExporter,
     "FullFunnelMarketing": FullFunnelMarketing,
     "Home": Home,
+    "KnowledgeBase": KnowledgeBase,
     "Legal": Legal,
     "MADashboard": MADashboard,
     "MAProjectDetail": MAProjectDetail,
@@ -152,7 +154,7 @@ export const PAGES = {
     "ThankYou": ThankYou,
     "UIUXDesign": UIUXDesign,
     "WebsiteDevelopment": WebsiteDevelopment,
-    "KnowledgeBase": KnowledgeBase,
+    "MigrationAssistantLanding": MigrationAssistantLanding,
 }
 
 export const pagesConfig = {
