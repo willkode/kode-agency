@@ -100,17 +100,13 @@ export default function SocialPostsSection() {
   const [hashtagPostId, setHashtagPostId] = useState(null);
 
   const generateHashtagsMutation = useMutation({
-    mutationFn: async () => {
-      const post = await base44.entities.SocialPost.create({
-        platform: 'twitter',
-        service: 'build_sprint',
-        content: 'Hashtag research request',
-        status: 'generate_hashtags'
-      });
-      return post;
+    mutationFn: async (postId) => {
+      await base44.entities.SocialPost.update(postId, { status: 'generate_hashtags' });
+      return postId;
     },
-    onSuccess: (post) => {
-      setHashtagPostId(post.id);
+    onSuccess: (postId) => {
+      setHashtagPostId(postId);
+      queryClient.invalidateQueries({ queryKey: ['social-posts'] });
     }
   });
 
@@ -121,19 +117,20 @@ export default function SocialPostsSection() {
     enabled: !!hashtagPostId,
     refetchInterval: (query) => {
       const data = query.state.data;
-      if (data?.[0]?.hashtag_notes) return false;
+      if (data?.[0]?.hashtag_notes && data?.[0]?.status !== 'generate_hashtags') return false;
       return 2000;
     }
   });
 
   // Update textarea when hashtag_notes is populated
   useEffect(() => {
-    if (hashtagPost?.[0]?.hashtag_notes) {
+    if (hashtagPost?.[0]?.hashtag_notes && hashtagPost?.[0]?.status !== 'generate_hashtags') {
       setHashtagNotes(prev => prev 
         ? `${prev}\n\n--- Generated ${new Date().toLocaleString()} ---\n${hashtagPost[0].hashtag_notes}` 
         : hashtagPost[0].hashtag_notes
       );
       setHashtagPostId(null);
+      queryClient.invalidateQueries({ queryKey: ['social-posts'] });
     }
   }, [hashtagPost]);
 
@@ -254,6 +251,20 @@ export default function SocialPostsSection() {
                   className="border-red-500 text-red-400 hover:bg-red-500/10"
                 >
                   <XCircle className="w-3 h-3 mr-1" /> Reject
+                </Button>
+                <Button 
+                  size="sm" 
+                  variant="outline"
+                  onClick={() => generateHashtagsMutation.mutate(post.id)}
+                  disabled={generateHashtagsMutation.isPending || hashtagPostId === post.id}
+                  className="border-purple-500 text-purple-400 hover:bg-purple-500/10"
+                >
+                  {hashtagPostId === post.id ? (
+                    <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+                  ) : (
+                    <Sparkles className="w-3 h-3 mr-1" />
+                  )}
+                  Hashtags
                 </Button>
               </>
             )}
@@ -436,23 +447,17 @@ export default function SocialPostsSection() {
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-lg font-medium text-white">Hashtag Research</h3>
-                    <Button
-                      onClick={() => generateHashtagsMutation.mutate()}
-                      disabled={generateHashtagsMutation.isPending}
-                      className="bg-[#73e28a] hover:bg-[#5dbb72] text-black"
-                    >
-                      {generateHashtagsMutation.isPending ? (
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      ) : (
-                        <Sparkles className="w-4 h-4 mr-2" />
-                      )}
-                      Generate Hashtags
-                    </Button>
+                    {hashtagPostId && (
+                      <div className="flex items-center gap-2 text-purple-400 text-sm">
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Generating hashtags...
+                      </div>
+                    )}
                   </div>
                   <Textarea
                     value={hashtagNotes}
                     onChange={(e) => setHashtagNotes(e.target.value)}
-                    placeholder="Add your hashtag research notes here..."
+                    placeholder="Click 'Hashtags' on a pending post to generate research..."
                     className="bg-slate-700 border-slate-600 text-white min-h-[300px]"
                   />
                 </CardContent>
