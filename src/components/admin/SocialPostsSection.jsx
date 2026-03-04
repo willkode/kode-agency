@@ -307,6 +307,9 @@ export default function SocialPostsSection() {
               Generating ({generatingPosts.length})
             </TabsTrigger>
           )}
+          <TabsTrigger value="hashtags" className="data-[state=active]:bg-slate-700">
+            Hashtags
+          </TabsTrigger>
         </TabsList>
 
         {isLoading ? (
@@ -385,6 +388,18 @@ export default function SocialPostsSection() {
                   {generatingPosts.map(post => <PostCard key={post.id} post={post} />)}
                 </div>
               )}
+            </TabsContent>
+
+            <TabsContent value="hashtags">
+              <Card className="bg-slate-800 border-slate-700">
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-medium text-white mb-4">Hashtag Research</h3>
+                  <Textarea
+                    placeholder="Add your hashtag research notes here..."
+                    className="bg-slate-700 border-slate-600 text-white min-h-[300px]"
+                  />
+                </CardContent>
+              </Card>
             </TabsContent>
           </>
         )}
