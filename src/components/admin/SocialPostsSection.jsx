@@ -97,18 +97,45 @@ export default function SocialPostsSection() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['social-posts'] })
   });
 
+  const [hashtagPostId, setHashtagPostId] = useState(null);
+
   const generateHashtagsMutation = useMutation({
     mutationFn: async () => {
-      const result = await base44.integrations.Core.InvokeLLM({
-        prompt: 'Generate a list of trending and relevant hashtags for Twitter and LinkedIn posts about app development services, specifically Build Sprint (live coding sessions) and Base44 ER (emergency app reviews). Include hashtags for: no-code development, AI builders, startup MVPs, app development, and tech entrepreneurship. Format as two sections: Twitter Hashtags and LinkedIn Hashtags.',
-        add_context_from_internet: true
+      const post = await base44.entities.SocialPost.create({
+        platform: 'twitter',
+        service: 'build_sprint',
+        content: 'Hashtag research request',
+        status: 'generate_hashtags'
       });
-      return result;
+      return post;
     },
-    onSuccess: (data) => {
-      setHashtagNotes(prev => prev ? `${prev}\n\n--- Generated ${new Date().toLocaleString()} ---\n${data}` : data);
+    onSuccess: (post) => {
+      setHashtagPostId(post.id);
     }
   });
+
+  // Poll for hashtag results
+  const { data: hashtagPost } = useQuery({
+    queryKey: ['hashtag-post', hashtagPostId],
+    queryFn: () => base44.entities.SocialPost.filter({ id: hashtagPostId }),
+    enabled: !!hashtagPostId,
+    refetchInterval: (query) => {
+      const data = query.state.data;
+      if (data?.[0]?.hashtag_notes) return false;
+      return 2000;
+    }
+  });
+
+  // Update textarea when hashtag_notes is populated
+  React.useEffect(() => {
+    if (hashtagPost?.[0]?.hashtag_notes) {
+      setHashtagNotes(prev => prev 
+        ? `${prev}\n\n--- Generated ${new Date().toLocaleString()} ---\n${hashtagPost[0].hashtag_notes}` 
+        : hashtagPost[0].hashtag_notes
+      );
+      setHashtagPostId(null);
+    }
+  }, [hashtagPost]);
 
   const handleReject = (post) => {
     setSelectedPost(post);
