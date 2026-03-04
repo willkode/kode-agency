@@ -229,7 +229,7 @@ export default function SocialPostsSection() {
           )}
 
           <div className="flex gap-2 flex-wrap">
-            {showActions && post.status === 'pending_review' && (
+            {showActions && (post.status === 'pending_review' || post.status === 'generate_hashtags') && (
               <>
                 <Button 
                   size="sm" 
