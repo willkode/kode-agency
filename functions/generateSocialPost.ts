@@ -104,7 +104,7 @@ Write only the post text, nothing else.`;
     }
 
     // Create the post record
-    const post = await base44.entities.SocialPost.create({
+    const post = await base44.asServiceRole.entities.SocialPost.create({
       platform,
       service,
       title: title || null,
