@@ -2,12 +2,12 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.20';
 
 Deno.serve(async (req) => {
   try {
-    const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
-    
-    if (!user || user.role !== 'admin') {
+    const apiKey = req.headers.get('x-api-key');
+    if (apiKey !== Deno.env.get('ARES_API_KEY')) {
       return Response.json({ success: false, error: 'Forbidden' }, { status: 403 });
     }
+    
+    const base44 = createClientFromRequest(req);
 
     const { 
       post_id, 
