@@ -35,26 +35,6 @@ Deno.serve(async (req) => {
     // Update the post
     const post = await base44.asServiceRole.entities.SocialPost.update(post_id, updateData);
 
-    // If status is approved or generate_hashtags, notify the Ares agent
-    if (status === 'approved' || status === 'generate_hashtags') {
-      try {
-        await fetch('https://app.base44.com/api/apps/69a756e9f5df095cfa4d8633/agent/message', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': Deno.env.get('ARES_API_KEY')
-          },
-          body: JSON.stringify({
-            message: `Process SocialPost id: ${post_id} status: ${status}`,
-            conversation_id: '69a756eb805b811b041879f4'
-          })
-        });
-      } catch (agentError) {
-        // Log but don't fail the update if agent notification fails
-        console.error('Failed to notify agent:', agentError.message);
-      }
-    }
-
     return Response.json({ success: true, post });
   } catch (error) {
     return Response.json({ success: false, error: error.message }, { status: 500 });
