@@ -57,7 +57,12 @@ export default function SocialPostsSection() {
 
   const approveMutation = useMutation({
     mutationFn: async (postId) => {
-      await base44.entities.SocialPost.update(postId, { status: 'approved' });
+      // Call the publish function which posts to the platform
+      const { data } = await base44.functions.invoke('publishSocialPost', { post_id: postId });
+      if (!data.success) {
+        throw new Error(data.error);
+      }
+      return data;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['social-posts'] })
   });
@@ -96,38 +101,27 @@ export default function SocialPostsSection() {
 
   const generateHashtagsMutation = useMutation({
     mutationFn: async (postId) => {
-      await base44.entities.SocialPost.update(postId, { status: 'generate_hashtags' });
-      return postId;
-    },
-    onSuccess: (postId) => {
       setHashtagPostId(postId);
-      queryClient.invalidateQueries({ queryKey: ['social-posts'] });
-    }
-  });
-
-  // Poll for hashtag results
-  const { data: hashtagPost } = useQuery({
-    queryKey: ['hashtag-post', hashtagPostId],
-    queryFn: () => base44.entities.SocialPost.filter({ id: hashtagPostId }),
-    enabled: !!hashtagPostId,
-    refetchInterval: (query) => {
-      const data = query.state.data;
-      if (data?.[0]?.hashtag_notes && data?.[0]?.status !== 'generate_hashtags') return false;
-      return 2000;
-    }
-  });
-
-  // Update textarea when hashtag_notes is populated
-  useEffect(() => {
-    if (hashtagPost?.[0]?.hashtag_notes && hashtagPost?.[0]?.status !== 'generate_hashtags') {
+      const { data } = await base44.functions.invoke('generateHashtags', { post_id: postId });
+      if (!data.success) {
+        throw new Error(data.error);
+      }
+      return { postId, hashtag_notes: data.hashtag_notes };
+    },
+    onSuccess: ({ postId, hashtag_notes }) => {
       setHashtagNotes(prev => prev 
-        ? `${prev}\n\n--- Generated ${new Date().toLocaleString()} ---\n${hashtagPost[0].hashtag_notes}` 
-        : hashtagPost[0].hashtag_notes
+        ? `${prev}\n\n--- Generated ${new Date().toLocaleString()} ---\n${hashtag_notes}` 
+        : hashtag_notes
       );
       setHashtagPostId(null);
       queryClient.invalidateQueries({ queryKey: ['social-posts'] });
+    },
+    onError: () => {
+      setHashtagPostId(null);
     }
-  }, [hashtagPost]);
+  });
+
+
 
   const handleReject = (post) => {
     setSelectedPost(post);
