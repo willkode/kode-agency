@@ -18,7 +18,9 @@ import {
   MessageSquare,
   Linkedin,
   Zap,
-  Wrench
+  Wrench,
+  Calendar,
+  Clock
 } from 'lucide-react';
 
 const PLATFORMS = [
@@ -35,6 +37,7 @@ const SERVICES = [
 const STATUS_COLORS = {
   generate: 'bg-gray-500/20 text-gray-400',
   pending_review: 'bg-yellow-500/20 text-yellow-400',
+  scheduled: 'bg-cyan-500/20 text-cyan-400',
   approved: 'bg-blue-500/20 text-blue-400',
   rejected: 'bg-red-500/20 text-red-400',
   published: 'bg-green-500/20 text-green-400',
@@ -98,6 +101,19 @@ export default function SocialPostsSection() {
   });
 
   const [hashtagPostId, setHashtagPostId] = useState(null);
+  const [bulkPlatform, setBulkPlatform] = useState('twitter');
+  const [bulkDays, setBulkDays] = useState(30);
+
+  const bulkGenerateMutation = useMutation({
+    mutationFn: async ({ platform, days }) => {
+      const { data } = await base44.functions.invoke('bulkGenerateSocialPosts', { platform, days });
+      if (!data.success) {
+        throw new Error(data.error);
+      }
+      return data;
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['social-posts'] })
+  });
 
   const generateHashtagsMutation = useMutation({
     mutationFn: async (postId) => {
@@ -135,6 +151,7 @@ export default function SocialPostsSection() {
   };
 
   const pendingPosts = posts.filter(p => p.status === 'pending_review' || p.status === 'generate_hashtags');
+  const scheduledPosts = posts.filter(p => p.status === 'scheduled').sort((a, b) => new Date(a.scheduled_for) - new Date(b.scheduled_for));
   const approvedPosts = posts.filter(p => p.status === 'approved');
   const publishedPosts = posts.filter(p => p.status === 'published');
   const rejectedPosts = posts.filter(p => p.status === 'rejected');
@@ -216,6 +233,13 @@ export default function SocialPostsSection() {
             </a>
           )}
 
+          {post.scheduled_for && post.status === 'scheduled' && (
+            <div className="text-cyan-400 text-xs mb-3 flex items-center gap-1">
+              <Clock className="w-3 h-3" />
+              Scheduled: {new Date(post.scheduled_for).toLocaleString()}
+            </div>
+          )}
+
           {post.published_at && (
             <div className="text-slate-500 text-xs mb-3">
               Published: {new Date(post.published_at).toLocaleString()}
@@ -223,7 +247,7 @@ export default function SocialPostsSection() {
           )}
 
           <div className="flex gap-2 flex-wrap">
-            {showActions && (post.status === 'pending_review' || post.status === 'generate_hashtags') && (
+            {showActions && (post.status === 'pending_review' || post.status === 'generate_hashtags' || post.status === 'scheduled') && (
               <>
                 <Button 
                   size="sm" 
@@ -231,7 +255,7 @@ export default function SocialPostsSection() {
                   disabled={approveMutation.isPending}
                   className="bg-green-600 hover:bg-green-700"
                 >
-                  <CheckCircle className="w-3 h-3 mr-1" /> Approve
+                  <CheckCircle className="w-3 h-3 mr-1" /> {post.status === 'scheduled' ? 'Publish Now' : 'Approve'}
                 </Button>
                 <Button 
                   size="sm" 
@@ -258,7 +282,7 @@ export default function SocialPostsSection() {
               </>
             )}
             
-            {(post.status === 'rejected' || post.status === 'failed' || post.status === 'generate') && (
+            {(post.status === 'rejected' || post.status === 'failed' || post.status === 'generate' || post.status === 'scheduled') && (
               <Button 
                 size="sm" 
                 variant="ghost" 
@@ -325,11 +349,64 @@ export default function SocialPostsSection() {
         </CardContent>
       </Card>
 
+      {/* Bulk Generate Posts */}
+      <Card className="bg-slate-900 border-slate-800 mb-6">
+        <CardContent className="p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <Calendar className="w-4 h-4 text-cyan-400" />
+            <span className="text-white font-medium">Bulk Schedule (3 posts/day at optimal times)</span>
+          </div>
+          <div className="flex gap-4 items-center flex-wrap">
+            <Select value={bulkPlatform} onValueChange={setBulkPlatform}>
+              <SelectTrigger className="w-40 bg-slate-800 border-slate-700">
+                <SelectValue placeholder="Platform" />
+              </SelectTrigger>
+              <SelectContent className="bg-slate-800 border-slate-700">
+                {PLATFORMS.map(p => (
+                  <SelectItem key={p.value} value={p.value}>{p.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select value={String(bulkDays)} onValueChange={(v) => setBulkDays(Number(v))}>
+              <SelectTrigger className="w-32 bg-slate-800 border-slate-700">
+                <SelectValue placeholder="Days" />
+              </SelectTrigger>
+              <SelectContent className="bg-slate-800 border-slate-700">
+                <SelectItem value="7">7 days</SelectItem>
+                <SelectItem value="14">14 days</SelectItem>
+                <SelectItem value="30">30 days</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Button 
+              onClick={() => bulkGenerateMutation.mutate({ platform: bulkPlatform, days: bulkDays })}
+              disabled={bulkGenerateMutation.isPending}
+              className="bg-cyan-600 hover:bg-cyan-700 text-white"
+            >
+              {bulkGenerateMutation.isPending ? (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              ) : (
+                <Calendar className="w-4 h-4 mr-2" />
+              )}
+              Generate {bulkDays * 3} Posts
+            </Button>
+
+            {bulkGenerateMutation.isPending && (
+              <span className="text-slate-400 text-sm">This may take a few minutes...</span>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Posts Tabs */}
       <Tabs defaultValue="pending">
         <TabsList className="bg-slate-800 mb-4 text-white">
           <TabsTrigger value="pending" className="data-[state=active]:bg-slate-700">
             Pending Review ({pendingPosts.length})
+          </TabsTrigger>
+          <TabsTrigger value="scheduled" className="data-[state=active]:bg-slate-700">
+            Scheduled ({scheduledPosts.length})
           </TabsTrigger>
           <TabsTrigger value="approved" className="data-[state=active]:bg-slate-700">
             Approved ({approvedPosts.length})
@@ -367,6 +444,18 @@ export default function SocialPostsSection() {
               ) : (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {pendingPosts.map(post => <PostCard key={post.id} post={post} showActions />)}
+                </div>
+              )}
+            </TabsContent>
+
+            <TabsContent value="scheduled">
+              {scheduledPosts.length === 0 ? (
+                <div className="text-center py-12 text-slate-500">
+                  No scheduled posts.
+                </div>
+              ) : (
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {scheduledPosts.map(post => <PostCard key={post.id} post={post} showActions />)}
                 </div>
               )}
             </TabsContent>
