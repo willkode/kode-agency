@@ -99,14 +99,14 @@ export default function SocialPostsSection() {
 
   const generateHashtagsMutation = useMutation({
     mutationFn: async () => {
-      const { data } = await base44.functions.invoke('ares', {
-        task: 'Generate a list of trending and relevant hashtags for Twitter and LinkedIn posts about app development services, specifically Build Sprint (live coding sessions) and Base44 ER (emergency app reviews). Include hashtags for: no-code development, AI builders, startup MVPs, app development, and tech entrepreneurship. Format as two sections: Twitter Hashtags and LinkedIn Hashtags.'
+      const result = await base44.integrations.Core.InvokeLLM({
+        prompt: 'Generate a list of trending and relevant hashtags for Twitter and LinkedIn posts about app development services, specifically Build Sprint (live coding sessions) and Base44 ER (emergency app reviews). Include hashtags for: no-code development, AI builders, startup MVPs, app development, and tech entrepreneurship. Format as two sections: Twitter Hashtags and LinkedIn Hashtags.',
+        add_context_from_internet: true
       });
-      return data;
+      return result;
     },
     onSuccess: (data) => {
-      const result = data?.response || data?.result || data?.output || JSON.stringify(data);
-      setHashtagNotes(prev => prev ? `${prev}\n\n--- Generated ${new Date().toLocaleString()} ---\n${result}` : result);
+      setHashtagNotes(prev => prev ? `${prev}\n\n--- Generated ${new Date().toLocaleString()} ---\n${data}` : data);
     }
   });
 
