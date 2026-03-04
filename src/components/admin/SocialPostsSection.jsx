@@ -47,6 +47,7 @@ export default function SocialPostsSection() {
   const [rejectionReason, setRejectionReason] = useState('');
   const [generatePlatform, setGeneratePlatform] = useState('twitter');
   const [generateService, setGenerateService] = useState('build_sprint');
+  const [hashtagNotes, setHashtagNotes] = useState('');
   const queryClient = useQueryClient();
 
   const { data: posts = [], isLoading } = useQuery({
@@ -94,6 +95,19 @@ export default function SocialPostsSection() {
       await base44.entities.SocialPost.delete(postId);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['social-posts'] })
+  });
+
+  const generateHashtagsMutation = useMutation({
+    mutationFn: async () => {
+      const { data } = await base44.functions.invoke('ares', {
+        task: 'Generate a list of trending and relevant hashtags for Twitter and LinkedIn posts about app development services, specifically Build Sprint (live coding sessions) and Base44 ER (emergency app reviews). Include hashtags for: no-code development, AI builders, startup MVPs, app development, and tech entrepreneurship. Format as two sections: Twitter Hashtags and LinkedIn Hashtags.'
+      });
+      return data;
+    },
+    onSuccess: (data) => {
+      const result = data?.response || data?.result || data?.output || JSON.stringify(data);
+      setHashtagNotes(prev => prev ? `${prev}\n\n--- Generated ${new Date().toLocaleString()} ---\n${result}` : result);
+    }
   });
 
   const handleReject = (post) => {
@@ -393,8 +407,24 @@ export default function SocialPostsSection() {
             <TabsContent value="hashtags">
               <Card className="bg-slate-800 border-slate-700">
                 <CardContent className="p-6">
-                  <h3 className="text-lg font-medium text-white mb-4">Hashtag Research</h3>
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-medium text-white">Hashtag Research</h3>
+                    <Button
+                      onClick={() => generateHashtagsMutation.mutate()}
+                      disabled={generateHashtagsMutation.isPending}
+                      className="bg-[#73e28a] hover:bg-[#5dbb72] text-black"
+                    >
+                      {generateHashtagsMutation.isPending ? (
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      ) : (
+                        <Sparkles className="w-4 h-4 mr-2" />
+                      )}
+                      Generate Hashtags
+                    </Button>
+                  </div>
                   <Textarea
+                    value={hashtagNotes}
+                    onChange={(e) => setHashtagNotes(e.target.value)}
                     placeholder="Add your hashtag research notes here..."
                     className="bg-slate-700 border-slate-600 text-white min-h-[300px]"
                   />
