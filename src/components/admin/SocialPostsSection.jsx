@@ -79,13 +79,8 @@ export default function SocialPostsSection() {
 
   const generateMutation = useMutation({
     mutationFn: async ({ platform, service }) => {
-      await base44.entities.SocialPost.create({
-        platform,
-        service,
-        content: '',
-        status: 'generate',
-        generated_by_ai: true
-      });
+      const { data } = await base44.functions.invoke('generateSocialPost', { platform, service });
+      return data;
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['social-posts'] })
   });
