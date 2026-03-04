@@ -17,6 +17,7 @@ import AppFoundationSection from '@/components/admin/AppFoundationSection';
 import OperationsSection from '@/components/admin/OperationsSection';
 import MigrationQuotesSection from '@/components/admin/MigrationQuotesSection';
 import MarketingCenterSection from '@/components/admin/MarketingCenterSection.jsx';
+import SocialPostsSection from '@/components/admin/SocialPostsSection.jsx';
 
 const menuGroups = [
   {
@@ -51,6 +52,7 @@ const menuGroups = [
     title: 'Marketing',
     items: [
       { id: 'marketing', label: 'Marketing Center', icon: Megaphone },
+      { id: 'social-posts', label: 'Social Posts', icon: Megaphone },
     ]
   },
 ];
@@ -298,6 +300,9 @@ export default function AdminPage() {
           )}
           {activeTab === 'marketing' && (
             <MarketingCenterSection />
+          )}
+          {activeTab === 'social-posts' && (
+            <SocialPostsSection />
           )}
         </div>
       </main>
