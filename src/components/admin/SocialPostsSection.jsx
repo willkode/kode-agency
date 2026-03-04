@@ -140,7 +140,7 @@ export default function SocialPostsSection() {
     }
   };
 
-  const pendingPosts = posts.filter(p => p.status === 'pending_review');
+  const pendingPosts = posts.filter(p => p.status === 'pending_review' || p.status === 'generate_hashtags');
   const approvedPosts = posts.filter(p => p.status === 'approved');
   const publishedPosts = posts.filter(p => p.status === 'published');
   const rejectedPosts = posts.filter(p => p.status === 'rejected');
