@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
@@ -127,7 +127,7 @@ export default function SocialPostsSection() {
   });
 
   // Update textarea when hashtag_notes is populated
-  React.useEffect(() => {
+  useEffect(() => {
     if (hashtagPost?.[0]?.hashtag_notes) {
       setHashtagNotes(prev => prev 
         ? `${prev}\n\n--- Generated ${new Date().toLocaleString()} ---\n${hashtagPost[0].hashtag_notes}` 
