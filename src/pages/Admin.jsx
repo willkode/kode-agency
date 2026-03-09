@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { createPageUrl } from '@/utils';
 import { Button } from "@/components/ui/button";
-import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList, Menu, X, ChevronRight, Smartphone, Rocket, Activity, GitBranch, Megaphone, LogOut } from 'lucide-react';
+import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList, Menu, X, ChevronRight, Smartphone, Rocket, Activity, GitBranch, Megaphone, LogOut, ShieldAlert, Loader2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 import CRMSection from '@/components/admin/CRMSection';
@@ -58,6 +60,56 @@ const menuGroups = [
 ];
 
 export default function AdminPage() {
+  const navigate = useNavigate();
+  const [authState, setAuthState] = useState('loading'); // 'loading' | 'authorized' | 'denied'
+
+  useEffect(() => {
+    const checkAdmin = async () => {
+      try {
+        const isAuth = await base44.auth.isAuthenticated();
+        if (!isAuth) {
+          setAuthState('denied');
+          return;
+        }
+        const user = await base44.auth.me();
+        if (user?.role === 'admin') {
+          setAuthState('authorized');
+        } else {
+          setAuthState('denied');
+        }
+      } catch {
+        setAuthState('denied');
+      }
+    };
+    checkAdmin();
+  }, []);
+
+  if (authState === 'loading') {
+    return (
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-slate-400" />
+      </div>
+    );
+  }
+
+  if (authState === 'denied') {
+    return (
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+        <div className="text-center">
+          <ShieldAlert className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold text-white mb-2">Access Denied</h1>
+          <p className="text-slate-400 mb-6">You do not have permission to view this page.</p>
+          <Button
+            onClick={() => navigate(createPageUrl('Home'))}
+            className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold"
+          >
+            Go Home
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   const urlParams = new URLSearchParams(window.location.search);
   const initialTab = urlParams.get('tab') || 'operations';
   const [activeTab, setActiveTab] = useState(initialTab);
