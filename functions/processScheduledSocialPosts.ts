@@ -175,7 +175,13 @@ async function postToReddit(title, content, subreddit) {
 }
 
 async function postToLinkedIn(base44, content) {
-  const { accessToken } = await base44.asServiceRole.connectors.getConnection('linkedin');
+  let connection;
+  try {
+    connection = await base44.asServiceRole.connectors.getConnection('linkedin');
+  } catch (err) {
+    throw new Error('LinkedIn connector not authorized. Please re-authorize in app settings. ' + (err.message || ''));
+  }
+  const { accessToken } = connection;
   
   const userInfoResponse = await fetch('https://api.linkedin.com/v2/userinfo', {
     headers: {
