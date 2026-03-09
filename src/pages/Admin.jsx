@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList, Menu, X, ChevronRight, Smartphone, Rocket, Activity, GitBranch, Megaphone } from 'lucide-react';
+import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList, Menu, X, ChevronRight, Smartphone, Rocket, Activity, GitBranch, Megaphone, LogOut } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 import CRMSection from '@/components/admin/CRMSection';
@@ -232,6 +232,15 @@ export default function AdminPage() {
               <span className="text-white font-medium">{currentTabLabel}</span>
             </div>
           </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-slate-400 hover:text-white hover:bg-slate-800 gap-2"
+            onClick={() => base44.auth.logout('/')}
+          >
+            <LogOut className="w-4 h-4" />
+            Logout
+          </Button>
         </header>
 
         {/* Page Content */}
