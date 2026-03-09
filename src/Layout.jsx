@@ -49,7 +49,7 @@ export default function Layout({ children, currentPageName }) {
         const isAuth = await base44.auth.isAuthenticated();
         if (isAuth) {
           const user = await base44.auth.me();
-          if (user?.role === 'admin' && currentPageName !== 'Admin') {
+          if (user?.role === 'admin' && user?.email === 'iamwillkode@gmail.com' && currentPageName !== 'Admin') {
             navigate(createPageUrl('Admin'));
           }
         }
@@ -120,10 +120,10 @@ export default function Layout({ children, currentPageName }) {
           <div className="hidden lg:flex items-center gap-4">
             {authUser ? (
               <Button
-                onClick={() => navigate(createPageUrl(authUser.role === 'admin' ? 'Admin' : 'ClientPortal'))}
+                onClick={() => navigate(createPageUrl(authUser.role === 'admin' && authUser.email === 'iamwillkode@gmail.com' ? 'Admin' : 'ClientPortal'))}
                 className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold border-0 rounded-full px-6"
               >
-                {authUser.role === 'admin' ? 'Admin' : 'Dashboard'}
+                {authUser.role === 'admin' && authUser.email === 'iamwillkode@gmail.com' ? 'Admin' : 'Dashboard'}
               </Button>
             ) : (
               <Button
@@ -162,11 +162,11 @@ export default function Layout({ children, currentPageName }) {
                   <Button
                     onClick={() => {
                       setIsMobileMenuOpen(false);
-                      navigate(createPageUrl(authUser.role === 'admin' ? 'Admin' : 'ClientPortal'));
+                      navigate(createPageUrl(authUser.role === 'admin' && authUser.email === 'iamwillkode@gmail.com' ? 'Admin' : 'ClientPortal'));
                     }}
                     className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black h-12 text-lg mt-4"
                   >
-                    {authUser.role === 'admin' ? 'Admin' : 'Dashboard'}
+                    {authUser.role === 'admin' && authUser.email === 'iamwillkode@gmail.com' ? 'Admin' : 'Dashboard'}
                   </Button>
                 ) : (
                   <Button
