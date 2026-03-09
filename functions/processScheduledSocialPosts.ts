@@ -1,3 +1,4 @@
+// Publishes scheduled social posts in batches to avoid timeouts
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.20';
 import OAuth from 'npm:oauth-1.0a@2.2.6';
 import crypto from 'node:crypto';
