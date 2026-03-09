@@ -27,9 +27,11 @@ Deno.serve(async (req) => {
       return Response.json({ success: true, message: 'No posts due for publishing', published: 0 });
     }
 
+    // Process max 3 posts per run to avoid timeouts. The automation runs every 5 min so it catches up.
+    const batch = duePosts.slice(0, 3);
     const results = [];
 
-    for (const post of duePosts) {
+    for (const post of batch) {
       let postUrl = null;
       let errorMessage = null;
 
