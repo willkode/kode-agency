@@ -71,9 +71,10 @@ Deno.serve(async (req) => {
 
     return Response.json({ 
       success: true, 
-      message: `Processed ${duePosts.length} posts: ${published} published, ${failed} failed`,
+      message: `Processed ${batch.length} of ${duePosts.length} due posts: ${published} published, ${failed} failed`,
       published,
       failed,
+      remaining: duePosts.length - batch.length,
       results
     });
   } catch (error) {
