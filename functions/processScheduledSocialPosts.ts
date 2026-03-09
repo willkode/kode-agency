@@ -37,17 +37,26 @@ Deno.serve(async (req) => {
       let errorMessage = null;
 
       try {
-        if (post.platform === 'twitter') {
-          postUrl = await postToTwitter(post.content);
-        } else if (post.platform === 'reddit') {
-          postUrl = await postToReddit(post.title, post.content, post.subreddit);
-        } else if (post.platform === 'linkedin') {
-          postUrl = await postToLinkedIn(base44, post.content);
-        } else {
-          throw new Error(`Unsupported platform: ${post.platform}`);
-        }
+        // Wrap each publish in a 25-second timeout to prevent one slow call from blocking the batch
+        const publishPromise = (async () => {
+          if (post.platform === 'twitter') {
+            return await postToTwitter(post.content);
+          } else if (post.platform === 'reddit') {
+            return await postToReddit(post.title, post.content, post.subreddit);
+          } else if (post.platform === 'linkedin') {
+            return await postToLinkedIn(base44, post.content);
+          } else {
+            throw new Error(`Unsupported platform: ${post.platform}`);
+          }
+        })();
+
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Publish timed out after 25 seconds')), 25000)
+        );
+
+        postUrl = await Promise.race([publishPromise, timeoutPromise]);
       } catch (err) {
-        errorMessage = err.message;
+        errorMessage = err.message || String(err);
       }
 
       // Update the post
