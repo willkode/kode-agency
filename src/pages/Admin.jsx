@@ -93,6 +93,29 @@ export default function AdminPage() {
     checkAdmin();
   }, []);
 
+  useEffect(() => {
+    if (authState !== 'authorized') return;
+    const fetchBadges = async () => {
+      try {
+        const [sprints, reviews, mobileapp, foundation, migrationQuotes] = await Promise.all([
+          base44.entities.BuildSprintRequest.filter({ payment_status: 'completed' }),
+          base44.entities.AppReviewRequest.filter({ payment_status: 'completed' }),
+          base44.entities.MobileAppConversionRequest.filter({ payment_status: 'completed' }),
+          base44.entities.AppFoundationRequest.filter({ payment_status: 'completed' }),
+          base44.entities.MigrationQuoteRequest.filter({ status: 'New' }),
+        ]);
+        setBadges({
+          sprints: sprints.length,
+          reviews: reviews.length,
+          mobileapp: mobileapp.length,
+          foundation: foundation.length,
+          'migration-quotes': migrationQuotes.length,
+        });
+      } catch (_) {}
+    };
+    fetchBadges();
+  }, [authState]);
+
   if (authState === 'loading') {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center">
@@ -145,28 +168,6 @@ export default function AdminPage() {
     });
     setBadges(prev => ({ ...prev, [section]: 0 }));
   };
-
-  useEffect(() => {
-    const fetchBadges = async () => {
-      try {
-        const [sprints, reviews, mobileapp, foundation, migrationQuotes] = await Promise.all([
-          base44.entities.BuildSprintRequest.filter({ payment_status: 'completed' }),
-          base44.entities.AppReviewRequest.filter({ payment_status: 'completed' }),
-          base44.entities.MobileAppConversionRequest.filter({ payment_status: 'completed' }),
-          base44.entities.AppFoundationRequest.filter({ payment_status: 'completed' }),
-          base44.entities.MigrationQuoteRequest.filter({ status: 'New' }),
-        ]);
-        setBadges({
-          sprints: sprints.length,
-          reviews: reviews.length,
-          mobileapp: mobileapp.length,
-          foundation: foundation.length,
-          'migration-quotes': migrationQuotes.length,
-        });
-      } catch (_) {}
-    };
-    fetchBadges();
-  }, []);
 
   const handleConvertToProject = (lead, projectType) => {
     const projectTypeLabels = {
