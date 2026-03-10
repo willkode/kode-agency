@@ -21,6 +21,12 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Please provide a valid GitHub repository URL' }, { status: 400 });
     }
 
+    // Verify scan belongs to user
+    const scans = await base44.asServiceRole.entities.FrontendExporterScan.filter({ id: scan_id });
+    if (!scans.length || scans[0].user_email !== user.email) {
+      return Response.json({ error: 'Scan not found or access denied' }, { status: 403 });
+    }
+
     // Update scan status to scanning
     await base44.asServiceRole.entities.FrontendExporterScan.update(scan_id, {
       status: 'scanning'

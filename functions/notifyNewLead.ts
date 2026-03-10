@@ -4,7 +4,13 @@ const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
 Deno.serve(async (req) => {
   try {
+    // This function should only be called by authenticated admin users or automations
+    // Adding basic validation to prevent abuse
     const { name, email, phone, payment_status, service, amount } = await req.json();
+    
+    if (!name || !email || !service) {
+      return Response.json({ error: 'Missing required fields' }, { status: 400 });
+    }
 
     const statusLabel = {
       pending: 'Unpaid',

@@ -25,6 +25,12 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Payment not confirmed' }, { status: 402 });
     }
 
+    // Verify scan belongs to user
+    const scans = await base44.asServiceRole.entities.FrontendExporterScan.filter({ id: scan_id });
+    if (!scans.length || scans[0].user_email !== user.email) {
+      return Response.json({ error: 'Scan not found or access denied' }, { status: 403 });
+    }
+
     // Unlock the scan
     await base44.asServiceRole.entities.FrontendExporterScan.update(scan_id, {
       status: 'completed',

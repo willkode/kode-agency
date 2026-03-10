@@ -38,6 +38,13 @@ async function sendCustomerConfirmationEmail(email, name, serviceName) {
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
+    
+    // Verify user authentication
+    const user = await base44.auth.me();
+    if (!user) {
+      return Response.json({ error: 'Authentication required' }, { status: 401 });
+    }
+    
     const { sessionId } = await req.json();
     
     if (!sessionId) {
@@ -49,6 +56,11 @@ Deno.serve(async (req) => {
     
     if (session.payment_status !== 'paid') {
       return Response.json({ error: 'Payment not completed' }, { status: 400 });
+    }
+    
+    // Verify session belongs to calling user
+    if (session.customer_email && session.customer_email !== user.email) {
+      return Response.json({ error: 'Session does not belong to authenticated user' }, { status: 403 });
     }
 
     const { service, requestId, customerName } = session.metadata;

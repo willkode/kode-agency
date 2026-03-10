@@ -20,6 +20,13 @@ const getAccessToken = async () => {
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
+    
+    // Verify user authentication
+    const user = await base44.auth.me();
+    if (!user) {
+      return Response.json({ error: 'Authentication required' }, { status: 401 });
+    }
+    
     const { orderId, quoteId } = await req.json();
     
     const accessToken = await getAccessToken();
