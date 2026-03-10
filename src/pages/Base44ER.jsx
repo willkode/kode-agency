@@ -49,7 +49,8 @@ export default function Base44ERPage() {
     country: '',
     app_url: '',
     issue_description: '',
-    include_fix: false
+    include_fix: false,
+    include_security: false
   });
 
   // Handle return from Stripe
@@ -85,7 +86,12 @@ export default function Base44ERPage() {
       // March Special: Review + Fix is $50 (ends April 1, 2026)
       const marchSpecialEndDate = new Date('2026-04-01T06:00:00Z'); // Midnight CST = 6am UTC
       const isMarchSpecial = new Date() < marchSpecialEndDate;
-      const amount = isMarchSpecial ? 50 : (data.include_fix ? 150 : 50);
+      let amount = isMarchSpecial ? 50 : (data.include_fix ? 150 : 50);
+      
+      // Add security check addon
+      if (data.include_security) {
+        amount += 20;
+      }
       
       const created = await base44.entities.AppReviewRequest.create({
         ...data,
@@ -487,11 +493,6 @@ Provide the full analysis in the exact report format above based on the data I s
 
   const services = [
     {
-      icon: Shield,
-      title: "Security Check",
-      items: ["Common vulnerabilities", "Unsafe patterns", "Data exposure risks", "Auth and permission issues"]
-    },
-    {
       icon: Code,
       title: "Code Quality Check",
       items: ["Structural problems", "Maintainability issues", "Anti-patterns", "Scalability concerns"]
@@ -586,7 +587,7 @@ Provide the full analysis in the exact report format above based on the data I s
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-3 gap-6 mb-12">
           {services.map((service, index) => (
             <Card key={index} className="p-6 bg-slate-900/50 border-slate-800 hover:border-[#73e28a]/50">
               <div className="w-12 h-12 rounded-xl bg-[#73e28a]/10 flex items-center justify-center mb-4">
@@ -603,6 +604,40 @@ Provide the full analysis in the exact report format above based on the data I s
               </ul>
             </Card>
           ))}
+        </div>
+
+        <div className="max-w-3xl mx-auto">
+          <Card className="p-8 bg-slate-900/80 border-[#73e28a]/30">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-xl bg-[#73e28a]/10 flex items-center justify-center flex-shrink-0">
+                <Shield className="w-6 h-6 text-[#73e28a]" />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-2">
+                  <h3 className="text-xl font-bold text-white">Add Security Check</h3>
+                  <span className="text-[#73e28a] font-bold">+$20</span>
+                </div>
+                <p className="text-slate-400 mb-4">
+                  Add a comprehensive security audit covering entity RLS rules, backend function auth, rate limiting, privilege escalation, and more. Based on our manual security review process.
+                </p>
+                <ul className="grid md:grid-cols-2 gap-2">
+                  {[
+                    "Entity access control review",
+                    "Backend function security",
+                    "Privilege escalation checks",
+                    "Rate limiting analysis",
+                    "Data exposure risks",
+                    "Auth and permission issues"
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
+                      <CheckCircle className="w-4 h-4 text-[#73e28a] mt-0.5 flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </Card>
         </div>
       </Section>
 
@@ -831,9 +866,34 @@ Provide the full analysis in the exact report format above based on the data I s
                 </div>
               </div>
 
+              <div 
+                className={`p-4 rounded-lg border cursor-pointer transition-all ${formData.include_security ? 'bg-[#73e28a]/10 border-[#73e28a]' : 'bg-slate-800 border-slate-700 hover:border-slate-600'}`}
+                onClick={() => handleChange('include_security', !formData.include_security)}
+              >
+                <div className="flex items-start gap-3">
+                  <Checkbox 
+                    checked={formData.include_security}
+                    onCheckedChange={(checked) => handleChange('include_security', checked)}
+                    className="mt-1 border-slate-600 data-[state=checked]:bg-[#73e28a] data-[state=checked]:border-[#73e28a]"
+                  />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Shield className="w-4 h-4 text-[#73e28a]" />
+                      <span className="font-bold text-white">Add Security Check</span>
+                      <span className="text-[#73e28a] text-sm">+$20</span>
+                    </div>
+                    <p className="text-sm text-slate-400">
+                      Comprehensive security audit covering entity RLS, backend auth, rate limiting, and privilege escalation checks.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <div className="p-3 bg-slate-800/50 rounded-lg text-center">
                 <span className="text-slate-400">Total: </span>
-                <span className="text-xl font-bold text-[#73e28a]">$50</span>
+                <span className="text-xl font-bold text-[#73e28a]">
+                  ${50 + (formData.include_security ? 20 : 0)}
+                </span>
                 {formData.include_fix && <span className="text-amber-400 text-sm ml-2">(March Special - Fix included FREE!)</span>}
               </div>
 
@@ -905,7 +965,7 @@ Provide the full analysis in the exact report format above based on the data I s
               <div>
                 <h3 className="text-xl font-bold text-white mb-2">Redirecting to Checkout...</h3>
                 <p className="text-slate-400">
-                  Complete your $50 payment to finalize the review request.
+                  Complete your ${50 + (formData.include_security ? 20 : 0)} payment to finalize the review request.
                 </p>
               </div>
               <p className="text-sm text-slate-500">
