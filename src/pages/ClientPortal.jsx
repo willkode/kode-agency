@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { 
   FolderKanban, Calendar, User, CheckCircle, Clock, Circle, 
-  AlertCircle, Send, ArrowLeft, FileText 
+  AlertCircle, Send, ArrowLeft, FileText, LogOut 
 } from 'lucide-react';
 import { format } from 'date-fns';
 
@@ -100,25 +100,35 @@ export default function ClientPortalPage() {
         
         <div className="relative z-10">
           {/* Header */}
-          <div className="flex items-center gap-4 mb-8">
-            {selectedProject && (
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={() => setSelectedProject(null)}
-                className="text-slate-400 hover:text-white"
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </Button>
-            )}
-            <div>
-              <h1 className="text-2xl font-bold text-white">
-                {selectedProject ? selectedProject.title : 'Client Portal'}
-              </h1>
-              <p className="text-slate-400">
-                {selectedProject ? 'View project tasks and progress' : 'Welcome back, ' + (user?.full_name || 'Client')}
-              </p>
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-4">
+              {selectedProject && (
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={() => setSelectedProject(null)}
+                  className="text-slate-400 hover:text-white"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                </Button>
+              )}
+              <div>
+                <h1 className="text-2xl font-bold text-white">
+                  {selectedProject ? selectedProject.title : 'Client Portal'}
+                </h1>
+                <p className="text-slate-400">
+                  {selectedProject ? 'View project tasks and progress' : 'Welcome back, ' + (user?.full_name || 'Client')}
+                </p>
+              </div>
             </div>
+            <Button
+              onClick={() => base44.auth.logout('/')}
+              variant="ghost"
+              className="text-slate-400 hover:text-white gap-2"
+            >
+              <LogOut className="w-4 h-4" />
+              Logout
+            </Button>
           </div>
 
           {!selectedProject ? (
