@@ -686,7 +686,7 @@ export default function SecurityCheckPage() {
                   <div className="flex-1">
                     <Label 
                       htmlFor="include_fix" 
-                      className="text-slate-200 font-medium cursor-pointer"
+                      className="text-[#73e28a] font-bold cursor-pointer"
                     >
                       Have us fix the issues for you (+$50)
                     </Label>
