@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -56,7 +57,8 @@ export default function SecurityCheckPage() {
     phone: '',
     country: '',
     app_url: '',
-    description: ''
+    description: '',
+    include_fix: false
   });
 
   // Handle return from Stripe
@@ -82,25 +84,28 @@ export default function SecurityCheckPage() {
 
   const submitMutation = useMutation({
     mutationFn: async (data) => {
+      const totalAmount = data.include_fix ? 70 : 20;
       const created = await base44.entities.SecurityCheckRequest.create({
         ...data,
-        payment_amount: 20
+        payment_amount: totalAmount
       });
       
+      const totalAmount = data.include_fix ? 70 : 20;
       base44.functions.invoke('notifyNewLead', {
         name: data.name,
         email: data.email,
         phone: data.phone || '',
         payment_status: 'pending',
-        service: 'Security Check',
-        amount: 20
+        service: data.include_fix ? 'Security Check + Fix' : 'Security Check',
+        amount: totalAmount
       }).catch(err => console.error('Lead notification failed:', err));
       
+      const totalAmount = data.include_fix ? 70 : 20;
       const response = await base44.functions.invoke('createStripeCheckout', { 
         service: 'SecurityCheck',
         requestId: created.id,
-        amount: 20,
-        description: 'Base44 Security Check Service',
+        amount: totalAmount,
+        description: data.include_fix ? 'Base44 Security Check + Fix Service' : 'Base44 Security Check Service',
         customerEmail: data.email,
         customerName: data.name
       });
@@ -671,9 +676,36 @@ export default function SecurityCheckPage() {
                 />
               </div>
 
-              <div className="p-3 bg-slate-800/50 rounded-lg text-center">
-                <span className="text-slate-400">Total: </span>
-                <span className="text-xl font-bold text-[#73e28a]">$20</span>
+              <div className="space-y-4 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                <div className="flex items-start gap-3">
+                  <Checkbox
+                    id="include_fix"
+                    checked={formData.include_fix}
+                    onCheckedChange={(checked) => handleChange('include_fix', checked)}
+                    className="mt-1"
+                  />
+                  <div className="flex-1">
+                    <Label 
+                      htmlFor="include_fix" 
+                      className="text-slate-200 font-medium cursor-pointer"
+                    >
+                      Have us fix the issues for you (+$50)
+                    </Label>
+                    <p className="text-sm text-slate-400 mt-1">
+                      We'll implement all the fixes directly in your Base44 app
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pt-3 border-t border-slate-700 text-center">
+                  <span className="text-slate-400">Total: </span>
+                  <span className="text-xl font-bold text-[#73e28a]">
+                    ${formData.include_fix ? '70' : '20'}
+                  </span>
+                  {formData.include_fix && (
+                    <p className="text-xs text-slate-500 mt-1">$20 scan + $50 implementation</p>
+                  )}
+                </div>
               </div>
 
               <Button 
@@ -744,7 +776,7 @@ export default function SecurityCheckPage() {
               <div>
                 <h3 className="text-xl font-bold text-white mb-2">Redirecting to Checkout...</h3>
                 <p className="text-slate-400">
-                  Complete your $20 payment to finalize the security check request.
+                  Complete your ${formData.include_fix ? '70' : '20'} payment to finalize the security check request.
                 </p>
               </div>
               <p className="text-sm text-slate-500">
