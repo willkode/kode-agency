@@ -187,7 +187,7 @@ export default function SecurityCheckPage() {
             </div>
 
             <p className="text-xl text-slate-300 mb-8 leading-relaxed max-w-3xl mx-auto">
-              We manually audit your Base44 app for the vulnerabilities the built-in security tab can't see — and give you the exact prompts to fix every issue we find.
+              We manually audit your Base44 app for the vulnerabilities the built-in security tab can't see. We pull all your entities and run over 100+ attack simulations on each one to ensure they're truly secure — then give you the exact prompts to fix every issue we find.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-4">
@@ -336,7 +336,7 @@ export default function SecurityCheckPage() {
                 severityColor: "bg-orange-500/10 border-orange-500/30 text-orange-400",
                 icon: Lock,
                 title: "Unauthenticated Entity Access",
-                desc: "Can visitors read or write your entities without logging in? We test every entity for open GET and POST access."
+                desc: "Can visitors read or write your entities without logging in? We pull all your entities and run 100+ attack simulations on each — testing every endpoint for open GET and POST access, bulk operations, and bypass attempts."
               },
               {
                 severity: "Critical",
