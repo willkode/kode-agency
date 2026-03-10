@@ -205,7 +205,7 @@ export default function SecurityCheckPage() {
             </div>
             
             <p className="text-sm text-slate-400 mb-12">
-              Delivered within 48 hours · Fix prompts included · No code knowledge needed
+              Delivered within 48 hours (excluding weekends) · Fix prompts included · No code knowledge needed
             </p>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
@@ -213,7 +213,7 @@ export default function SecurityCheckPage() {
                 { icon: Shield, label: "Manual Audit" },
                 { icon: FileText, label: "Full Report" },
                 { icon: Code, label: "Fix Prompts" },
-                { icon: Clock, label: "48hr Delivery" }
+                { icon: Clock, label: "48hr Delivery*" }
               ].map((item, i) => (
                 <div key={i} className="flex flex-col items-center gap-2 p-4 bg-slate-900/50 rounded-lg border border-slate-800">
                   <item.icon className="w-6 h-6 text-[#73e28a]" />
@@ -509,7 +509,7 @@ export default function SecurityCheckPage() {
               </p>
               <div className="mb-6">
                 <span className="text-5xl font-bold text-[#73e28a]">$20</span>
-                <p className="text-slate-500 text-sm mt-1">one-time · delivered within 48 hours</p>
+                <p className="text-slate-500 text-sm mt-1">one-time · delivered within 48 hours (excluding weekends)</p>
               </div>
               <ul className="space-y-3 mb-8">
                 {[
@@ -545,7 +545,7 @@ export default function SecurityCheckPage() {
               </p>
               <div className="mb-6">
                 <span className="text-5xl font-bold text-[#73e28a]">$70</span>
-                <p className="text-slate-500 text-sm mt-1">$20 scan + $50 implementation · delivered within 48 hours</p>
+                <p className="text-slate-500 text-sm mt-1">$20 scan + $50 implementation · delivered within 48 hours (excluding weekends)</p>
               </div>
               <ul className="space-y-3 mb-8">
                 {[
