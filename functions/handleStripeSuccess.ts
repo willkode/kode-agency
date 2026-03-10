@@ -74,6 +74,8 @@ Deno.serve(async (req) => {
       await handleBuildSprint(base44, session, requestId);
     } else if (service === 'AppFoundation' && requestId) {
       await handleAppFoundation(base44, session, requestId);
+    } else if (service === 'SecurityCheck' && requestId) {
+      await handleSecurityCheck(base44, session, requestId);
     }
 
     return Response.json({ 
