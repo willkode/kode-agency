@@ -179,7 +179,7 @@ export default function SecurityCheckPage() {
             
             <div className="mb-8 space-y-2">
               <p className="text-2xl text-white font-semibold">
-                Your Base44 app passed the scanner.
+                Your Base44 app passed the built-in RLS scanner.
               </p>
               <p className="text-2xl text-slate-300 font-semibold">
                 That doesn't mean it's secure.
