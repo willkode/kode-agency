@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { track, trackPurchase, usePageView, useScrollDepth, useTimeOnPage } from '@/components/analytics/useAnalytics';
 import Section from '@/components/ui-custom/Section';
 import Card from '@/components/ui-custom/Card';
+import SectionLabel from '@/components/ui-custom/SectionLabel';
 import GridBackground from '@/components/ui-custom/GridBackground';
 import FloatingPixels from '@/components/ui-custom/FloatingPixels';
 import SEO, { createServiceSchema, createBreadcrumbSchema } from '@/components/SEO';
@@ -27,7 +28,16 @@ import {
   ExternalLink,
   Eye,
   Database,
-  Code
+  Code,
+  X,
+  Check,
+  Zap,
+  Users,
+  Settings,
+  Key,
+  List,
+  Clock,
+  FileText
 } from 'lucide-react';
 
 export default function SecurityCheckPage() {
@@ -129,29 +139,6 @@ export default function SecurityCheckPage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const services = [
-    {
-      icon: Shield,
-      title: "Entity Security Audit",
-      items: ["RLS policy review", "Permission checks", "Access control gaps", "Data exposure risks"]
-    },
-    {
-      icon: Code,
-      title: "Backend Function Security",
-      items: ["Service role abuse", "Missing auth checks", "Input validation", "Error handling"]
-    },
-    {
-      icon: Database,
-      title: "Data Protection Review",
-      items: ["Sensitive field protection", "Cross-tenant isolation", "Payment field security", "User data safety"]
-    },
-    {
-      icon: Eye,
-      title: "Detailed Report",
-      items: ["Severity ratings", "Exact locations", "Fix recommendations", "Priority actions"]
-    }
-  ];
-
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -160,155 +147,426 @@ export default function SecurityCheckPage() {
         { name: "Services", url: "/Services" },
         { name: "Security Check", url: "/SecurityCheck" }
       ]),
-      createServiceSchema("Base44 Security Check", "Professional security audit for Base44 apps. $20 one-time comprehensive security review.", "/SecurityCheck")
+      createServiceSchema("Base44 Security Scan", "Manual security audit for Base44 apps covering vulnerabilities the built-in scanner can't see. $20 comprehensive review.", "/SecurityCheck")
     ]
   };
 
   return (
     <div className="flex flex-col bg-slate-950 text-white overflow-hidden">
       <SEO 
-        title="Security Check - Base44 App Security Audit"
-        description="Professional security audit for Base44 apps. $20 comprehensive review covering entity security, backend functions, data protection, and access control."
-        keywords={["Base44 security", "app security audit", "Base44 security check", "security review", "vulnerability scan"]}
+        title="Base44 Security Scan - Manual Security Audit for Base44 Apps"
+        description="We manually audit your Base44 app for vulnerabilities the built-in security tab can't see. Get exact fix prompts for every issue. $20 delivered within 48 hours."
+        keywords={["Base44 security", "app security audit", "Base44 security check", "security review", "vulnerability scan", "RLS audit", "backend function security"]}
         url="/SecurityCheck"
         jsonLd={jsonLd}
       />
       
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden pt-20">
+      <section className="relative pt-32 pb-20 px-4 overflow-hidden">
         <GridBackground />
-        <FloatingPixels count={20} />
+        <FloatingPixels count={30} />
         
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 bg-[#73e28a]/10 border border-[#73e28a]/30 rounded-full px-4 py-2 mb-6">
-            <Shield className="w-4 h-4 text-[#73e28a]" />
-            <span className="text-[#73e28a] text-sm font-medium">Security Audit Service</span>
-          </div>
-          
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">
-            Security <span className="text-[#73e28a]">Check</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto mb-4">
-            Comprehensive Security Audit for Your Base44 App
-          </p>
-          <div className="text-center mb-8">
-            <p className="text-4xl md:text-5xl font-bold text-[#73e28a]">$20</p>
-            <p className="text-slate-500 text-sm">One-Time Security Audit</p>
-          </div>
-          
-          <Button 
-            onClick={() => setIsModalOpen(true)}
-            className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold text-lg h-14 px-10 rounded-full"
-          >
-            Get Security Audit <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
+        <div className="container mx-auto relative z-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 border border-red-500/30 rounded-full mb-6">
+              <AlertTriangle className="w-4 h-4 text-red-400" />
+              <span className="text-red-400 text-sm font-medium">Critical Security Gap</span>
+            </div>
+            
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+              Base44 Security Scan
+            </h1>
+            
+            <div className="mb-8 space-y-2">
+              <p className="text-2xl text-white font-semibold">
+                Your Base44 app passed the scanner.
+              </p>
+              <p className="text-2xl text-slate-300 font-semibold">
+                That doesn't mean it's secure.
+              </p>
+            </div>
 
-          <p className="text-slate-500 text-sm mt-6">
-            Expert security review • Full coverage • Actionable recommendations
-          </p>
+            <p className="text-xl text-slate-300 mb-8 leading-relaxed max-w-3xl mx-auto">
+              We manually audit your Base44 app for the vulnerabilities the built-in security tab can't see — and give you the exact prompts to fix every issue we find.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-4">
+              <Button 
+                onClick={() => setIsModalOpen(true)}
+                className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-8 text-lg group"
+              >
+                Get My App Scanned — $20
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
+            
+            <p className="text-sm text-slate-400 mb-12">
+              Delivered within 48 hours · Fix prompts included · No code knowledge needed
+            </p>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
+              {[
+                { icon: Shield, label: "Manual Audit" },
+                { icon: FileText, label: "Full Report" },
+                { icon: Code, label: "Fix Prompts" },
+                { icon: Clock, label: "48hr Delivery" }
+              ].map((item, i) => (
+                <div key={i} className="flex flex-col items-center gap-2 p-4 bg-slate-900/50 rounded-lg border border-slate-800">
+                  <item.icon className="w-6 h-6 text-[#73e28a]" />
+                  <span className="text-sm text-slate-300 text-center">{item.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* What's Included */}
-      <Section className="py-24 relative">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            What's Included in the Security Check
-          </h2>
-          <p className="text-slate-400 max-w-2xl mx-auto">
-            A complete security audit covering entities, backend functions, access control, and data protection.
+      {/* Why We Built This */}
+      <Section className="py-24">
+        <div className="max-w-4xl mx-auto">
+          <SectionLabel text="Origin Story" />
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Why we built this</h2>
+          <p className="text-2xl text-slate-300 mb-8 font-semibold">
+            We found these vulnerabilities in our own Base44 apps.
+          </p>
+          <p className="text-xl text-slate-300 mb-8">
+            Then we looked at how other Base44 apps were built and realised the same issues were everywhere.
+          </p>
+
+          <div className="bg-slate-900/80 border border-slate-800 rounded-lg p-8 mb-8">
+            <p className="text-slate-300 leading-relaxed mb-6">
+              While auditing two of our own production Base44 apps, we discovered that <strong className="text-white">authenticated users could permanently delete their own accounts with a single API call</strong>, <strong className="text-white">unauthenticated visitors could write records directly to open entity endpoints</strong>, and <strong className="text-white">the invite system had a privilege escalation path that let regular users grant themselves admin access</strong>.
+            </p>
+            <p className="text-slate-300 leading-relaxed">
+              None of these were flagged by Base44's Dashboard Security Tab. The scanner showed green across the board. The issues came from how the AI builder creates entities by default — public, writable, and without rate limiting — and from attack surfaces the scanner simply doesn't check.
+            </p>
+          </div>
+
+          <p className="text-slate-300 leading-relaxed">
+            We documented every finding, tested every fix, and built a manual review process around what we learned. This service is that process — applied to your app.
           </p>
         </div>
+      </Section>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service, index) => (
-            <Card key={index} className="p-6 bg-slate-900/50 border-slate-800 hover:border-[#73e28a]/50">
-              <div className="w-12 h-12 rounded-xl bg-[#73e28a]/10 flex items-center justify-center mb-4">
-                <service.icon className="w-6 h-6 text-[#73e28a]" />
+      {/* The Problem */}
+      <Section className="py-24 bg-slate-900/50">
+        <div className="max-w-5xl mx-auto">
+          <SectionLabel text="The Gap" />
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">The problem</h2>
+          <p className="text-2xl text-slate-300 mb-12">
+            Base44's security scanner only covers one of seven attack surfaces.
+          </p>
+          <p className="text-lg text-slate-400 mb-12">
+            Running the built-in scan is a good start. But it leaves most of your app unchecked.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            {/* What it checks */}
+            <Card className="p-8 bg-green-500/5 border-green-500/30">
+              <div className="flex items-center gap-3 mb-6">
+                <Check className="w-6 h-6 text-green-400" />
+                <h3 className="text-xl font-bold text-white">What the Dashboard Security Tab checks</h3>
               </div>
-              <h3 className="text-lg font-bold text-white mb-4">{service.title}</h3>
-              <ul className="space-y-2">
-                {service.items.map((item, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-slate-400">
-                    <CheckCircle className="w-4 h-4 text-[#73e28a] mt-0.5 flex-shrink-0" />
-                    {item}
+              <ul className="space-y-3">
+                {[
+                  "Entity RLS rules for missing access controls",
+                  "Overly permissive read/write policies",
+                  "Public entity exposure",
+                  "Admin-only restriction flags",
+                  "Visual CRUD permission summary"
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 text-slate-300">
+                    <Check className="w-4 h-4 text-green-400 mt-1 flex-shrink-0" />
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </Card>
-          ))}
+
+            {/* What it doesn't check */}
+            <Card className="p-8 bg-red-500/5 border-red-500/30">
+              <div className="flex items-center gap-3 mb-6">
+                <X className="w-6 h-6 text-red-400" />
+                <h3 className="text-xl font-bold text-white">What it does not check</h3>
+              </div>
+              <ul className="space-y-3">
+                {[
+                  "Backend functions (service role abuse, missing auth checks)",
+                  "Rate limiting on public-facing endpoints",
+                  "Privilege escalation via invite or bulk endpoints",
+                  "Storage exhaustion / database flooding attacks",
+                  "Webhook signature validation",
+                  "Automation and scheduled function security",
+                  "Secrets and integration credential exposure",
+                  "API endpoint abuse patterns"
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 text-slate-300">
+                    <X className="w-4 h-4 text-red-400 mt-1 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          </div>
+
+          <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-6">
+            <p className="text-slate-300 leading-relaxed">
+              <strong className="text-yellow-400">AI-generated apps are especially at risk</strong> because the builder creates entities with open access rules by default — it prioritises getting your app working over locking it down. Developers who aren't security specialists see a passing scan and ship. The attack surface grows silently every time the AI adds a new entity.
+            </p>
+          </div>
         </div>
       </Section>
 
-      {/* Why This Matters */}
-      <Section className="py-24 bg-slate-900/50 relative">
-        <GridBackground />
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-white mb-6">Why Security Matters</h2>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-amber-500 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">Unsecured apps can leak customer data</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-amber-500 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">Users can access or modify data they shouldn't</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-amber-500 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">Payment manipulation can cost you money</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-amber-500 mt-1 flex-shrink-0" />
-                  <span className="text-slate-300">Backend functions may have privilege escalation risks</span>
-                </li>
+      {/* What We Audit */}
+      <Section className="py-24">
+        <div className="max-w-5xl mx-auto">
+          <SectionLabel text="8 Check Categories" />
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">What we audit</h2>
+          <p className="text-xl text-slate-300 mb-12">
+            A manual review of every layer the scanner skips.
+          </p>
+          <p className="text-lg text-slate-400 mb-12">
+            We go through your app the same way an attacker would — methodically, endpoint by endpoint.
+          </p>
+
+          <div className="space-y-6">
+            {[
+              {
+                severity: "High",
+                severityColor: "bg-orange-500/10 border-orange-500/30 text-orange-400",
+                icon: Lock,
+                title: "Unauthenticated Entity Access",
+                desc: "Can visitors read or write your entities without logging in? We test every entity for open GET and POST access."
+              },
+              {
+                severity: "Critical",
+                severityColor: "bg-red-500/10 border-red-500/30 text-red-400",
+                icon: Users,
+                title: "Privilege Escalation",
+                desc: "Can a regular user grant themselves admin or owner access via the invite endpoint, bulk create, or role update paths?"
+              },
+              {
+                severity: "High",
+                severityColor: "bg-orange-500/10 border-orange-500/30 text-orange-400",
+                icon: AlertTriangle,
+                title: "Destructive Self-Actions",
+                desc: "Can authenticated users delete their own account, corrupt their profile, or trigger irreversible actions without confirmation?"
+              },
+              {
+                severity: "Medium",
+                severityColor: "bg-yellow-500/10 border-yellow-500/30 text-yellow-400",
+                icon: Zap,
+                title: "Rate Limiting on Functions",
+                desc: "Are your public-facing backend functions — contact forms, waitlist signups, submissions — throttled? We test for unbounded call loops."
+              },
+              {
+                severity: "High",
+                severityColor: "bg-orange-500/10 border-orange-500/30 text-orange-400",
+                icon: Database,
+                title: "Storage Exhaustion (DoS)",
+                desc: "Can an attacker flood your open entity endpoints to bloat your database, hit your Base44 storage quota, and force an unplanned upgrade?"
+              },
+              {
+                severity: "Medium",
+                severityColor: "bg-yellow-500/10 border-yellow-500/30 text-yellow-400",
+                icon: Settings,
+                title: "Backend Function Auth",
+                desc: "Do your functions using asServiceRole have proper authentication checks? We look for service role abuse patterns that bypass all RLS rules."
+              },
+              {
+                severity: "Low",
+                severityColor: "bg-blue-500/10 border-blue-500/30 text-blue-400",
+                icon: Key,
+                title: "IDOR & Cross-User Access",
+                desc: "Can users access or modify other users' records by guessing or enumerating IDs? We check read, update, and delete paths."
+              },
+              {
+                severity: "Medium",
+                severityColor: "bg-yellow-500/10 border-yellow-500/30 text-yellow-400",
+                icon: List,
+                title: "Bulk Endpoint Abuse",
+                desc: "Do your bulk create and update endpoints enforce the same restrictions as individual endpoints? We test for bypasses that slip through."
+              }
+            ].map((item, i) => (
+              <Card key={i} className="p-6 bg-slate-900/80 border-slate-800 hover:border-[#73e28a]/30 transition-colors">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-slate-800 flex items-center justify-center flex-shrink-0">
+                    <item.icon className="w-6 h-6 text-[#73e28a]" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex flex-wrap items-center gap-3 mb-2">
+                      <span className={`px-3 py-1 rounded-full text-xs font-bold border ${item.severityColor}`}>
+                        {item.severity}
+                      </span>
+                      <h3 className="text-xl font-bold text-white">{item.title}</h3>
+                    </div>
+                    <p className="text-slate-400">{item.desc}</p>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* What You Get */}
+      <Section className="py-24 bg-slate-900/50">
+        <div className="max-w-5xl mx-auto">
+          <SectionLabel text="Deliverables" />
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">What you get</h2>
+          <p className="text-xl text-slate-300 mb-12">
+            A full findings report with ready-to-paste fix prompts.
+          </p>
+          <p className="text-lg text-slate-400 mb-12">
+            Not just a list of problems — everything you need to fix them in Base44 without writing a line of code.
+          </p>
+
+          <div className="space-y-6">
+            {[
+              {
+                num: "1",
+                title: "Findings summary with severity ratings",
+                desc: "Every issue we find, classified as Critical / High / Medium / Low with a plain-English explanation of what it means and what an attacker could do with it."
+              },
+              {
+                num: "2",
+                title: "Affected endpoint and reproduction steps",
+                desc: "The exact API endpoint, the request that triggers it, and what response confirms the vulnerability — so you can verify it yourself before fixing."
+              },
+              {
+                num: "3",
+                title: "Copy-paste fix prompts for the Base44 AI builder",
+                desc: "For every finding, a ready-to-use prompt you paste directly into your Base44 builder to generate the fix. No security knowledge required."
+              },
+              {
+                num: "4",
+                title: "Confirmed safe controls",
+                desc: "A list of everything we tested that is working correctly — so you know what doesn't need attention and can focus your effort where it matters."
+              },
+              {
+                num: "5",
+                title: "Remediation priority table",
+                desc: "A ranked action list — what to fix immediately, what to fix this sprint, and what can wait — so you know where to start."
+              }
+            ].map((item, i) => (
+              <Card key={i} className="p-6 bg-slate-900/80 border-slate-800">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-lg bg-[#73e28a] text-black font-bold text-xl flex items-center justify-center flex-shrink-0">
+                    {item.num}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                    <p className="text-slate-400">{item.desc}</p>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* Pricing */}
+      <Section className="py-24">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <SectionLabel text="Pricing" />
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Simple, flat-rate pricing.</h2>
+            <p className="text-xl text-slate-400">
+              No hourly billing. No retainer. Pay once, get your report.
+            </p>
+          </div>
+
+          <p className="text-lg text-slate-300 text-center mb-12">
+            Start with the scan. Add implementation if you want us to handle the fixes.
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Security Scan */}
+            <Card className="p-8 bg-slate-900/80 border-slate-800 hover:border-[#73e28a]/50 transition-colors">
+              <h3 className="text-2xl font-bold text-white mb-2">Security Scan + Report</h3>
+              <p className="text-slate-400 mb-6">
+                Manual audit of your Base44 app with a full findings report and fix prompts for every issue found.
+              </p>
+              <div className="mb-6">
+                <span className="text-5xl font-bold text-[#73e28a]">$20</span>
+                <p className="text-slate-500 text-sm mt-1">one-time · delivered within 48 hours</p>
+              </div>
+              <ul className="space-y-3 mb-8">
+                {[
+                  "Manual audit across all 8 check categories",
+                  "Full findings report (PDF + Word)",
+                  "Severity rating for each issue",
+                  "Copy-paste Base44 builder fix prompts",
+                  "Remediation priority table",
+                  "List of confirmed safe controls"
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 text-slate-300">
+                    <CheckCircle className="w-4 h-4 text-[#73e28a] mt-1 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
-            </div>
-            <Card className="p-8 bg-slate-800/50 border-slate-700">
-              <h3 className="text-xl font-bold text-white mb-4">What You Get</h3>
-              <ul className="space-y-3 mb-6">
-                <li className="flex items-start gap-2 text-sm text-slate-300">
-                  <CheckCircle className="w-4 h-4 text-[#73e28a] mt-0.5" />
-                  Complete entity RLS policy audit
-                </li>
-                <li className="flex items-start gap-2 text-sm text-slate-300">
-                  <CheckCircle className="w-4 h-4 text-[#73e28a] mt-0.5" />
-                  Backend function security review
-                </li>
-                <li className="flex items-start gap-2 text-sm text-slate-300">
-                  <CheckCircle className="w-4 h-4 text-[#73e28a] mt-0.5" />
-                  Data access and protection analysis
-                </li>
-                <li className="flex items-start gap-2 text-sm text-slate-300">
-                  <CheckCircle className="w-4 h-4 text-[#73e28a] mt-0.5" />
-                  Detailed report with fix instructions
-                </li>
-                <li className="flex items-start gap-2 text-sm text-slate-300">
-                  <CheckCircle className="w-4 h-4 text-[#73e28a] mt-0.5" />
-                  Priority ranking of issues
-                </li>
+              <Button 
+                onClick={() => setIsModalOpen(true)}
+                className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-12"
+              >
+                Get My App Scanned
+              </Button>
+            </Card>
+
+            {/* Scan + Implementation */}
+            <Card className="p-8 bg-slate-900/80 border-[#73e28a] relative">
+              <div className="absolute -top-3 right-8 bg-[#73e28a] text-black text-xs font-bold px-3 py-1 rounded-full">
+                MOST POPULAR
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-2">Scan + We Fix It</h3>
+              <p className="text-slate-400 mb-6">
+                Everything in the report, plus we implement all the fixes in your Base44 app directly.
+              </p>
+              <div className="mb-6">
+                <span className="text-5xl font-bold text-[#73e28a]">$70</span>
+                <p className="text-slate-500 text-sm mt-1">$20 scan + $50 implementation · delivered within 48 hours</p>
+              </div>
+              <ul className="space-y-3 mb-8">
+                {[
+                  "Everything in the Security Scan",
+                  "We apply every fix inside your Base44 builder",
+                  "RLS rules locked down",
+                  "Backend function auth hardened",
+                  "Rate limiting added to public functions",
+                  "Post-fix verification pass included"
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 text-slate-300">
+                    <CheckCircle className="w-4 h-4 text-[#73e28a] mt-1 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
+              <Button 
+                onClick={() => setIsModalOpen(true)}
+                className="w-full bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-12"
+              >
+                Get My App Fixed
+              </Button>
             </Card>
           </div>
         </div>
       </Section>
 
-      {/* CTA */}
-      <Section className="py-24 relative">
-        <div className="text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Secure Your App Today
+      {/* Final CTA */}
+      <Section className="py-24 bg-slate-900/50">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            Your app is live. Is it secure?
           </h2>
-          <p className="text-slate-400 max-w-xl mx-auto mb-8">
-            Get peace of mind with a professional security audit for just $20.
+          <p className="text-xl text-slate-300 mb-8">
+            Most Base44 apps have at least one high-severity issue that the built-in scanner never flags. Find out what's in yours before someone else does.
           </p>
           <Button 
             onClick={() => setIsModalOpen(true)}
-            className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold text-lg h-14 px-10 rounded-full"
+            className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-10 text-lg"
           >
-            Start Security Check <ArrowRight className="ml-2 w-5 h-5" />
+            Get My App Scanned — $20
           </Button>
         </div>
       </Section>
