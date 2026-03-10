@@ -235,8 +235,22 @@ export default function SecurityCheckPage() {
 
           <div className="bg-slate-900/80 border border-slate-800 rounded-lg p-8 mb-8">
             <p className="text-slate-300 leading-relaxed mb-6">
-              While auditing two of our own production Base44 apps, we discovered that <strong className="text-white">authenticated users could permanently delete their own accounts with a single API call</strong>, <strong className="text-white">unauthenticated visitors could write records directly to open entity endpoints</strong>, and <strong className="text-white">the invite system had a privilege escalation path that let regular users grant themselves admin access</strong>.
+              While auditing two of our own production Base44 apps, we discovered that:
             </p>
+            <ul className="space-y-3 mb-6 ml-4">
+              <li className="flex items-start gap-3 text-slate-300">
+                <span className="text-red-400 mt-1">•</span>
+                <span><strong className="text-white">Authenticated users could permanently delete their own accounts with a single API call</strong></span>
+              </li>
+              <li className="flex items-start gap-3 text-slate-300">
+                <span className="text-red-400 mt-1">•</span>
+                <span><strong className="text-white">Unauthenticated visitors could write records directly to open entity endpoints</strong></span>
+              </li>
+              <li className="flex items-start gap-3 text-slate-300">
+                <span className="text-red-400 mt-1">•</span>
+                <span><strong className="text-white">The invite system had a privilege escalation path that let regular users grant themselves admin access</strong></span>
+              </li>
+            </ul>
             <p className="text-slate-300 leading-relaxed">
               None of these were flagged by Base44's Dashboard Security Tab. The scanner showed green across the board. The issues came from how the AI builder creates entities by default — public, writable, and without rate limiting — and from attack surfaces the scanner simply doesn't check.
             </p>
