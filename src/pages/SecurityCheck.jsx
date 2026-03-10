@@ -256,6 +256,12 @@ export default function SecurityCheckPage() {
             </p>
           </div>
 
+          <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-6 mb-6">
+            <p className="text-slate-300 leading-relaxed">
+              <strong className="text-amber-400">This isn't a bug in Base44.</strong> These issues happen when users build apps without a security background. Base44 gives you the tools to secure your app — RLS rules, auth checks, rate limiting — but if you don't know what to look for, you won't know to add them. Most builders see a passing RLS scan and assume they're protected.
+            </p>
+          </div>
+
           <p className="text-slate-300 leading-relaxed">
             We documented every finding, tested every fix, and built a manual review process around what we learned. This service is that process — applied to your app.
           </p>
