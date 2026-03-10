@@ -385,3 +385,76 @@ A Lead has been automatically created in your CRM.
     }
   }
 }
+
+async function handleSecurityCheck(base44, session, requestId) {
+  await base44.asServiceRole.entities.SecurityCheckRequest.update(requestId, {
+    payment_status: 'completed'
+  });
+
+  const requests = await base44.asServiceRole.entities.SecurityCheckRequest.filter({ id: requestId });
+  const requestData = requests[0];
+
+  if (requestData) {
+    // Idempotency check
+    const existingLeads = await base44.asServiceRole.entities.Lead.filter({ payment_reference: session.id });
+    let lead;
+    
+    if (existingLeads.length > 0) {
+      lead = existingLeads[0];
+      console.log(`Lead already exists for session ${session.id}, skipping creation`);
+    } else {
+      lead = await base44.asServiceRole.entities.Lead.create({
+        name: requestData.name,
+        email: requestData.email,
+        phone: requestData.phone || '',
+        source: 'Website',
+        status: 'Won',
+        description: `Security Check Request\n\nApp URL: ${requestData.app_url}\n\nFocus Areas:\n${requestData.description}`,
+        deal_value: 20,
+        notes: `Country: ${requestData.country || 'Not provided'}\nService: Security Check\nStripe Session: ${session.id}`,
+        service_sku: 'security_check',
+        payment_status: 'completed',
+        payment_provider: 'stripe',
+        payment_reference: session.id,
+        amount: 20
+      });
+    }
+
+    await base44.asServiceRole.integrations.Core.SendEmail({
+      to: 'will@kodeagency.us',
+      subject: `💰 PAID: Security Check from ${requestData.name}`,
+      body: `
+PAYMENT CONFIRMED - Security Check Request
+
+Payment Details:
+- Stripe Session ID: ${session.id}
+- Amount: $20.00 USD
+
+Client Details:
+- Name: ${requestData.name}
+- Email: ${requestData.email}
+- Phone: ${requestData.phone || 'Not provided'}
+- Country: ${requestData.country || 'Not provided'}
+- App URL: ${requestData.app_url}
+
+Focus Areas:
+${requestData.description}
+
+Collaborator invite should have been sent to: iamwillkode@gmail.com
+
+A Lead has been automatically created in your CRM.
+      `
+    });
+
+    // Send confirmation email to customer
+    await sendCustomerConfirmationEmail(requestData.email, requestData.name, 'Security Check');
+    
+    // Auto-convert to project
+    try {
+      await base44.asServiceRole.functions.invoke('convertLeadToProject', { lead_id: lead.id });
+      console.log(`Auto-converted lead ${lead.id} to project`);
+    } catch (err) {
+      console.error('Auto-conversion failed:', err);
+    }
+  }
+}
