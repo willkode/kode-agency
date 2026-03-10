@@ -246,10 +246,6 @@ export default function SecurityCheckPage() {
                 <span className="text-red-400 mt-1">•</span>
                 <span><strong className="text-white">Unauthenticated visitors could write records directly to open entity endpoints</strong></span>
               </li>
-              <li className="flex items-start gap-3 text-slate-300">
-                <span className="text-red-400 mt-1">•</span>
-                <span><strong className="text-white">The invite system had a privilege escalation path that let regular users grant themselves admin access</strong></span>
-              </li>
             </ul>
             <p className="text-slate-300 leading-relaxed">
               None of these were flagged by Base44's Dashboard Security Tab. The scanner showed green across the board. The issues came from how the AI builder creates entities by default — public, writable, and without rate limiting — and from attack surfaces the scanner simply doesn't check.
