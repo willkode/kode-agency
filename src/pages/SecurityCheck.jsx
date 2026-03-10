@@ -85,12 +85,12 @@ export default function SecurityCheckPage() {
   const submitMutation = useMutation({
     mutationFn: async (data) => {
       const totalAmount = data.include_fix ? 70 : 20;
+      
       const created = await base44.entities.SecurityCheckRequest.create({
         ...data,
         payment_amount: totalAmount
       });
       
-      const totalAmount = data.include_fix ? 70 : 20;
       base44.functions.invoke('notifyNewLead', {
         name: data.name,
         email: data.email,
@@ -100,7 +100,6 @@ export default function SecurityCheckPage() {
         amount: totalAmount
       }).catch(err => console.error('Lead notification failed:', err));
       
-      const totalAmount = data.include_fix ? 70 : 20;
       const response = await base44.functions.invoke('createStripeCheckout', { 
         service: 'SecurityCheck',
         requestId: created.id,
