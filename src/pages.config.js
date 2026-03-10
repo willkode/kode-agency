@@ -96,11 +96,11 @@ import PublicQuote from './pages/PublicQuote';
 import RefundPolicy from './pages/RefundPolicy';
 import SEOServices from './pages/SEOServices';
 import SaaSDevelopment from './pages/SaaSDevelopment';
+import SecurityCheck from './pages/SecurityCheck';
 import Services from './pages/Services';
 import ThankYou from './pages/ThankYou';
 import UIUXDesign from './pages/UIUXDesign';
 import WebsiteDevelopment from './pages/WebsiteDevelopment';
-import SecurityCheck from './pages/SecurityCheck';
 import __Layout from './Layout.jsx';
 
 
@@ -154,11 +154,11 @@ export const PAGES = {
     "RefundPolicy": RefundPolicy,
     "SEOServices": SEOServices,
     "SaaSDevelopment": SaaSDevelopment,
+    "SecurityCheck": SecurityCheck,
     "Services": Services,
     "ThankYou": ThankYou,
     "UIUXDesign": UIUXDesign,
     "WebsiteDevelopment": WebsiteDevelopment,
-    "SecurityCheck": SecurityCheck,
 }
 
 export const pagesConfig = {
