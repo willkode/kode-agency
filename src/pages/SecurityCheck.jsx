@@ -595,7 +595,7 @@ export default function SecurityCheckPage() {
 
       {/* Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="bg-slate-900 border-slate-800 text-white max-w-lg">
+        <DialogContent className="bg-slate-900 border-slate-800 text-white max-w-lg max-h-[85vh] overflow-y-auto">
           {!paymentSuccess && (
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold">
