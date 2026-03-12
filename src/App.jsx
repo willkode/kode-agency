@@ -11,6 +11,7 @@ import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import CallSentinel from './pages/CallSentinel';
 import Sentinel from './pages/Sentinel';
+import Tip from './pages/Tip';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -70,6 +71,11 @@ const AuthenticatedApp = () => {
       <Route path="/Sentinel" element={
         <LayoutWrapper currentPageName="Sentinel">
           <Sentinel />
+        </LayoutWrapper>
+      } />
+      <Route path="/Tip" element={
+        <LayoutWrapper currentPageName="Tip">
+          <Tip />
         </LayoutWrapper>
       } />
       <Route path="*" element={<PageNotFound />} />
