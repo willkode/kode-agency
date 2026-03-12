@@ -121,13 +121,23 @@ export default function BuildSprintPage() {
         payment_status: 'pending'
       });
       
+      // Create or update Lead (handles duplicates)
+      const leadResult = await base44.functions.invoke('createOrUpdateLead', {
+        name: data.name,
+        email: data.email,
+        source: 'Build Sprint',
+        service_sku: 'build_sprint',
+        deal_value: totalAmount,
+        payment_status: 'pending',
+      });
+      
       // Send lead notification email
       base44.functions.invoke('notifyNewLead', {
         name: data.name,
         email: data.email,
         phone: '',
         payment_status: 'pending',
-        service: 'Build Sprint',
+        service: `Build Sprint ${leadResult.data.isExisting ? '(Returning Customer)' : '(New)'}`,
         amount: totalAmount
       }).catch(err => console.error('Lead notification failed:', err));
       
