@@ -8,11 +8,14 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Users, Mail, Phone, Building, DollarSign, Calendar, 
   Plus, Search, Filter, ArrowRight, MessageSquare, Clock,
-  CheckCircle, XCircle, TrendingUp, Edit, Trash2
+  CheckCircle, XCircle, TrendingUp, Edit, Trash2, Send, Bell, Tag, User
 } from 'lucide-react';
+import EmailComposer from '@/components/crm/EmailComposer';
+import CommunicationTimeline from '@/components/crm/CommunicationTimeline';
 
 const statusColors = {
   'New': 'bg-blue-500/20 text-blue-400 border-blue-500/30',
@@ -35,6 +38,11 @@ export default function CRMSection({ onConvertToProject }) {
   const [newActivity, setNewActivity] = useState({ type: 'Note', description: '' });
   const [isConvertDialogOpen, setIsConvertDialogOpen] = useState(false);
   const [projectType, setProjectType] = useState('');
+  const [isEmailComposerOpen, setIsEmailComposerOpen] = useState(false);
+  const [followUpDate, setFollowUpDate] = useState('');
+  const [leadScore, setLeadScore] = useState(50);
+  const [assignedTo, setAssignedTo] = useState('');
+  const [marketingTags, setMarketingTags] = useState('');
   
   const queryClient = useQueryClient();
 
@@ -46,6 +54,11 @@ export default function CRMSection({ onConvertToProject }) {
   const { data: activities = [] } = useQuery({
     queryKey: ['activities'],
     queryFn: () => base44.entities.Activity.list('-created_date'),
+  });
+
+  const { data: emails = [] } = useQuery({
+    queryKey: ['emails'],
+    queryFn: () => base44.entities.EmailThread.list('-created_date'),
   });
 
   const createLeadMutation = useMutation({
@@ -103,6 +116,22 @@ export default function CRMSection({ onConvertToProject }) {
   const totalWonValue = wonDeals.reduce((sum, l) => sum + (l.deal_value || 0), 0);
 
   const leadActivities = activities.filter(a => a.lead_id === selectedLead?.id);
+  const leadEmails = emails.filter(e => e.lead_id === selectedLead?.id);
+  
+  // Follow-up reminders
+  const todayFollowUps = leads.filter(l => {
+    if (!l.next_follow_up) return false;
+    const followUpDate = new Date(l.next_follow_up);
+    const today = new Date();
+    return followUpDate.toDateString() === today.toDateString();
+  });
+
+  const overdueFollowUps = leads.filter(l => {
+    if (!l.next_follow_up) return false;
+    const followUpDate = new Date(l.next_follow_up);
+    const today = new Date();
+    return followUpDate < today && followUpDate.toDateString() !== today.toDateString();
+  });
 
   const handleStatusChange = (leadId, newStatus) => {
     updateLeadMutation.mutate({ id: leadId, data: { status: newStatus } });
@@ -130,8 +159,67 @@ export default function CRMSection({ onConvertToProject }) {
     budget: '', timeline: '', description: '', deal_value: ''
   });
 
+  const handleEmailSent = () => {
+    queryClient.invalidateQueries({ queryKey: ['emails'] });
+    queryClient.invalidateQueries({ queryKey: ['activities'] });
+  };
+
+  const handleSaveFollowUp = () => {
+    if (followUpDate) {
+      updateLeadMutation.mutate({ 
+        id: selectedLead.id, 
+        data: { next_follow_up: followUpDate }
+      });
+    }
+  };
+
+  const handleSaveLeadDetails = () => {
+    const updates = {};
+    if (assignedTo !== (selectedLead.assigned_to || '')) updates.assigned_to = assignedTo;
+    if (leadScore !== (selectedLead.probability || 50)) updates.probability = leadScore;
+    if (marketingTags) {
+      const tagsArray = marketingTags.split(',').map(t => t.trim()).filter(Boolean);
+      updates.marketing_tags = tagsArray;
+    }
+    if (Object.keys(updates).length > 0) {
+      updateLeadMutation.mutate({ id: selectedLead.id, data: updates });
+    }
+  };
+
+  // Initialize lead details when selected
+  React.useEffect(() => {
+    if (selectedLead) {
+      setFollowUpDate(selectedLead.next_follow_up || '');
+      setLeadScore(selectedLead.probability || 50);
+      setAssignedTo(selectedLead.assigned_to || '');
+      setMarketingTags(selectedLead.marketing_tags?.join(', ') || '');
+    }
+  }, [selectedLead?.id]);
+
   return (
     <div className="space-y-6">
+      {/* Follow-up Alerts */}
+      {(todayFollowUps.length > 0 || overdueFollowUps.length > 0) && (
+        <Card className="p-4 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border-yellow-500/30">
+          <div className="flex items-start gap-3">
+            <Bell className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-1" />
+            <div className="flex-1">
+              <h3 className="font-bold text-white mb-2">Follow-up Reminders</h3>
+              {overdueFollowUps.length > 0 && (
+                <p className="text-sm text-red-400 mb-1">
+                  🔴 {overdueFollowUps.length} overdue follow-up{overdueFollowUps.length > 1 ? 's' : ''}
+                </p>
+              )}
+              {todayFollowUps.length > 0 && (
+                <p className="text-sm text-yellow-400">
+                  ⚠️ {todayFollowUps.length} follow-up{todayFollowUps.length > 1 ? 's' : ''} due today
+                </p>
+              )}
+            </div>
+          </div>
+        </Card>
+      )}
+
       {/* Stats Row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card className="p-4 bg-slate-900/80 border-slate-800">
@@ -283,7 +371,16 @@ export default function CRMSection({ onConvertToProject }) {
                     className="p-4 bg-slate-900/80 border-slate-800 cursor-pointer hover:border-[#73e28a]/50"
                     onClick={() => setSelectedLead(lead)}
                   >
-                    <h4 className="font-bold text-white truncate">{lead.name}</h4>
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <h4 className="font-bold text-white truncate flex-1">{lead.name}</h4>
+                      {lead.next_follow_up && (
+                        <Bell className={`w-3 h-3 flex-shrink-0 ${
+                          new Date(lead.next_follow_up) < new Date() 
+                            ? 'text-red-400' 
+                            : 'text-yellow-400'
+                        }`} />
+                      )}
+                    </div>
                     {lead.company && <p className="text-sm text-slate-400 truncate">{lead.company}</p>}
                     <div className="flex items-center gap-2 mt-2 flex-wrap">
                       {lead.service_sku && (
@@ -303,6 +400,12 @@ export default function CRMSection({ onConvertToProject }) {
                     </div>
                     {(lead.amount || lead.deal_value) > 0 && (
                       <p className="text-sm text-[#73e28a] mt-1">${(lead.amount || lead.deal_value).toLocaleString()}</p>
+                    )}
+                    {lead.assigned_to && (
+                      <div className="flex items-center gap-1 mt-1">
+                        <User className="w-3 h-3 text-slate-500" />
+                        <span className="text-xs text-slate-500">{lead.assigned_to}</span>
+                      </div>
                     )}
                   </Card>
                 ))}
@@ -395,8 +498,8 @@ export default function CRMSection({ onConvertToProject }) {
       </Dialog>
 
       {/* Lead Detail Dialog */}
-      <Dialog open={!!selectedLead && !isConvertDialogOpen} onOpenChange={(open) => !open && setSelectedLead(null)}>
-        <DialogContent className="bg-slate-900 border-slate-800 max-w-2xl max-h-[90vh] overflow-y-auto">
+      <Dialog open={!!selectedLead && !isConvertDialogOpen && !isEmailComposerOpen} onOpenChange={(open) => !open && setSelectedLead(null)}>
+        <DialogContent className="bg-slate-900 border-slate-800 max-w-3xl max-h-[90vh] overflow-y-auto">
           {selectedLead && (
             <>
               <DialogHeader>
@@ -406,6 +509,13 @@ export default function CRMSection({ onConvertToProject }) {
                     {selectedLead.company && <p className="text-slate-400">{selectedLead.company}</p>}
                   </div>
                   <div className="flex gap-2">
+                    <Button 
+                      className="bg-blue-600 hover:bg-blue-700 text-white"
+                      onClick={() => setIsEmailComposerOpen(true)}
+                    >
+                      <Mail className="w-4 h-4 mr-2" />
+                      Send Email
+                    </Button>
                     <Button variant="ghost" size="icon" onClick={() => deleteLeadMutation.mutate(selectedLead.id)}>
                       <Trash2 className="w-4 h-4 text-red-400" />
                     </Button>
@@ -413,7 +523,14 @@ export default function CRMSection({ onConvertToProject }) {
                 </div>
               </DialogHeader>
 
-              <div className="space-y-6 mt-4">
+              <Tabs defaultValue="overview" className="mt-4">
+                <TabsList className="grid w-full grid-cols-3 bg-slate-800">
+                  <TabsTrigger value="overview">Overview</TabsTrigger>
+                  <TabsTrigger value="communication">Communication</TabsTrigger>
+                  <TabsTrigger value="details">Details</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="overview" className="space-y-6 mt-4">
                 {/* Status Selector */}
                 <div>
                   <label className="text-sm text-slate-400 mb-2 block">Status</label>
@@ -460,6 +577,30 @@ export default function CRMSection({ onConvertToProject }) {
                   </div>
                 )}
 
+                {/* Follow-up Date */}
+                <div>
+                  <label className="text-sm text-slate-400 mb-2 block">Next Follow-up</label>
+                  <div className="flex gap-2">
+                    <Input
+                      type="datetime-local"
+                      className="bg-slate-800 border-slate-700 flex-1"
+                      value={followUpDate}
+                      onChange={(e) => setFollowUpDate(e.target.value)}
+                    />
+                    <Button
+                      className="bg-[#73e28a] text-black hover:bg-[#5dbb72]"
+                      onClick={handleSaveFollowUp}
+                    >
+                      Save
+                    </Button>
+                  </div>
+                  {selectedLead.next_follow_up && (
+                    <p className="text-xs text-slate-500 mt-1">
+                      Current: {new Date(selectedLead.next_follow_up).toLocaleString()}
+                    </p>
+                  )}
+                </div>
+
                 {/* Notes */}
                 <div>
                   <label className="text-sm text-slate-400 mb-2 block">Notes</label>
@@ -474,7 +615,22 @@ export default function CRMSection({ onConvertToProject }) {
                   />
                 </div>
 
-                {/* Activity Log */}
+                {/* Create Project Button */}
+                <Button 
+                  className="w-full bg-[#73e28a] text-black hover:bg-[#5dbb72]"
+                  onClick={handleConvertToProject}
+                >
+                  <ArrowRight className="w-4 h-4 mr-2" /> Convert to Project
+                </Button>
+                </TabsContent>
+
+                <TabsContent value="communication" className="space-y-6 mt-4">
+                  <div>
+                    <label className="text-sm text-slate-400 mb-3 block">Communication Timeline</label>
+                    <CommunicationTimeline activities={leadActivities} emails={leadEmails} />
+                  </div>
+
+                {/* Quick Activity Log */}
                 <div>
                   <label className="text-sm text-slate-400 mb-2 block">Activity</label>
                   <div className="flex gap-2 mb-3">
@@ -507,26 +663,89 @@ export default function CRMSection({ onConvertToProject }) {
                       Add
                     </Button>
                   </div>
-                  <div className="space-y-2 max-h-48 overflow-y-auto">
-                    {leadActivities.map(activity => (
-                      <div key={activity.id} className="flex items-start gap-3 text-sm p-2 bg-slate-800/50 rounded">
-                        <Badge variant="outline" className="border-slate-700 text-slate-300 text-xs">{activity.type}</Badge>
-                        <span className="text-slate-300 flex-1">{activity.description}</span>
-                        <span className="text-slate-500 text-xs">{new Date(activity.created_date).toLocaleDateString()}</span>
-                      </div>
-                    ))}
-                  </div>
                 </div>
+                </TabsContent>
 
-                {/* Create Project Button */}
-                <Button 
-                  className="w-full bg-[#73e28a] text-black hover:bg-[#5dbb72]"
-                  onClick={handleConvertToProject}
-                >
-                  <ArrowRight className="w-4 h-4 mr-2" /> Convert to Project
-                </Button>
-              </div>
+                <TabsContent value="details" className="space-y-6 mt-4">
+                  {/* Lead Assignment */}
+                  <div>
+                    <label className="text-sm text-slate-400 mb-2 block">Assigned To</label>
+                    <Input
+                      className="bg-slate-800 border-slate-700"
+                      value={assignedTo}
+                      onChange={(e) => setAssignedTo(e.target.value)}
+                      placeholder="Team member name..."
+                    />
+                  </div>
+
+                  {/* Lead Score */}
+                  <div>
+                    <label className="text-sm text-slate-400 mb-2 block">
+                      Lead Score / Probability: {leadScore}%
+                    </label>
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value={leadScore}
+                      onChange={(e) => setLeadScore(parseInt(e.target.value))}
+                      className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[#73e28a]"
+                    />
+                    <div className="flex justify-between text-xs text-slate-500 mt-1">
+                      <span>Cold</span>
+                      <span>Warm</span>
+                      <span>Hot</span>
+                    </div>
+                  </div>
+
+                  {/* Marketing Tags */}
+                  <div>
+                    <label className="text-sm text-slate-400 mb-2 block">Marketing Tags</label>
+                    <Input
+                      className="bg-slate-800 border-slate-700"
+                      value={marketingTags}
+                      onChange={(e) => setMarketingTags(e.target.value)}
+                      placeholder="e.g. campaign_spring_2024, webinar_attendee"
+                    />
+                    <p className="text-xs text-slate-500 mt-1">Comma-separated tags</p>
+                  </div>
+
+                  {selectedLead.marketing_tags && selectedLead.marketing_tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {selectedLead.marketing_tags.map((tag, i) => (
+                        <Badge key={i} className="bg-purple-500/20 text-purple-400 border-purple-500/30">
+                          <Tag className="w-3 h-3 mr-1" />
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
+
+                  <Button
+                    className="w-full bg-[#73e28a] text-black hover:bg-[#5dbb72]"
+                    onClick={handleSaveLeadDetails}
+                  >
+                    Save Details
+                  </Button>
+                </TabsContent>
+              </Tabs>
             </>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Email Composer Dialog */}
+      <Dialog open={isEmailComposerOpen} onOpenChange={setIsEmailComposerOpen}>
+        <DialogContent className="bg-slate-900 border-slate-800 max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-white">Send Email to {selectedLead?.name}</DialogTitle>
+          </DialogHeader>
+          {selectedLead && (
+            <EmailComposer
+              lead={selectedLead}
+              onClose={() => setIsEmailComposerOpen(false)}
+              onEmailSent={handleEmailSent}
+            />
           )}
         </DialogContent>
       </Dialog>
