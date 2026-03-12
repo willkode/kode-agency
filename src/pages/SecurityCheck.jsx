@@ -190,8 +190,12 @@ export default function SecurityCheckPage() {
               </p>
             </div>
 
-            <p className="text-xl text-slate-300 mb-8 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-xl text-slate-300 mb-4 leading-relaxed max-w-3xl mx-auto">
               We manually audit your Base44 app for the vulnerabilities the built-in security tab can't see. We pull all your entities and run over 100+ attack simulations on each one to ensure they're truly secure — then give you the exact prompts to fix every issue we find.
+            </p>
+            
+            <p className="text-lg text-[#73e28a] font-semibold mb-8">
+              Solves security rejection for app marketplace applications
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-4">
