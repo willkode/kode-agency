@@ -14,10 +14,10 @@ Deno.serve(async (req) => {
     
     const origin = req.headers.get('origin');
     
-    const { requestId, customerEmail, customerName } = await req.json();
+    const { requestId, customerEmail, customerName, amount } = await req.json();
     
-    if (!requestId) {
-      return Response.json({ error: 'Request ID is required' }, { status: 400 });
+    if (!requestId || !amount) {
+      return Response.json({ error: 'Request ID and amount are required' }, { status: 400 });
     }
 
     const session = await stripe.checkout.sessions.create({
@@ -26,9 +26,9 @@ Deno.serve(async (req) => {
         price_data: {
           currency: 'usd',
           product_data: {
-            name: 'Base44 Security Check Service',
+            name: amount === 125 ? 'Base44 Security Check + Fix Service' : 'Base44 Security Check Service',
           },
-          unit_amount: 2000, // $20.00
+          unit_amount: amount * 100,
         },
         quantity: 1,
       }],

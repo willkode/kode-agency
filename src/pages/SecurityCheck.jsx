@@ -84,7 +84,7 @@ export default function SecurityCheckPage() {
 
   const submitMutation = useMutation({
     mutationFn: async (data) => {
-      const totalAmount = data.include_fix ? 70 : 20;
+      const totalAmount = data.include_fix ? 125 : 50;
       
       const created = await base44.entities.SecurityCheckRequest.create({
         ...data,
@@ -100,11 +100,9 @@ export default function SecurityCheckPage() {
         amount: totalAmount
       }).catch(err => console.error('Lead notification failed:', err));
       
-      const response = await base44.functions.invoke('createStripeCheckout', { 
-        service: 'SecurityCheck',
+      const response = await base44.functions.invoke('createSecurityCheckOrder', { 
         requestId: created.id,
         amount: totalAmount,
-        description: data.include_fix ? 'Base44 Security Check + Fix Service' : 'Base44 Security Check Service',
         customerEmail: data.email,
         customerName: data.name
       });
@@ -203,7 +201,7 @@ export default function SecurityCheckPage() {
                 onClick={() => setIsModalOpen(true)}
                 className="bg-[#73e28a] hover:bg-[#5dbb72] text-black font-bold h-14 px-8 text-lg group"
               >
-                Get My App Scanned — $20
+                Get My App Scanned — $50
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
@@ -512,7 +510,7 @@ export default function SecurityCheckPage() {
                 Manual audit of your Base44 app with a full findings report and fix prompts for every issue found.
               </p>
               <div className="mb-6">
-                <span className="text-5xl font-bold text-[#73e28a]">$20</span>
+                <span className="text-5xl font-bold text-[#73e28a]">$50</span>
                 <p className="text-slate-500 text-sm mt-1">one-time · delivered within 48 hours (excluding weekends)</p>
               </div>
               <ul className="space-y-3 mb-8">
@@ -548,8 +546,8 @@ export default function SecurityCheckPage() {
                 Everything in the report, plus we implement all the fixes in your Base44 app directly.
               </p>
               <div className="mb-6">
-                <span className="text-5xl font-bold text-[#73e28a]">$70</span>
-                <p className="text-slate-500 text-sm mt-1">$20 scan + $50 implementation · delivered within 48 hours (excluding weekends)</p>
+                <span className="text-5xl font-bold text-[#73e28a]">$125</span>
+                <p className="text-slate-500 text-sm mt-1">$50 scan + $75 implementation · delivered within 48 hours (excluding weekends)</p>
               </div>
               <ul className="space-y-3 mb-8">
                 {[
@@ -692,7 +690,7 @@ export default function SecurityCheckPage() {
                       htmlFor="include_fix" 
                       className="text-[#73e28a] font-bold cursor-pointer"
                     >
-                      Have us fix the issues for you (+$50)
+                      Have us fix the issues for you (+$75)
                     </Label>
                     <p className="text-sm text-slate-400 mt-1">
                       We'll implement all the fixes directly in your Base44 app
@@ -703,10 +701,10 @@ export default function SecurityCheckPage() {
                 <div className="pt-3 border-t border-slate-700 text-center">
                   <span className="text-slate-400">Total: </span>
                   <span className="text-xl font-bold text-[#73e28a]">
-                    ${formData.include_fix ? '70' : '20'}
+                    ${formData.include_fix ? '125' : '50'}
                   </span>
                   {formData.include_fix && (
-                    <p className="text-xs text-slate-500 mt-1">$20 scan + $50 implementation</p>
+                    <p className="text-xs text-slate-500 mt-1">$50 scan + $75 implementation</p>
                   )}
                 </div>
               </div>
@@ -779,7 +777,7 @@ export default function SecurityCheckPage() {
               <div>
                 <h3 className="text-xl font-bold text-white mb-2">Redirecting to Checkout...</h3>
                 <p className="text-slate-400">
-                  Complete your ${formData.include_fix ? '70' : '20'} payment to finalize the security check request.
+                  Complete your ${formData.include_fix ? '125' : '50'} payment to finalize the security check request.
                 </p>
               </div>
               <p className="text-sm text-slate-500">

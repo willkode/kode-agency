@@ -38,13 +38,13 @@ Deno.serve(async (req) => {
           source: 'Website',
           status: 'Won',
           description: `Security Check Request\n\nApp URL: ${requestData.app_url}\n\nFocus Areas:\n${requestData.description}`,
-          deal_value: 20,
-          notes: `Country: ${requestData.country || 'Not provided'}\nService: Security Check\nStripe Session: ${session.id}`,
+          deal_value: requestData.payment_amount || 50,
+          notes: `Country: ${requestData.country || 'Not provided'}\nService: ${requestData.payment_amount === 125 ? 'Security Check + Fix' : 'Security Check'}\nStripe Session: ${session.id}`,
           service_sku: 'security_check',
           payment_status: 'completed',
           payment_provider: 'stripe',
           payment_reference: session.id,
-          amount: 20
+          amount: requestData.payment_amount || 50
         });
       }
 
@@ -56,7 +56,8 @@ PAYMENT CONFIRMED - Security Check Request
 
 Payment Details:
 - Stripe Session ID: ${session.id}
-- Amount: $20.00 USD
+- Amount: $${requestData.payment_amount || 50}.00 USD
+- Service: ${requestData.payment_amount === 125 ? 'Security Check + Implementation' : 'Security Check Only'}
 
 Client Details:
 - Name: ${requestData.name}
@@ -107,7 +108,7 @@ Kode Agency | AI-Accelerated Development
     return Response.json({ 
       success: true,
       requestId,
-      amount: 20
+      amount: requestData.payment_amount || 50
     });
 
   } catch (error) {
