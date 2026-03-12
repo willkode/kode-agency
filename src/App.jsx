@@ -10,6 +10,7 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import CallSentinel from './pages/CallSentinel';
+import Sentinel from './pages/Sentinel';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -64,6 +65,11 @@ const AuthenticatedApp = () => {
       <Route path="/CallSentinel" element={
         <LayoutWrapper currentPageName="CallSentinel">
           <CallSentinel />
+        </LayoutWrapper>
+      } />
+      <Route path="/Sentinel" element={
+        <LayoutWrapper currentPageName="Sentinel">
+          <Sentinel />
         </LayoutWrapper>
       } />
       <Route path="*" element={<PageNotFound />} />
