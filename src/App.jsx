@@ -60,6 +60,11 @@ const AuthenticatedApp = () => {
           }
         />
       ))}
+      <Route path="/CallSentinel" element={
+        <LayoutWrapper currentPageName="CallSentinel">
+          <CallSentinel />
+        </LayoutWrapper>
+      } />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
