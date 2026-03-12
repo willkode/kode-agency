@@ -39,14 +39,13 @@ export default function ContactPage() {
     mutationFn: async (data) => {
       // Save to ContactSubmission
       await base44.entities.ContactSubmission.create(data);
-      // Also create a Lead in CRM
-      await base44.entities.Lead.create({
+      // Create or update Lead (handles duplicates)
+      const leadResult = await base44.functions.invoke('createOrUpdateLead', {
         name: data.name,
         email: data.email,
         phone: data.phone,
         description: data.message,
         source: 'Contact Form',
-        status: 'New'
       });
       // Send lead notification email
       base44.functions.invoke('notifyNewLead', {
@@ -54,7 +53,7 @@ export default function ContactPage() {
         email: data.email,
         phone: data.phone || '',
         payment_status: 'N/A',
-        service: 'Contact Form',
+        service: `Contact Form ${leadResult.data.isExisting ? '(Returning Contact)' : '(New)'}`,
         amount: 0
       }).catch(err => console.error('Lead notification failed:', err));
       // Send notification email
