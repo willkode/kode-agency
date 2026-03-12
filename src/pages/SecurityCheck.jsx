@@ -722,22 +722,45 @@ export default function SecurityCheckPage() {
           {step === 2 && (
             <div className="space-y-6 mt-4">
               <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-                <h3 className="font-bold text-white mb-4">Follow these steps:</h3>
-                <ol className="space-y-4 text-sm">
-                  <li className="flex gap-3">
-                    <span className="w-6 h-6 rounded-full bg-[#73e28a] text-black font-bold flex items-center justify-center flex-shrink-0">1</span>
-                    <span className="text-slate-300">Open your Base44 app editor</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="w-6 h-6 rounded-full bg-[#73e28a] text-black font-bold flex items-center justify-center flex-shrink-0">2</span>
-                    <span className="text-slate-300">Click the <strong>Share</strong> button (next to Publish)</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="w-6 h-6 rounded-full bg-[#73e28a] text-black font-bold flex items-center justify-center flex-shrink-0">3</span>
-                    <div className="text-slate-300">
-                      Send an invite with <strong>Collaborator</strong> access to:
+                <h3 className="font-bold text-white mb-6">Follow these steps:</h3>
+                <div className="space-y-6">
+                  {/* Step 1 */}
+                  <div className="flex gap-4">
+                    <span className="w-8 h-8 rounded-full bg-[#73e28a] text-black font-bold flex items-center justify-center flex-shrink-0">1</span>
+                    <div className="flex-1">
+                      <p className="text-slate-300 mb-3">Go to your Base44 app to make edits</p>
+                      <div className="bg-slate-900 rounded-lg p-3 border border-slate-700">
+                        <img 
+                          src="https://media.base44.com/images/public/691e276e2117009b68e21c5c/4bbebf0ab_Screenshot2026-03-12113552.png" 
+                          alt="Base44 app editor header"
+                          className="w-full max-w-sm rounded"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Step 2 */}
+                  <div className="flex gap-4">
+                    <span className="w-8 h-8 rounded-full bg-[#73e28a] text-black font-bold flex items-center justify-center flex-shrink-0">2</span>
+                    <div className="flex-1">
+                      <p className="text-slate-300 mb-3">Click on the Invite collaborator "+" icon</p>
+                      <div className="bg-slate-900 rounded-lg p-3 border border-slate-700">
+                        <img 
+                          src="https://media.base44.com/images/public/691e276e2117009b68e21c5c/47ecd0efb_Screenshot2026-03-12113602.png" 
+                          alt="Invite collaborators dialog"
+                          className="w-full max-w-sm rounded"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Step 3 */}
+                  <div className="flex gap-4">
+                    <span className="w-8 h-8 rounded-full bg-[#73e28a] text-black font-bold flex items-center justify-center flex-shrink-0">3</span>
+                    <div className="flex-1">
+                      <p className="text-slate-300 mb-2">Enter <strong>iamwillkode@gmail.com</strong> and send</p>
                       <div className="flex items-center gap-2 mt-2">
-                        <code className="bg-slate-900 px-3 py-1 rounded text-[#73e28a]">iamwillkode@gmail.com</code>
+                        <code className="bg-slate-900 px-3 py-1 rounded text-[#73e28a] text-sm">iamwillkode@gmail.com</code>
                         <button 
                           onClick={copyEmail}
                           className="p-1.5 hover:bg-slate-700 rounded transition-colors"
@@ -746,8 +769,8 @@ export default function SecurityCheckPage() {
                         </button>
                       </div>
                     </div>
-                  </li>
-                </ol>
+                  </div>
+                </div>
               </div>
 
               <div className="flex gap-3">
