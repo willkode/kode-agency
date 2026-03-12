@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { Button } from "@/components/ui/button";
-import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList, Menu, X, ChevronRight, Smartphone, Rocket, Activity, GitBranch, Megaphone, LogOut, ShieldAlert, Loader2 } from 'lucide-react';
+import { Users, FolderKanban, Briefcase, Layout, FileText, Stethoscope, Zap, Receipt, ClipboardList, Menu, X, ChevronRight, Smartphone, Rocket, Activity, GitBranch, Megaphone, LogOut, ShieldAlert, Loader2, Shield } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 import CRMSection from '@/components/admin/CRMSection';
@@ -11,6 +11,7 @@ import CareersSection from '@/components/admin/CareersSection';
 import PortfolioSection from '@/components/admin/PortfolioSection';
 import BlogSection from '@/components/admin/BlogSection';
 import AppReviewsSection from '@/components/admin/AppReviewsSection';
+import SecurityScanSection from '@/components/admin/SecurityScanSection';
 import BuildSprintsSection from '@/components/admin/BuildSprintsSection';
 import QuotesSection from '@/components/admin/QuotesSection';
 import TaskTemplatesSection from '@/components/admin/TaskTemplatesSection';
@@ -36,6 +37,7 @@ const menuGroups = [
       { id: 'projects', label: 'Projects', icon: FolderKanban },
       { id: 'sprints', label: 'Build Sprints', icon: Zap },
       { id: 'reviews', label: 'App Reviews', icon: Stethoscope },
+      { id: 'security-scan', label: 'Security Scan', icon: Shield },
       { id: 'mobileapp', label: 'Mobile App', icon: Smartphone },
       { id: 'foundation', label: 'App Foundation', icon: Rocket },
       { id: 'templates', label: 'Task Templates', icon: ClipboardList },
@@ -97,9 +99,10 @@ export default function AdminPage() {
     if (authState !== 'authorized') return;
     const fetchBadges = async () => {
       try {
-        const [sprints, reviews, mobileapp, foundation, migrationQuotes] = await Promise.all([
+        const [sprints, reviews, securityScans, mobileapp, foundation, migrationQuotes] = await Promise.all([
           base44.entities.BuildSprintRequest.filter({ payment_status: 'completed' }),
           base44.entities.AppReviewRequest.filter({ payment_status: 'completed' }),
+          base44.entities.SecurityCheckRequest.filter({ payment_status: 'completed' }),
           base44.entities.MobileAppConversionRequest.filter({ payment_status: 'completed' }),
           base44.entities.AppFoundationRequest.filter({ payment_status: 'completed' }),
           base44.entities.MigrationQuoteRequest.filter({ status: 'New' }),
@@ -107,6 +110,7 @@ export default function AdminPage() {
         setBadges({
           sprints: sprints.length,
           reviews: reviews.length,
+          'security-scan': securityScans.length,
           mobileapp: mobileapp.length,
           foundation: foundation.length,
           'migration-quotes': migrationQuotes.length,
@@ -335,6 +339,14 @@ export default function AdminPage() {
               onMarkRead={(id) => markAsRead('reviews', id)} 
               onMarkUnread={(id) => markAsUnread('reviews', id)}
               onMarkAllRead={(ids) => markAllAsRead('reviews', ids)}
+            />
+          )}
+          {activeTab === 'security-scan' && (
+            <SecurityScanSection 
+              readIds={readIds['security-scan'] || []} 
+              onMarkRead={(id) => markAsRead('security-scan', id)} 
+              onMarkUnread={(id) => markAsUnread('security-scan', id)}
+              onMarkAllRead={(ids) => markAllAsRead('security-scan', ids)}
             />
           )}
           {activeTab === 'templates' && (
