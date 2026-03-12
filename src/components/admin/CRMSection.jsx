@@ -323,7 +323,13 @@ export default function CRMSection({ onConvertToProject }) {
                 <div className="flex items-center gap-4">
                   <div>
                     <h4 className="font-bold text-white">{lead.name}</h4>
-                    <p className="text-sm text-slate-400">{lead.email}</p>
+                    <div className="flex items-center gap-3">
+                      <p className="text-sm text-slate-400">{lead.email}</p>
+                      <span className="text-xs text-slate-500">•</span>
+                      <p className="text-xs text-slate-500">
+                        {new Date(lead.created_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      </p>
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
