@@ -107,6 +107,13 @@ export default function SecurityCheckPage() {
         customerName: data.name
       });
       
+      // Track Stripe Payment redirect for Google Analytics
+      track('Stripe Payment', {
+        service: 'Security Check',
+        amount: totalAmount,
+        include_fix: data.include_fix
+      });
+      
       return { created, stripeUrl: response.data.url };
     },
     onSuccess: ({ created, stripeUrl }) => {

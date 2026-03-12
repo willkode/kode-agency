@@ -121,6 +121,14 @@ export default function Base44ERPage() {
         metadata: { includeFix: data.include_fix ? 'true' : 'false' }
       });
       
+      // Track Stripe Payment redirect for Google Analytics
+      track('Stripe Payment', {
+        service: 'Base44 ER',
+        amount: amount,
+        include_fix: data.include_fix,
+        include_security: data.include_security
+      });
+      
       return { created, stripeUrl: response.data.url };
     },
     onSuccess: ({ created, stripeUrl }) => {

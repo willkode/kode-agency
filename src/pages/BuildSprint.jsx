@@ -149,6 +149,13 @@ export default function BuildSprintPage() {
         request_id: request.id
       });
       
+      // Track Stripe Payment redirect for Google Analytics
+      track('Stripe Payment', {
+        service: 'Build Sprint',
+        amount: totalAmount,
+        hours: data.hours
+      });
+      
       // Redirect to Stripe
       if (stripeData.url) {
         window.location.href = stripeData.url;
