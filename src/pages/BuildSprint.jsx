@@ -114,64 +114,75 @@ export default function BuildSprintPage() {
 
   const createRequestMutation = useMutation({
     mutationFn: async (data) => {
-      // Create the request record
-      const request = await base44.entities.BuildSprintRequest.create({
-        ...data,
-        payment_amount: totalAmount,
-        payment_status: 'pending'
-      });
-      
-      // Create or update Lead (handles duplicates)
-      const leadResult = await base44.functions.invoke('createOrUpdateLead', {
-        name: data.name,
-        email: data.email,
-        source: 'Build Sprint',
-        service_sku: 'build_sprint',
-        deal_value: totalAmount,
-        payment_status: 'pending',
-      });
-      
-      // Send lead notification email
-      base44.functions.invoke('notifyNewLead', {
-        name: data.name,
-        email: data.email,
-        phone: '',
-        payment_status: 'pending',
-        service: `Build Sprint ${leadResult.data.isExisting ? '(Returning Customer)' : '(New)'}`,
-        amount: totalAmount
-      }).catch(err => console.error('Lead notification failed:', err));
-      
-      // Create Stripe checkout session
-      const { data: stripeData } = await base44.functions.invoke('createStripeCheckout', {
-        service: 'BuildSprint',
-        requestId: request.id,
-        amount: totalAmount,
-        description: `Done-With-You Build Sprint - ${data.hours} hours`,
-        customerEmail: data.email,
-        customerName: data.name,
-        metadata: { hours: data.hours.toString() }
-      });
-      
-      // Track checkout started before redirect
-      track('build_sprint_checkout_started', {
-        hours: data.hours,
-        amount: totalAmount,
-        request_id: request.id
-      });
-      
-      // Track Stripe Payment redirect for Google Analytics
-      track('Stripe Payment', {
-        service: 'Build Sprint',
-        amount: totalAmount,
-        hours: data.hours
-      });
-      
-      // Redirect to Stripe
-      if (stripeData.url) {
-        window.location.href = stripeData.url;
+      try {
+        // Create the request record
+        const request = await base44.entities.BuildSprintRequest.create({
+          ...data,
+          payment_amount: totalAmount,
+          payment_status: 'pending'
+        });
+        
+        // Create or update Lead (handles duplicates)
+        const leadResult = await base44.functions.invoke('createOrUpdateLead', {
+          name: data.name,
+          email: data.email,
+          source: 'Build Sprint',
+          service_sku: 'build_sprint',
+          deal_value: totalAmount,
+          payment_status: 'pending',
+        });
+        
+        // Send lead notification email
+        base44.functions.invoke('notifyNewLead', {
+          name: data.name,
+          email: data.email,
+          phone: '',
+          payment_status: 'pending',
+          service: `Build Sprint ${leadResult.data.isExisting ? '(Returning Customer)' : '(New)'}`,
+          amount: totalAmount
+        }).catch(err => console.error('Lead notification failed:', err));
+        
+        // Create Stripe checkout session
+        const { data: stripeData } = await base44.functions.invoke('createStripeCheckout', {
+          service: 'BuildSprint',
+          requestId: request.id,
+          amount: totalAmount,
+          description: `Done-With-You Build Sprint - ${data.hours} hours`,
+          customerEmail: data.email,
+          customerName: data.name,
+          metadata: { hours: data.hours.toString() }
+        });
+        
+        // Track checkout started before redirect
+        track('build_sprint_checkout_started', {
+          hours: data.hours,
+          amount: totalAmount,
+          request_id: request.id
+        });
+        
+        // Track Stripe Payment redirect for Google Analytics
+        track('Stripe Payment', {
+          service: 'Build Sprint',
+          amount: totalAmount,
+          hours: data.hours
+        });
+        
+        // Redirect to Stripe
+        if (stripeData.url) {
+          window.location.href = stripeData.url;
+        } else {
+          throw new Error('No checkout URL returned from Stripe');
+        }
+        
+        return request;
+      } catch (error) {
+        console.error('Build Sprint booking failed:', error);
+        throw error;
       }
-      
-      return request;
+    },
+    onError: (error) => {
+      track('build_sprint_booking_error', { error: error?.message || 'unknown' });
+      alert(`Booking failed: ${error?.message || 'Unknown error'}. Please try again.`);
     }
   });
 
