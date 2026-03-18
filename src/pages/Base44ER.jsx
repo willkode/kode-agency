@@ -50,7 +50,8 @@ export default function Base44ERPage() {
     app_url: '',
     issue_description: '',
     include_fix: false,
-    include_security: false
+    include_security: false,
+    include_security_fix: false
   });
 
   // Handle return from Stripe
@@ -91,6 +92,11 @@ export default function Base44ERPage() {
       // Add security check addon
       if (data.include_security) {
         amount += 20;
+      }
+      
+      // Add security audit + fix addon
+      if (data.include_security_fix) {
+        amount += 50;
       }
       
       const created = await base44.entities.AppReviewRequest.create({
@@ -897,10 +903,34 @@ Provide the full analysis in the exact report format above based on the data I s
                 </div>
               </div>
 
+              <div 
+                className={`p-4 rounded-lg border cursor-pointer transition-all ${formData.include_security_fix ? 'bg-amber-500/10 border-amber-500' : 'bg-slate-800 border-slate-700 hover:border-slate-600'}`}
+                onClick={() => handleChange('include_security_fix', !formData.include_security_fix)}
+              >
+                <div className="flex items-start gap-3">
+                  <Checkbox 
+                    checked={formData.include_security_fix}
+                    onCheckedChange={(checked) => handleChange('include_security_fix', checked)}
+                    className="mt-1 border-slate-600 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
+                  />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <Wrench className="w-4 h-4 text-amber-400" />
+                      <span className="font-bold text-white">Security Audit + Fix</span>
+                      <span className="text-amber-400 text-sm font-bold">+$50</span>
+                      <span className="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full">Recommended</span>
+                    </div>
+                    <p className="text-sm text-slate-400">
+                      Full security audit <strong className="text-slate-300">plus</strong> I'll implement the fixes for you — patched RLS rules, hardened backend functions, and a written summary of every change made.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <div className="p-3 bg-slate-800/50 rounded-lg text-center">
                 <span className="text-slate-400">Total: </span>
                 <span className="text-xl font-bold text-[#73e28a]">
-                  ${50 + (formData.include_security ? 20 : 0)}
+                  ${50 + (formData.include_security ? 20 : 0) + (formData.include_security_fix ? 50 : 0)}
                 </span>
                 {formData.include_fix && <span className="text-amber-400 text-sm ml-2">(March Special - Fix included FREE!)</span>}
               </div>
@@ -973,7 +1003,7 @@ Provide the full analysis in the exact report format above based on the data I s
               <div>
                 <h3 className="text-xl font-bold text-white mb-2">Redirecting to Checkout...</h3>
                 <p className="text-slate-400">
-                  Complete your ${50 + (formData.include_security ? 20 : 0)} payment to finalize the review request.
+                  Complete your ${50 + (formData.include_security ? 20 : 0) + (formData.include_security_fix ? 50 : 0)} payment to finalize the review request.
                 </p>
               </div>
               <p className="text-sm text-slate-500">
