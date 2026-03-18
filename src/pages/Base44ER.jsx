@@ -881,29 +881,6 @@ Provide the full analysis in the exact report format above based on the data I s
               </div>
 
               <div 
-                className={`p-4 rounded-lg border cursor-pointer transition-all ${formData.include_security ? 'bg-[#73e28a]/10 border-[#73e28a]' : 'bg-slate-800 border-slate-700 hover:border-slate-600'}`}
-                onClick={() => handleChange('include_security', !formData.include_security)}
-              >
-                <div className="flex items-start gap-3">
-                  <Checkbox 
-                    checked={formData.include_security}
-                    onCheckedChange={(checked) => handleChange('include_security', checked)}
-                    className="mt-1 border-slate-600 data-[state=checked]:bg-[#73e28a] data-[state=checked]:border-[#73e28a]"
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Shield className="w-4 h-4 text-[#73e28a]" />
-                      <span className="font-bold text-white">Add Security Check</span>
-                      <span className="text-[#73e28a] text-sm">+$20</span>
-                    </div>
-                    <p className="text-sm text-slate-400">
-                      Comprehensive security audit covering entity RLS, backend auth, rate limiting, and privilege escalation checks.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div 
                 className={`p-4 rounded-lg border cursor-pointer transition-all ${formData.include_security_fix ? 'bg-amber-500/10 border-amber-500' : 'bg-slate-800 border-slate-700 hover:border-slate-600'}`}
                 onClick={() => handleChange('include_security_fix', !formData.include_security_fix)}
               >
